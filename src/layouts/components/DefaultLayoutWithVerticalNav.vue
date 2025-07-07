@@ -31,7 +31,7 @@ import { VerticalNavLayout } from '@layouts'
         </IconBtn>
 
         <VSpacer />
-        <VIcon icon="tabler-circles" size="40" style="background-color: rgb(var(--v-global-theme-primary))"/>
+        <VIcon icon="tabler-cube" size="40" style="background-color: rgb(var(--v-global-theme-primary))"/>
         <VListItem class="pl-0">
           <VListItemSubtitle>Loyalty points</VListItemSubtitle>
           <VListItemTitle class="font-weight-bold" style="line-height: 1rem;">5302.79</VListItemTitle>
