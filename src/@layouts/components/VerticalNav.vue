@@ -170,6 +170,7 @@ const hideTitleAndIcon = configStore.isVerticalNavMini(isHovered)
         <!-- auth providers -->
         <div class="text-center">
           <AuthProvider />
+
         </div>
       </PerfectScrollbar>
     </slot>
