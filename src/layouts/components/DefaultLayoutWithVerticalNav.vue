@@ -25,29 +25,33 @@ import { VerticalNavLayout } from '@layouts'
           @click="toggleVerticalOverlayNavActive(true)"
         >
           <VIcon
-            size="26"
+            size="30"
             icon="tabler-menu-2"
           />
         </IconBtn>
 
         <VSpacer />
-        <VIcon icon="tabler-circles" class="mr-2" />
-        <VListItem class="pa-0 d-flex align-center">
-          <span class="font-weight-semibold">Loyalty points</span>
-          <div class="d-flex align-center" style="gap: 6px;">
-            <span style="text-align: center">5302.79</span>
-          </div>
+        <VIcon icon="tabler-circles" size="40" style="background-color: rgb(var(--v-global-theme-primary))"/>
+        <VListItem class="pl-0">
+          <VListItemSubtitle>Loyalty points</VListItemSubtitle>
+          <VListItemTitle class="font-weight-bold" style="line-height: 1rem;">5302.79</VListItemTitle>
         </VListItem>
         <!-- Wallet Balance -->
-        <VIcon icon="tabler-wallet" class="mr-2" />
-        <VListItem class="pa-0 d-flex align-center">
-          <span class="font-weight-semibold">Wallet Balance</span>
-          <div class="d-flex align-center" style="gap: 6px;">
-            <span style="text-align: center">15.22</span>
-            <VIcon icon="tabler-s-turn-down" size="22" />
-
-          </div>
+        <VIcon icon="tabler-wallet" size="40" style="background-color: rgb(var(--v-global-theme-primary))"/>
+        <VListItem class="pl-0">
+        <VListItemSubtitle>
+          Wallet Balance
+        </VListItemSubtitle>
+          <VListItemTitle  class="font-weight-bold" style="line-height: 1rem;">15.22</VListItemTitle>
         </VListItem>
+<!--        <VListItem class="pa-0 d-flex align-center">-->
+<!--          <span class="font-weight-semibold">Wallet Balance</span>-->
+<!--          <div class="d-flex align-center" style="gap: 6px;">-->
+<!--            <span style="text-align: center">15.22</span>-->
+<!--            <VIcon icon="tabler-s-turn-down" size="22" />-->
+
+<!--          </div>-->
+<!--        </VListItem>-->
         <NavbarThemeSwitcher />
         <NavBarNotifications class="me-1" />
         <UserProfile />
