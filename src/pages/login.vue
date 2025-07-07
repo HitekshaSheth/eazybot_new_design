@@ -13,19 +13,33 @@ import { themeConfig } from '@themeConfig'
 definePage({
   meta: {
     layout: 'blank',
-    public: true,
+    unauthenticatedOnly: true,
   },
 })
 
+const router = useRouter()
+
 const form = ref({
-  email: '',
-  password: '',
+  email: 'admin@demo.com',
+  password: 'admin',
   remember: false,
 })
 
 const isPasswordVisible = ref(false)
 const authThemeImg = useGenerateImageVariant(authV2LoginIllustrationLight, authV2LoginIllustrationDark, authV2LoginIllustrationBorderedLight, authV2LoginIllustrationBorderedDark, true)
 const authThemeMask = useGenerateImageVariant(authV2MaskLight, authV2MaskDark)
+
+const login = () => {
+  // TODO: replace with real login logic / API call
+  if (form.value.email && form.value.password) {
+    localStorage.setItem('accessToken', 'demo-token')
+
+    // ✅ Redirect to dashboard
+    router.push({ name: 'root' }) // or router.push('/dashboard')
+  } else {
+    alert('Please enter email and password')
+  }
+}
 </script>
 
 <template>
@@ -87,7 +101,7 @@ const authThemeMask = useGenerateImageVariant(authV2MaskLight, authV2MaskDark)
           </p>
         </VCardText>
         <VCardText>
-          <VForm @submit.prevent="() => {}">
+          <VForm @submit.prevent="login">
             <VRow>
               <!-- email -->
               <VCol cols="12">
