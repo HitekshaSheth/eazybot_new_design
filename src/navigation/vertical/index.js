@@ -25,7 +25,7 @@ export default [
   },
   {
     title: 'My Loyalty Points',
-    icon: { icon: 'tabler-circles' },
+    icon: { icon: 'tabler-cube' },
     // to: 'apps-chat',
   },
   { heading: 'Account' },
