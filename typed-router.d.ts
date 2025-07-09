@@ -22,6 +22,7 @@ declare module 'vue-router/auto-routes' {
     '$error': RouteRecordInfo<'$error', '/:error(.*)', { error: ParamValue<true> }, { error: ParamValue<false> }>,
     'bots': RouteRecordInfo<'bots', '/bots', Record<never, never>, Record<never, never>>,
     'create-bot': RouteRecordInfo<'create-bot', '/create-bot', Record<never, never>, Record<never, never>>,
+    'edit-bot': RouteRecordInfo<'edit-bot', '/edit-bot', Record<never, never>, Record<never, never>>,
     'forgot-password': RouteRecordInfo<'forgot-password', '/forgot-password', Record<never, never>, Record<never, never>>,
     'login': RouteRecordInfo<'login', '/login', Record<never, never>, Record<never, never>>,
     'second-page': RouteRecordInfo<'second-page', '/second-page', Record<never, never>, Record<never, never>>,

@@ -209,7 +209,7 @@ const moreList = [
     >
     <VCard>
       <VCardItem class="card-active">
-        <VCardTitle>ETH</VCardTitle>
+        <VCardTitle><a class="v-card-title" href="/view-bot">ETH</a> </VCardTitle>
         <template #append>
           <span class="font-weight-bold">Active</span>
           <div>
@@ -387,7 +387,7 @@ const moreList = [
     >
     <VCard>
       <VCardItem class="card-sell-only">
-        <VCardTitle>ETH</VCardTitle>
+        <VCardTitle><a class="v-card-title" href="/view-bot">ETH</a> </VCardTitle>
         <template #append>
           <span class="font-weight-bold">Sell Only</span>
           <div>
@@ -565,7 +565,7 @@ const moreList = [
     >
     <VCard>
       <VCardItem class="card-inactive">
-        <VCardTitle>ETH</VCardTitle>
+        <VCardTitle><a class="v-card-title" href="/view-bot">ETH</a> </VCardTitle>
         <template #append>
           <span class="font-weight-bold">Inactive</span>
           <div>
