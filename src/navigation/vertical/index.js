@@ -8,7 +8,7 @@ export default [
   {
     title: 'My Bots',
     icon: { icon: 'tabler-shopping-cart' },
-    to: { name: 'second-page' },
+    to: { name: 'bots' },
   },
   {
     title: 'Trading Insights',

@@ -42,7 +42,7 @@ import { VerticalNavLayout } from '@layouts'
         <VListItemSubtitle>
           Wallet Balance
         </VListItemSubtitle>
-          <VListItemTitle  class="font-weight-bold" style="line-height: 1rem;">15.22</VListItemTitle>
+          <VListItemTitle  class="font-weight-bold" style="line-height: 1rem;">15.22 <VIcon icon="tabler-s-turn-down" size="22"  style="background-color: red"/></VListItemTitle>
         </VListItem>
 <!--        <VListItem class="pa-0 d-flex align-center">-->
 <!--          <span class="font-weight-semibold">Wallet Balance</span>-->
