@@ -104,7 +104,7 @@ const moreList = [
 
       <VCardText class="d-flex justify-space-between align-center flex-wrap gap-4">
         <!-- Left: Title -->
-        <span class="font-weight-bold">Bot Revenue Insights</span>
+        <span class="font-weight-bold" style="color: rgba(var(--v-theme-on-surface), var(--v-high-emphasis-opacity)) !important;">Bot Revenue Insights</span>
 
         <!-- Right: Statuses -->
         <div class="d-flex align-center gap-x-4">
@@ -117,7 +117,7 @@ const moreList = [
       </VCardText>
       <VTable class="text-no-wrap">
         <thead>
-        <tr>
+        <tr class="border-bg-thead">
           <th>
             Profile
           </th>
@@ -144,10 +144,10 @@ const moreList = [
 
         <tbody>
         <tr
-          v-for="item in bots"
+          v-for="(item, index) in bots"
           :key="item.bot"
         >
-          <td>
+          <td :class="{ 'font-weight-bold': index === bots.length - 1 }">
             {{ item.profile }}
           </td>
           <td>
@@ -165,7 +165,7 @@ const moreList = [
           <td>
             {{ item.deleted }}
           </td>
-          <td>
+          <td :class="{ 'font-weight-bold': index === bots.length - 1 }">
             {{ item.grand_total }}
           </td>
         </tr>
@@ -193,6 +193,8 @@ const moreList = [
       <!-- Right side: Create button -->
       <div class="d-flex align-center gap-x-2">
         <!-- Optional: Add grid/filter icons here if needed -->
+        <VIcon icon="tabler-table" />
+        <VIcon icon="tabler-mist" />
         <VBtn
           prepend-icon="tabler-plus"
           :to="{ name: 'create-bot' }"
@@ -288,10 +290,11 @@ const moreList = [
             </VRow>
             <VDivider />
             <!-- Other Metrics -->
+            <div class="card-bg-metrics">
             <VRow dense class="py-2 align-center">
               <VCol cols="6">
                 <div class="d-flex flex-column justify-center">
-                  <span class="text-caption grey--text">Today Profit (9h:19m)</span>
+                  <span class="text-caption">Today Profit (9h:19m)</span>
                 </div>
               </VCol>
 
@@ -305,7 +308,7 @@ const moreList = [
             <VRow dense class="py-2 align-center">
               <VCol cols="6">
                 <div class="d-flex flex-column justify-center">
-                  <span class="text-caption grey--text">Initial Capital</span>
+                  <span class="text-caption">Initial Capital</span>
                 </div>
               </VCol>
 
@@ -319,7 +322,7 @@ const moreList = [
             <VRow dense class="py-2 align-center">
               <VCol cols="6">
                 <div class="d-flex flex-column justify-center">
-                  <span class="text-caption grey--text">Current Capital</span>
+                  <span class="text-caption">Current Capital</span>
                 </div>
               </VCol>
 
@@ -333,7 +336,7 @@ const moreList = [
             <VRow dense class="py-2 align-center">
               <VCol cols="6">
                 <div class="d-flex flex-column justify-center">
-                  <span class="text-caption grey--text">Available Quote Coins</span>
+                  <span class="text-caption">Available Quote Coins</span>
                 </div>
               </VCol>
 
@@ -347,7 +350,7 @@ const moreList = [
             <VRow dense class="py-2 align-center">
               <VCol cols="6">
                 <div class="d-flex flex-column justify-center">
-                  <span class="text-caption grey--text">Runtime</span>
+                  <span class="text-caption">Runtime</span>
                 </div>
               </VCol>
 
@@ -361,16 +364,17 @@ const moreList = [
             <VRow dense class="py-2 align-center">
               <VCol cols="6">
                 <div class="d-flex flex-column justify-center">
-                  <span class="text-caption grey--text">Last Trade</span>
+                  <span class="text-caption">Last Trade</span>
                 </div>
               </VCol>
 
               <VCol cols="6">
                 <div class="d-flex flex-column justify-center align-end">
-                  <span class="text-right text-h6 font-weight-bold"><VIcon icon="tabler-clock-hour-4" size="20" />BUY C9 15D ago</span>
+                  <span class="text-right text-h6 font-weight-bold">BUY C9 15D ago</span>
                 </div>
               </VCol>
             </VRow>
+            </div>
             <!-- Footer -->
             <div class="text-caption text-center mt-2 grey--text">
               Bot ID: 107543 <VIcon icon="tabler-copy" size="20" />
@@ -466,10 +470,11 @@ const moreList = [
             </VRow>
             <VDivider />
             <!-- Other Metrics -->
-            <VRow dense class="py-2 align-center">
+            <div class="card-bg-metrics">
+              <VRow dense class="py-2 align-center">
               <VCol cols="6">
                 <div class="d-flex flex-column justify-center">
-                  <span class="text-caption grey--text">Today Profit (9h:19m)</span>
+                  <span class="text-caption">Today Profit (9h:19m)</span>
                 </div>
               </VCol>
 
@@ -483,7 +488,7 @@ const moreList = [
             <VRow dense class="py-2 align-center">
               <VCol cols="6">
                 <div class="d-flex flex-column justify-center">
-                  <span class="text-caption grey--text">Initial Capital</span>
+                  <span class="text-caption">Initial Capital</span>
                 </div>
               </VCol>
 
@@ -497,7 +502,7 @@ const moreList = [
             <VRow dense class="py-2 align-center">
               <VCol cols="6">
                 <div class="d-flex flex-column justify-center">
-                  <span class="text-caption grey--text">Current Capital</span>
+                  <span class="text-caption">Current Capital</span>
                 </div>
               </VCol>
 
@@ -511,7 +516,7 @@ const moreList = [
             <VRow dense class="py-2 align-center">
               <VCol cols="6">
                 <div class="d-flex flex-column justify-center">
-                  <span class="text-caption grey--text">Available Quote Coins</span>
+                  <span class="text-caption">Available Quote Coins</span>
                 </div>
               </VCol>
 
@@ -525,7 +530,7 @@ const moreList = [
             <VRow dense class="py-2 align-center">
               <VCol cols="6">
                 <div class="d-flex flex-column justify-center">
-                  <span class="text-caption grey--text">Runtime</span>
+                  <span class="text-caption">Runtime</span>
                 </div>
               </VCol>
 
@@ -539,16 +544,17 @@ const moreList = [
             <VRow dense class="py-2 align-center">
               <VCol cols="6">
                 <div class="d-flex flex-column justify-center">
-                  <span class="text-caption grey--text">Last Trade</span>
+                  <span class="text-caption">Last Trade</span>
                 </div>
               </VCol>
 
               <VCol cols="6">
                 <div class="d-flex flex-column justify-center align-end">
-                  <span class="text-right text-h6 font-weight-bold"><VIcon icon="tabler-clock-hour-4" size="20" />BUY C9 15D ago</span>
+                  <span class="text-right text-h6 font-weight-bold">BUY C9 15D ago</span>
                 </div>
               </VCol>
             </VRow>
+            </div>
             <!-- Footer -->
             <div class="text-caption text-center mt-2 grey--text">
               Bot ID: 107543 <VIcon icon="tabler-copy" size="20" />
@@ -644,10 +650,11 @@ const moreList = [
             </VRow>
             <VDivider />
           <!-- Other Metrics -->
-            <VRow dense class="py-2 align-center">
+            <div class="card-bg-metrics">
+              <VRow dense class="py-2 align-center">
               <VCol cols="6">
                 <div class="d-flex flex-column justify-center">
-                  <span class="text-caption grey--text">Today Profit (9h:19m)</span>
+                  <span class="text-caption">Today Profit (9h:19m)</span>
                 </div>
               </VCol>
 
@@ -661,7 +668,7 @@ const moreList = [
             <VRow dense class="py-2 align-center">
               <VCol cols="6">
                 <div class="d-flex flex-column justify-center">
-                  <span class="text-caption grey--text">Initial Capital</span>
+                  <span class="text-caption">Initial Capital</span>
                 </div>
               </VCol>
 
@@ -675,7 +682,7 @@ const moreList = [
             <VRow dense class="py-2 align-center">
               <VCol cols="6">
                 <div class="d-flex flex-column justify-center">
-                  <span class="text-caption grey--text">Current Capital</span>
+                  <span class="text-caption">Current Capital</span>
                 </div>
               </VCol>
 
@@ -689,7 +696,7 @@ const moreList = [
             <VRow dense class="py-2 align-center">
               <VCol cols="6">
                 <div class="d-flex flex-column justify-center">
-                  <span class="text-caption grey--text">Available Quote Coins</span>
+                  <span class="text-caption">Available Quote Coins</span>
                 </div>
               </VCol>
 
@@ -703,13 +710,13 @@ const moreList = [
             <VRow dense class="py-2 align-center">
               <VCol cols="6">
                 <div class="d-flex flex-column justify-center">
-                  <span class="text-caption grey--text">Runtime</span>
+                  <span class="text-caption">Runtime</span>
                 </div>
               </VCol>
 
               <VCol cols="6">
                 <div class="d-flex flex-column justify-center align-end">
-                  <span class="text-right text-h6 font-weight-bold"><VIcon icon="tabler-clock-hour-4" size="20" />144D 23H 17M</span>
+                  <span class="text-right text-h6 font-weight-bold"><VIcon icon="tabler-clock-hour-4" size="18" />144D 23H 17M</span>
                 </div>
               </VCol>
             </VRow>
@@ -717,16 +724,17 @@ const moreList = [
             <VRow dense class="py-2 align-center">
               <VCol cols="6">
                 <div class="d-flex flex-column justify-center">
-                  <span class="text-caption grey--text">Last Trade</span>
+                  <span class="text-caption">Last Trade</span>
                 </div>
               </VCol>
 
               <VCol cols="6">
                 <div class="d-flex flex-column justify-center align-end">
-                  <span class="text-right text-h6 font-weight-bold"><VIcon icon="tabler-clock-hour-4" size="20" />BUY C9 15D ago</span>
+                  <span class="text-right text-h6 font-weight-bold">BUY C9 15D ago</span>
                 </div>
               </VCol>
             </VRow>
+            </div>
           <!-- Footer -->
           <div class="text-caption text-center mt-2 grey--text">
             Bot ID: 107543 <VIcon icon="tabler-copy" size="20" />
@@ -770,5 +778,16 @@ th{
 .text-sub-caption{
   font-weight: 500;
   color:#475569;
+}
+.border-bg-thead{
+  background-color: #f1f5f9;
+  border-bottom: 1px solid #c1c4c7;
+}
+.card-bg-metrics{
+  background-color: #fafafa;
+  padding-left: 0px;
+}
+.card-bg-metrics .text-caption{
+  color: #475569!important;
 }
 </style>
