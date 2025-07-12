@@ -114,18 +114,28 @@ const eazybotStrategy = ref(false)
 const isVirtual = ref(false)
 const multipleBots = ref(false)
 
-const botForm = ref({
-  title: '',
-  baseCurrency: null,
-  option: 'single',
-  status: 'active',
-  usdt: 600,
+const createBotForm = data => ({
+  title: data?.title || '',
+  baseCurrency: data?.baseCurrency || null,
+  option: data?.option || 'single',
+  status: data?.status || 'active',
+  usdt: data?.usdt || 600,
 })
-const optionCounter = ref(1)
 
-function addBotRow() {
-  // logic to handle row add
-  console.log('Add bot', botForm.value)
+// Initialize with one row
+const botForms = ref([createBotForm()])
+
+// Add a new row by cloning an existing one
+function addBotRow(index) {
+  const copied = createBotForm(botForms.value[index])
+  botForms.value.push(copied)
+}
+
+// Remove row unless it's the last one
+function removeBotRow(index) {
+  if (botForms.value.length > 1) {
+    botForms.value.splice(index, 1)
+  }
 }
 
 const takeProfit = ref(600)
@@ -156,8 +166,50 @@ const coverHeaders = [
   { title: '', value: 'actions', sortable: false },
 ]
 
+const selected = ref([])
+
+const showBulkModal = ref(false)
+
+const bulkForm = ref({
+  cover: '-0.25',
+  buyXTime: '0.14',
+  pullback: '0.1',
+  keepProfit: '50',
+  type: 'Average',
+})
+
+function duplicateCover(item) {
+  const newRow = { ...item }
+  newRow.no = covers.value.length + 1
+  covers.value.push(newRow)
+}
+
 function removeCover(index) {
   covers.value.splice(index, 1)
+  covers.value.forEach((row, i) => row.no = i + 1)
+}
+
+function applyBulkEdit() {
+  selected.value.forEach(rowNo => {
+    const row = covers.value.find(r => r.no === rowNo)
+    if (row) {
+      if (bulkForm.value.cover !== '') row.cover = bulkForm.value.cover
+      if (bulkForm.value.buyXTime !== '') row.buyXTime = bulkForm.value.buyXTime
+      if (bulkForm.value.pullback !== '') row.pullback = bulkForm.value.pullback
+      if (bulkForm.value.keepProfit !== '') row.keepProfit = bulkForm.value.keepProfit
+      if (bulkForm.value.type !== '') row.type = bulkForm.value.type
+    }
+  })
+
+  // Reset modal
+  bulkForm.value = {
+    cover: '',
+    buyXTime: '',
+    pullback: '',
+    keepProfit: '',
+    type: '',
+  }
+  showBulkModal.value = false
 }
 
 function goBack() {
@@ -174,11 +226,36 @@ function bulkEdit() {
 
 </script>
 <style scoped>
-.v-label.custom-input .custom-radio {
-  height: 50px!important;
+::v-deep(.custom-radio .v-radio) {
+    margin-block-start: 0rem;
+}
+::v-deep(.custom-radio) {
+  margin: 0 !important;
+  display: flex;
+  align-items: center;
+  height: 40px; /* Or any fixed height */
+}
+label{
+  color: #334155;
+}
+.custom-radio-item {
+  width: 100%;
+  padding: 0 !important;
+  margin: 0 !important;
+  line-height: 1;
+}
+.divider-vertical {
+  height: 24px;
+  width: 1px;
+  background-color: #dbe3eb;
+  margin: 0 24px;
+}
+.flex-1 {
+  flex: 1;
 }
 body .v-btn-group.v-btn-toggle .v-btn{
-  block-size: 30px !important;
+  block-size: auto!important;
+  inline-size: auto!important;
 }
 body .v-btn-group.v-btn-toggle.v-btn-group{
   height: 38px!important;
@@ -235,10 +312,10 @@ thead{
                 <VRow class="align-stretch">
                   <!-- Left Column -->
                   <VCol cols="12" md="7" class="d-flex flex-column justify-center">
+                    <label>Exchange</label>
                     <AppSelect
                       v-model="accountForm.exchange"
                       placeholder="Select"
-                      label="Exchange"
                       :rules="[requiredValidator]"
                       :items="['Binance', 'KuCoin', 'Bitget', 'Kraken', 'Coinbase Advanced', 'Bybit', 'Coinbase Prime']"
                     />
@@ -268,7 +345,7 @@ thead{
                       :grid-column="{ sm: '3', cols: '6' }"
                     >
                       <template #default="{ item, isSelected }">
-                        <div class="d-flex align-center justify-space-between w-100">
+                        <div class="d-flex align-center justify-space-between w-100  custom-radio-item">
                           <div>
                             <span class="font-weight-medium">{{ item.title }}</span>
                           </div>
@@ -373,10 +450,7 @@ thead{
               <VDivider />
 
               <VCardText>
-                <template
-                  v-for="i in optionCounter"
-                  :key="i"
-                >
+                <template v-for="(botForm, index) in botForms" :key="index">
                   <VRow>
                     <VCol cols="12" md="2">
                       <label>Title</label>
@@ -387,11 +461,11 @@ thead{
                         outlined
                       />
                     </VCol>
+
                     <VCol cols="12" md="2">
                       <label>Base Currency</label>
                       <VSelect
                         v-model="botForm.baseCurrency"
-                        label="Base Currency"
                         :items="['USDT', 'BTC', 'ETH']"
                         placeholder="Select"
                         dense
@@ -399,31 +473,22 @@ thead{
                       />
                     </VCol>
 
-                    <!-- Bot Option -->
                     <VCol cols="12" md="2">
                       <label>Bot Option</label>
-                      <VBtnToggle
-                        v-model="botForm.option"
-                        divided
-                        mandatory
-                      >
+                      <VBtnToggle v-model="botForm.option" divided mandatory>
                         <VBtn value="cycle" variant="text">Cycle</VBtn>
                         <VBtn value="single" variant="text">Single</VBtn>
                       </VBtnToggle>
                     </VCol>
 
-                    <!-- Status -->
                     <VCol cols="12" md="2">
                       <label>Status</label>
-                      <VBtnToggle
-                        v-model="botForm.status"
-                        divided
-                        mandatory
-                      >
+                      <VBtnToggle v-model="botForm.status" divided mandatory>
                         <VBtn value="active" color="primary" variant="text">Active</VBtn>
                         <VBtn value="inactive" variant="text">In-Active</VBtn>
                       </VBtnToggle>
                     </VCol>
+
                     <VCol cols="12" md="2">
                       <label>USDT Assigned</label>
                       <VTextField
@@ -435,13 +500,14 @@ thead{
                       />
                     </VCol>
 
-                    <VCol cols="12" md="2">
+                    <VCol cols="12" md="2" class="d-flex align-end" v-if="multipleBots == true">
                       <VBtn
                         class="mt-6"
-                        prepend-icon="tabler-plus"
-                        @click="optionCounter++"
-                      >
-                      </VBtn>
+                        :icon="index === botForms.length - 1 ? 'tabler-copy' : 'tabler-x'"
+                        :color="index === botForms.length - 1 ? 'primary' : 'error'"
+                        variant="outlined"
+                        @click="index === botForms.length - 1 ? addBotRow(index) : removeBotRow(index)"
+                      />
                     </VCol>
                   </VRow>
                 </template>
@@ -494,21 +560,31 @@ thead{
                     <VTextField v-model="profitRetracement" type="number" />
                   </VCol>
                   <VCol cols="12" md="8" class="d-flex flex-column justify-center" style="background-color: #f5f8fb;">
-                    <VRow class="align-center">
-                      <VCol cols="4" class="d-flex align-center">
-                        <span>Expected Exchange Fee: <strong>0%</strong></span>
-                        <div style="width: 1px; height: 24px; background-color: #ccc;margin-left: 40px;"></div>
-                      </VCol>
+<!--                    <VCard flat class="py-3 px-4">-->
+                      <div class="d-flex align-center justify-space-between text-center w-100">
+                        <!-- Item 1 -->
+                        <div class="flex-1 d-flex align-center justify-center">
+                          <span>Expected Exchange Fee&nbsp;<strong>0%</strong></span>
+                        </div>
 
-                      <VCol cols="4" class="d-flex align-center">
-                        <span>Expected SSF fees: <strong>0.25%</strong></span>
-                      </VCol>
+                        <!-- Divider -->
+                        <div class="divider-vertical" />
 
-                      <VCol cols="4" class="d-flex align-center">
-                        <div style="width: 1px; height: 24px; background-color: #ccc;"></div>
-                        <span style="padding-left: 30px">Actual Take Profit: <strong>1.75%</strong></span>
-                      </VCol>
-                    </VRow>
+                        <!-- Item 2 -->
+                        <div class="flex-1 d-flex align-center justify-center">
+                          <span>Expected SSF fees&nbsp;<strong>0.25%</strong></span>
+                        </div>
+
+                        <!-- Divider -->
+                        <div class="divider-vertical" />
+
+                        <!-- Item 3 -->
+                        <div class="flex-1 d-flex align-center justify-center">
+                          <span>Actual Take Profit&nbsp;<strong>1.75%</strong></span>
+                        </div>
+                      </div>
+<!--                    </VCard>-->
+
                   </VCol>
                 </VRow>
               </VCardText>
@@ -546,66 +622,102 @@ thead{
               </VCardTitle>
               <VCardText>
                 <VRow>
-                  <VCol Cols="11" md="11"></VCol>
-                  <VCol Cols="1" md="1">
-                    <VBtn variant="text" class="align-end text-right" append-icon="tabler-chevron-down" size="small" @click="bulkEdit">Bulk Edit</VBtn>
+                  <VCol cols="11" md="11" />
+                  <VCol cols="1" md="1" class="text-right">
+                    <VBtn
+                      variant="text"
+                      append-icon="tabler-chevron-down"
+                      size="small"
+                      :disabled="selected.length === 0"
+                      @click="showBulkModal = true"
+                    >
+                      Bulk Edit
+                    </VBtn>
                   </VCol>
-                  </VRow>
+                </VRow>
+
                 <VRow>
                   <VDataTable
+                    v-model="selected"
                     :headers="coverHeaders"
                     :items="covers"
+                    item-value="no"
+                    show-select
                     class="elevation-1"
-                    item-value="index"
                   >
-                    <!-- Actions (Delete Icon) -->
-                    <template #item.actions="{ index }">
-                      <VIcon icon="tabler-trash-x" style="color: red; cursor: pointer" @click="removeCover(index)" />
-                    </template>
+                    <!-- Delete -->
+<!--                    <template #item.actions="{ index }">-->
+<!--                      <VIcon icon="tabler-trash-x" style="color: red; cursor: pointer" @click="removeCover(index)" />-->
+<!--                    </template>-->
 
-                    <!-- Editable Cover % -->
-                    <template #item.cover="{ item, index }">
-                      <AppTextField
-                        v-model="item.cover"
-                        type="text"
+                    <template #item.actions="{ item, index }">
+                      <VIcon
+                        :icon="index === covers.length - 1 ? 'tabler-plus' : 'tabler-trash-x'"
+                        :color="index === covers.length - 1 ? 'primary' : 'red'"
+                        style="cursor: pointer"
+                        @click="index === covers.length - 1 ? duplicateCover(item) : removeCover(index)"
                       />
                     </template>
 
-                    <!-- Editable Buy X Time -->
-                    <template #item.buyXTime="{ item, index }">
-                      <AppTextField
-                        v-model="item.buyXTime"
-                        suffix="5.8800$"
-                        type="number"
-                      />
+                    <!-- Editable Fields -->
+                    <template #item.cover="{ item }">
+                      <AppTextField v-model="item.cover" />
                     </template>
 
-                    <!-- Editable Pullback -->
+                    <template #item.buyXTime="{ item }">
+                      <AppTextField v-model="item.buyXTime" suffix="5.8800$" />
+                    </template>
+
                     <template #item.pullback="{ item }">
-                      <AppTextField
-                        v-model="item.pullback"
-                      />
+                      <AppTextField v-model="item.pullback" />
                     </template>
 
-                    <!-- Editable Keep Profit -->
                     <template #item.keepProfit="{ item }">
-                      <AppTextField
-                        v-model="item.keepProfit"
-                      />
+                      <AppTextField v-model="item.keepProfit" />
                     </template>
 
-                    <!-- Type Toggle Buttons -->
                     <template #item.type="{ item }">
-                      <VBtnToggle
-                        v-model="item.type"
-                        divided
-                        mandatory
-                      >
-                        <VBtn value="Average" variant="text">Ave</VBtn>
-                        <VBtn value="Independent" variant="text">Ind</VBtn>
+                      <VBtnToggle v-model="item.type" divided mandatory>
+                        <VBtn value="Average" variant="text">Average</VBtn>
+                        <VBtn value="Independent" variant="text">Independent</VBtn>
                       </VBtnToggle>
                     </template>
                   </VDataTable>
+
+                  <!-- Bulk Edit Modal -->
+                  <VDialog v-model="showBulkModal" max-width="600">
+                    <VCard>
+                      <VCardTitle>Bulk Edit Selected Rows</VCardTitle>
+                      <VCardText>
+                        <VRow>
+                          <VCol cols="12" sm="6">
+                            <AppTextField v-model="bulkForm.cover" label="Cover %" />
+                          </VCol>
+                          <VCol cols="12" sm="6">
+                            <AppTextField v-model="bulkForm.buyXTime" label="Buy X Time" suffix="5.8800$" />
+                          </VCol>
+                          <VCol cols="12" sm="6">
+                            <AppTextField v-model="bulkForm.pullback" label="Pullback" />
+                          </VCol>
+                          <VCol cols="12" sm="6">
+                            <AppTextField v-model="bulkForm.keepProfit" label="Keep Profit (%)" />
+                          </VCol>
+                          <VCol cols="12">
+                            <label class="mb-2 d-block">Type</label>
+                            <VBtnToggle v-model="bulkForm.type" divided mandatory>
+                              <VBtn value="Average" variant="text">Average</VBtn>
+                              <VBtn value="Independent" variant="text">Independent</VBtn>
+                            </VBtnToggle>
+                          </VCol>
+                        </VRow>
+                      </VCardText>
+                      <VCardActions>
+                        <VSpacer />
+                        <VBtn text @click="showBulkModal = false">Cancel</VBtn>
+                        <VBtn color="primary" @click="applyBulkEdit">Apply</VBtn>
+                      </VCardActions>
+                    </VCard>
+                  </VDialog>
                 </VRow>
               </VCardText>
             </VCard>
