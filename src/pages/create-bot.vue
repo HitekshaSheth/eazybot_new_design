@@ -18,12 +18,9 @@ const numberedSteps = [
 ]
 
 const currentStep = ref(0)
-const isPasswordVisible = ref(false)
-const isCPasswordVisible = ref(false)
 const isCurrentStepValid = ref(true)
 const refAccountForm = ref()
 const refPersonalForm = ref()
-const refSocialLinkForm = ref()
 
 const accountForm = ref({
   exchange: 'Select',
@@ -226,6 +223,9 @@ function bulkEdit() {
 
 </script>
 <style scoped>
+::v-deep(.v-slider.v-input--horizontal) {
+  margin-inline: unset!important;
+}
 ::v-deep(.custom-radio .v-radio) {
     margin-block-start: 0rem;
 }
@@ -321,8 +321,10 @@ thead{
                     />
                   </VCol>
 
+                  </VRow>
+                  <VRow>
                   <!-- Right Column: vertically centered, full height -->
-                  <VCol cols="12" md="5" class="d-flex align-center justify-center">
+                  <VCol cols="12" md="12" class="d-flex">
                     <div class="d-flex align-center gap-2">
                       <span class="font-weight-medium">Assigned Balance</span>
                       <strong>11 BOT</strong>
@@ -387,6 +389,7 @@ thead{
               <VCol
                 cols="12"
                 md="5"
+                class="pl-15"
               >
                 <VRow>
                   <VCol cols="12">
@@ -401,7 +404,7 @@ thead{
                     </VCol>
                   </VRow>
                 <VRow>
-                  <VCol cols="12" md="3">
+                  <VCol cols="12" md="4">
                     <AppTextField
                       v-model="amount"
                       suffix="$"
@@ -409,7 +412,7 @@ thead{
                       placeholder="10.05"
                     />
                     </VCol>
-                  <VCol cols="12" md="6">
+                  <VCol cols="12" md="5">
 
                     </VCol>
 
@@ -426,91 +429,179 @@ thead{
                   </VRow>
                 <VRow>
                   <div>
+                    <VCol cols="12" class="pt-0 pb-0">
                       <VSwitch
                         v-model="autoCompounding"
                         label="Auto Compounding"
                       />
+                    </VCol>
+                    <VCol cols="12" class="pt-0 pb-0">
                       <VSwitch
                         v-model="eazybotStrategy"
                         label="Use the EazyBot Strategy?"
                       />
+                    </VCol>
+                    <VCol cols="12" class="pt-0 pb-0">
                     <VSwitch
                       v-model="isVirtual"
                       label="Is Virtual"
                     />
+                    </VCol>
+                    <VCol cols="12" class="pt-0 pb-0">
                     <VSwitch
                       v-model="multipleBots"
                       label="Create Multiple Bots"
                     />
+                    </VCol>
                   </div>
 
                 </VRow>
 
               </VCol>
+<!--              <VDivider />-->
+
+<!--              <VCardText>-->
+<!--                <template v-for="(botForm, index) in botForms" :key="index">-->
+<!--                  <VRow>-->
+<!--                    <VCol cols="12" md="2">-->
+<!--                      <label>Title</label>-->
+<!--                      <VTextField-->
+<!--                        v-model="botForm.title"-->
+<!--                        placeholder="Bot name"-->
+<!--                        dense-->
+<!--                        outlined-->
+<!--                      />-->
+<!--                    </VCol>-->
+
+<!--                    <VCol cols="12" md="2">-->
+<!--                      <label>Base Currency</label>-->
+<!--                      <VSelect-->
+<!--                        v-model="botForm.baseCurrency"-->
+<!--                        :items="['USDT', 'BTC', 'ETH']"-->
+<!--                        placeholder="Select"-->
+<!--                        dense-->
+<!--                        outlined-->
+<!--                      />-->
+<!--                    </VCol>-->
+
+<!--                    <VCol cols="12" md="2">-->
+<!--                      <label>Bot Option</label>-->
+<!--                      <VBtnToggle v-model="botForm.option" divided mandatory>-->
+<!--                        <VBtn value="cycle" variant="text">Cycle</VBtn>-->
+<!--                        <VBtn value="single" variant="text">Single</VBtn>-->
+<!--                      </VBtnToggle>-->
+<!--                    </VCol>-->
+
+<!--                    <VCol cols="12" md="3">-->
+<!--                      <label>Status</label>-->
+<!--                      <br/>-->
+<!--                      <VBtnToggle v-model="botForm.status" divided mandatory>-->
+<!--                        <VBtn value="active" color="primary" variant="text">Active</VBtn>-->
+<!--                        <VBtn value="inactive" variant="text">In-Active</VBtn>-->
+<!--                      </VBtnToggle>-->
+<!--                    </VCol>-->
+
+<!--                    <VCol cols="12" md="2">-->
+<!--                      <label>USDT Assigned</label>-->
+<!--                      <VTextField-->
+<!--                        v-model="botForm.usdt"-->
+<!--                        placeholder="USDT Assigned"-->
+<!--                        type="number"-->
+<!--                        dense-->
+<!--                        outlined-->
+<!--                      />-->
+<!--                    </VCol>-->
+
+<!--                    <VCol cols="12" md="1" class="d-flex align-end" v-if="multipleBots == true">-->
+<!--                      <VBtn-->
+<!--                        class="mt-6"-->
+<!--                        :icon="index === botForms.length - 1 ? 'tabler-copy' : 'tabler-x'"-->
+<!--                        :color="index === botForms.length - 1 ? 'primary' : 'error'"-->
+<!--                        variant="outlined"-->
+<!--                        @click="index === botForms.length - 1 ? addBotRow(index) : removeBotRow(index)"-->
+<!--                      />-->
+<!--                    </VCol>-->
+<!--                  </VRow>-->
+<!--                </template>-->
+<!--              </VCardText>-->
               <VDivider />
 
               <VCardText>
-                <template v-for="(botForm, index) in botForms" :key="index">
-                  <VRow>
-                    <VCol cols="12" md="2">
-                      <label>Title</label>
+                <VTable>
+                  <thead>
+                  <tr>
+                    <th style="width: 20%">Title</th>
+                    <th style="width: 15%">Base Currency</th>
+                    <th style="width: 20%">Bot Option</th>
+                    <th style="width: 20%">Status</th>
+                    <th style="width: 20%">USDT Assigned</th>
+                    <th v-if="multipleBots" style="width: 5%">Actions</th>
+                  </tr>
+                  </thead>
+
+                  <tbody>
+                  <tr v-for="(botForm, index) in botForms" :key="index">
+                    <!-- Title -->
+                    <td>
                       <VTextField
                         v-model="botForm.title"
                         placeholder="Bot name"
                         dense
-                        outlined
+                        variant="outlined"
                       />
-                    </VCol>
+                    </td>
 
-                    <VCol cols="12" md="2">
-                      <label>Base Currency</label>
+                    <!-- Base Currency -->
+                    <td>
                       <VSelect
                         v-model="botForm.baseCurrency"
                         :items="['USDT', 'BTC', 'ETH']"
                         placeholder="Select"
                         dense
-                        outlined
+                        variant="outlined"
                       />
-                    </VCol>
+                    </td>
 
-                    <VCol cols="12" md="2">
-                      <label>Bot Option</label>
+                    <!-- Bot Option -->
+                    <td>
                       <VBtnToggle v-model="botForm.option" divided mandatory>
                         <VBtn value="cycle" variant="text">Cycle</VBtn>
                         <VBtn value="single" variant="text">Single</VBtn>
                       </VBtnToggle>
-                    </VCol>
+                    </td>
 
-                    <VCol cols="12" md="2">
-                      <label>Status</label>
+                    <!-- Status -->
+                    <td>
                       <VBtnToggle v-model="botForm.status" divided mandatory>
                         <VBtn value="active" color="primary" variant="text">Active</VBtn>
                         <VBtn value="inactive" variant="text">In-Active</VBtn>
                       </VBtnToggle>
-                    </VCol>
+                    </td>
 
-                    <VCol cols="12" md="2">
-                      <label>USDT Assigned</label>
+                    <!-- USDT Assigned -->
+                    <td>
                       <VTextField
                         v-model="botForm.usdt"
-                        placeholder="USDT Assigned"
                         type="number"
+                        placeholder="USDT Assigned"
                         dense
-                        outlined
+                        variant="outlined"
                       />
-                    </VCol>
+                    </td>
 
-                    <VCol cols="12" md="2" class="d-flex align-end" v-if="multipleBots == true">
+                    <!-- Actions -->
+                    <td v-if="multipleBots">
                       <VBtn
-                        class="mt-6"
                         :icon="index === botForms.length - 1 ? 'tabler-copy' : 'tabler-x'"
                         :color="index === botForms.length - 1 ? 'primary' : 'error'"
                         variant="outlined"
                         @click="index === botForms.length - 1 ? addBotRow(index) : removeBotRow(index)"
                       />
-                    </VCol>
-                  </VRow>
-                </template>
+                    </td>
+                  </tr>
+                  </tbody>
+                </VTable>
+
               </VCardText>
 
               <VCol cols="12">
@@ -553,13 +644,13 @@ thead{
                 <VRow class="align-stretch">
                   <VCol cols="12" md="2"  class="d-flex flex-column justify-center">
                     <label>Take Profit</label>
-                    <VTextField v-model="takeProfit" type="number" />
+                    <VTextField v-model="takeProfit" type="number" :disabled="eazybotStrategy"/>
                   </VCol>
                   <VCol cols="12" md="2"  class="d-flex flex-column justify-center">
                     <label>Profit Re-tracement</label>
-                    <VTextField v-model="profitRetracement" type="number" />
+                    <VTextField v-model="profitRetracement" type="number" :disabled="eazybotStrategy"/>
                   </VCol>
-                  <VCol cols="12" md="8" class="d-flex flex-column justify-center" style="background-color: #f5f8fb;">
+                  <VCol cols="12" md="8" class="d-flex flex-column justify-center" style="background-color: #f5f8fb;margin-top: 12px;margin-bottom: 12px;border-radius: 6px">
 <!--                    <VCard flat class="py-3 px-4">-->
                       <div class="d-flex align-center justify-space-between text-center w-100">
                         <!-- Item 1 -->
@@ -596,19 +687,19 @@ thead{
                 <VRow>
                   <VCol cols="12" md="3">
                     <label>Cover %</label>
-                    <VTextField v-model="sliding.coverPercent" label="" />
+                    <VTextField v-model="sliding.coverPercent" label="" :disabled="eazybotStrategy"/>
                   </VCol>
                   <VCol cols="12" md="3">
                     <label>Buy X Time</label>
-                    <VTextField v-model="sliding.buyXTime" label="" />
+                    <VTextField v-model="sliding.buyXTime" label="" :disabled="eazybotStrategy"/>
                   </VCol>
                   <VCol cols="12" md="3">
                     <label>Pullback</label>
-                    <VTextField v-model="sliding.pullback" label="" />
+                    <VTextField v-model="sliding.pullback" label="" :disabled="eazybotStrategy"/>
                   </VCol>
                   <VCol cols="12" md="3">
                     <label>Keep Profit (%)</label>
-                    <VTextField v-model="sliding.keepProfit" label="" />
+                    <VTextField v-model="sliding.keepProfit" label="" :disabled="eazybotStrategy"/>
                   </VCol>
                 </VRow>
               </VCardText>
@@ -651,7 +742,7 @@ thead{
 <!--                    </template>-->
 
                     <template #item.actions="{ item, index }">
-                      <VIcon
+                      <VIcon :disabled="eazybotStrategy"
                         :icon="index === covers.length - 1 ? 'tabler-plus' : 'tabler-trash-x'"
                         :color="index === covers.length - 1 ? 'primary' : 'red'"
                         style="cursor: pointer"
@@ -661,23 +752,23 @@ thead{
 
                     <!-- Editable Fields -->
                     <template #item.cover="{ item }">
-                      <AppTextField v-model="item.cover" />
+                      <AppTextField v-model="item.cover" :disabled="eazybotStrategy"/>
                     </template>
 
                     <template #item.buyXTime="{ item }">
-                      <AppTextField v-model="item.buyXTime" suffix="5.8800$" />
+                      <AppTextField v-model="item.buyXTime" suffix="5.8800$" :disabled="eazybotStrategy"/>
                     </template>
 
                     <template #item.pullback="{ item }">
-                      <AppTextField v-model="item.pullback" />
+                      <AppTextField v-model="item.pullback" :disabled="eazybotStrategy"/>
                     </template>
 
                     <template #item.keepProfit="{ item }">
-                      <AppTextField v-model="item.keepProfit" />
+                      <AppTextField v-model="item.keepProfit" :disabled="eazybotStrategy"/>
                     </template>
 
                     <template #item.type="{ item }">
-                      <VBtnToggle v-model="item.type" divided mandatory>
+                      <VBtnToggle v-model="item.type" divided mandatory :disabled="eazybotStrategy">
                         <VBtn value="Average" variant="text">Average</VBtn>
                         <VBtn value="Independent" variant="text">Independent</VBtn>
                       </VBtnToggle>
