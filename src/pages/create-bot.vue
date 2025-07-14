@@ -135,6 +135,17 @@ function removeBotRow(index) {
   }
 }
 
+// Watch to update `amount` when either USDT or initialOrder changes
+watch(
+  [() => botForms.value[0].usdt, initialOrder],
+  ([usdt, percent]) => {
+    if (!isNaN(usdt) && !isNaN(percent)) {
+      amount.value = ((parseFloat(usdt) || 0) * (parseFloat(percent) || 0)) / 100
+    }
+  },
+  { immediate: true }
+)
+
 const takeProfit = ref(600)
 const profitRetracement = ref(600)
 
@@ -410,6 +421,7 @@ thead{
                       suffix="$"
                       type="number"
                       placeholder="10.05"
+                      readonly
                     />
                     </VCol>
                   <VCol cols="12" md="5">
