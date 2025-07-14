@@ -526,7 +526,9 @@ thead{
 <!--              </VCardText>-->
               <VDivider />
 
-              <VCardText>
+<!--              <VCardText>-->
+              <VCol
+                cols="12">
                 <VTable>
                   <thead>
                   <tr>
@@ -601,8 +603,9 @@ thead{
                   </tr>
                   </tbody>
                 </VTable>
+              </VCol>
 
-              </VCardText>
+<!--              </VCardText>-->
 
               <VCol cols="12">
                 <div class="d-flex flex-wrap gap-4 justify-sm-space-between justify-center mt-8">
