@@ -276,14 +276,14 @@ const moreList = [
               <VCol cols="6">
                 <div class="d-flex flex-column justify-center">
                   <span class="text-caption grey--text">Profit</span>
-                  <span class="text-h6 font-weight-bold">166.30</span>
+                  <span class="text-h4 font-weight-bold">166.30</span>
                 </div>
               </VCol>
 
               <VCol cols="6">
                 <div class="d-flex flex-column justify-center align-end">
                   <span class="text-caption grey--text">Market Vs Average</span>
-                  <span class="text-h6 font-weight-bold d-flex align-center" style="color: red">
+                  <span class="text-h4 font-weight-bold d-flex align-center" style="color: red">
                     <VIcon icon="tabler-s-turn-down" size="22" />-50.15%</span>
                 </div>
               </VCol>
@@ -456,14 +456,14 @@ const moreList = [
               <VCol cols="6">
                 <div class="d-flex flex-column justify-center">
                   <span class="text-caption grey--text">Profit</span>
-                  <span class="text-h6 font-weight-bold">166.30</span>
+                  <span class="text-h4 font-weight-bold">166.30</span>
                 </div>
               </VCol>
 
               <VCol cols="6">
                 <div class="d-flex flex-column justify-center align-end">
                   <span class="text-caption grey--text">Market Vs Average</span>
-                  <span class="text-h6 font-weight-bold d-flex align-center" style="color: red">
+                  <span class="text-h4 font-weight-bold d-flex align-center" style="color: red">
                     <VIcon icon="tabler-s-turn-down" size="22" />-50.15%</span>
                 </div>
               </VCol>
@@ -636,14 +636,14 @@ const moreList = [
               <VCol cols="6">
                 <div class="d-flex flex-column justify-center">
                   <span class="text-caption grey--text">Profit</span>
-                  <span class="text-h6 font-weight-bold">166.30</span>
+                  <span class="text-h4 font-weight-bold">166.30</span>
                 </div>
               </VCol>
 
               <VCol cols="6">
                 <div class="d-flex flex-column justify-center align-end">
                   <span class="text-caption grey--text">Market Vs Average</span>
-                  <span class="text-h6 font-weight-bold d-flex align-center" style="color: red">
+                  <span class="text-h4 font-weight-bold d-flex align-center" style="color: red">
                     <VIcon icon="tabler-s-turn-down" size="22" />-50.15%</span>
                 </div>
               </VCol>

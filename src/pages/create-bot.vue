@@ -274,7 +274,7 @@ body .v-btn-group.v-btn-toggle.v-btn-group{
 .v-btn--active{
   color: rgb(var(--v-theme-primary)) !important;
 }
-thead{
+::v-deep(thead){
   background-color: #f5f8fb!important;
 }
 </style>
@@ -544,12 +544,12 @@ thead{
                 <VTable>
                   <thead>
                   <tr>
-                    <th style="width: 20%">Title</th>
-                    <th style="width: 20%">Base Currency</th>
+                    <th style="width: 22%">Title</th>
+                    <th style="width: 22%">Base Currency</th>
                     <th style="width: 15%">Bot Option</th>
                     <th style="width: 15%">Status</th>
-                    <th style="width: 20%">USDT Assigned</th>
-                    <th v-if="multipleBots" style="width: 10%">Actions</th>
+                    <th style="width: 23%">USDT Assigned</th>
+                    <th v-if="multipleBots" style="width: 5%"> </th>
                   </tr>
                   </thead>
 
@@ -728,8 +728,8 @@ thead{
               </VCardTitle>
               <VCardText>
                 <VRow>
-                  <VCol cols="11" md="11" />
-                  <VCol cols="1" md="1" class="text-right">
+                  <VCol cols="11" md="10" />
+                  <VCol cols="1" md="2" class="text-right">
                     <VBtn
                       variant="text"
                       append-icon="tabler-chevron-down"
