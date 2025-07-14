@@ -531,11 +531,11 @@ thead{
                   <thead>
                   <tr>
                     <th style="width: 20%">Title</th>
-                    <th style="width: 15%">Base Currency</th>
-                    <th style="width: 20%">Bot Option</th>
-                    <th style="width: 20%">Status</th>
+                    <th style="width: 20%">Base Currency</th>
+                    <th style="width: 15%">Bot Option</th>
+                    <th style="width: 15%">Status</th>
                     <th style="width: 20%">USDT Assigned</th>
-                    <th v-if="multipleBots" style="width: 5%">Actions</th>
+                    <th v-if="multipleBots" style="width: 10%">Actions</th>
                   </tr>
                   </thead>
 
