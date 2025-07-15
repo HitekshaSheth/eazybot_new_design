@@ -17,6 +17,7 @@ export default [
   {
     title: 'My Wallet',
     icon: { icon: 'tabler-wallet' },
+    to: { name: 'my-wallet' },
   },
   {
     title: 'Packages',
