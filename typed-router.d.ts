@@ -20,6 +20,11 @@ declare module 'vue-router/auto-routes' {
   export interface RouteNamedMap {
     'root': RouteRecordInfo<'root', '/', Record<never, never>, Record<never, never>>,
     '$error': RouteRecordInfo<'$error', '/:error(.*)', { error: ParamValue<true> }, { error: ParamValue<false> }>,
+    'account-settings-account': RouteRecordInfo<'account-settings-account', '/account-settings/account', Record<never, never>, Record<never, never>>,
+    'account-settings-billing-plans': RouteRecordInfo<'account-settings-billing-plans', '/account-settings/billing-plans', Record<never, never>, Record<never, never>>,
+    'account-settings-billing-history-table': RouteRecordInfo<'account-settings-billing-history-table', '/account-settings/BillingHistoryTable', Record<never, never>, Record<never, never>>,
+    'account-settings-notification': RouteRecordInfo<'account-settings-notification', '/account-settings/notification', Record<never, never>, Record<never, never>>,
+    'account-settings-security': RouteRecordInfo<'account-settings-security', '/account-settings/security', Record<never, never>, Record<never, never>>,
     'bots': RouteRecordInfo<'bots', '/bots', Record<never, never>, Record<never, never>>,
     'create-bot': RouteRecordInfo<'create-bot', '/create-bot', Record<never, never>, Record<never, never>>,
     'edit-bot': RouteRecordInfo<'edit-bot', '/edit-bot', Record<never, never>, Record<never, never>>,
