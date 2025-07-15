@@ -35,25 +35,31 @@
     <!-- Search & Filter -->
     <VCard>
       <VCardText>
-        <VRow align="center" class="pb-2" justify="space-between">
-          <VCol cols="12" md="8">
-            <h3>Covers</h3>
+
+        <VRow align="center" justify="space-between" class="pb-2">
+          <!-- Left: Title -->
+          <VCol cols="auto">
+            <h3 class="mb-0">Covers</h3>
           </VCol>
-          <VCol cols="12" md="3">
+
+          <!-- Right: Controls (Search, Filter, Download) -->
+          <VCol cols="auto" class="d-flex align-center">
+            <!-- Search Box -->
             <AppTextField
               v-model="search"
               placeholder="Search ..."
               append-inner-icon="tabler-search"
+              style="width: 270px"
               single-line
               hide-details
               dense
               outlined
             />
-          </VCol>
-          <VCol cols="auto">
+
+            <!-- Filter Menu -->
             <VMenu v-model="filterMenu" :close-on-content-click="false" offset-y>
               <template #activator="{ props }">
-                <VBtn icon v-bind="props">
+                <VBtn class="ml-2" icon v-bind="props">
                   <VIcon icon="tabler-filter" />
                 </VBtn>
               </template>
@@ -78,6 +84,8 @@
                 </VCardActions>
               </VCard>
             </VMenu>
+
+            <!-- Download Button -->
             <VBtn
               icon="tabler-download"
               color="primary"

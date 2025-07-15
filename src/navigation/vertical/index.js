@@ -27,6 +27,7 @@ export default [
   {
     title: 'My Loyalty Points',
     icon: { icon: 'tabler-cube' },
+    to: { name: 'my-loyalty-points' },
     // to: 'apps-chat',
   },
   { heading: 'Account' },
@@ -34,8 +35,14 @@ export default [
     title: 'My Account',
     icon: { icon: 'tabler-password-user' },
     children: [
-      { title: 'Test1' },
-      { title: 'Test2' }
+      { title: 'My Profile' },
+      { title: 'My Subscription' },
+      { title: 'PNL report' },
+      { title: 'Holding report' },
+      { title: 'My Exchanges' , to: { name: 'my-exchanges' }},
+      { title: 'My Vouchers' },
+      { title: 'My Affiliate Center' },
+      { title: 'Change Password' },
     ],
   },
   { heading: 'Help & Support' },
