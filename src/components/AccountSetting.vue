@@ -67,7 +67,6 @@
       v-for="item in tabs"
       :key="item.icon"
       :value="item.tab"
-      class="tab-pill"
       :to="{ name: item.tab}"
     >
       <VIcon size="20" start :icon="item.icon" />
@@ -111,6 +110,9 @@ const tabs = [
 ::v-deep(.v-tab--selected) {
   background-color: rgb(var(--v-theme-primary));
   color: rgb(var(--v-theme-on-primary)) !important;
+}
+::v-deep(.v-slide-group__container) {
+  flex: unset !important;
 }
 </style>
 
