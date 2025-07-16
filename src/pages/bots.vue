@@ -2,6 +2,10 @@
 import AppPageHeader from '@/components/AppPageHeader.vue'
 import Frame from '@/assets/images/Frame.svg?url'
 import Group from '@/assets/images/Group.svg?url'
+import { useDisplay } from 'vuetify'
+
+const { mdAndUp } = useDisplay()
+
 
 const pageTitle = 'Bots'
 const breadcrumbs = [
@@ -93,6 +97,7 @@ const moreList = [
 </script>
 
 <template>
+
   <AppPageHeader
     :title="pageTitle"
     :breadcrumbs="breadcrumbs"
@@ -179,6 +184,7 @@ const moreList = [
         <h2 class="text-h5">Bot Collection</h2>
 
         <AppSelect
+          v-if="mdAndUp"
           v-model="botStatus"
           placeholder="Bot Status"
           class="select-status"
@@ -236,9 +242,13 @@ const moreList = [
                 <div class="font-weight-medium">ETH/USDT</div>
                 <div class="text-caption grey--text">1481.71</div>
               </div>
-              <div class="ml-auto text-right">
+              <div  v-if="mdAndUp" class="ml-auto text-right">
                 <div class="text-caption grey--text">Strategy Type</div>
                 <div class="font-weight-medium">SBS</div>
+              </div>
+              <div  v-else class="ml-auto text-right">
+                <div class="text-caption grey--text">Category</div>
+                <div class="font-weight-medium">Not Assigned Bot</div>
               </div>
             </div>
           </VListItem>
@@ -246,7 +256,7 @@ const moreList = [
           </VCardText>
           <VListItem>
             <VCardText class="pb-0 pt-0">
-              <div class="d-flex align-center gap-2 py-2">
+              <div v-if="mdAndUp" class="d-flex align-center gap-2 py-2">
                 <VRow dense class="w-100">
                   <VCol cols="3">
                     <div class="d-flex flex-column justify-center">
@@ -269,6 +279,33 @@ const moreList = [
                   <VCol cols="3">
                     <div class="d-flex flex-column justify-center">
                       <span class="text-caption grey--text">Category<br /><span class="text-sub-caption">N/A Bot</span></span>
+                    </div>
+                  </VCol>
+                </VRow>
+              </div>
+              <div v-else class="d-flex align-center gap-2 py-2">
+                <VRow dense class="w-100">
+                  <VCol cols="3">
+                    <div class="d-flex flex-column justify-center">
+                      <span class="text-caption grey--text text-center"><VIcon icon="tabler-circle-letter-b"/><span class="text-sub-caption">Binance</span></span>
+                    </div>
+                  </VCol>
+
+                  <VCol cols="3">
+                    <div class="d-flex flex-column justify-center">
+                      <span class="text-caption grey--text text-center"><VIcon icon="tabler-refresh"/><span class="text-sub-caption">Single</span></span>
+                    </div>
+                  </VCol>
+
+                  <VCol cols="3">
+                    <div class="d-flex flex-column justify-center">
+                      <span class="text-caption grey--text text-center"><VIcon icon="tabler-world-cog"/><span class="text-sub-caption">Custom</span></span>
+                    </div>
+                  </VCol>
+
+                  <VCol cols="3">
+                    <div class="d-flex flex-column justify-center">
+                      <span class="text-caption grey--text text-center"><VIcon icon="tabler-target-arrow"/><span class="text-sub-caption">SBS</span></span>
                     </div>
                   </VCol>
                 </VRow>
@@ -423,9 +460,13 @@ const moreList = [
                 <div class="font-weight-medium">ETH/USDT</div>
                 <div class="text-caption grey--text">1481.71</div>
               </div>
-              <div class="ml-auto text-right">
+              <div  v-if="mdAndUp" class="ml-auto text-right">
                 <div class="text-caption grey--text">Strategy Type</div>
                 <div class="font-weight-medium">SBS</div>
+              </div>
+              <div  v-else class="ml-auto text-right">
+                <div class="text-caption grey--text">Category</div>
+                <div class="font-weight-medium">Not Assigned Bot</div>
               </div>
             </div>
           </VListItem>
@@ -433,7 +474,7 @@ const moreList = [
         </VCardText>
         <VListItem>
           <VCardText class="pb-0 pt-0">
-            <div class="d-flex align-center gap-2 py-2">
+            <div v-if="mdAndUp" class="d-flex align-center gap-2 py-2">
               <VRow dense class="w-100">
                 <VCol cols="3">
                   <div class="d-flex flex-column justify-center">
@@ -456,6 +497,33 @@ const moreList = [
                 <VCol cols="3">
                   <div class="d-flex flex-column justify-center">
                     <span class="text-caption grey--text">Category<br /><span class="text-sub-caption">N/A Bot</span></span>
+                  </div>
+                </VCol>
+              </VRow>
+            </div>
+            <div v-else class="d-flex align-center gap-2 py-2">
+              <VRow dense class="w-100">
+                <VCol cols="3">
+                  <div class="d-flex flex-column justify-center">
+                    <span class="text-caption grey--text text-center"><VIcon icon="tabler-circle-letter-b"/><span class="text-sub-caption">Binance</span></span>
+                  </div>
+                </VCol>
+
+                <VCol cols="3">
+                  <div class="d-flex flex-column justify-center">
+                    <span class="text-caption grey--text text-center"><VIcon icon="tabler-refresh"/><span class="text-sub-caption">Single</span></span>
+                  </div>
+                </VCol>
+
+                <VCol cols="3">
+                  <div class="d-flex flex-column justify-center">
+                    <span class="text-caption grey--text text-center"><VIcon icon="tabler-world-cog"/><span class="text-sub-caption">Custom</span></span>
+                  </div>
+                </VCol>
+
+                <VCol cols="3">
+                  <div class="d-flex flex-column justify-center">
+                    <span class="text-caption grey--text text-center"><VIcon icon="tabler-target-arrow"/><span class="text-sub-caption">SBS</span></span>
                   </div>
                 </VCol>
               </VRow>
@@ -611,9 +679,13 @@ const moreList = [
                 <div class="font-weight-medium">ETH/USDT</div>
                 <div class="text-caption grey--text">1481.71</div>
               </div>
-              <div class="ml-auto text-right">
+              <div  v-if="mdAndUp" class="ml-auto text-right">
                 <div class="text-caption grey--text">Strategy Type</div>
                 <div class="font-weight-medium">SBS</div>
+              </div>
+              <div  v-else class="ml-auto text-right">
+                <div class="text-caption grey--text">Category</div>
+                <div class="font-weight-medium">Not Assigned Bot</div>
               </div>
             </div>
           </VListItem>
@@ -621,7 +693,7 @@ const moreList = [
         </VCardText>
         <VListItem>
           <VCardText class="pb-0 pt-0">
-            <div class="d-flex align-center gap-2 py-2">
+            <div v-if="mdAndUp" class="d-flex align-center gap-2 py-2">
               <VRow dense class="w-100">
                 <VCol cols="3">
                   <div class="d-flex flex-column justify-center">
@@ -644,6 +716,33 @@ const moreList = [
                 <VCol cols="3">
                   <div class="d-flex flex-column justify-center">
                     <span class="text-caption grey--text">Category<br /><span class="text-sub-caption">N/A Bot</span></span>
+                  </div>
+                </VCol>
+              </VRow>
+            </div>
+            <div v-else class="d-flex align-center gap-2 py-2">
+              <VRow dense class="w-100">
+                <VCol cols="3">
+                  <div class="d-flex flex-column justify-center">
+                    <span class="text-caption grey--text text-center"><VIcon icon="tabler-circle-letter-b"/><span class="text-sub-caption">Binance</span></span>
+                  </div>
+                </VCol>
+
+                <VCol cols="3">
+                  <div class="d-flex flex-column justify-center">
+                    <span class="text-caption grey--text text-center"><VIcon icon="tabler-refresh"/><span class="text-sub-caption">Single</span></span>
+                  </div>
+                </VCol>
+
+                <VCol cols="3">
+                  <div class="d-flex flex-column justify-center">
+                    <span class="text-caption grey--text text-center"><VIcon icon="tabler-world-cog"/><span class="text-sub-caption">Custom</span></span>
+                  </div>
+                </VCol>
+
+                <VCol cols="3">
+                  <div class="d-flex flex-column justify-center">
+                    <span class="text-caption grey--text text-center"><VIcon icon="tabler-target-arrow"/><span class="text-sub-caption">SBS</span></span>
                   </div>
                 </VCol>
               </VRow>
