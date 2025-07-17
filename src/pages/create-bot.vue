@@ -775,7 +775,7 @@ body .v-btn-group.v-btn-toggle.v-btn-group{
                       <template #item.actions="{ item, index }">
                         <VIcon :disabled="eazybotStrategy"
                                :icon="index === covers.length - 1 ? 'tabler-plus' : 'tabler-trash-x'"
-                               :color="index === covers.length - 1 ? 'primary' : 'red'"
+                               :class="index === covers.length - 1 ? 'text-primary' : 'text-error'"
                                style="cursor: pointer"
                                @click="index === covers.length - 1 ? duplicateCover(item) : removeCover(index)"
                         />
@@ -1312,7 +1312,7 @@ body .v-btn-group.v-btn-toggle.v-btn-group{
                           <VIcon
                             :disabled="eazybotStrategy"
                             :icon="index === covers.length - 1 ? 'tabler-plus' : 'tabler-trash-x'"
-                            :color="index === covers.length - 1 ? 'primary' : 'red'"
+                            :class="index === covers.length - 1 ? 'text-primary' : 'text-error'"
                             style="cursor: pointer"
                             @click="index === covers.length - 1 ? duplicateCover(item) : removeCover(index)"
                           />
