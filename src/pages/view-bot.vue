@@ -2,9 +2,6 @@
 import AppPageHeader from '@/components/AppPageHeader.vue'
 import Frame from '@/assets/images/Frame.svg?url'
 import Group from '@/assets/images/Group.svg?url'
-import { useDisplay } from 'vuetify'
-
-const { mdAndUp } = useDisplay()
 
 const pageTitle = 'Bot Insight'
 const breadcrumbs = [
@@ -15,21 +12,11 @@ const breadcrumbs = [
 ]
 
 const currentTab = ref('item-1')
-const previousTab = ref('item-2')
 
 const showDetails = ref(false)
 
-const stats = [
-  { label: 'Trades closed', value: '7' },
-  { label: 'Top positions sold', value: '0' },
-  { label: 'Sliding covers', value: '22' },
-  { label: 'Opening price', value: '4016.66' },
-  { label: 'Closing price', value: '4079.54' },
-  { label: 'Profit used', value: '-', icon: true },
-  { label: 'Available profit', value: '2.42', icon: true },
-  { label: 'Session profit', value: '$19.71', icon: true, color: 'text-success' },
-]
 </script>
+
 <template>
   <AppPageHeader
     :title="pageTitle"
@@ -37,2502 +24,346 @@ const stats = [
   />
 
   <!-- Page content here -->
-  <div v-if="mdAndUp">
-    <VCard>
+  <VCard>
 
-      <VCardText class="d-flex justify-space-between align-center flex-wrap gap-4">
-        <!-- Left: Title -->
-        <span class="font-weight-bold">
+    <VCardText class="d-flex justify-space-between align-center flex-wrap gap-4">
+      <!-- Left: Title -->
+      <span class="font-weight-bold">
         <span class="pr-2">ETH</span>
       <VChip color="success">Active</VChip>
       </span>
 
-        <!-- Right: Statuses -->
-        <div class="d-flex align-center gap-x-4">
-          <VBtn variant="outlined" prepend-icon="tabler-download">
-            Export
-          </VBtn>
-          <VBtn
-            prepend-icon="tabler-edit"
-            :to="{ name: 'edit-bot' }"
-          >
-            Edit Bot
-          </VBtn>
-        </div>
-      </VCardText>
-      <VCardText class="d-flex justify-space-between align-center flex-wrap gap-4">
-        <!-- Left: Title -->
-        <VList class="card-list">
-          <VListItem>
-            <div class="d-flex align-center gap-2">
-              <VAvatar>
-                <img :src="Group">
-              </VAvatar>
-              <VAvatar style="margin-left: -25px">
-                <img :src="Frame">
-              </VAvatar>
-              <div>
-                <div class="font-weight-medium">ETH/USDT</div>
-                <div class="text-caption grey--text">1481.71</div>
-              </div>
-            </div>
-          </VListItem>
-        </VList>
-
-        <!-- Right: Statuses -->
-        <div class="d-flex align-center gap-x-4">
-          <span class="text-caption grey--text">Sessions Closed<br /><span class="text-sub-caption">10</span></span>
-          <div style="width: 1px; height: 24px; background-color: #ccc;"></div>
-          <span class="text-caption grey--text">Exchange<br /><span class="text-sub-caption">Binance</span></span>
-          <div style="width: 1px; height: 24px; background-color: #ccc;"></div>
-          <span class="text-caption grey--text">Cycle Type<br /><span class="text-sub-caption">Single</span></span>
-          <div style="width: 1px; height: 24px; background-color: #ccc;"></div>
-          <span class="text-caption grey--text">Strategy<br /><span class="text-sub-caption">Custom</span></span>
-          <div style="width: 1px; height: 24px; background-color: #ccc;"></div>
-          <span class="text-caption grey--text">Strategy Type<br /><span class="text-sub-caption">SBS</span></span>
-          <div style="width: 1px; height: 24px; background-color: #ccc;"></div>
-          <span class="text-caption grey--text">Runtime<br /><span class="text-sub-caption">149D 20H 44M</span></span>
-        </div>
-      </VCardText>
-      <VCardText class="justify-space-between align-center flex-wrap gap-4">
-        <div class="pb-0 px-3 pt-3 mb-4 bg-light-primary rounded">
-
-          <!-- Left: Title -->
-          <VRow class="d-flex py-2 align-center">
-            <VCol cols="2">
-              <div class="font-weight-bold">Earnings Report <VIcon icon="tabler-arrow-right" size="20" /></div>
-            </VCol>
-            <VCol cols="2">
-              <span class="text-caption grey--text">Today (7h:27m)<br /><span class="text-sub-caption">-</span></span>
-            </VCol>
-            <VCol cols="2">
-              <span class="text-caption grey--text">Last 7 Days<br /><span class="text-sub-caption">-</span></span>
-            </VCol>
-            <VCol cols="2">
-              <span class="text-caption grey--text">Last 30 Days<br /><span class="text-sub-caption">-</span></span>
-            </VCol>
-            <VCol cols="2">
-              <span class="text-caption grey--text">Trades Closed<br /><span class="text-sub-caption">68</span></span>
-            </VCol>
-            <VCol cols="2">
-              <span class="text-caption grey--text">Trade Profit <VIcon icon="tabler-info-circle"/><br /><span class="text-sub-caption" style="color: green">$ 166.30</span></span>
-            </VCol>
-          </VRow>
-        </div>
-      </VCardText>
-    </VCard>
-    <VCardText class="justify-space-between align-center flex-wrap gap-4">
-
-
-      <VTabs v-model="currentTab">
-        <VTab>Current Session</VTab>
-        <VTab>
-          <div class="d-flex align-center gap-1">
-            <span>Previous Sessions</span>
-            <VBadge
-              color="secondary"
-              content="3"
-              inline
-              bordered
-              offset-x="2"
-              offset-y="0"
-            />
-          </div>
-        </VTab>
-      </VTabs>
+      <!-- Right: Statuses -->
+      <div class="d-flex align-center gap-x-4">
+        <VBtn variant="outlined" prepend-icon="tabler-download">
+          Export
+        </VBtn>
+        <VBtn
+          prepend-icon="tabler-edit"
+          :to="{ name: 'edit-bot' }"
+        >
+          Edit Bot
+        </VBtn>
+      </div>
     </VCardText>
-
-    <div class="justify-space-between align-center flex-wrap gap-4 pb-4">
-      <VCard>
-        <VCardText>
-          <VWindow v-model="currentTab">
-            <VWindowItem value="item-1">
-              <VExpansionPanels  class="no-icon-rotate" multiple>
-                <VExpansionPanel expand-icon="tabler-plus" collapse-icon="tabler-minus">
-                  <VExpansionPanelTitle class="d-flex align-center" disable-icon-rotate>
-                    <VCard class="mb-6" style="flex-grow: 1; margin-right: 15px;">
-                      <VCardText class="d-flex justify-space-between align-center flex-wrap gap-4">
-                        <div class="d-flex align-center gap-2">
-                          <div class="text-h6">Session <strong>36950514</strong></div>
-                        </div>
-                        <div class="d-flex align-center gap-x-4">
-                          <span class="text-caption grey--text">Runtime:</span><strong>10D 58M</strong>
-                          <div style="width: 1px; height: 24px; background-color: #ccc;"></div>
-                          <span class="text-caption grey--text"><span class="font-weight-bold">Dec 6</span>, 2024 23:30 <VIcon icon="tabler-arrow-right" size="20" /> <span class="font-weight-bold">Dec 17</span>, 2024 23:30 </span>
-                        </div>
-                      </VCardText>
-                      <VCardText>
-                        <div class="d-flex align-center justify-space-between flex-wrap pt-4">
-                          <template v-for="(item, index) in stats" :key="index">
-                            <div class="d-flex align-center" style="flex: 1; min-width: 120px;">
-                              <div>
-          <span class="text-caption grey--text">
-            {{ item.label }}
-            <VIcon v-if="item.icon" icon="tabler-info-circle" size="14" />
-            <br />
-            <span
-              :class="['text-sub-caption', item.color]"
-            >
-              {{ item.value }}
-            </span>
-          </span>
-                              </div>
-                              <!-- Divider (skip for last item) -->
-                              <div
-                                v-if="index !== stats.length - 1"
-                                style="width: 1px; height: 24px; background-color: #ccc; margin: 0 12px;"
-                              />
-                            </div>
-                          </template>
-                        </div>
-                      </VCardText>
-
-                    </VCard>
-
-                  </VExpansionPanelTitle>
-                  <VExpansionPanelText>
-                    <div class="mb-4">
-                      <VRow>
-                        <!-- Buy Info -->
-                        <VCol cols="12" md="4">
-                          <VCardTitle class="text-center pl-0 pr-0" style="color:green;">Buy info
-                            <VProgressLinear
-                              model-value="100"
-                              color="green"
-                              height="3"
-                            />
-                          </VCardTitle>
-
-                          <VCard border class="pa-3 buy-card">
-                            <div class="d-flex justify-space-between align-center">
-                              <div class="d-flex align-center gap-2">
-                                <VChip color="success" class="text-white">Buy</VChip>
-                                <span class="font-weight-bold text-black text-left">Cover 4</span>
-                              </div>
-                              <div class="d-flex align-center gap-x-4">
-                                <VChip size="small">-2% X1</VChip>
-                              </div>
-                            </div>
-                            <div class="text-caption mt-1">Open: <span class="font-weight-light-bold">Dec 10, 2024 - 22:17</span></div>
-                            <VRow class="mt-2">
-                              <VCol cols="3" class="text-caption grey--text">Trade ID<br><span class="font-weight-bold">502426</span></VCol>
-                              <VCol cols="3" class="text-caption grey--text">Price<br><span class="font-weight-bold">3634.04</span></VCol>
-                              <VCol cols="3" class="text-caption grey--text">Quantity<br><span class="font-weight-bold">0.0291</span></VCol>
-                              <VCol cols="3" class="text-caption grey--text">Amount<br><span class="font-weight-bold">105.75</span></VCol>
-                            </VRow>
-                          </VCard>
-                        </VCol>
-
-                        <!-- Sell Info -->
-                        <VCol cols="12" md="4">
-                          <VCardTitle class="text-center pl-0 pr-0" style="color:red;">Sell info
-                            <VProgressLinear
-                              model-value="100"
-                              color="red"
-                              height="3"
-                            />
-                          </VCardTitle>
-                          <VCard border class="pa-3 sell-card" style="cursor: pointer;">
-                            <div class="d-flex justify-space-between align-center">
-                              <div class="d-flex align-center gap-2">
-                                <VChip color="error" class="text-white">Sell</VChip>
-                                <span class="font-weight-bold text-left">Cover 4</span>
-                              </div>
-                              <div class="d-flex align-center gap-x-4">
-                                <VChip size="small">-2% X1</VChip>
-                              </div>
-                            </div>
-                            <div class="text-caption mt-1">Open: <span class="font-weight-light-bold">Dec 10, 2024 - 22:17</span></div>
-                            <VRow class="mt-2">
-                              <VCol cols="3" class="text-caption grey--text">Trade ID<br><span class="font-weight-bold">502426</span></VCol>
-                              <VCol cols="3" class="text-caption grey--text">Price<br><span class="font-weight-bold">3634.04</span></VCol>
-                              <VCol cols="3" class="text-caption grey--text">Quantity<br><span class="font-weight-bold">0.0291</span></VCol>
-                              <VCol cols="3" class="text-caption grey--text">Amount<br><span class="font-weight-bold">105.75</span></VCol>
-                            </VRow>
-                          </VCard>
-                        </VCol>
-
-                        <!-- Profit Summary -->
-                        <VCol cols="12" md="4">
-                          <VCardTitle class="text-center pl-0 pr-0">Profit
-                            <VProgressLinear
-                              height="3"
-                            />
-                          </VCardTitle>
-                          <VCard border class="pa-3 profit-card">
-                            <VRow>
-                              <VCol cols="6" class="text-caption grey--text pb-0">Gross Profit:</VCol>
-                              <VCol cols="6" class="text-sub-caption text-right pb-0">2.50</VCol>
-                              <VCol cols="6" class="text-caption grey--text pb-0 pt-1">Fees:</VCol>
-                              <VCol cols="6" class="text-sub-caption text-right pb-0 pt-1">0.47372728</VCol>
-                              <VCol cols="6" class="text-caption grey--text pb-0 pt-0">Profit %:</VCol>
-                              <VCol cols="6" class="text-sub-caption text-right pb-0 pt-0">2.02%</VCol>
-                              <VCol cols="6" class="text-caption grey--text pb-0 pt-1">Profit Avg Price:</VCol>
-                              <VCol cols="6" class="text-sub-caption text-right pb-0 pt-1">1.01%</VCol>
-                              <VCol cols="6" class="text-caption font-weight-bold pb-1 pt-0">Net Profit:</VCol>
-                              <VCol cols="6" class="text-sub-caption text-right pb-1 pt-0"><VChip color="success" class="ml-2" size="small">1.01 (0.98%)</VChip></VCol>
-                            </VRow>
-                          </VCard>
-                        </VCol>
-                      </VRow>
-                    </div>
-                    <div>
-                      <VCard class="mb-4">
-                        <VCardTitle class="border-bg-block"> <VIcon icon="tabler-alert-triangle" class="mr-1" style="background-color:red"/> Insufficient Balance</VCardTitle>
-                        <VDivider />
-                        <VCardText>
-                          <VRow>
-                            <VCol cols="12">
-                              <VRow>
-                                <VCol cols="4">
-                                  <VChip color="error" class="text-white">Sell</VChip>
-                                  <span class="font-weight-bold pl-2 pr-4">Cover 4</span>
-                                  <VChip size="small">-2% X1</VChip>
-                                </VCol>
-                                <VCol cols="2" class="text-caption">Close<br><span class="font-weight-bold">Dec 10, 2024 - 22:17</span></VCol>
-                                <VCol cols="2" class="text-caption">Trade ID<br><span class="font-weight-bold">50242660</span></VCol>
-                                <VCol cols="4">
-                                  <div class="d-flex justify-space-between text-caption">
-                                    <div class="text-left">
-                                      <div>Price</div>
-                                      <div class="font-weight-bold">3634.04</div>
-                                    </div>
-
-                                    <div class="text-center">
-                                      <div>Quantity</div>
-                                      <div class="font-weight-bold">0.0291</div>
-                                    </div>
-
-                                    <div class="text-right">
-                                      <div>Amount</div>
-                                      <div class="font-weight-bold">105.75</div>
-                                    </div>
-                                  </div>
-                                </VCol>
-
-                              </VRow>
-                            </VCol>
-                          </VRow>
-                        </VCardText>
-                      </VCard>
-                      <VCard class="mb-4">
-                        <VCardTitle class="border-bg-block"> <VIcon icon="tabler-alert-circle" class="mr-1" style="background-color:orange"/> Insufficient Balance</VCardTitle>
-                        <VDivider />
-                        <VCardText>
-                          <VRow>
-                            <VCol cols="12">
-                              <VRow>
-                                <VCol cols="4">
-                                  <VChip color="error" class="text-white">Sell</VChip>
-                                  <span class="font-weight-bold pl-2 pr-4">Cover 4</span>
-                                  <VChip size="small">-2% X1</VChip>
-                                </VCol>
-                                <VCol cols="2" class="text-caption">Close<br><span class="font-weight-bold">Dec 10, 2024 - 22:17</span></VCol>
-                                <VCol cols="2" class="text-caption">Trade ID<br><span class="font-weight-bold">50242660</span></VCol>
-                                <VCol cols="4">
-                                  <div class="d-flex justify-space-between text-caption">
-                                    <div class="text-left">
-                                      <div>Price</div>
-                                      <div class="font-weight-bold">3634.04</div>
-                                    </div>
-
-                                    <div class="text-center">
-                                      <div>Quantity</div>
-                                      <div class="font-weight-bold">0.0291</div>
-                                    </div>
-
-                                    <div class="text-right">
-                                      <div>Amount</div>
-                                      <div class="font-weight-bold">105.75</div>
-                                    </div>
-                                  </div>
-                                </VCol>
-
-                              </VRow>
-                            </VCol>
-                          </VRow>
-                        </VCardText>
-                      </VCard>
-                      <VCard class="mb-4">
-                        <VCardTitle class="border-bg-block"> <VIcon icon="tabler-info-circle" class="mr-1" style="background-color:blue"/> Insufficient Balance</VCardTitle>
-                        <VDivider />
-                        <VCardText>
-                          <VRow>
-                            <VCol cols="12">
-                              <VRow>
-                                <VCol cols="4">
-                                  <VChip color="error" class="text-white">Sell</VChip>
-                                  <span class="font-weight-bold pl-2 pr-4">Cover 4</span>
-                                  <VChip size="small">-2% X1</VChip>
-                                </VCol>
-                                <VCol cols="2" class="text-caption">Close<br><span class="font-weight-bold">Dec 10, 2024 - 22:17</span></VCol>
-                                <VCol cols="2" class="text-caption">Trade ID<br><span class="font-weight-bold">50242660</span></VCol>
-                                <VCol cols="4">
-                                  <div class="d-flex justify-space-between text-caption">
-                                    <div class="text-left">
-                                      <div>Price</div>
-                                      <div class="font-weight-bold">3634.04</div>
-                                    </div>
-
-                                    <div class="text-center">
-                                      <div>Quantity</div>
-                                      <div class="font-weight-bold">0.0291</div>
-                                    </div>
-
-                                    <div class="text-right">
-                                      <div>Amount</div>
-                                      <div class="font-weight-bold">105.75</div>
-                                    </div>
-                                  </div>
-                                </VCol>
-
-                              </VRow>
-                            </VCol>
-                          </VRow>
-                        </VCardText>
-                      </VCard>
-                    </div>
-                    <VCard>
-                      <VRow>
-                        <!-- Buy Info -->
-                        <VCol cols="12" md="4">
-                          <VCard border class="pa-3 buy-card">
-                            <div class="d-flex justify-space-between align-center">
-                              <div class="d-flex align-center gap-2">
-                                <VChip color="success" class="text-white">Buy</VChip>
-                                <span class="font-weight-bold text-black text-left">Cover 4</span>
-                              </div>
-                              <div class="d-flex align-center gap-x-4">
-                                <VChip size="small">-2% X1</VChip>
-                              </div>
-                            </div>
-                            <div class="text-caption mt-1">Open: <span class="font-weight-light-bold">Dec 10, 2024 - 22:17</span></div>
-                            <VRow class="mt-2">
-                              <VCol cols="3" class="text-caption grey--text">Trade ID<br><span class="font-weight-bold">502426</span></VCol>
-                              <VCol cols="3" class="text-caption grey--text">Price<br><span class="font-weight-bold">3634.04</span></VCol>
-                              <VCol cols="3" class="text-caption grey--text">Quantity<br><span class="font-weight-bold">0.0291</span></VCol>
-                              <VCol cols="3" class="text-caption grey--text">Amount<br><span class="font-weight-bold">105.75</span></VCol>
-                            </VRow>
-                          </VCard>
-                        </VCol>
-
-                        <!-- Sell Info -->
-                        <VCol cols="12" md="4">
-                          <VCard border class="pa-3 sell-card">
-                            <div class="d-flex justify-space-between align-center">
-                              <div class="d-flex align-center gap-2">
-                                <VChip color="error" class="text-white">Sell</VChip>
-                                <span class="font-weight-bold text-left">Cover 4</span>
-                              </div>
-                              <div class="d-flex align-center gap-x-4">
-                                <VChip size="small">-2% X1</VChip>
-                              </div>
-                            </div>
-                            <div class="text-caption mt-1">Open: <span class="font-weight-light-bold">Dec 10, 2024 - 22:17</span></div>
-                            <VRow class="mt-2">
-                              <VCol cols="3" class="text-caption grey--text">Trade ID<br><span class="font-weight-bold">502426</span></VCol>
-                              <VCol cols="3" class="text-caption grey--text">Price<br><span class="font-weight-bold">3634.04</span></VCol>
-                              <VCol cols="3" class="text-caption grey--text">Quantity<br><span class="font-weight-bold">0.0291</span></VCol>
-                              <VCol cols="3" class="text-caption grey--text">Amount<br><span class="font-weight-bold">105.75</span></VCol>
-                            </VRow>
-                          </VCard>
-                        </VCol>
-
-                        <!-- Profit Summary -->
-                        <VCol cols="12" md="4">
-                          <VCard border class="pa-3 profit-card">
-                            <VRow>
-                              <VCol cols="6" class="text-caption grey--text pb-0">Gross Profit:</VCol>
-                              <VCol cols="6" class="text-sub-caption text-right pb-0">2.50</VCol>
-                              <VCol cols="6" class="text-caption grey--text pb-0 pt-1">Fees:</VCol>
-                              <VCol cols="6" class="text-sub-caption text-right pb-0 pt-1">0.47372728</VCol>
-                              <VCol cols="6" class="text-caption grey--text pb-0 pt-0">Profit %:</VCol>
-                              <VCol cols="6" class="text-sub-caption text-right pb-0 pt-0">2.02%</VCol>
-                              <VCol cols="6" class="text-caption grey--text pb-0 pt-1">Profit Avg Price:</VCol>
-                              <VCol cols="6" class="text-sub-caption text-right pb-0 pt-1">1.01%</VCol>
-                              <VCol cols="6" class="text-caption font-weight-bold pb-1 pt-0">Net Profit:</VCol>
-                              <VCol cols="6" class="text-sub-caption text-right pb-1 pt-0"><VChip color="success" class="ml-2" size="small">1.01 (0.98%)</VChip></VCol>
-                            </VRow>
-                          </VCard>
-                        </VCol>
-                      </VRow>
-                    </VCard>
-                  </VExpansionPanelText>
-                </VExpansionPanel>
-              </VExpansionPanels>
-            </VWindowItem>
-            <VWindowItem value="item-2">
-              <VExpansionPanels multiple>
-                <VExpansionPanel expand-icon="tabler-plus" collapse-icon="tabler-minus">
-                  <VExpansionPanelTitle class="d-flex align-center" disable-icon-rotate>
-                    <VCard class="mb-6" style="flex-grow: 1; margin-right: 15px;">
-                      <VCardText class="d-flex justify-space-between align-center flex-wrap gap-4">
-                        <div class="d-flex align-center gap-2">
-                          <div class="text-h6">Session <strong>36950514</strong></div>
-                        </div>
-                        <div class="d-flex align-center gap-x-4">
-                          <span class="text-caption grey--text">Runtime:</span><strong>10D 58M</strong>
-                          <div style="width: 1px; height: 24px; background-color: #ccc;"></div>
-                          <span class="text-caption grey--text"><span class="font-weight-bold">Dec 6</span>, 2024 23:30 <VIcon icon="tabler-arrow-right" size="20" /> <span class="font-weight-bold">Dec 17</span>, 2024 23:30 </span>
-                        </div>
-                      </VCardText>
-                      <VCardText>
-                        <div class="d-flex align-center justify-space-between flex-wrap pt-4">
-                          <template v-for="(item, index) in stats" :key="index">
-                            <div class="d-flex align-center" style="flex: 1; min-width: 120px;">
-                              <div>
-          <span class="text-caption grey--text">
-            {{ item.label }}
-            <VIcon v-if="item.icon" icon="tabler-info-circle" size="14" />
-            <br />
-            <span
-              :class="['text-sub-caption', item.color]"
-            >
-              {{ item.value }}
-            </span>
-          </span>
-                              </div>
-                              <!-- Divider (skip for last item) -->
-                              <div
-                                v-if="index !== stats.length - 1"
-                                style="width: 1px; height: 24px; background-color: #ccc; margin: 0 12px;"
-                              />
-                            </div>
-                          </template>
-                        </div>
-                      </VCardText>
-
-                    </VCard>
-                  </VExpansionPanelTitle>
-                  <VExpansionPanelText>
-                    <div class="mb-4">
-                      <VRow>
-                        <!-- Buy Info -->
-                        <VCol cols="12" md="4">
-                          <VCardTitle class="text-center pl-0 pr-0" style="color:green;">Buy info
-                            <VProgressLinear
-                              model-value="100"
-                              color="green"
-                              height="3"
-                            />
-                          </VCardTitle>
-
-                          <VCard border class="pa-3 buy-card">
-                            <div class="d-flex justify-space-between align-center">
-                              <div class="d-flex align-center gap-2">
-                                <VChip color="success" class="text-white">Buy</VChip>
-                                <span class="font-weight-bold text-black text-left">Cover 4</span>
-                              </div>
-                              <div class="d-flex align-center gap-x-4">
-                                <VChip size="small">-2% X1</VChip>
-                              </div>
-                            </div>
-                            <div class="text-caption mt-1">Open: <span class="font-weight-light-bold">Dec 10, 2024 - 22:17</span></div>
-                            <VRow class="mt-2">
-                              <VCol cols="3" class="text-caption grey--text">Trade ID<br><span class="font-weight-bold">502426</span></VCol>
-                              <VCol cols="3" class="text-caption grey--text">Price<br><span class="font-weight-bold">3634.04</span></VCol>
-                              <VCol cols="3" class="text-caption grey--text">Quantity<br><span class="font-weight-bold">0.0291</span></VCol>
-                              <VCol cols="3" class="text-caption grey--text">Amount<br><span class="font-weight-bold">105.75</span></VCol>
-                            </VRow>
-                          </VCard>
-                        </VCol>
-
-                        <!-- Sell Info -->
-                        <VCol cols="12" md="4">
-                          <VCardTitle class="text-center pl-0 pr-0" style="color:red;">Sell info
-                            <VProgressLinear
-                              model-value="100"
-                              color="red"
-                              height="3"
-                            />
-                          </VCardTitle>
-                          <VCard border class="pa-3 sell-card" style="cursor: pointer;">
-                            <div class="d-flex justify-space-between align-center">
-                              <div class="d-flex align-center gap-2">
-                                <VChip color="error" class="text-white">Sell</VChip>
-                                <span class="font-weight-bold text-left">Cover 4</span>
-                              </div>
-                              <div class="d-flex align-center gap-x-4">
-                                <VChip size="small">-2% X1</VChip>
-                              </div>
-                            </div>
-                            <div class="text-caption mt-1">Open: <span class="font-weight-light-bold">Dec 10, 2024 - 22:17</span></div>
-                            <VRow class="mt-2">
-                              <VCol cols="3" class="text-caption grey--text">Trade ID<br><span class="font-weight-bold">502426</span></VCol>
-                              <VCol cols="3" class="text-caption grey--text">Price<br><span class="font-weight-bold">3634.04</span></VCol>
-                              <VCol cols="3" class="text-caption grey--text">Quantity<br><span class="font-weight-bold">0.0291</span></VCol>
-                              <VCol cols="3" class="text-caption grey--text">Amount<br><span class="font-weight-bold">105.75</span></VCol>
-                            </VRow>
-                          </VCard>
-                        </VCol>
-
-                        <!-- Profit Summary -->
-                        <VCol cols="12" md="4">
-                          <VCardTitle class="text-center pl-0 pr-0">Profit
-                            <VProgressLinear
-                              height="3"
-                            />
-                          </VCardTitle>
-                          <VCard border class="pa-3 profit-card">
-                            <VRow>
-                              <VCol cols="6" class="text-caption grey--text pb-0">Gross Profit:</VCol>
-                              <VCol cols="6" class="text-sub-caption text-right pb-0">2.50</VCol>
-                              <VCol cols="6" class="text-caption grey--text pb-0 pt-1">Fees:</VCol>
-                              <VCol cols="6" class="text-sub-caption text-right pb-0 pt-1">0.47372728</VCol>
-                              <VCol cols="6" class="text-caption grey--text pb-0 pt-0">Profit %:</VCol>
-                              <VCol cols="6" class="text-sub-caption text-right pb-0 pt-0">2.02%</VCol>
-                              <VCol cols="6" class="text-caption grey--text pb-0 pt-1">Profit Avg Price:</VCol>
-                              <VCol cols="6" class="text-sub-caption text-right pb-0 pt-1">1.01%</VCol>
-                              <VCol cols="6" class="text-caption font-weight-bold pb-1 pt-0">Net Profit:</VCol>
-                              <VCol cols="6" class="text-sub-caption text-right pb-1 pt-0"><VChip color="success" class="ml-2" size="small">1.01 (0.98%)</VChip></VCol>
-                            </VRow>
-                          </VCard>
-                        </VCol>
-                      </VRow>
-                    </div>
-                    <div>
-                      <VCard class="mb-4">
-                        <VCardTitle class="border-bg-block"> <VIcon icon="tabler-alert-triangle" class="mr-1" style="background-color:red"/> Insufficient Balance</VCardTitle>
-                        <VDivider />
-                        <VCardText>
-                          <VRow>
-                            <VCol cols="12">
-                              <VRow>
-                                <VCol cols="4">
-                                  <VChip color="error" class="text-white">Sell</VChip>
-                                  <span class="font-weight-bold pl-2 pr-4">Cover 4</span>
-                                  <VChip size="small">-2% X1</VChip>
-                                </VCol>
-                                <VCol cols="2" class="text-caption">Close<br><span class="font-weight-bold">Dec 10, 2024 - 22:17</span></VCol>
-                                <VCol cols="2" class="text-caption">Trade ID<br><span class="font-weight-bold">50242660</span></VCol>
-                                <VCol cols="4">
-                                  <div class="d-flex justify-space-between text-caption">
-                                    <div class="text-left">
-                                      <div>Price</div>
-                                      <div class="font-weight-bold">3634.04</div>
-                                    </div>
-
-                                    <div class="text-center">
-                                      <div>Quantity</div>
-                                      <div class="font-weight-bold">0.0291</div>
-                                    </div>
-
-                                    <div class="text-right">
-                                      <div>Amount</div>
-                                      <div class="font-weight-bold">105.75</div>
-                                    </div>
-                                  </div>
-                                </VCol>
-
-                              </VRow>
-                            </VCol>
-                          </VRow>
-                        </VCardText>
-                      </VCard>
-                      <VCard class="mb-4">
-                        <VCardTitle class="border-bg-block"> <VIcon icon="tabler-alert-circle" class="mr-1" style="background-color:orange"/> Insufficient Balance</VCardTitle>
-                        <VDivider />
-                        <VCardText>
-                          <VRow>
-                            <VCol cols="12">
-                              <VRow>
-                                <VCol cols="4">
-                                  <VChip color="error" class="text-white">Sell</VChip>
-                                  <span class="font-weight-bold pl-2 pr-4">Cover 4</span>
-                                  <VChip size="small">-2% X1</VChip>
-                                </VCol>
-                                <VCol cols="2" class="text-caption">Close<br><span class="font-weight-bold">Dec 10, 2024 - 22:17</span></VCol>
-                                <VCol cols="2" class="text-caption">Trade ID<br><span class="font-weight-bold">50242660</span></VCol>
-                                <VCol cols="4">
-                                  <div class="d-flex justify-space-between text-caption">
-                                    <div class="text-left">
-                                      <div>Price</div>
-                                      <div class="font-weight-bold">3634.04</div>
-                                    </div>
-
-                                    <div class="text-center">
-                                      <div>Quantity</div>
-                                      <div class="font-weight-bold">0.0291</div>
-                                    </div>
-
-                                    <div class="text-right">
-                                      <div>Amount</div>
-                                      <div class="font-weight-bold">105.75</div>
-                                    </div>
-                                  </div>
-                                </VCol>
-
-                              </VRow>
-                            </VCol>
-                          </VRow>
-                        </VCardText>
-                      </VCard>
-                      <VCard class="mb-4">
-                        <VCardTitle class="border-bg-block"> <VIcon icon="tabler-info-circle" class="mr-1" style="background-color:blue"/> Insufficient Balance</VCardTitle>
-                        <VDivider />
-                        <VCardText>
-                          <VRow>
-                            <VCol cols="12">
-                              <VRow>
-                                <VCol cols="4">
-                                  <VChip color="error" class="text-white">Sell</VChip>
-                                  <span class="font-weight-bold pl-2 pr-4">Cover 4</span>
-                                  <VChip size="small">-2% X1</VChip>
-                                </VCol>
-                                <VCol cols="2" class="text-caption">Close<br><span class="font-weight-bold">Dec 10, 2024 - 22:17</span></VCol>
-                                <VCol cols="2" class="text-caption">Trade ID<br><span class="font-weight-bold">50242660</span></VCol>
-                                <VCol cols="4">
-                                  <div class="d-flex justify-space-between text-caption">
-                                    <div class="text-left">
-                                      <div>Price</div>
-                                      <div class="font-weight-bold">3634.04</div>
-                                    </div>
-
-                                    <div class="text-center">
-                                      <div>Quantity</div>
-                                      <div class="font-weight-bold">0.0291</div>
-                                    </div>
-
-                                    <div class="text-right">
-                                      <div>Amount</div>
-                                      <div class="font-weight-bold">105.75</div>
-                                    </div>
-                                  </div>
-                                </VCol>
-
-                              </VRow>
-                            </VCol>
-                          </VRow>
-                        </VCardText>
-                      </VCard>
-                    </div>
-                    <VCard>
-                      <VRow>
-                        <!-- Buy Info -->
-                        <VCol cols="12" md="4">
-                          <VCard border class="pa-3 buy-card">
-                            <div class="d-flex justify-space-between align-center">
-                              <div class="d-flex align-center gap-2">
-                                <VChip color="success" class="text-white">Buy</VChip>
-                                <span class="font-weight-bold text-black text-left">Cover 4</span>
-                              </div>
-                              <div class="d-flex align-center gap-x-4">
-                                <VChip size="small">-2% X1</VChip>
-                              </div>
-                            </div>
-                            <div class="text-caption mt-1">Open: <span class="font-weight-light-bold">Dec 10, 2024 - 22:17</span></div>
-                            <VRow class="mt-2">
-                              <VCol cols="3" class="text-caption grey--text">Trade ID<br><span class="font-weight-bold">502426</span></VCol>
-                              <VCol cols="3" class="text-caption grey--text">Price<br><span class="font-weight-bold">3634.04</span></VCol>
-                              <VCol cols="3" class="text-caption grey--text">Quantity<br><span class="font-weight-bold">0.0291</span></VCol>
-                              <VCol cols="3" class="text-caption grey--text">Amount<br><span class="font-weight-bold">105.75</span></VCol>
-                            </VRow>
-                          </VCard>
-                        </VCol>
-
-                        <!-- Sell Info -->
-                        <VCol cols="12" md="4">
-                          <VCard border class="pa-3 sell-card">
-                            <div class="d-flex justify-space-between align-center">
-                              <div class="d-flex align-center gap-2">
-                                <VChip color="error" class="text-white">Sell</VChip>
-                                <span class="font-weight-bold text-left">Cover 4</span>
-                              </div>
-                              <div class="d-flex align-center gap-x-4">
-                                <VChip size="small">-2% X1</VChip>
-                              </div>
-                            </div>
-                            <div class="text-caption mt-1">Open: <span class="font-weight-light-bold">Dec 10, 2024 - 22:17</span></div>
-                            <VRow class="mt-2">
-                              <VCol cols="3" class="text-caption grey--text">Trade ID<br><span class="font-weight-bold">502426</span></VCol>
-                              <VCol cols="3" class="text-caption grey--text">Price<br><span class="font-weight-bold">3634.04</span></VCol>
-                              <VCol cols="3" class="text-caption grey--text">Quantity<br><span class="font-weight-bold">0.0291</span></VCol>
-                              <VCol cols="3" class="text-caption grey--text">Amount<br><span class="font-weight-bold">105.75</span></VCol>
-                            </VRow>
-                          </VCard>
-                        </VCol>
-
-                        <!-- Profit Summary -->
-                        <VCol cols="12" md="4">
-                          <VCard border class="pa-3 profit-card">
-                            <VRow>
-                              <VCol cols="6" class="text-caption grey--text pb-0">Gross Profit:</VCol>
-                              <VCol cols="6" class="text-sub-caption text-right pb-0">2.50</VCol>
-                              <VCol cols="6" class="text-caption grey--text pb-0 pt-1">Fees:</VCol>
-                              <VCol cols="6" class="text-sub-caption text-right pb-0 pt-1">0.47372728</VCol>
-                              <VCol cols="6" class="text-caption grey--text pb-0 pt-0">Profit %:</VCol>
-                              <VCol cols="6" class="text-sub-caption text-right pb-0 pt-0">2.02%</VCol>
-                              <VCol cols="6" class="text-caption grey--text pb-0 pt-1">Profit Avg Price:</VCol>
-                              <VCol cols="6" class="text-sub-caption text-right pb-0 pt-1">1.01%</VCol>
-                              <VCol cols="6" class="text-caption font-weight-bold pb-1 pt-0">Net Profit:</VCol>
-                              <VCol cols="6" class="text-sub-caption text-right pb-1 pt-0"><VChip color="success" class="ml-2" size="small">1.01 (0.98%)</VChip></VCol>
-                            </VRow>
-                          </VCard>
-                        </VCol>
-                      </VRow>
-                    </VCard>
-                  </VExpansionPanelText>
-                </VExpansionPanel>
-                <VExpansionPanel expand-icon="tabler-plus" collapse-icon="tabler-minus">
-                  <VExpansionPanelTitle class="d-flex align-center" disable-icon-rotate>
-                    <VCard class="mb-6" style="flex-grow: 1; margin-right: 15px;">
-                      <VCardText class="d-flex justify-space-between align-center flex-wrap gap-4">
-                        <div class="d-flex align-center gap-2">
-                          <div class="text-h6">Session <strong>36950514</strong></div>
-                        </div>
-                        <div class="d-flex align-center gap-x-4">
-                          <span class="text-caption grey--text">Runtime:</span><strong>10D 58M</strong>
-                          <div style="width: 1px; height: 24px; background-color: #ccc;"></div>
-                          <span class="text-caption grey--text"><span class="font-weight-bold">Dec 6</span>, 2024 23:30 <VIcon icon="tabler-arrow-right" size="20" /> <span class="font-weight-bold">Dec 17</span>, 2024 23:30 </span>
-                        </div>
-                      </VCardText>
-                      <VCardText>
-                        <div class="d-flex align-center justify-space-between flex-wrap pt-4">
-                          <template v-for="(item, index) in stats" :key="index">
-                            <div class="d-flex align-center" style="flex: 1; min-width: 120px;">
-                              <div>
-          <span class="text-caption grey--text">
-            {{ item.label }}
-            <VIcon v-if="item.icon" icon="tabler-info-circle" size="14" />
-            <br />
-            <span
-              :class="['text-sub-caption', item.color]"
-            >
-              {{ item.value }}
-            </span>
-          </span>
-                              </div>
-                              <!-- Divider (skip for last item) -->
-                              <div
-                                v-if="index !== stats.length - 1"
-                                style="width: 1px; height: 24px; background-color: #ccc; margin: 0 12px;"
-                              />
-                            </div>
-                          </template>
-                        </div>
-                      </VCardText>
-
-                    </VCard>
-
-                  </VExpansionPanelTitle>
-                  <VExpansionPanelText>
-                    <div class="mb-4">
-                      <VRow>
-                        <!-- Buy Info -->
-                        <VCol cols="12" md="4">
-                          <VCardTitle class="text-center pl-0 pr-0" style="color:green;">Buy info
-                            <VProgressLinear
-                              model-value="100"
-                              color="green"
-                              height="3"
-                            />
-                          </VCardTitle>
-
-                          <VCard border class="pa-3 buy-card">
-                            <div class="d-flex justify-space-between align-center">
-                              <div class="d-flex align-center gap-2">
-                                <VChip color="success" class="text-white">Buy</VChip>
-                                <span class="font-weight-bold text-black text-left">Cover 4</span>
-                              </div>
-                              <div class="d-flex align-center gap-x-4">
-                                <VChip size="small">-2% X1</VChip>
-                              </div>
-                            </div>
-                            <div class="text-caption mt-1">Open: <span class="font-weight-light-bold">Dec 10, 2024 - 22:17</span></div>
-                            <VRow class="mt-2">
-                              <VCol cols="3" class="text-caption grey--text">Trade ID<br><span class="font-weight-bold">502426</span></VCol>
-                              <VCol cols="3" class="text-caption grey--text">Price<br><span class="font-weight-bold">3634.04</span></VCol>
-                              <VCol cols="3" class="text-caption grey--text">Quantity<br><span class="font-weight-bold">0.0291</span></VCol>
-                              <VCol cols="3" class="text-caption grey--text">Amount<br><span class="font-weight-bold">105.75</span></VCol>
-                            </VRow>
-                          </VCard>
-                        </VCol>
-
-                        <!-- Sell Info -->
-                        <VCol cols="12" md="4">
-                          <VCardTitle class="text-center pl-0 pr-0" style="color:red;">Sell info
-                            <VProgressLinear
-                              model-value="100"
-                              color="red"
-                              height="3"
-                            />
-                          </VCardTitle>
-                          <VCard border class="pa-3 sell-card" style="cursor: pointer;">
-                            <div class="d-flex justify-space-between align-center">
-                              <div class="d-flex align-center gap-2">
-                                <VChip color="error" class="text-white">Sell</VChip>
-                                <span class="font-weight-bold text-left">Cover 4</span>
-                              </div>
-                              <div class="d-flex align-center gap-x-4">
-                                <VChip size="small">-2% X1</VChip>
-                              </div>
-                            </div>
-                            <div class="text-caption mt-1">Open: <span class="font-weight-light-bold">Dec 10, 2024 - 22:17</span></div>
-                            <VRow class="mt-2">
-                              <VCol cols="3" class="text-caption grey--text">Trade ID<br><span class="font-weight-bold">502426</span></VCol>
-                              <VCol cols="3" class="text-caption grey--text">Price<br><span class="font-weight-bold">3634.04</span></VCol>
-                              <VCol cols="3" class="text-caption grey--text">Quantity<br><span class="font-weight-bold">0.0291</span></VCol>
-                              <VCol cols="3" class="text-caption grey--text">Amount<br><span class="font-weight-bold">105.75</span></VCol>
-                            </VRow>
-                          </VCard>
-                        </VCol>
-
-                        <!-- Profit Summary -->
-                        <VCol cols="12" md="4">
-                          <VCardTitle class="text-center pl-0 pr-0">Profit
-                            <VProgressLinear
-                              height="3"
-                            />
-                          </VCardTitle>
-                          <VCard border class="pa-3 profit-card">
-                            <VRow>
-                              <VCol cols="6" class="text-caption grey--text pb-0">Gross Profit:</VCol>
-                              <VCol cols="6" class="text-sub-caption text-right pb-0">2.50</VCol>
-                              <VCol cols="6" class="text-caption grey--text pb-0 pt-1">Fees:</VCol>
-                              <VCol cols="6" class="text-sub-caption text-right pb-0 pt-1">0.47372728</VCol>
-                              <VCol cols="6" class="text-caption grey--text pb-0 pt-0">Profit %:</VCol>
-                              <VCol cols="6" class="text-sub-caption text-right pb-0 pt-0">2.02%</VCol>
-                              <VCol cols="6" class="text-caption grey--text pb-0 pt-1">Profit Avg Price:</VCol>
-                              <VCol cols="6" class="text-sub-caption text-right pb-0 pt-1">1.01%</VCol>
-                              <VCol cols="6" class="text-caption font-weight-bold pb-1 pt-0">Net Profit:</VCol>
-                              <VCol cols="6" class="text-sub-caption text-right pb-1 pt-0"><VChip color="success" class="ml-2" size="small">1.01 (0.98%)</VChip></VCol>
-                            </VRow>
-                          </VCard>
-                        </VCol>
-                      </VRow>
-                    </div>
-                    <div>
-                      <VCard class="mb-4">
-                        <VCardTitle class="border-bg-block"> <VIcon icon="tabler-alert-triangle" class="mr-1" style="background-color:red"/> Insufficient Balance</VCardTitle>
-                        <VDivider />
-                        <VCardText>
-                          <VRow>
-                            <VCol cols="12">
-                              <VRow>
-                                <VCol cols="4">
-                                  <VChip color="error" class="text-white">Sell</VChip>
-                                  <span class="font-weight-bold pl-2 pr-4">Cover 4</span>
-                                  <VChip size="small">-2% X1</VChip>
-                                </VCol>
-                                <VCol cols="2" class="text-caption">Close<br><span class="font-weight-bold">Dec 10, 2024 - 22:17</span></VCol>
-                                <VCol cols="2" class="text-caption">Trade ID<br><span class="font-weight-bold">50242660</span></VCol>
-                                <VCol cols="4">
-                                  <div class="d-flex justify-space-between text-caption">
-                                    <div class="text-left">
-                                      <div>Price</div>
-                                      <div class="font-weight-bold">3634.04</div>
-                                    </div>
-
-                                    <div class="text-center">
-                                      <div>Quantity</div>
-                                      <div class="font-weight-bold">0.0291</div>
-                                    </div>
-
-                                    <div class="text-right">
-                                      <div>Amount</div>
-                                      <div class="font-weight-bold">105.75</div>
-                                    </div>
-                                  </div>
-                                </VCol>
-
-                              </VRow>
-                            </VCol>
-                          </VRow>
-                        </VCardText>
-                      </VCard>
-                      <VCard class="mb-4">
-                        <VCardTitle class="border-bg-block"> <VIcon icon="tabler-alert-circle" class="mr-1" style="background-color:orange"/> Insufficient Balance</VCardTitle>
-                        <VDivider />
-                        <VCardText>
-                          <VRow>
-                            <VCol cols="12">
-                              <VRow>
-                                <VCol cols="4">
-                                  <VChip color="error" class="text-white">Sell</VChip>
-                                  <span class="font-weight-bold pl-2 pr-4">Cover 4</span>
-                                  <VChip size="small">-2% X1</VChip>
-                                </VCol>
-                                <VCol cols="2" class="text-caption">Close<br><span class="font-weight-bold">Dec 10, 2024 - 22:17</span></VCol>
-                                <VCol cols="2" class="text-caption">Trade ID<br><span class="font-weight-bold">50242660</span></VCol>
-                                <VCol cols="4">
-                                  <div class="d-flex justify-space-between text-caption">
-                                    <div class="text-left">
-                                      <div>Price</div>
-                                      <div class="font-weight-bold">3634.04</div>
-                                    </div>
-
-                                    <div class="text-center">
-                                      <div>Quantity</div>
-                                      <div class="font-weight-bold">0.0291</div>
-                                    </div>
-
-                                    <div class="text-right">
-                                      <div>Amount</div>
-                                      <div class="font-weight-bold">105.75</div>
-                                    </div>
-                                  </div>
-                                </VCol>
-
-                              </VRow>
-                            </VCol>
-                          </VRow>
-                        </VCardText>
-                      </VCard>
-                      <VCard class="mb-4">
-                        <VCardTitle class="border-bg-block"> <VIcon icon="tabler-info-circle" class="mr-1" style="background-color:blue"/> Insufficient Balance</VCardTitle>
-                        <VDivider />
-                        <VCardText>
-                          <VRow>
-                            <VCol cols="12">
-                              <VRow>
-                                <VCol cols="4">
-                                  <VChip color="error" class="text-white">Sell</VChip>
-                                  <span class="font-weight-bold pl-2 pr-4">Cover 4</span>
-                                  <VChip size="small">-2% X1</VChip>
-                                </VCol>
-                                <VCol cols="2" class="text-caption">Close<br><span class="font-weight-bold">Dec 10, 2024 - 22:17</span></VCol>
-                                <VCol cols="2" class="text-caption">Trade ID<br><span class="font-weight-bold">50242660</span></VCol>
-                                <VCol cols="4">
-                                  <div class="d-flex justify-space-between text-caption">
-                                    <div class="text-left">
-                                      <div>Price</div>
-                                      <div class="font-weight-bold">3634.04</div>
-                                    </div>
-
-                                    <div class="text-center">
-                                      <div>Quantity</div>
-                                      <div class="font-weight-bold">0.0291</div>
-                                    </div>
-
-                                    <div class="text-right">
-                                      <div>Amount</div>
-                                      <div class="font-weight-bold">105.75</div>
-                                    </div>
-                                  </div>
-                                </VCol>
-
-                              </VRow>
-                            </VCol>
-                          </VRow>
-                        </VCardText>
-                      </VCard>
-                    </div>
-                    <VCard>
-                      <VRow>
-                        <!-- Buy Info -->
-                        <VCol cols="12" md="4">
-                          <VCard border class="pa-3 buy-card">
-                            <div class="d-flex justify-space-between align-center">
-                              <div class="d-flex align-center gap-2">
-                                <VChip color="success" class="text-white">Buy</VChip>
-                                <span class="font-weight-bold text-black text-left">Cover 4</span>
-                              </div>
-                              <div class="d-flex align-center gap-x-4">
-                                <VChip size="small">-2% X1</VChip>
-                              </div>
-                            </div>
-                            <div class="text-caption mt-1">Open: <span class="font-weight-light-bold">Dec 10, 2024 - 22:17</span></div>
-                            <VRow class="mt-2">
-                              <VCol cols="3" class="text-caption grey--text">Trade ID<br><span class="font-weight-bold">502426</span></VCol>
-                              <VCol cols="3" class="text-caption grey--text">Price<br><span class="font-weight-bold">3634.04</span></VCol>
-                              <VCol cols="3" class="text-caption grey--text">Quantity<br><span class="font-weight-bold">0.0291</span></VCol>
-                              <VCol cols="3" class="text-caption grey--text">Amount<br><span class="font-weight-bold">105.75</span></VCol>
-                            </VRow>
-                          </VCard>
-                        </VCol>
-
-                        <!-- Sell Info -->
-                        <VCol cols="12" md="4">
-                          <VCard border class="pa-3 sell-card">
-                            <div class="d-flex justify-space-between align-center">
-                              <div class="d-flex align-center gap-2">
-                                <VChip color="error" class="text-white">Sell</VChip>
-                                <span class="font-weight-bold text-left">Cover 4</span>
-                              </div>
-                              <div class="d-flex align-center gap-x-4">
-                                <VChip size="small">-2% X1</VChip>
-                              </div>
-                            </div>
-                            <div class="text-caption mt-1">Open: <span class="font-weight-light-bold">Dec 10, 2024 - 22:17</span></div>
-                            <VRow class="mt-2">
-                              <VCol cols="3" class="text-caption grey--text">Trade ID<br><span class="font-weight-bold">502426</span></VCol>
-                              <VCol cols="3" class="text-caption grey--text">Price<br><span class="font-weight-bold">3634.04</span></VCol>
-                              <VCol cols="3" class="text-caption grey--text">Quantity<br><span class="font-weight-bold">0.0291</span></VCol>
-                              <VCol cols="3" class="text-caption grey--text">Amount<br><span class="font-weight-bold">105.75</span></VCol>
-                            </VRow>
-                          </VCard>
-                        </VCol>
-
-                        <!-- Profit Summary -->
-                        <VCol cols="12" md="4">
-                          <VCard border class="pa-3 profit-card">
-                            <VRow>
-                              <VCol cols="6" class="text-caption grey--text pb-0">Gross Profit:</VCol>
-                              <VCol cols="6" class="text-sub-caption text-right pb-0">2.50</VCol>
-                              <VCol cols="6" class="text-caption grey--text pb-0 pt-1">Fees:</VCol>
-                              <VCol cols="6" class="text-sub-caption text-right pb-0 pt-1">0.47372728</VCol>
-                              <VCol cols="6" class="text-caption grey--text pb-0 pt-0">Profit %:</VCol>
-                              <VCol cols="6" class="text-sub-caption text-right pb-0 pt-0">2.02%</VCol>
-                              <VCol cols="6" class="text-caption grey--text pb-0 pt-1">Profit Avg Price:</VCol>
-                              <VCol cols="6" class="text-sub-caption text-right pb-0 pt-1">1.01%</VCol>
-                              <VCol cols="6" class="text-caption font-weight-bold pb-1 pt-0">Net Profit:</VCol>
-                              <VCol cols="6" class="text-sub-caption text-right pb-1 pt-0"><VChip color="success" class="ml-2" size="small">1.01 (0.98%)</VChip></VCol>
-                            </VRow>
-                          </VCard>
-                        </VCol>
-                      </VRow>
-                    </VCard>
-                  </VExpansionPanelText>
-                </VExpansionPanel>
-                <VExpansionPanel expand-icon="tabler-plus" collapse-icon="tabler-minus">
-                  <VExpansionPanelTitle class="d-flex align-center" disable-icon-rotate>
-                    <VCard class="mb-6" style="flex-grow: 1; margin-right: 15px;">
-                      <VCardText class="d-flex justify-space-between align-center flex-wrap gap-4">
-                        <div class="d-flex align-center gap-2">
-                          <div class="text-h6">Session <strong>36950514</strong></div>
-                        </div>
-                        <div class="d-flex align-center gap-x-4">
-                          <span class="text-caption grey--text">Runtime:</span><strong>10D 58M</strong>
-                          <div style="width: 1px; height: 24px; background-color: #ccc;"></div>
-                          <span class="text-caption grey--text"><span class="font-weight-bold">Dec 6</span>, 2024 23:30 <VIcon icon="tabler-arrow-right" size="20" /> <span class="font-weight-bold">Dec 17</span>, 2024 23:30 </span>
-                        </div>
-                      </VCardText>
-                      <VCardText>
-                        <div class="d-flex align-center justify-space-between flex-wrap pt-4">
-                          <template v-for="(item, index) in stats" :key="index">
-                            <div class="d-flex align-center" style="flex: 1; min-width: 120px;">
-                              <div>
-          <span class="text-caption grey--text">
-            {{ item.label }}
-            <VIcon v-if="item.icon" icon="tabler-info-circle" size="14" />
-            <br />
-            <span
-              :class="['text-sub-caption', item.color]"
-            >
-              {{ item.value }}
-            </span>
-          </span>
-                              </div>
-                              <!-- Divider (skip for last item) -->
-                              <div
-                                v-if="index !== stats.length - 1"
-                                style="width: 1px; height: 24px; background-color: #ccc; margin: 0 12px;"
-                              />
-                            </div>
-                          </template>
-                        </div>
-                      </VCardText>
-
-                    </VCard>
-
-                  </VExpansionPanelTitle>
-                  <VExpansionPanelText>
-                    <div class="mb-4">
-                      <VRow>
-                        <!-- Buy Info -->
-                        <VCol cols="12" md="4">
-                          <VCardTitle class="text-center pl-0 pr-0" style="color:green;">Buy info
-                            <VProgressLinear
-                              model-value="100"
-                              color="green"
-                              height="3"
-                            />
-                          </VCardTitle>
-
-                          <VCard border class="pa-3 buy-card">
-                            <div class="d-flex justify-space-between align-center">
-                              <div class="d-flex align-center gap-2">
-                                <VChip color="success" class="text-white">Buy</VChip>
-                                <span class="font-weight-bold text-black text-left">Cover 4</span>
-                              </div>
-                              <div class="d-flex align-center gap-x-4">
-                                <VChip size="small">-2% X1</VChip>
-                              </div>
-                            </div>
-                            <div class="text-caption mt-1">Open: <span class="font-weight-light-bold">Dec 10, 2024 - 22:17</span></div>
-                            <VRow class="mt-2">
-                              <VCol cols="3" class="text-caption grey--text">Trade ID<br><span class="font-weight-bold">502426</span></VCol>
-                              <VCol cols="3" class="text-caption grey--text">Price<br><span class="font-weight-bold">3634.04</span></VCol>
-                              <VCol cols="3" class="text-caption grey--text">Quantity<br><span class="font-weight-bold">0.0291</span></VCol>
-                              <VCol cols="3" class="text-caption grey--text">Amount<br><span class="font-weight-bold">105.75</span></VCol>
-                            </VRow>
-                          </VCard>
-                        </VCol>
-
-                        <!-- Sell Info -->
-                        <VCol cols="12" md="4">
-                          <VCardTitle class="text-center pl-0 pr-0" style="color:red;">Sell info
-                            <VProgressLinear
-                              model-value="100"
-                              color="red"
-                              height="3"
-                            />
-                          </VCardTitle>
-                          <VCard border class="pa-3 sell-card" style="cursor: pointer;">
-                            <div class="d-flex justify-space-between align-center">
-                              <div class="d-flex align-center gap-2">
-                                <VChip color="error" class="text-white">Sell</VChip>
-                                <span class="font-weight-bold text-left">Cover 4</span>
-                              </div>
-                              <div class="d-flex align-center gap-x-4">
-                                <VChip size="small">-2% X1</VChip>
-                              </div>
-                            </div>
-                            <div class="text-caption mt-1">Open: <span class="font-weight-light-bold">Dec 10, 2024 - 22:17</span></div>
-                            <VRow class="mt-2">
-                              <VCol cols="3" class="text-caption grey--text">Trade ID<br><span class="font-weight-bold">502426</span></VCol>
-                              <VCol cols="3" class="text-caption grey--text">Price<br><span class="font-weight-bold">3634.04</span></VCol>
-                              <VCol cols="3" class="text-caption grey--text">Quantity<br><span class="font-weight-bold">0.0291</span></VCol>
-                              <VCol cols="3" class="text-caption grey--text">Amount<br><span class="font-weight-bold">105.75</span></VCol>
-                            </VRow>
-                          </VCard>
-                        </VCol>
-
-                        <!-- Profit Summary -->
-                        <VCol cols="12" md="4">
-                          <VCardTitle class="text-center pl-0 pr-0">Profit
-                            <VProgressLinear
-                              height="3"
-                            />
-                          </VCardTitle>
-                          <VCard border class="pa-3 profit-card">
-                            <VRow>
-                              <VCol cols="6" class="text-caption grey--text pb-0">Gross Profit:</VCol>
-                              <VCol cols="6" class="text-sub-caption text-right pb-0">2.50</VCol>
-                              <VCol cols="6" class="text-caption grey--text pb-0 pt-1">Fees:</VCol>
-                              <VCol cols="6" class="text-sub-caption text-right pb-0 pt-1">0.47372728</VCol>
-                              <VCol cols="6" class="text-caption grey--text pb-0 pt-0">Profit %:</VCol>
-                              <VCol cols="6" class="text-sub-caption text-right pb-0 pt-0">2.02%</VCol>
-                              <VCol cols="6" class="text-caption grey--text pb-0 pt-1">Profit Avg Price:</VCol>
-                              <VCol cols="6" class="text-sub-caption text-right pb-0 pt-1">1.01%</VCol>
-                              <VCol cols="6" class="text-caption font-weight-bold pb-1 pt-0">Net Profit:</VCol>
-                              <VCol cols="6" class="text-sub-caption text-right pb-1 pt-0"><VChip color="success" class="ml-2" size="small">1.01 (0.98%)</VChip></VCol>
-                            </VRow>
-                          </VCard>
-                        </VCol>
-                      </VRow>
-                    </div>
-                    <div>
-                      <VCard class="mb-4">
-                        <VCardTitle class="border-bg-block"> <VIcon icon="tabler-alert-triangle" class="mr-1" style="background-color:red"/> Insufficient Balance</VCardTitle>
-                        <VDivider />
-                        <VCardText>
-                          <VRow>
-                            <VCol cols="12">
-                              <VRow>
-                                <VCol cols="4">
-                                  <VChip color="error" class="text-white">Sell</VChip>
-                                  <span class="font-weight-bold pl-2 pr-4">Cover 4</span>
-                                  <VChip size="small">-2% X1</VChip>
-                                </VCol>
-                                <VCol cols="2" class="text-caption">Close<br><span class="font-weight-bold">Dec 10, 2024 - 22:17</span></VCol>
-                                <VCol cols="2" class="text-caption">Trade ID<br><span class="font-weight-bold">50242660</span></VCol>
-                                <VCol cols="4">
-                                  <div class="d-flex justify-space-between text-caption">
-                                    <div class="text-left">
-                                      <div>Price</div>
-                                      <div class="font-weight-bold">3634.04</div>
-                                    </div>
-
-                                    <div class="text-center">
-                                      <div>Quantity</div>
-                                      <div class="font-weight-bold">0.0291</div>
-                                    </div>
-
-                                    <div class="text-right">
-                                      <div>Amount</div>
-                                      <div class="font-weight-bold">105.75</div>
-                                    </div>
-                                  </div>
-                                </VCol>
-
-                              </VRow>
-                            </VCol>
-                          </VRow>
-                        </VCardText>
-                      </VCard>
-                      <VCard class="mb-4">
-                        <VCardTitle class="border-bg-block"> <VIcon icon="tabler-alert-circle" class="mr-1" style="background-color:orange"/> Insufficient Balance</VCardTitle>
-                        <VDivider />
-                        <VCardText>
-                          <VRow>
-                            <VCol cols="12">
-                              <VRow>
-                                <VCol cols="4">
-                                  <VChip color="error" class="text-white">Sell</VChip>
-                                  <span class="font-weight-bold pl-2 pr-4">Cover 4</span>
-                                  <VChip size="small">-2% X1</VChip>
-                                </VCol>
-                                <VCol cols="2" class="text-caption">Close<br><span class="font-weight-bold">Dec 10, 2024 - 22:17</span></VCol>
-                                <VCol cols="2" class="text-caption">Trade ID<br><span class="font-weight-bold">50242660</span></VCol>
-                                <VCol cols="4">
-                                  <div class="d-flex justify-space-between text-caption">
-                                    <div class="text-left">
-                                      <div>Price</div>
-                                      <div class="font-weight-bold">3634.04</div>
-                                    </div>
-
-                                    <div class="text-center">
-                                      <div>Quantity</div>
-                                      <div class="font-weight-bold">0.0291</div>
-                                    </div>
-
-                                    <div class="text-right">
-                                      <div>Amount</div>
-                                      <div class="font-weight-bold">105.75</div>
-                                    </div>
-                                  </div>
-                                </VCol>
-
-                              </VRow>
-                            </VCol>
-                          </VRow>
-                        </VCardText>
-                      </VCard>
-                      <VCard class="mb-4">
-                        <VCardTitle class="border-bg-block"> <VIcon icon="tabler-info-circle" class="mr-1" style="background-color:blue"/> Insufficient Balance</VCardTitle>
-                        <VDivider />
-                        <VCardText>
-                          <VRow>
-                            <VCol cols="12">
-                              <VRow>
-                                <VCol cols="4">
-                                  <VChip color="error" class="text-white">Sell</VChip>
-                                  <span class="font-weight-bold pl-2 pr-4">Cover 4</span>
-                                  <VChip size="small">-2% X1</VChip>
-                                </VCol>
-                                <VCol cols="2" class="text-caption">Close<br><span class="font-weight-bold">Dec 10, 2024 - 22:17</span></VCol>
-                                <VCol cols="2" class="text-caption">Trade ID<br><span class="font-weight-bold">50242660</span></VCol>
-                                <VCol cols="4">
-                                  <div class="d-flex justify-space-between text-caption">
-                                    <div class="text-left">
-                                      <div>Price</div>
-                                      <div class="font-weight-bold">3634.04</div>
-                                    </div>
-
-                                    <div class="text-center">
-                                      <div>Quantity</div>
-                                      <div class="font-weight-bold">0.0291</div>
-                                    </div>
-
-                                    <div class="text-right">
-                                      <div>Amount</div>
-                                      <div class="font-weight-bold">105.75</div>
-                                    </div>
-                                  </div>
-                                </VCol>
-
-                              </VRow>
-                            </VCol>
-                          </VRow>
-                        </VCardText>
-                      </VCard>
-                    </div>
-                    <VCard>
-                      <VRow>
-                        <!-- Buy Info -->
-                        <VCol cols="12" md="4">
-                          <VCard border class="pa-3 buy-card">
-                            <div class="d-flex justify-space-between align-center">
-                              <div class="d-flex align-center gap-2">
-                                <VChip color="success" class="text-white">Buy</VChip>
-                                <span class="font-weight-bold text-black text-left">Cover 4</span>
-                              </div>
-                              <div class="d-flex align-center gap-x-4">
-                                <VChip size="small">-2% X1</VChip>
-                              </div>
-                            </div>
-                            <div class="text-caption mt-1">Open: <span class="font-weight-light-bold">Dec 10, 2024 - 22:17</span></div>
-                            <VRow class="mt-2">
-                              <VCol cols="3" class="text-caption grey--text">Trade ID<br><span class="font-weight-bold">502426</span></VCol>
-                              <VCol cols="3" class="text-caption grey--text">Price<br><span class="font-weight-bold">3634.04</span></VCol>
-                              <VCol cols="3" class="text-caption grey--text">Quantity<br><span class="font-weight-bold">0.0291</span></VCol>
-                              <VCol cols="3" class="text-caption grey--text">Amount<br><span class="font-weight-bold">105.75</span></VCol>
-                            </VRow>
-                          </VCard>
-                        </VCol>
-
-                        <!-- Sell Info -->
-                        <VCol cols="12" md="4">
-                          <VCard border class="pa-3 sell-card">
-                            <div class="d-flex justify-space-between align-center">
-                              <div class="d-flex align-center gap-2">
-                                <VChip color="error" class="text-white">Sell</VChip>
-                                <span class="font-weight-bold text-left">Cover 4</span>
-                              </div>
-                              <div class="d-flex align-center gap-x-4">
-                                <VChip size="small">-2% X1</VChip>
-                              </div>
-                            </div>
-                            <div class="text-caption mt-1">Open: <span class="font-weight-light-bold">Dec 10, 2024 - 22:17</span></div>
-                            <VRow class="mt-2">
-                              <VCol cols="3" class="text-caption grey--text">Trade ID<br><span class="font-weight-bold">502426</span></VCol>
-                              <VCol cols="3" class="text-caption grey--text">Price<br><span class="font-weight-bold">3634.04</span></VCol>
-                              <VCol cols="3" class="text-caption grey--text">Quantity<br><span class="font-weight-bold">0.0291</span></VCol>
-                              <VCol cols="3" class="text-caption grey--text">Amount<br><span class="font-weight-bold">105.75</span></VCol>
-                            </VRow>
-                          </VCard>
-                        </VCol>
-
-                        <!-- Profit Summary -->
-                        <VCol cols="12" md="4">
-                          <VCard border class="pa-3 profit-card">
-                            <VRow>
-                              <VCol cols="6" class="text-caption grey--text pb-0">Gross Profit:</VCol>
-                              <VCol cols="6" class="text-sub-caption text-right pb-0">2.50</VCol>
-                              <VCol cols="6" class="text-caption grey--text pb-0 pt-1">Fees:</VCol>
-                              <VCol cols="6" class="text-sub-caption text-right pb-0 pt-1">0.47372728</VCol>
-                              <VCol cols="6" class="text-caption grey--text pb-0 pt-0">Profit %:</VCol>
-                              <VCol cols="6" class="text-sub-caption text-right pb-0 pt-0">2.02%</VCol>
-                              <VCol cols="6" class="text-caption grey--text pb-0 pt-1">Profit Avg Price:</VCol>
-                              <VCol cols="6" class="text-sub-caption text-right pb-0 pt-1">1.01%</VCol>
-                              <VCol cols="6" class="text-caption font-weight-bold pb-1 pt-0">Net Profit:</VCol>
-                              <VCol cols="6" class="text-sub-caption text-right pb-1 pt-0"><VChip color="success" class="ml-2" size="small">1.01 (0.98%)</VChip></VCol>
-                            </VRow>
-                          </VCard>
-                        </VCol>
-                      </VRow>
-                    </VCard>
-                  </VExpansionPanelText>
-                </VExpansionPanel>
-              </VExpansionPanels>
-            </VWindowItem>
-          </VWindow>
-        </VCardText>
-      </VCard>
-    </div>
-  </div>
-  <div v-else>
-    <VCard>
-
-      <VCardText class="d-flex justify-space-between align-center flex-wrap gap-4">
-        <!-- Left: Title -->
-        <span class="font-weight-bold">
-        <span class="pr-2">ETH</span>
-      <VChip color="success">Active</VChip>
-      </span>
-
-        <!-- Right: Statuses -->
-        <div class="d-flex align-center gap-x-4">
-          <VBtn variant="outlined" icon="tabler-download" rounded>
-          </VBtn>
-          <VBtn
-            icon="tabler-edit"
-            :to="{ name: 'edit-bot' }"
-            rounded
-          >
-          </VBtn>
-        </div>
-      </VCardText>
-      <VCardText class="d-flex justify-space-between align-center flex-wrap gap-4">
-        <!-- Left: Title -->
-        <VList class="card-list">
-          <VListItem>
-            <div class="d-flex align-center gap-2">
-              <VAvatar>
-                <img :src="Group">
-              </VAvatar>
-              <VAvatar style="margin-left: -25px">
-                <img :src="Frame">
-              </VAvatar>
-              <div>
-                <div class="font-weight-medium">ETH/USDT</div>
-                <div class="text-caption grey--text">1481.71</div>
-              </div>
+    <VCardText class="d-flex justify-space-between align-center flex-wrap gap-4">
+      <!-- Left: Title -->
+      <VList class="card-list">
+        <VListItem>
+          <div class="d-flex align-center gap-2">
+            <VAvatar>
+              <img :src="Group">
+            </VAvatar>
+            <VAvatar style="margin-left: -25px">
+              <img :src="Frame">
+            </VAvatar>
+            <div>
+              <div class="font-weight-medium">ETH/USDT</div>
+              <div class="text-caption grey--text">1481.71</div>
             </div>
-          </VListItem>
-        </VList>
+          </div>
+        </VListItem>
+      </VList>
 
-        <!-- Right: Statuses -->
-        <div class="d-flex align-center gap-x-4">
-          <span class="text-caption grey--text text-right">Sessions Closed<br /><span class="text-sub-caption">10</span></span>
-        </div>
-      </VCardText>
-      <VCardText class="justify-space-between align-center flex-wrap gap-4">
-        <VRow dense class="w-100">
-          <VCol cols="3">
-            <div class="d-flex flex-column justify-center">
-              <span class="text-caption grey--text text-center"><VIcon icon="tabler-circle-letter-b"/><span class="text-sub-caption">Binance</span></span>
-            </div>
+      <!-- Right: Statuses -->
+      <div class="d-flex align-center gap-x-4">
+        <span class="text-caption grey--text">Sessions Closed<br /><span class="text-sub-caption">10</span></span>
+        <div style="width: 1px; height: 24px; background-color: #ccc;"></div>
+        <span class="text-caption grey--text">Exchange<br /><span class="text-sub-caption">Binance</span></span>
+        <div style="width: 1px; height: 24px; background-color: #ccc;"></div>
+        <span class="text-caption grey--text">Cycle Type<br /><span class="text-sub-caption">Single</span></span>
+        <div style="width: 1px; height: 24px; background-color: #ccc;"></div>
+        <span class="text-caption grey--text">Strategy<br /><span class="text-sub-caption">Custom</span></span>
+        <div style="width: 1px; height: 24px; background-color: #ccc;"></div>
+        <span class="text-caption grey--text">Strategy Type<br /><span class="text-sub-caption">SBS</span></span>
+        <div style="width: 1px; height: 24px; background-color: #ccc;"></div>
+        <span class="text-caption grey--text">Runtime<br /><span class="text-sub-caption">149D 20H 44M</span></span>
+      </div>
+    </VCardText>
+    <VCardText class="justify-space-between align-center flex-wrap gap-4">
+      <div class="pb-0 px-3 pt-3 mb-4 bg-light-primary rounded">
+
+      <!-- Left: Title -->
+        <VRow class="d-flex py-2 align-center">
+          <VCol cols="2">
+            <div class="font-weight-bold">Earnings Report <VIcon icon="tabler-arrow-right" size="20" /></div>
           </VCol>
-
-          <VCol cols="3">
-            <div class="d-flex flex-column justify-center">
-              <span class="text-caption grey--text text-center"><VIcon icon="tabler-refresh"/><span class="text-sub-caption">Single</span></span>
-            </div>
+          <VCol cols="2">
+            <span class="text-caption grey--text">Today (7h:27m)<br /><span class="text-sub-caption">-</span></span>
           </VCol>
-
-          <VCol cols="3">
-            <div class="d-flex flex-column justify-center">
-              <span class="text-caption grey--text text-center"><VIcon icon="tabler-world-cog"/><span class="text-sub-caption">Custom</span></span>
-            </div>
+          <VCol cols="2">
+            <span class="text-caption grey--text">Last 7 Days<br /><span class="text-sub-caption">-</span></span>
           </VCol>
-
-          <VCol cols="3">
-            <div class="d-flex flex-column justify-center">
-              <span class="text-caption grey--text text-center"><VIcon icon="tabler-target-arrow"/><span class="text-sub-caption">SBS</span></span>
-            </div>
+          <VCol cols="2">
+            <span class="text-caption grey--text">Last 30 Days<br /><span class="text-sub-caption">-</span></span>
+          </VCol>
+          <VCol cols="2">
+            <span class="text-caption grey--text">Trades Closed<br /><span class="text-sub-caption">68</span></span>
+          </VCol>
+          <VCol cols="2">
+            <span class="text-caption grey--text">Trade Profit <VIcon icon="tabler-info-circle"/><br /><span class="text-sub-caption" style="color: green">$ 166.30</span></span>
           </VCol>
         </VRow>
-      </VCardText>
-      <VDivider />
-      <VCardText class="d-flex justify-space-between align-center flex-wrap gap-4" style="border-radius: 0px 0px 10px 10px;background-color: #fafafa;border-top: 1px solid #e2e8f0;">
-        <!-- Left: Title -->
-        <div class="d-flex align-center gap-x-4">
-          <span class="text-caption grey--text">Day’s P&L (7h:27m)<br /><span class="text-sub-caption" style="color: green">$ 6.30</span></span>
-        </div>
-        <!-- Right: Statuses -->
-        <div class="d-flex align-center gap-x-4">
-          <span class="text-caption grey--text text-right">Overall P&L<br /><span class="text-sub-caption" style="color: green">$ 166.30</span></span>
-        </div>
-      </VCardText>
-    </VCard>
-    <VCardText class="justify-space-between align-center flex-wrap gap-4">
-      <VTabs v-model="currentTab">
-        <VTab style="padding: 0px 10px;">Current Session</VTab>
-        <VTab style="padding: 0px 10px;">
-          <div class="d-flex align-center gap-1">
-            <span>Previous Sessions</span>
-            <VBadge
-              color="secondary"
-              content="4"
-              inline
-              bordered
-              offset-x="2"
-              offset-y="0"
-            />
-          </div>
-        </VTab>
-      </VTabs>
+      </div>
     </VCardText>
-    <div class="justify-space-between align-center flex-wrap gap-4 pb-4">
-      <VCard>
-          <VWindow v-model="currentTab">
-            <VWindowItem value="item-1">
-              <VExpansionPanels class="no-icon-rotate" multiple>
-                <VExpansionPanel expand-icon="tabler-plus" collapse-icon="tabler-minus">
-                  <VExpansionPanelTitle disable-icon-rotate>
-                    <div class="d-flex justify-space-between align-center w-100">
-                      <div class="text-h6">
-                        Session <strong>36950514</strong>
+  </VCard>
+  <VCardText class="justify-space-between align-center flex-wrap gap-4">
+
+
+<VTabs v-model="currentTab">
+    <VTab>Current Session</VTab>
+    <VTab>Previous Sessions</VTab>
+  </VTabs>
+  </VCardText>
+
+  <div class="justify-space-between align-center flex-wrap gap-4 pb-4">
+    <VCard>
+    <VCardText>
+      <VWindow v-model="currentTab">
+          <VWindowItem value="item-1">
+            <VExpansionPanels multiple>
+              <VExpansionPanel>
+                <VExpansionPanelTitle class="d-flex align-center">
+                  <VCard class="mb-6" style="flex-grow: 1;">
+                    <VCardText class="d-flex justify-space-between align-center flex-wrap gap-4">
+                      <div class="d-flex align-center gap-2">
+                        <div class="text-h6">Session <strong>36950514</strong></div>
                       </div>
-                      <span class="text-sub-caption text-success">$19.71</span>
-                    </div>
-                  </VExpansionPanelTitle>
-                  <VExpansionPanelText>
-                    <div class="mb-4 mt-2">
-                      <VRow>
-                        <VRow dense class="text-center">
-                          <!-- Row 1 -->
-                          <VCol cols="12">
-                            <div class="d-flex justify-space-between">
-                              <!-- Column 1 -->
-                              <div class="flex-1">
-                                <span class="text-caption text-grey">Trades closed</span><br>
-                                <strong class="font-weight-bold text-sub-caption">7</strong>
-                              </div>
-
-                              <!-- Vertical Divider -->
-                              <VDivider vertical class="mx-2" style="height: 40px;" />
-
-                              <!-- Column 2 -->
-                              <div class="flex-1">
-                                <span class="text-caption text-grey">Top positions sold</span><br>
-                                <strong class="font-weight-bold text-sub-caption">0</strong>
-                              </div>
-
-                              <!-- Vertical Divider -->
-                              <VDivider vertical class="mx-2" style="height: 40px;" />
-
-                              <!-- Column 3 -->
-                              <div class="flex-1">
-                                <span class="text-caption text-grey">Sliding covers</span><br>
-                                <strong class="font-weight-bold text-sub-caption">22</strong>
-                              </div>
-                            </div>
-                          </VCol>
-                          <VDivider />
-
-                          <!-- Row: Opening / Closing / Profit Used -->
-                          <VCol cols="12">
-                            <div class="d-flex justify-space-between align-start">
-                              <!-- Opening Price -->
-                              <div class="text-center flex-1">
-                                <span class="text-caption text-grey">Opening price</span><br>
-                                <strong class="font-weight-bold text-sub-caption">4016.66</strong>
-                              </div>
-
-                              <VDivider vertical class="mx-2" style="height: 40px;" />
-
-                              <!-- Closing Price -->
-                              <div class="text-center flex-1">
-                                <span class="text-caption text-grey">Closing price</span><br>
-                                <strong class="font-weight-bold text-sub-caption">4079.54</strong>
-                              </div>
-
-                              <VDivider vertical class="mx-2" style="height: 40px;" />
-
-                              <!-- Profit Used -->
-                              <div class="text-center flex-1">
-                                <span class="text-caption text-grey">Profit used<VIcon icon="tabler-info-circle" size="14" /></span><br>
-                                <strong class="font-weight-bold text-sub-caption">-</strong>
-                              </div>
-                            </div>
-                          </VCol>
-                            <VDivider />
-                          <!-- Row: Available Profit / Runtime -->
-                          <VCol cols="12">
-                            <div class="d-flex justify-space-between align-start">
-                              <!-- Available Profit -->
-                              <div class="text-center flex-1">
-                                <span class="text-caption text-grey">Available profit<VIcon icon="tabler-info-circle" size="14" /></span><br>
-                                <strong class="font-weight-bold text-sub-caption">2.42</strong>
-                              </div>
-
-                              <VDivider vertical class="mx-2" style="height: 40px;" />
-
-                              <!-- Runtime -->
-                              <div class="text-center flex-1">
-                                <span class="text-caption text-grey">Runtime</span><br>
-                                <strong class="font-weight-bold text-sub-caption">10D 58M</strong>
-                              </div>
-                            </div>
-                          </VCol>
-
-                            <VDivider />
-
-                          <!-- Footer -->
-                          <VCol cols="12">
-                            <div class="text-center">
-                              <strong class="font-weight-bold text-sub-caption">Session Trades - 12 Open</strong>
-                            </div>
-                          </VCol>
-                        </VRow>
-
-                        <VCol cols="12">
-                          <!-- Buy Info -->
-                          <VCard border class="pa-3 buy-card">
-                            <div class="d-flex justify-space-between align-center">
-                              <div class="d-flex align-center gap-2">
-                                <VChip color="success" class="text-white">Buy</VChip>
-                                <span class="font-weight-bold text-black text-left">Cover 4</span>
-                              </div>
-                              <div class="d-flex align-center gap-x-4">
-                                <VChip size="small">-2% X1</VChip>
-                              </div>
-                            </div>
-                            <div class="text-caption mt-1">Open: <span class="font-weight-light-bold">Dec 10, 2024 - 22:17</span></div>
-                            <VRow class="mt-1">
-                              <VCol cols="3" class="text-caption grey--text">Trade ID<br><span class="font-weight-bold">502426</span></VCol>
-                              <VCol cols="3" class="text-caption grey--text">Price<br><span class="font-weight-bold">3634.04</span></VCol>
-                              <VCol cols="3" class="text-caption grey--text">Quantity<br><span class="font-weight-bold">0.0291</span></VCol>
-                              <VCol cols="3" class="text-caption grey--text">Amount<br><span class="font-weight-bold">105.75</span></VCol>
-                            </VRow>
-                          </VCard>
-                        <!-- Sell Info -->
-                          <VCard border class="pa-3 sell-card" style="cursor: pointer;">
-                            <div class="d-flex justify-space-between align-center">
-                              <div class="d-flex align-center gap-2">
-                                <VChip color="error" class="text-white">Sell</VChip>
-                                <span class="font-weight-bold text-left">Cover 4</span>
-                              </div>
-                              <div class="d-flex align-center gap-x-4">
-                                <VChip size="small">-2% X1</VChip>
-                              </div>
-                            </div>
-                            <div class="text-caption mt-1">Open: <span class="font-weight-light-bold">Dec 10, 2024 - 22:17</span></div>
-                            <VRow class="mt-1">
-                              <VCol cols="3" class="text-caption grey--text">Trade ID<br><span class="font-weight-bold">502426</span></VCol>
-                              <VCol cols="3" class="text-caption grey--text">Price<br><span class="font-weight-bold">3634.04</span></VCol>
-                              <VCol cols="3" class="text-caption grey--text">Quantity<br><span class="font-weight-bold">0.0291</span></VCol>
-                              <VCol cols="3" class="text-caption grey--text">Amount<br><span class="font-weight-bold">105.75</span></VCol>
-                            </VRow>
-                          </VCard>
-                        <!-- Profit Summary -->
-                          <VCard border class="pa-3 profit-card">
-                            <VRow>
-                              <VCol cols="4" class="text-caption grey--text pb-0">Gross Profit:</VCol>
-                              <VCol cols="2" class="text-sub-caption text-right pb-0">2.50</VCol>
-                              <VCol cols="3" class="text-caption grey--text pb-0 pl-0">Profit %:</VCol>
-                              <VCol cols="3" class="text-sub-caption text-right pb-0">2.02%</VCol>
-                              <VCol cols="2" class="text-caption grey--text pb-0 pt-1 pr-0">Fees:</VCol>
-                              <VCol cols="4" class="text-sub-caption text-right pb-0 pt-1">0.47372728</VCol>
-                              <VCol cols="4" class="text-caption grey--text pb-0 pt-1 pl-0 pr-0">Profit Avg Price:</VCol>
-                              <VCol cols="2" class="text-sub-caption text-right pb-0 pt-1 pl-0">1.01%</VCol>
-                              <VCol cols="6" class="text-caption font-weight-bold pb-1 pt-0">Net Profit:</VCol>
-                              <VCol cols="6" class="text-sub-caption text-right pb-1 pt-0"><VChip color="success" class="ml-2" size="small">1.01 (0.98%)</VChip></VCol>
-                            </VRow>
-                          </VCard>
-                        </VCol>
-                      </VRow>
-                    </div>
-                    <div>
-                      <VCard class="mb-4" style="border: 1px solid rgb(240, 185, 11);">
-                        <VCardTitle class="border-bg-block" style="font-size: 12px;background-color: #ffdc6c;">Account has insufficient balance for requested action.</VCardTitle>
-                        <VDivider />
-                        <div class="pa-3">
-                          <div class="d-flex justify-space-between align-center">
-                            <div class="d-flex align-center gap-2">
-                              <VChip color="success" class="text-white">Buy</VChip>
-                              <span class="font-weight-bold text-black text-left">Cover 4</span>
-                            </div>
-                            <div class="d-flex align-center gap-x-4">
-                              <VChip size="small">-2% X1</VChip>
-                            </div>
-                          </div>
-                          <div class="text-caption mt-1">Open: <span class="font-weight-light-bold">Dec 10, 2024 - 22:17</span></div>
-                          <VRow class="mt-1">
-                            <VCol cols="3" class="text-caption grey--text">Trade ID<br><span class="font-weight-bold">502426</span></VCol>
-                            <VCol cols="3" class="text-caption grey--text">Price<br><span class="font-weight-bold">3634.04</span></VCol>
-                            <VCol cols="3" class="text-caption grey--text">Quantity<br><span class="font-weight-bold">0.0291</span></VCol>
-                            <VCol cols="3" class="text-caption grey--text">Amount<br><span class="font-weight-bold">105.75</span></VCol>
-                          </VRow>
-                        </div>
-                      </VCard>
-                      <VCard class="mb-4" style="border: 1px solid rgb(240, 185, 11);">
-                        <VCardTitle class="border-bg-block" style="font-size: 12px;background-color: #ffdc6c;">Account has insufficient balance for requested action.</VCardTitle>
-                        <VDivider />
-                        <div class="pa-3">
-                          <div class="d-flex justify-space-between align-center">
-                            <div class="d-flex align-center gap-2">
-                              <VChip color="success" class="text-white">Buy</VChip>
-                              <span class="font-weight-bold text-black text-left">Cover 4</span>
-                            </div>
-                            <div class="d-flex align-center gap-x-4">
-                              <VChip size="small">-2% X1</VChip>
-                            </div>
-                          </div>
-                          <div class="text-caption mt-1">Open: <span class="font-weight-light-bold">Dec 10, 2024 - 22:17</span></div>
-                          <VRow class="mt-1">
-                            <VCol cols="3" class="text-caption grey--text">Trade ID<br><span class="font-weight-bold">502426</span></VCol>
-                            <VCol cols="3" class="text-caption grey--text">Price<br><span class="font-weight-bold">3634.04</span></VCol>
-                            <VCol cols="3" class="text-caption grey--text">Quantity<br><span class="font-weight-bold">0.0291</span></VCol>
-                            <VCol cols="3" class="text-caption grey--text">Amount<br><span class="font-weight-bold">105.75</span></VCol>
-                          </VRow>
-                        </div>
-                      </VCard>
-                      <VCard class="mb-4" style="border: 1px solid rgb(240, 185, 11);">
-                        <VCardTitle class="border-bg-block" style="font-size: 12px;background-color: #ffdc6c;">Account has insufficient balance for requested action.</VCardTitle>
-                        <VDivider />
-                        <div class="pa-3">
-                          <div class="d-flex justify-space-between align-center">
-                            <div class="d-flex align-center gap-2">
-                              <VChip color="success" class="text-white">Buy</VChip>
-                              <span class="font-weight-bold text-black text-left">Cover 4</span>
-                            </div>
-                            <div class="d-flex align-center gap-x-4">
-                              <VChip size="small">-2% X1</VChip>
-                            </div>
-                          </div>
-                          <div class="text-caption mt-1">Open: <span class="font-weight-light-bold">Dec 10, 2024 - 22:17</span></div>
-                          <VRow class="mt-1">
-                            <VCol cols="3" class="text-caption grey--text">Trade ID<br><span class="font-weight-bold">502426</span></VCol>
-                            <VCol cols="3" class="text-caption grey--text">Price<br><span class="font-weight-bold">3634.04</span></VCol>
-                            <VCol cols="3" class="text-caption grey--text">Quantity<br><span class="font-weight-bold">0.0291</span></VCol>
-                            <VCol cols="3" class="text-caption grey--text">Amount<br><span class="font-weight-bold">105.75</span></VCol>
-                          </VRow>
-                        </div>
-                      </VCard>
-                    </div>
-                    <VCard>
-                      <VRow>
-                        <!-- Buy Info -->
-                        <VCol cols="12">
-                          <!-- Buy Info -->
-                          <VCard border class="pa-3 buy-card">
-                            <div class="d-flex justify-space-between align-center">
-                              <div class="d-flex align-center gap-2">
-                                <VChip color="success" class="text-white">Buy</VChip>
-                                <span class="font-weight-bold text-black text-left">Cover 4</span>
-                              </div>
-                              <div class="d-flex align-center gap-x-4">
-                                <VChip size="small">-2% X1</VChip>
-                              </div>
-                            </div>
-                            <div class="text-caption mt-1">Open: <span class="font-weight-light-bold">Dec 10, 2024 - 22:17</span></div>
-                            <VRow class="mt-1">
-                              <VCol cols="3" class="text-caption grey--text">Trade ID<br><span class="font-weight-bold">502426</span></VCol>
-                              <VCol cols="3" class="text-caption grey--text">Price<br><span class="font-weight-bold">3634.04</span></VCol>
-                              <VCol cols="3" class="text-caption grey--text">Quantity<br><span class="font-weight-bold">0.0291</span></VCol>
-                              <VCol cols="3" class="text-caption grey--text">Amount<br><span class="font-weight-bold">105.75</span></VCol>
-                            </VRow>
-                          </VCard>
-                          <!-- Sell Info -->
-                          <VCard border class="pa-3 sell-card" style="cursor: pointer;">
-                            <div class="d-flex justify-space-between align-center">
-                              <div class="d-flex align-center gap-2">
-                                <VChip color="error" class="text-white">Sell</VChip>
-                                <span class="font-weight-bold text-left">Cover 4</span>
-                              </div>
-                              <div class="d-flex align-center gap-x-4">
-                                <VChip size="small">-2% X1</VChip>
-                              </div>
-                            </div>
-                            <div class="text-caption mt-1">Open: <span class="font-weight-light-bold">Dec 10, 2024 - 22:17</span></div>
-                            <VRow class="mt-1">
-                              <VCol cols="3" class="text-caption grey--text">Trade ID<br><span class="font-weight-bold">502426</span></VCol>
-                              <VCol cols="3" class="text-caption grey--text">Price<br><span class="font-weight-bold">3634.04</span></VCol>
-                              <VCol cols="3" class="text-caption grey--text">Quantity<br><span class="font-weight-bold">0.0291</span></VCol>
-                              <VCol cols="3" class="text-caption grey--text">Amount<br><span class="font-weight-bold">105.75</span></VCol>
-                            </VRow>
-                          </VCard>
-                          <!-- Profit Summary -->
-                          <VCard border class="pa-3 profit-card">
-                            <VRow>
-                              <VCol cols="4" class="text-caption grey--text pb-0">Gross Profit:</VCol>
-                              <VCol cols="2" class="text-sub-caption text-right pb-0">2.50</VCol>
-                              <VCol cols="3" class="text-caption grey--text pb-0 pl-0">Profit %:</VCol>
-                              <VCol cols="3" class="text-sub-caption text-right pb-0">2.02%</VCol>
-                              <VCol cols="2" class="text-caption grey--text pb-0 pt-1 pr-0">Fees:</VCol>
-                              <VCol cols="4" class="text-sub-caption text-right pb-0 pt-1">0.47372728</VCol>
-                              <VCol cols="4" class="text-caption grey--text pb-0 pt-1 pl-0 pr-0">Profit Avg Price:</VCol>
-                              <VCol cols="2" class="text-sub-caption text-right pb-0 pt-1 pl-0">1.01%</VCol>
-                              <VCol cols="6" class="text-caption font-weight-bold pb-1 pt-0">Net Profit:</VCol>
-                              <VCol cols="6" class="text-sub-caption text-right pb-1 pt-0"><VChip color="success" class="ml-2" size="small">1.01 (0.98%)</VChip></VCol>
-                            </VRow>
-                          </VCard>
-                        </VCol>
-                      </VRow>
-                    </VCard>
-                  </VExpansionPanelText>
-                </VExpansionPanel>
-              </VExpansionPanels>
-            </VWindowItem>
-            <VWindowItem value="item-2">
-              <VExpansionPanels  class="no-icon-rotate" multiple>
-                <VExpansionPanel style="margin-block-end: 0.5rem" expand-icon="tabler-plus" collapse-icon="tabler-minus">
-                  <VExpansionPanelTitle disable-icon-rotate>
-                    <div class="d-flex justify-space-between align-center w-100">
-                      <div class="text-h6">
-                        Session <strong>36950514</strong>
+                      <div class="d-flex align-center gap-x-4">
+                        <span class="text-caption grey--text">Runtime:</span><strong>10D 58M</strong>
+                        <div style="width: 1px; height: 24px; background-color: #ccc;"></div>
+                        <span class="text-caption grey--text"><span class="font-weight-bold">Dec 6</span>, 2024 23:30 <VIcon icon="tabler-arrow-right" size="20" /> <span class="font-weight-bold">Dec 17</span>, 2024 23:30 </span>
                       </div>
-                      <span class="text-sub-caption text-success">$19.71</span>
-                    </div>
-                  </VExpansionPanelTitle>
-                  <VExpansionPanelText>
-                    <div class="mb-4 mt-2">
-                      <VRow>
-                        <VRow dense class="text-center">
-                          <!-- Row 1 -->
-                          <VCol cols="12">
-                            <div class="d-flex justify-space-between">
-                              <!-- Column 1 -->
-                              <div class="flex-1">
-                                <span class="text-caption text-grey">Trades closed</span><br>
-                                <strong class="font-weight-bold text-sub-caption">7</strong>
-                              </div>
-
-                              <!-- Vertical Divider -->
-                              <VDivider vertical class="mx-2" style="height: 40px;" />
-
-                              <!-- Column 2 -->
-                              <div class="flex-1">
-                                <span class="text-caption text-grey">Top positions sold</span><br>
-                                <strong class="font-weight-bold text-sub-caption">0</strong>
-                              </div>
-
-                              <!-- Vertical Divider -->
-                              <VDivider vertical class="mx-2" style="height: 40px;" />
-
-                              <!-- Column 3 -->
-                              <div class="flex-1">
-                                <span class="text-caption text-grey">Sliding covers</span><br>
-                                <strong class="font-weight-bold text-sub-caption">22</strong>
-                              </div>
-                            </div>
-                          </VCol>
-                          <VDivider />
-
-                          <!-- Row: Opening / Closing / Profit Used -->
-                          <VCol cols="12">
-                            <div class="d-flex justify-space-between align-start">
-                              <!-- Opening Price -->
-                              <div class="text-center flex-1">
-                                <span class="text-caption text-grey">Opening price</span><br>
-                                <strong class="font-weight-bold text-sub-caption">4016.66</strong>
-                              </div>
-
-                              <VDivider vertical class="mx-2" style="height: 40px;" />
-
-                              <!-- Closing Price -->
-                              <div class="text-center flex-1">
-                                <span class="text-caption text-grey">Closing price</span><br>
-                                <strong class="font-weight-bold text-sub-caption">4079.54</strong>
-                              </div>
-
-                              <VDivider vertical class="mx-2" style="height: 40px;" />
-
-                              <!-- Profit Used -->
-                              <div class="text-center flex-1">
-                                <span class="text-caption text-grey">Profit used<VIcon icon="tabler-info-circle" size="14" /></span><br>
-                                <strong class="font-weight-bold text-sub-caption">-</strong>
-                              </div>
-                            </div>
-                          </VCol>
-                          <VDivider />
-                          <!-- Row: Available Profit / Runtime -->
-                          <VCol cols="12">
-                            <div class="d-flex justify-space-between align-start">
-                              <!-- Available Profit -->
-                              <div class="text-center flex-1">
-                                <span class="text-caption text-grey">Available profit<VIcon icon="tabler-info-circle" size="14" /></span><br>
-                                <strong class="font-weight-bold text-sub-caption">2.42</strong>
-                              </div>
-
-                              <VDivider vertical class="mx-2" style="height: 40px;" />
-
-                              <!-- Runtime -->
-                              <div class="text-center flex-1">
-                                <span class="text-caption text-grey">Runtime</span><br>
-                                <strong class="font-weight-bold text-sub-caption">10D 58M</strong>
-                              </div>
-                            </div>
-                          </VCol>
-
-                          <VDivider />
-
-                          <!-- Footer -->
-                          <VCol cols="12">
-                            <div class="text-center">
-                              <strong class="font-weight-bold text-sub-caption">Session Trades - 12 Open</strong>
-                            </div>
-                          </VCol>
-                        </VRow>
-
-                        <VCol cols="12">
-                          <!-- Buy Info -->
-                          <VCard border class="pa-3 buy-card">
-                            <div class="d-flex justify-space-between align-center">
-                              <div class="d-flex align-center gap-2">
-                                <VChip color="success" class="text-white">Buy</VChip>
-                                <span class="font-weight-bold text-black text-left">Cover 4</span>
-                              </div>
-                              <div class="d-flex align-center gap-x-4">
-                                <VChip size="small">-2% X1</VChip>
-                              </div>
-                            </div>
-                            <div class="text-caption mt-1">Open: <span class="font-weight-light-bold">Dec 10, 2024 - 22:17</span></div>
-                            <VRow class="mt-1">
-                              <VCol cols="3" class="text-caption grey--text">Trade ID<br><span class="font-weight-bold">502426</span></VCol>
-                              <VCol cols="3" class="text-caption grey--text">Price<br><span class="font-weight-bold">3634.04</span></VCol>
-                              <VCol cols="3" class="text-caption grey--text">Quantity<br><span class="font-weight-bold">0.0291</span></VCol>
-                              <VCol cols="3" class="text-caption grey--text">Amount<br><span class="font-weight-bold">105.75</span></VCol>
-                            </VRow>
-                          </VCard>
-                          <!-- Sell Info -->
-                          <VCard border class="pa-3 sell-card" style="cursor: pointer;">
-                            <div class="d-flex justify-space-between align-center">
-                              <div class="d-flex align-center gap-2">
-                                <VChip color="error" class="text-white">Sell</VChip>
-                                <span class="font-weight-bold text-left">Cover 4</span>
-                              </div>
-                              <div class="d-flex align-center gap-x-4">
-                                <VChip size="small">-2% X1</VChip>
-                              </div>
-                            </div>
-                            <div class="text-caption mt-1">Open: <span class="font-weight-light-bold">Dec 10, 2024 - 22:17</span></div>
-                            <VRow class="mt-1">
-                              <VCol cols="3" class="text-caption grey--text">Trade ID<br><span class="font-weight-bold">502426</span></VCol>
-                              <VCol cols="3" class="text-caption grey--text">Price<br><span class="font-weight-bold">3634.04</span></VCol>
-                              <VCol cols="3" class="text-caption grey--text">Quantity<br><span class="font-weight-bold">0.0291</span></VCol>
-                              <VCol cols="3" class="text-caption grey--text">Amount<br><span class="font-weight-bold">105.75</span></VCol>
-                            </VRow>
-                          </VCard>
-                          <!-- Profit Summary -->
-                          <VCard border class="pa-3 profit-card">
-                            <VRow>
-                              <VCol cols="4" class="text-caption grey--text pb-0">Gross Profit:</VCol>
-                              <VCol cols="2" class="text-sub-caption text-right pb-0">2.50</VCol>
-                              <VCol cols="3" class="text-caption grey--text pb-0 pl-0">Profit %:</VCol>
-                              <VCol cols="3" class="text-sub-caption text-right pb-0">2.02%</VCol>
-                              <VCol cols="2" class="text-caption grey--text pb-0 pt-1 pr-0">Fees:</VCol>
-                              <VCol cols="4" class="text-sub-caption text-right pb-0 pt-1">0.47372728</VCol>
-                              <VCol cols="4" class="text-caption grey--text pb-0 pt-1 pl-0 pr-0">Profit Avg Price:</VCol>
-                              <VCol cols="2" class="text-sub-caption text-right pb-0 pt-1 pl-0">1.01%</VCol>
-                              <VCol cols="6" class="text-caption font-weight-bold pb-1 pt-0">Net Profit:</VCol>
-                              <VCol cols="6" class="text-sub-caption text-right pb-1 pt-0"><VChip color="success" class="ml-2" size="small">1.01 (0.98%)</VChip></VCol>
-                            </VRow>
-                          </VCard>
-                        </VCol>
-                      </VRow>
-                    </div>
-                    <div>
-                      <VCard class="mb-4" style="border: 1px solid rgb(240, 185, 11);">
-                        <VCardTitle class="border-bg-block" style="font-size: 12px;background-color: #ffdc6c;">Account has insufficient balance for requested action.</VCardTitle>
-                        <VDivider />
-                        <div class="pa-3">
-                          <div class="d-flex justify-space-between align-center">
-                            <div class="d-flex align-center gap-2">
-                              <VChip color="success" class="text-white">Buy</VChip>
-                              <span class="font-weight-bold text-black text-left">Cover 4</span>
-                            </div>
-                            <div class="d-flex align-center gap-x-4">
-                              <VChip size="small">-2% X1</VChip>
-                            </div>
-                          </div>
-                          <div class="text-caption mt-1">Open: <span class="font-weight-light-bold">Dec 10, 2024 - 22:17</span></div>
-                          <VRow class="mt-1">
-                            <VCol cols="3" class="text-caption grey--text">Trade ID<br><span class="font-weight-bold">502426</span></VCol>
-                            <VCol cols="3" class="text-caption grey--text">Price<br><span class="font-weight-bold">3634.04</span></VCol>
-                            <VCol cols="3" class="text-caption grey--text">Quantity<br><span class="font-weight-bold">0.0291</span></VCol>
-                            <VCol cols="3" class="text-caption grey--text">Amount<br><span class="font-weight-bold">105.75</span></VCol>
-                          </VRow>
-                        </div>
-                      </VCard>
-                      <VCard class="mb-4" style="border: 1px solid rgb(240, 185, 11);">
-                        <VCardTitle class="border-bg-block" style="font-size: 12px;background-color: #ffdc6c;">Account has insufficient balance for requested action.</VCardTitle>
-                        <VDivider />
-                        <div class="pa-3">
-                          <div class="d-flex justify-space-between align-center">
-                            <div class="d-flex align-center gap-2">
-                              <VChip color="success" class="text-white">Buy</VChip>
-                              <span class="font-weight-bold text-black text-left">Cover 4</span>
-                            </div>
-                            <div class="d-flex align-center gap-x-4">
-                              <VChip size="small">-2% X1</VChip>
-                            </div>
-                          </div>
-                          <div class="text-caption mt-1">Open: <span class="font-weight-light-bold">Dec 10, 2024 - 22:17</span></div>
-                          <VRow class="mt-1">
-                            <VCol cols="3" class="text-caption grey--text">Trade ID<br><span class="font-weight-bold">502426</span></VCol>
-                            <VCol cols="3" class="text-caption grey--text">Price<br><span class="font-weight-bold">3634.04</span></VCol>
-                            <VCol cols="3" class="text-caption grey--text">Quantity<br><span class="font-weight-bold">0.0291</span></VCol>
-                            <VCol cols="3" class="text-caption grey--text">Amount<br><span class="font-weight-bold">105.75</span></VCol>
-                          </VRow>
-                        </div>
-                      </VCard>
-                      <VCard class="mb-4" style="border: 1px solid rgb(240, 185, 11);">
-                        <VCardTitle class="border-bg-block" style="font-size: 12px;background-color: #ffdc6c;">Account has insufficient balance for requested action.</VCardTitle>
-                        <VDivider />
-                        <div class="pa-3">
-                          <div class="d-flex justify-space-between align-center">
-                            <div class="d-flex align-center gap-2">
-                              <VChip color="success" class="text-white">Buy</VChip>
-                              <span class="font-weight-bold text-black text-left">Cover 4</span>
-                            </div>
-                            <div class="d-flex align-center gap-x-4">
-                              <VChip size="small">-2% X1</VChip>
-                            </div>
-                          </div>
-                          <div class="text-caption mt-1">Open: <span class="font-weight-light-bold">Dec 10, 2024 - 22:17</span></div>
-                          <VRow class="mt-1">
-                            <VCol cols="3" class="text-caption grey--text">Trade ID<br><span class="font-weight-bold">502426</span></VCol>
-                            <VCol cols="3" class="text-caption grey--text">Price<br><span class="font-weight-bold">3634.04</span></VCol>
-                            <VCol cols="3" class="text-caption grey--text">Quantity<br><span class="font-weight-bold">0.0291</span></VCol>
-                            <VCol cols="3" class="text-caption grey--text">Amount<br><span class="font-weight-bold">105.75</span></VCol>
-                          </VRow>
-                        </div>
-                      </VCard>
-                    </div>
-                    <VCard>
-                      <VRow>
-                        <!-- Buy Info -->
-                        <VCol cols="12">
-                          <!-- Buy Info -->
-                          <VCard border class="pa-3 buy-card">
-                            <div class="d-flex justify-space-between align-center">
-                              <div class="d-flex align-center gap-2">
-                                <VChip color="success" class="text-white">Buy</VChip>
-                                <span class="font-weight-bold text-black text-left">Cover 4</span>
-                              </div>
-                              <div class="d-flex align-center gap-x-4">
-                                <VChip size="small">-2% X1</VChip>
-                              </div>
-                            </div>
-                            <div class="text-caption mt-1">Open: <span class="font-weight-light-bold">Dec 10, 2024 - 22:17</span></div>
-                            <VRow class="mt-1">
-                              <VCol cols="3" class="text-caption grey--text">Trade ID<br><span class="font-weight-bold">502426</span></VCol>
-                              <VCol cols="3" class="text-caption grey--text">Price<br><span class="font-weight-bold">3634.04</span></VCol>
-                              <VCol cols="3" class="text-caption grey--text">Quantity<br><span class="font-weight-bold">0.0291</span></VCol>
-                              <VCol cols="3" class="text-caption grey--text">Amount<br><span class="font-weight-bold">105.75</span></VCol>
-                            </VRow>
-                          </VCard>
-                          <!-- Sell Info -->
-                          <VCard border class="pa-3 sell-card" style="cursor: pointer;">
-                            <div class="d-flex justify-space-between align-center">
-                              <div class="d-flex align-center gap-2">
-                                <VChip color="error" class="text-white">Sell</VChip>
-                                <span class="font-weight-bold text-left">Cover 4</span>
-                              </div>
-                              <div class="d-flex align-center gap-x-4">
-                                <VChip size="small">-2% X1</VChip>
-                              </div>
-                            </div>
-                            <div class="text-caption mt-1">Open: <span class="font-weight-light-bold">Dec 10, 2024 - 22:17</span></div>
-                            <VRow class="mt-1">
-                              <VCol cols="3" class="text-caption grey--text">Trade ID<br><span class="font-weight-bold">502426</span></VCol>
-                              <VCol cols="3" class="text-caption grey--text">Price<br><span class="font-weight-bold">3634.04</span></VCol>
-                              <VCol cols="3" class="text-caption grey--text">Quantity<br><span class="font-weight-bold">0.0291</span></VCol>
-                              <VCol cols="3" class="text-caption grey--text">Amount<br><span class="font-weight-bold">105.75</span></VCol>
-                            </VRow>
-                          </VCard>
-                          <!-- Profit Summary -->
-                          <VCard border class="pa-3 profit-card">
-                            <VRow>
-                              <VCol cols="4" class="text-caption grey--text pb-0">Gross Profit:</VCol>
-                              <VCol cols="2" class="text-sub-caption text-right pb-0">2.50</VCol>
-                              <VCol cols="3" class="text-caption grey--text pb-0 pl-0">Profit %:</VCol>
-                              <VCol cols="3" class="text-sub-caption text-right pb-0">2.02%</VCol>
-                              <VCol cols="2" class="text-caption grey--text pb-0 pt-1 pr-0">Fees:</VCol>
-                              <VCol cols="4" class="text-sub-caption text-right pb-0 pt-1">0.47372728</VCol>
-                              <VCol cols="4" class="text-caption grey--text pb-0 pt-1 pl-0 pr-0">Profit Avg Price:</VCol>
-                              <VCol cols="2" class="text-sub-caption text-right pb-0 pt-1 pl-0">1.01%</VCol>
-                              <VCol cols="6" class="text-caption font-weight-bold pb-1 pt-0">Net Profit:</VCol>
-                              <VCol cols="6" class="text-sub-caption text-right pb-1 pt-0"><VChip color="success" class="ml-2" size="small">1.01 (0.98%)</VChip></VCol>
-                            </VRow>
-                          </VCard>
-                        </VCol>
-                      </VRow>
-                    </VCard>
-                  </VExpansionPanelText>
-                </VExpansionPanel>
-                <VExpansionPanel style="margin-block-end: 0.5rem" expand-icon="tabler-plus" collapse-icon="tabler-minus">
-                  <VExpansionPanelTitle disable-icon-rotate>
-                    <div class="d-flex justify-space-between align-center w-100">
-                      <div class="text-h6">
-                        Session <strong>36950514</strong>
+                    </VCardText>
+                    <VCardText>
+                      <div class="d-flex align-center gap-x-4 pt-4">
+                        <span class="text-caption grey--text">Trades closed<br /><span class="text-sub-caption">7</span></span>
+                        <div style="width: 1px; height: 24px; background-color: #ccc;"></div>
+                        <span class="text-caption grey--text">Top positions sold<br /><span class="text-sub-caption">0</span></span>
+                        <div style="width: 1px; height: 24px; background-color: #ccc;"></div>
+                        <span class="text-caption grey--text">Sliding covers<br /><span class="text-sub-caption">22</span></span>
+                        <div style="width: 1px; height: 24px; background-color: #ccc;"></div>
+                        <span class="text-caption grey--text">Opening price<br /><span class="text-sub-caption">4016.66</span></span>
+                        <div style="width: 1px; height: 24px; background-color: #ccc;"></div>
+                        <span class="text-caption grey--text">Closing price<br /><span class="text-sub-caption">4079.54</span></span>
+                        <div style="width: 1px; height: 24px; background-color: #ccc;"></div>
+                        <span class="text-caption grey--text">Profit used <VIcon icon="tabler-info-circle"/><br /><span class="text-sub-caption">-</span></span>
+                        <div style="width: 1px; height: 24px; background-color: #ccc;"></div>
+                        <span class="text-caption grey--text">Available profit <VIcon icon="tabler-info-circle"/><br /><span class="text-sub-caption">2.42</span></span>
+                        <div style="width: 1px; height: 24px; background-color: #ccc;"></div>
+                        <span class="text-caption grey--text">Session profit <VIcon icon="tabler-info-circle"/><br /><span class="text-sub-caption text-success">$19.71</span></span>
                       </div>
-                      <span class="text-sub-caption text-success">$19.71</span>
-                    </div>
-                  </VExpansionPanelTitle>
-                  <VExpansionPanelText>
-                    <div class="mb-4 mt-2">
+                    </VCardText>
+                  </VCard>
+
+                </VExpansionPanelTitle>
+                <VExpansionPanelText>
+                  <VCard class="mb-6">
+                    <VRow>
+                      <!-- Buy Info -->
+                      <VCol cols="12" md="4">
+                        <VCardTitle class="text-center pl-0 pr-0" style="color:green;">Buy info
+                          <VProgressLinear
+                            model-value="100"
+                            color="green"
+                            height="3"
+                          />
+                        </VCardTitle>
+
+                        <VCard border class="pa-3 buy-card">
+                          <div class="d-flex justify-space-between align-center">
+                            <div class="d-flex align-center gap-2">
+                              <VChip color="success" class="text-white">Buy</VChip>
+                              <span class="font-weight-bold text-black text-left">Cover 4</span>
+                            </div>
+                            <div class="d-flex align-center gap-x-4">
+                              <VChip size="small">-2% X1</VChip>
+                            </div>
+                          </div>
+                          <div class="text-caption mt-1">Open: <span class="font-weight-light-bold">Dec 10, 2024 - 22:17</span></div>
+                          <VRow class="mt-2">
+                            <VCol cols="3" class="text-caption grey--text">Trade ID<br><span class="font-weight-bold">502426</span></VCol>
+                            <VCol cols="3" class="text-caption grey--text">Price<br><span class="font-weight-bold">3634.04</span></VCol>
+                            <VCol cols="3" class="text-caption grey--text">Quantity<br><span class="font-weight-bold">0.0291</span></VCol>
+                            <VCol cols="3" class="text-caption grey--text">Amount<br><span class="font-weight-bold">105.75</span></VCol>
+                          </VRow>
+                        </VCard>
+                      </VCol>
+
+                      <!-- Sell Info -->
+                      <VCol cols="12" md="4">
+                        <VCardTitle class="text-center pl-0 pr-0" style="color:red;">Sell info
+                          <VProgressLinear
+                            model-value="100"
+                            color="red"
+                            height="3"
+                          />
+                        </VCardTitle>
+                        <VCard border class="pa-3 sell-card" @click="showDetails = !showDetails" style="cursor: pointer;">
+                          <div class="d-flex justify-space-between align-center">
+                            <div class="d-flex align-center gap-2">
+                              <VChip color="error" class="text-white">Sell</VChip>
+                              <span class="font-weight-bold text-left">Cover 4</span>
+                            </div>
+                            <div class="d-flex align-center gap-x-4">
+                              <VChip size="small">-2% X1</VChip>
+                            </div>
+                          </div>
+                          <div class="text-caption mt-1">Open: <span class="font-weight-light-bold">Dec 10, 2024 - 22:17</span></div>
+                          <VRow class="mt-2">
+                            <VCol cols="3" class="text-caption grey--text">Trade ID<br><span class="font-weight-bold">502426</span></VCol>
+                            <VCol cols="3" class="text-caption grey--text">Price<br><span class="font-weight-bold">3634.04</span></VCol>
+                            <VCol cols="3" class="text-caption grey--text">Quantity<br><span class="font-weight-bold">0.0291</span></VCol>
+                            <VCol cols="3" class="text-caption grey--text">Amount<br><span class="font-weight-bold">105.75</span></VCol>
+                          </VRow>
+                        </VCard>
+                      </VCol>
+
+                      <!-- Profit Summary -->
+                      <VCol cols="12" md="4">
+                        <VCardTitle class="text-center pl-0 pr-0">Profit
+                          <VProgressLinear
+                            height="3"
+                          />
+                        </VCardTitle>
+                        <VCard border class="pa-3 profit-card">
+                          <VRow>
+                            <VCol cols="6" class="text-caption grey--text pb-0">Gross Profit:</VCol>
+                            <VCol cols="6" class="text-sub-caption text-right pb-0">2.50</VCol>
+                            <VCol cols="6" class="text-caption grey--text pb-0 pt-1">Fees:</VCol>
+                            <VCol cols="6" class="text-sub-caption text-right pb-0 pt-1">0.47372728</VCol>
+                            <VCol cols="6" class="text-caption grey--text pb-0 pt-0">Profit %:</VCol>
+                            <VCol cols="6" class="text-sub-caption text-right pb-0 pt-0">2.02%</VCol>
+                            <VCol cols="6" class="text-caption grey--text pb-0 pt-1">Profit Avg Price:</VCol>
+                            <VCol cols="6" class="text-sub-caption text-right pb-0 pt-1">1.01%</VCol>
+                            <VCol cols="6" class="text-caption font-weight-bold pb-1 pt-0">Net Profit:</VCol>
+                            <VCol cols="6" class="text-sub-caption text-right pb-1 pt-0"><VChip color="success" class="ml-2" size="small">1.01 (0.98%)</VChip></VCol>
+                          </VRow>
+                        </VCard>
+                      </VCol>
+                    </VRow>
+                  </VCard>
+                  <div v-if="showDetails">
+                  <VCard class="mb-4">
+                    <VCardTitle class="border-bg-block"> <VIcon icon="tabler-alert-triangle" class="mr-1" style="background-color:red"/> Insufficient Balance</VCardTitle>
+                    <VDivider />
+                    <VCardText>
                       <VRow>
-                        <VRow dense class="text-center">
-                          <!-- Row 1 -->
-                          <VCol cols="12">
-                            <div class="d-flex justify-space-between">
-                              <!-- Column 1 -->
-                              <div class="flex-1">
-                                <span class="text-caption text-grey">Trades closed</span><br>
-                                <strong class="font-weight-bold text-sub-caption">7</strong>
-                              </div>
-
-                              <!-- Vertical Divider -->
-                              <VDivider vertical class="mx-2" style="height: 40px;" />
-
-                              <!-- Column 2 -->
-                              <div class="flex-1">
-                                <span class="text-caption text-grey">Top positions sold</span><br>
-                                <strong class="font-weight-bold text-sub-caption">0</strong>
-                              </div>
-
-                              <!-- Vertical Divider -->
-                              <VDivider vertical class="mx-2" style="height: 40px;" />
-
-                              <!-- Column 3 -->
-                              <div class="flex-1">
-                                <span class="text-caption text-grey">Sliding covers</span><br>
-                                <strong class="font-weight-bold text-sub-caption">22</strong>
-                              </div>
-                            </div>
-                          </VCol>
-                          <VDivider />
-
-                          <!-- Row: Opening / Closing / Profit Used -->
-                          <VCol cols="12">
-                            <div class="d-flex justify-space-between align-start">
-                              <!-- Opening Price -->
-                              <div class="text-center flex-1">
-                                <span class="text-caption text-grey">Opening price</span><br>
-                                <strong class="font-weight-bold text-sub-caption">4016.66</strong>
-                              </div>
-
-                              <VDivider vertical class="mx-2" style="height: 40px;" />
-
-                              <!-- Closing Price -->
-                              <div class="text-center flex-1">
-                                <span class="text-caption text-grey">Closing price</span><br>
-                                <strong class="font-weight-bold text-sub-caption">4079.54</strong>
-                              </div>
-
-                              <VDivider vertical class="mx-2" style="height: 40px;" />
-
-                              <!-- Profit Used -->
-                              <div class="text-center flex-1">
-                                <span class="text-caption text-grey">Profit used<VIcon icon="tabler-info-circle" size="14" /></span><br>
-                                <strong class="font-weight-bold text-sub-caption">-</strong>
-                              </div>
-                            </div>
-                          </VCol>
-                          <VDivider />
-                          <!-- Row: Available Profit / Runtime -->
-                          <VCol cols="12">
-                            <div class="d-flex justify-space-between align-start">
-                              <!-- Available Profit -->
-                              <div class="text-center flex-1">
-                                <span class="text-caption text-grey">Available profit<VIcon icon="tabler-info-circle" size="14" /></span><br>
-                                <strong class="font-weight-bold text-sub-caption">2.42</strong>
-                              </div>
-
-                              <VDivider vertical class="mx-2" style="height: 40px;" />
-
-                              <!-- Runtime -->
-                              <div class="text-center flex-1">
-                                <span class="text-caption text-grey">Runtime</span><br>
-                                <strong class="font-weight-bold text-sub-caption">10D 58M</strong>
-                              </div>
-                            </div>
-                          </VCol>
-
-                          <VDivider />
-
-                          <!-- Footer -->
-                          <VCol cols="12">
-                            <div class="text-center">
-                              <strong class="font-weight-bold text-sub-caption">Session Trades - 12 Open</strong>
-                            </div>
-                          </VCol>
-                        </VRow>
-
                         <VCol cols="12">
-                          <!-- Buy Info -->
-                          <VCard border class="pa-3 buy-card">
-                            <div class="d-flex justify-space-between align-center">
-                              <div class="d-flex align-center gap-2">
-                                <VChip color="success" class="text-white">Buy</VChip>
-                                <span class="font-weight-bold text-black text-left">Cover 4</span>
+                          <VRow>
+                            <VCol cols="4">
+                              <VChip color="error" class="text-white">Sell</VChip>
+                              <span class="font-weight-bold pl-2 pr-4">Cover 4</span>
+                              <VChip size="small">-2% X1</VChip>
+                            </VCol>
+                            <VCol cols="2" class="text-caption">Close<br><span class="font-weight-bold">Dec 10, 2024 - 22:17</span></VCol>
+                            <VCol cols="2" class="text-caption">Trade ID<br><span class="font-weight-bold">50242660</span></VCol>
+                            <VCol cols="4">
+                              <div class="d-flex justify-space-between text-caption">
+                                <div class="text-left">
+                                  <div>Price</div>
+                                  <div class="font-weight-bold">3634.04</div>
+                                </div>
+
+                                <div class="text-center">
+                                  <div>Quantity</div>
+                                  <div class="font-weight-bold">0.0291</div>
+                                </div>
+
+                                <div class="text-right">
+                                  <div>Amount</div>
+                                  <div class="font-weight-bold">105.75</div>
+                                </div>
                               </div>
-                              <div class="d-flex align-center gap-x-4">
-                                <VChip size="small">-2% X1</VChip>
-                              </div>
-                            </div>
-                            <div class="text-caption mt-1">Open: <span class="font-weight-light-bold">Dec 10, 2024 - 22:17</span></div>
-                            <VRow class="mt-1">
-                              <VCol cols="3" class="text-caption grey--text">Trade ID<br><span class="font-weight-bold">502426</span></VCol>
-                              <VCol cols="3" class="text-caption grey--text">Price<br><span class="font-weight-bold">3634.04</span></VCol>
-                              <VCol cols="3" class="text-caption grey--text">Quantity<br><span class="font-weight-bold">0.0291</span></VCol>
-                              <VCol cols="3" class="text-caption grey--text">Amount<br><span class="font-weight-bold">105.75</span></VCol>
-                            </VRow>
-                          </VCard>
-                          <!-- Sell Info -->
-                          <VCard border class="pa-3 sell-card" style="cursor: pointer;">
-                            <div class="d-flex justify-space-between align-center">
-                              <div class="d-flex align-center gap-2">
-                                <VChip color="error" class="text-white">Sell</VChip>
-                                <span class="font-weight-bold text-left">Cover 4</span>
-                              </div>
-                              <div class="d-flex align-center gap-x-4">
-                                <VChip size="small">-2% X1</VChip>
-                              </div>
-                            </div>
-                            <div class="text-caption mt-1">Open: <span class="font-weight-light-bold">Dec 10, 2024 - 22:17</span></div>
-                            <VRow class="mt-1">
-                              <VCol cols="3" class="text-caption grey--text">Trade ID<br><span class="font-weight-bold">502426</span></VCol>
-                              <VCol cols="3" class="text-caption grey--text">Price<br><span class="font-weight-bold">3634.04</span></VCol>
-                              <VCol cols="3" class="text-caption grey--text">Quantity<br><span class="font-weight-bold">0.0291</span></VCol>
-                              <VCol cols="3" class="text-caption grey--text">Amount<br><span class="font-weight-bold">105.75</span></VCol>
-                            </VRow>
-                          </VCard>
-                          <!-- Profit Summary -->
-                          <VCard border class="pa-3 profit-card">
-                            <VRow>
-                              <VCol cols="4" class="text-caption grey--text pb-0">Gross Profit:</VCol>
-                              <VCol cols="2" class="text-sub-caption text-right pb-0">2.50</VCol>
-                              <VCol cols="3" class="text-caption grey--text pb-0 pl-0">Profit %:</VCol>
-                              <VCol cols="3" class="text-sub-caption text-right pb-0">2.02%</VCol>
-                              <VCol cols="2" class="text-caption grey--text pb-0 pt-1 pr-0">Fees:</VCol>
-                              <VCol cols="4" class="text-sub-caption text-right pb-0 pt-1">0.47372728</VCol>
-                              <VCol cols="4" class="text-caption grey--text pb-0 pt-1 pl-0 pr-0">Profit Avg Price:</VCol>
-                              <VCol cols="2" class="text-sub-caption text-right pb-0 pt-1 pl-0">1.01%</VCol>
-                              <VCol cols="6" class="text-caption font-weight-bold pb-1 pt-0">Net Profit:</VCol>
-                              <VCol cols="6" class="text-sub-caption text-right pb-1 pt-0"><VChip color="success" class="ml-2" size="small">1.01 (0.98%)</VChip></VCol>
-                            </VRow>
-                          </VCard>
+                            </VCol>
+
+                          </VRow>
                         </VCol>
                       </VRow>
-                    </div>
-                    <div>
-                      <VCard class="mb-4" style="border: 1px solid rgb(240, 185, 11);">
-                        <VCardTitle class="border-bg-block" style="font-size: 12px;background-color: #ffdc6c;">Account has insufficient balance for requested action.</VCardTitle>
-                        <VDivider />
-                        <div class="pa-3">
-                          <div class="d-flex justify-space-between align-center">
-                            <div class="d-flex align-center gap-2">
-                              <VChip color="success" class="text-white">Buy</VChip>
-                              <span class="font-weight-bold text-black text-left">Cover 4</span>
-                            </div>
-                            <div class="d-flex align-center gap-x-4">
-                              <VChip size="small">-2% X1</VChip>
-                            </div>
-                          </div>
-                          <div class="text-caption mt-1">Open: <span class="font-weight-light-bold">Dec 10, 2024 - 22:17</span></div>
-                          <VRow class="mt-1">
-                            <VCol cols="3" class="text-caption grey--text">Trade ID<br><span class="font-weight-bold">502426</span></VCol>
-                            <VCol cols="3" class="text-caption grey--text">Price<br><span class="font-weight-bold">3634.04</span></VCol>
-                            <VCol cols="3" class="text-caption grey--text">Quantity<br><span class="font-weight-bold">0.0291</span></VCol>
-                            <VCol cols="3" class="text-caption grey--text">Amount<br><span class="font-weight-bold">105.75</span></VCol>
-                          </VRow>
-                        </div>
-                      </VCard>
-                      <VCard class="mb-4" style="border: 1px solid rgb(240, 185, 11);">
-                        <VCardTitle class="border-bg-block" style="font-size: 12px;background-color: #ffdc6c;">Account has insufficient balance for requested action.</VCardTitle>
-                        <VDivider />
-                        <div class="pa-3">
-                          <div class="d-flex justify-space-between align-center">
-                            <div class="d-flex align-center gap-2">
-                              <VChip color="success" class="text-white">Buy</VChip>
-                              <span class="font-weight-bold text-black text-left">Cover 4</span>
-                            </div>
-                            <div class="d-flex align-center gap-x-4">
-                              <VChip size="small">-2% X1</VChip>
-                            </div>
-                          </div>
-                          <div class="text-caption mt-1">Open: <span class="font-weight-light-bold">Dec 10, 2024 - 22:17</span></div>
-                          <VRow class="mt-1">
-                            <VCol cols="3" class="text-caption grey--text">Trade ID<br><span class="font-weight-bold">502426</span></VCol>
-                            <VCol cols="3" class="text-caption grey--text">Price<br><span class="font-weight-bold">3634.04</span></VCol>
-                            <VCol cols="3" class="text-caption grey--text">Quantity<br><span class="font-weight-bold">0.0291</span></VCol>
-                            <VCol cols="3" class="text-caption grey--text">Amount<br><span class="font-weight-bold">105.75</span></VCol>
-                          </VRow>
-                        </div>
-                      </VCard>
-                      <VCard class="mb-4" style="border: 1px solid rgb(240, 185, 11);">
-                        <VCardTitle class="border-bg-block" style="font-size: 12px;background-color: #ffdc6c;">Account has insufficient balance for requested action.</VCardTitle>
-                        <VDivider />
-                        <div class="pa-3">
-                          <div class="d-flex justify-space-between align-center">
-                            <div class="d-flex align-center gap-2">
-                              <VChip color="success" class="text-white">Buy</VChip>
-                              <span class="font-weight-bold text-black text-left">Cover 4</span>
-                            </div>
-                            <div class="d-flex align-center gap-x-4">
-                              <VChip size="small">-2% X1</VChip>
-                            </div>
-                          </div>
-                          <div class="text-caption mt-1">Open: <span class="font-weight-light-bold">Dec 10, 2024 - 22:17</span></div>
-                          <VRow class="mt-1">
-                            <VCol cols="3" class="text-caption grey--text">Trade ID<br><span class="font-weight-bold">502426</span></VCol>
-                            <VCol cols="3" class="text-caption grey--text">Price<br><span class="font-weight-bold">3634.04</span></VCol>
-                            <VCol cols="3" class="text-caption grey--text">Quantity<br><span class="font-weight-bold">0.0291</span></VCol>
-                            <VCol cols="3" class="text-caption grey--text">Amount<br><span class="font-weight-bold">105.75</span></VCol>
-                          </VRow>
-                        </div>
-                      </VCard>
-                    </div>
-                    <VCard>
+                    </VCardText>
+                  </VCard>
+                  <VCard class="mb-4">
+                    <VCardTitle class="border-bg-block"> <VIcon icon="tabler-alert-circle" class="mr-1" style="background-color:orange"/> Insufficient Balance</VCardTitle>
+                    <VDivider />
+                    <VCardText>
                       <VRow>
-                        <!-- Buy Info -->
                         <VCol cols="12">
-                          <!-- Buy Info -->
-                          <VCard border class="pa-3 buy-card">
-                            <div class="d-flex justify-space-between align-center">
-                              <div class="d-flex align-center gap-2">
-                                <VChip color="success" class="text-white">Buy</VChip>
-                                <span class="font-weight-bold text-black text-left">Cover 4</span>
+                          <VRow>
+                            <VCol cols="4">
+                              <VChip color="error" class="text-white">Sell</VChip>
+                              <span class="font-weight-bold pl-2 pr-4">Cover 4</span>
+                              <VChip size="small">-2% X1</VChip>
+                            </VCol>
+                            <VCol cols="2" class="text-caption">Close<br><span class="font-weight-bold">Dec 10, 2024 - 22:17</span></VCol>
+                            <VCol cols="2" class="text-caption">Trade ID<br><span class="font-weight-bold">50242660</span></VCol>
+                            <VCol cols="4">
+                              <div class="d-flex justify-space-between text-caption">
+                                <div class="text-left">
+                                  <div>Price</div>
+                                  <div class="font-weight-bold">3634.04</div>
+                                </div>
+
+                                <div class="text-center">
+                                  <div>Quantity</div>
+                                  <div class="font-weight-bold">0.0291</div>
+                                </div>
+
+                                <div class="text-right">
+                                  <div>Amount</div>
+                                  <div class="font-weight-bold">105.75</div>
+                                </div>
                               </div>
-                              <div class="d-flex align-center gap-x-4">
-                                <VChip size="small">-2% X1</VChip>
-                              </div>
-                            </div>
-                            <div class="text-caption mt-1">Open: <span class="font-weight-light-bold">Dec 10, 2024 - 22:17</span></div>
-                            <VRow class="mt-1">
-                              <VCol cols="3" class="text-caption grey--text">Trade ID<br><span class="font-weight-bold">502426</span></VCol>
-                              <VCol cols="3" class="text-caption grey--text">Price<br><span class="font-weight-bold">3634.04</span></VCol>
-                              <VCol cols="3" class="text-caption grey--text">Quantity<br><span class="font-weight-bold">0.0291</span></VCol>
-                              <VCol cols="3" class="text-caption grey--text">Amount<br><span class="font-weight-bold">105.75</span></VCol>
-                            </VRow>
-                          </VCard>
-                          <!-- Sell Info -->
-                          <VCard border class="pa-3 sell-card" style="cursor: pointer;">
-                            <div class="d-flex justify-space-between align-center">
-                              <div class="d-flex align-center gap-2">
-                                <VChip color="error" class="text-white">Sell</VChip>
-                                <span class="font-weight-bold text-left">Cover 4</span>
-                              </div>
-                              <div class="d-flex align-center gap-x-4">
-                                <VChip size="small">-2% X1</VChip>
-                              </div>
-                            </div>
-                            <div class="text-caption mt-1">Open: <span class="font-weight-light-bold">Dec 10, 2024 - 22:17</span></div>
-                            <VRow class="mt-1">
-                              <VCol cols="3" class="text-caption grey--text">Trade ID<br><span class="font-weight-bold">502426</span></VCol>
-                              <VCol cols="3" class="text-caption grey--text">Price<br><span class="font-weight-bold">3634.04</span></VCol>
-                              <VCol cols="3" class="text-caption grey--text">Quantity<br><span class="font-weight-bold">0.0291</span></VCol>
-                              <VCol cols="3" class="text-caption grey--text">Amount<br><span class="font-weight-bold">105.75</span></VCol>
-                            </VRow>
-                          </VCard>
-                          <!-- Profit Summary -->
-                          <VCard border class="pa-3 profit-card">
-                            <VRow>
-                              <VCol cols="4" class="text-caption grey--text pb-0">Gross Profit:</VCol>
-                              <VCol cols="2" class="text-sub-caption text-right pb-0">2.50</VCol>
-                              <VCol cols="3" class="text-caption grey--text pb-0 pl-0">Profit %:</VCol>
-                              <VCol cols="3" class="text-sub-caption text-right pb-0">2.02%</VCol>
-                              <VCol cols="2" class="text-caption grey--text pb-0 pt-1 pr-0">Fees:</VCol>
-                              <VCol cols="4" class="text-sub-caption text-right pb-0 pt-1">0.47372728</VCol>
-                              <VCol cols="4" class="text-caption grey--text pb-0 pt-1 pl-0 pr-0">Profit Avg Price:</VCol>
-                              <VCol cols="2" class="text-sub-caption text-right pb-0 pt-1 pl-0">1.01%</VCol>
-                              <VCol cols="6" class="text-caption font-weight-bold pb-1 pt-0">Net Profit:</VCol>
-                              <VCol cols="6" class="text-sub-caption text-right pb-1 pt-0"><VChip color="success" class="ml-2" size="small">1.01 (0.98%)</VChip></VCol>
-                            </VRow>
-                          </VCard>
+                            </VCol>
+
+                          </VRow>
                         </VCol>
                       </VRow>
-                    </VCard>
-                  </VExpansionPanelText>
-                </VExpansionPanel>
-                <VExpansionPanel style="margin-block-end: 0.5rem" expand-icon="tabler-plus" collapse-icon="tabler-minus">
-                  <VExpansionPanelTitle disable-icon-rotate>
-                    <div class="d-flex justify-space-between align-center w-100">
-                      <div class="text-h6">
-                        Session <strong>36950514</strong>
-                      </div>
-                      <span class="text-sub-caption text-success">$19.71</span>
-                    </div>
-                  </VExpansionPanelTitle>
-                  <VExpansionPanelText>
-                    <div class="mb-4 mt-2">
+                    </VCardText>
+                  </VCard>
+                  <VCard class="mb-4">
+                    <VCardTitle class="border-bg-block"> <VIcon icon="tabler-info-circle" class="mr-1" style="background-color:blue"/> Insufficient Balance</VCardTitle>
+                    <VDivider />
+                    <VCardText>
                       <VRow>
-                        <VRow dense class="text-center">
-                          <!-- Row 1 -->
-                          <VCol cols="12">
-                            <div class="d-flex justify-space-between">
-                              <!-- Column 1 -->
-                              <div class="flex-1">
-                                <span class="text-caption text-grey">Trades closed</span><br>
-                                <strong class="font-weight-bold text-sub-caption">7</strong>
-                              </div>
-
-                              <!-- Vertical Divider -->
-                              <VDivider vertical class="mx-2" style="height: 40px;" />
-
-                              <!-- Column 2 -->
-                              <div class="flex-1">
-                                <span class="text-caption text-grey">Top positions sold</span><br>
-                                <strong class="font-weight-bold text-sub-caption">0</strong>
-                              </div>
-
-                              <!-- Vertical Divider -->
-                              <VDivider vertical class="mx-2" style="height: 40px;" />
-
-                              <!-- Column 3 -->
-                              <div class="flex-1">
-                                <span class="text-caption text-grey">Sliding covers</span><br>
-                                <strong class="font-weight-bold text-sub-caption">22</strong>
-                              </div>
-                            </div>
-                          </VCol>
-                          <VDivider />
-
-                          <!-- Row: Opening / Closing / Profit Used -->
-                          <VCol cols="12">
-                            <div class="d-flex justify-space-between align-start">
-                              <!-- Opening Price -->
-                              <div class="text-center flex-1">
-                                <span class="text-caption text-grey">Opening price</span><br>
-                                <strong class="font-weight-bold text-sub-caption">4016.66</strong>
-                              </div>
-
-                              <VDivider vertical class="mx-2" style="height: 40px;" />
-
-                              <!-- Closing Price -->
-                              <div class="text-center flex-1">
-                                <span class="text-caption text-grey">Closing price</span><br>
-                                <strong class="font-weight-bold text-sub-caption">4079.54</strong>
-                              </div>
-
-                              <VDivider vertical class="mx-2" style="height: 40px;" />
-
-                              <!-- Profit Used -->
-                              <div class="text-center flex-1">
-                                <span class="text-caption text-grey">Profit used<VIcon icon="tabler-info-circle" size="14" /></span><br>
-                                <strong class="font-weight-bold text-sub-caption">-</strong>
-                              </div>
-                            </div>
-                          </VCol>
-                          <VDivider />
-                          <!-- Row: Available Profit / Runtime -->
-                          <VCol cols="12">
-                            <div class="d-flex justify-space-between align-start">
-                              <!-- Available Profit -->
-                              <div class="text-center flex-1">
-                                <span class="text-caption text-grey">Available profit<VIcon icon="tabler-info-circle" size="14" /></span><br>
-                                <strong class="font-weight-bold text-sub-caption">2.42</strong>
-                              </div>
-
-                              <VDivider vertical class="mx-2" style="height: 40px;" />
-
-                              <!-- Runtime -->
-                              <div class="text-center flex-1">
-                                <span class="text-caption text-grey">Runtime</span><br>
-                                <strong class="font-weight-bold text-sub-caption">10D 58M</strong>
-                              </div>
-                            </div>
-                          </VCol>
-
-                          <VDivider />
-
-                          <!-- Footer -->
-                          <VCol cols="12">
-                            <div class="text-center">
-                              <strong class="font-weight-bold text-sub-caption">Session Trades - 12 Open</strong>
-                            </div>
-                          </VCol>
-                        </VRow>
-
                         <VCol cols="12">
-                          <!-- Buy Info -->
-                          <VCard border class="pa-3 buy-card">
-                            <div class="d-flex justify-space-between align-center">
-                              <div class="d-flex align-center gap-2">
-                                <VChip color="success" class="text-white">Buy</VChip>
-                                <span class="font-weight-bold text-black text-left">Cover 4</span>
+                          <VRow>
+                            <VCol cols="4">
+                              <VChip color="error" class="text-white">Sell</VChip>
+                              <span class="font-weight-bold pl-2 pr-4">Cover 4</span>
+                              <VChip size="small">-2% X1</VChip>
+                            </VCol>
+                            <VCol cols="2" class="text-caption">Close<br><span class="font-weight-bold">Dec 10, 2024 - 22:17</span></VCol>
+                            <VCol cols="2" class="text-caption">Trade ID<br><span class="font-weight-bold">50242660</span></VCol>
+                            <VCol cols="4">
+                              <div class="d-flex justify-space-between text-caption">
+                                <div class="text-left">
+                                  <div>Price</div>
+                                  <div class="font-weight-bold">3634.04</div>
+                                </div>
+
+                                <div class="text-center">
+                                  <div>Quantity</div>
+                                  <div class="font-weight-bold">0.0291</div>
+                                </div>
+
+                                <div class="text-right">
+                                  <div>Amount</div>
+                                  <div class="font-weight-bold">105.75</div>
+                                </div>
                               </div>
-                              <div class="d-flex align-center gap-x-4">
-                                <VChip size="small">-2% X1</VChip>
-                              </div>
-                            </div>
-                            <div class="text-caption mt-1">Open: <span class="font-weight-light-bold">Dec 10, 2024 - 22:17</span></div>
-                            <VRow class="mt-1">
-                              <VCol cols="3" class="text-caption grey--text">Trade ID<br><span class="font-weight-bold">502426</span></VCol>
-                              <VCol cols="3" class="text-caption grey--text">Price<br><span class="font-weight-bold">3634.04</span></VCol>
-                              <VCol cols="3" class="text-caption grey--text">Quantity<br><span class="font-weight-bold">0.0291</span></VCol>
-                              <VCol cols="3" class="text-caption grey--text">Amount<br><span class="font-weight-bold">105.75</span></VCol>
-                            </VRow>
-                          </VCard>
-                          <!-- Sell Info -->
-                          <VCard border class="pa-3 sell-card" style="cursor: pointer;">
-                            <div class="d-flex justify-space-between align-center">
-                              <div class="d-flex align-center gap-2">
-                                <VChip color="error" class="text-white">Sell</VChip>
-                                <span class="font-weight-bold text-left">Cover 4</span>
-                              </div>
-                              <div class="d-flex align-center gap-x-4">
-                                <VChip size="small">-2% X1</VChip>
-                              </div>
-                            </div>
-                            <div class="text-caption mt-1">Open: <span class="font-weight-light-bold">Dec 10, 2024 - 22:17</span></div>
-                            <VRow class="mt-1">
-                              <VCol cols="3" class="text-caption grey--text">Trade ID<br><span class="font-weight-bold">502426</span></VCol>
-                              <VCol cols="3" class="text-caption grey--text">Price<br><span class="font-weight-bold">3634.04</span></VCol>
-                              <VCol cols="3" class="text-caption grey--text">Quantity<br><span class="font-weight-bold">0.0291</span></VCol>
-                              <VCol cols="3" class="text-caption grey--text">Amount<br><span class="font-weight-bold">105.75</span></VCol>
-                            </VRow>
-                          </VCard>
-                          <!-- Profit Summary -->
-                          <VCard border class="pa-3 profit-card">
-                            <VRow>
-                              <VCol cols="4" class="text-caption grey--text pb-0">Gross Profit:</VCol>
-                              <VCol cols="2" class="text-sub-caption text-right pb-0">2.50</VCol>
-                              <VCol cols="3" class="text-caption grey--text pb-0 pl-0">Profit %:</VCol>
-                              <VCol cols="3" class="text-sub-caption text-right pb-0">2.02%</VCol>
-                              <VCol cols="2" class="text-caption grey--text pb-0 pt-1 pr-0">Fees:</VCol>
-                              <VCol cols="4" class="text-sub-caption text-right pb-0 pt-1">0.47372728</VCol>
-                              <VCol cols="4" class="text-caption grey--text pb-0 pt-1 pl-0 pr-0">Profit Avg Price:</VCol>
-                              <VCol cols="2" class="text-sub-caption text-right pb-0 pt-1 pl-0">1.01%</VCol>
-                              <VCol cols="6" class="text-caption font-weight-bold pb-1 pt-0">Net Profit:</VCol>
-                              <VCol cols="6" class="text-sub-caption text-right pb-1 pt-0"><VChip color="success" class="ml-2" size="small">1.01 (0.98%)</VChip></VCol>
-                            </VRow>
-                          </VCard>
+                            </VCol>
+
+                          </VRow>
                         </VCol>
                       </VRow>
-                    </div>
-                    <div>
-                      <VCard class="mb-4" style="border: 1px solid rgb(240, 185, 11);">
-                        <VCardTitle class="border-bg-block" style="font-size: 12px;background-color: #ffdc6c;">Account has insufficient balance for requested action.</VCardTitle>
-                        <VDivider />
-                        <div class="pa-3">
+                    </VCardText>
+                  </VCard>
+                  </div>
+                  <VCard class="mb-6">
+                    <VRow>
+                      <!-- Buy Info -->
+                      <VCol cols="12" md="4">
+                        <VCard border class="pa-3 buy-card">
                           <div class="d-flex justify-space-between align-center">
                             <div class="d-flex align-center gap-2">
                               <VChip color="success" class="text-white">Buy</VChip>
@@ -2543,414 +374,64 @@ const stats = [
                             </div>
                           </div>
                           <div class="text-caption mt-1">Open: <span class="font-weight-light-bold">Dec 10, 2024 - 22:17</span></div>
-                          <VRow class="mt-1">
+                          <VRow class="mt-2">
                             <VCol cols="3" class="text-caption grey--text">Trade ID<br><span class="font-weight-bold">502426</span></VCol>
                             <VCol cols="3" class="text-caption grey--text">Price<br><span class="font-weight-bold">3634.04</span></VCol>
                             <VCol cols="3" class="text-caption grey--text">Quantity<br><span class="font-weight-bold">0.0291</span></VCol>
                             <VCol cols="3" class="text-caption grey--text">Amount<br><span class="font-weight-bold">105.75</span></VCol>
                           </VRow>
-                        </div>
-                      </VCard>
-                      <VCard class="mb-4" style="border: 1px solid rgb(240, 185, 11);">
-                        <VCardTitle class="border-bg-block" style="font-size: 12px;background-color: #ffdc6c;">Account has insufficient balance for requested action.</VCardTitle>
-                        <VDivider />
-                        <div class="pa-3">
+                        </VCard>
+                      </VCol>
+
+                      <!-- Sell Info -->
+                      <VCol cols="12" md="4">
+                        <VCard border class="pa-3 sell-card">
                           <div class="d-flex justify-space-between align-center">
                             <div class="d-flex align-center gap-2">
-                              <VChip color="success" class="text-white">Buy</VChip>
-                              <span class="font-weight-bold text-black text-left">Cover 4</span>
+                              <VChip color="error" class="text-white">Sell</VChip>
+                              <span class="font-weight-bold text-left">Cover 4</span>
                             </div>
                             <div class="d-flex align-center gap-x-4">
                               <VChip size="small">-2% X1</VChip>
                             </div>
                           </div>
                           <div class="text-caption mt-1">Open: <span class="font-weight-light-bold">Dec 10, 2024 - 22:17</span></div>
-                          <VRow class="mt-1">
+                          <VRow class="mt-2">
                             <VCol cols="3" class="text-caption grey--text">Trade ID<br><span class="font-weight-bold">502426</span></VCol>
                             <VCol cols="3" class="text-caption grey--text">Price<br><span class="font-weight-bold">3634.04</span></VCol>
                             <VCol cols="3" class="text-caption grey--text">Quantity<br><span class="font-weight-bold">0.0291</span></VCol>
                             <VCol cols="3" class="text-caption grey--text">Amount<br><span class="font-weight-bold">105.75</span></VCol>
                           </VRow>
-                        </div>
-                      </VCard>
-                      <VCard class="mb-4" style="border: 1px solid rgb(240, 185, 11);">
-                        <VCardTitle class="border-bg-block" style="font-size: 12px;background-color: #ffdc6c;">Account has insufficient balance for requested action.</VCardTitle>
-                        <VDivider />
-                        <div class="pa-3">
-                          <div class="d-flex justify-space-between align-center">
-                            <div class="d-flex align-center gap-2">
-                              <VChip color="success" class="text-white">Buy</VChip>
-                              <span class="font-weight-bold text-black text-left">Cover 4</span>
-                            </div>
-                            <div class="d-flex align-center gap-x-4">
-                              <VChip size="small">-2% X1</VChip>
-                            </div>
-                          </div>
-                          <div class="text-caption mt-1">Open: <span class="font-weight-light-bold">Dec 10, 2024 - 22:17</span></div>
-                          <VRow class="mt-1">
-                            <VCol cols="3" class="text-caption grey--text">Trade ID<br><span class="font-weight-bold">502426</span></VCol>
-                            <VCol cols="3" class="text-caption grey--text">Price<br><span class="font-weight-bold">3634.04</span></VCol>
-                            <VCol cols="3" class="text-caption grey--text">Quantity<br><span class="font-weight-bold">0.0291</span></VCol>
-                            <VCol cols="3" class="text-caption grey--text">Amount<br><span class="font-weight-bold">105.75</span></VCol>
+                        </VCard>
+                      </VCol>
+
+                      <!-- Profit Summary -->
+                      <VCol cols="12" md="4">
+                        <VCard border class="pa-3 profit-card">
+                          <VRow>
+                            <VCol cols="6" class="text-caption grey--text pb-0">Gross Profit:</VCol>
+                            <VCol cols="6" class="text-sub-caption text-right pb-0">2.50</VCol>
+                            <VCol cols="6" class="text-caption grey--text pb-0 pt-1">Fees:</VCol>
+                            <VCol cols="6" class="text-sub-caption text-right pb-0 pt-1">0.47372728</VCol>
+                            <VCol cols="6" class="text-caption grey--text pb-0 pt-0">Profit %:</VCol>
+                            <VCol cols="6" class="text-sub-caption text-right pb-0 pt-0">2.02%</VCol>
+                            <VCol cols="6" class="text-caption grey--text pb-0 pt-1">Profit Avg Price:</VCol>
+                            <VCol cols="6" class="text-sub-caption text-right pb-0 pt-1">1.01%</VCol>
+                            <VCol cols="6" class="text-caption font-weight-bold pb-1 pt-0">Net Profit:</VCol>
+                            <VCol cols="6" class="text-sub-caption text-right pb-1 pt-0"><VChip color="success" class="ml-2" size="small">1.01 (0.98%)</VChip></VCol>
                           </VRow>
-                        </div>
-                      </VCard>
-                    </div>
-                    <VCard>
-                      <VRow>
-                        <!-- Buy Info -->
-                        <VCol cols="12">
-                          <!-- Buy Info -->
-                          <VCard border class="pa-3 buy-card">
-                            <div class="d-flex justify-space-between align-center">
-                              <div class="d-flex align-center gap-2">
-                                <VChip color="success" class="text-white">Buy</VChip>
-                                <span class="font-weight-bold text-black text-left">Cover 4</span>
-                              </div>
-                              <div class="d-flex align-center gap-x-4">
-                                <VChip size="small">-2% X1</VChip>
-                              </div>
-                            </div>
-                            <div class="text-caption mt-1">Open: <span class="font-weight-light-bold">Dec 10, 2024 - 22:17</span></div>
-                            <VRow class="mt-1">
-                              <VCol cols="3" class="text-caption grey--text">Trade ID<br><span class="font-weight-bold">502426</span></VCol>
-                              <VCol cols="3" class="text-caption grey--text">Price<br><span class="font-weight-bold">3634.04</span></VCol>
-                              <VCol cols="3" class="text-caption grey--text">Quantity<br><span class="font-weight-bold">0.0291</span></VCol>
-                              <VCol cols="3" class="text-caption grey--text">Amount<br><span class="font-weight-bold">105.75</span></VCol>
-                            </VRow>
-                          </VCard>
-                          <!-- Sell Info -->
-                          <VCard border class="pa-3 sell-card" style="cursor: pointer;">
-                            <div class="d-flex justify-space-between align-center">
-                              <div class="d-flex align-center gap-2">
-                                <VChip color="error" class="text-white">Sell</VChip>
-                                <span class="font-weight-bold text-left">Cover 4</span>
-                              </div>
-                              <div class="d-flex align-center gap-x-4">
-                                <VChip size="small">-2% X1</VChip>
-                              </div>
-                            </div>
-                            <div class="text-caption mt-1">Open: <span class="font-weight-light-bold">Dec 10, 2024 - 22:17</span></div>
-                            <VRow class="mt-1">
-                              <VCol cols="3" class="text-caption grey--text">Trade ID<br><span class="font-weight-bold">502426</span></VCol>
-                              <VCol cols="3" class="text-caption grey--text">Price<br><span class="font-weight-bold">3634.04</span></VCol>
-                              <VCol cols="3" class="text-caption grey--text">Quantity<br><span class="font-weight-bold">0.0291</span></VCol>
-                              <VCol cols="3" class="text-caption grey--text">Amount<br><span class="font-weight-bold">105.75</span></VCol>
-                            </VRow>
-                          </VCard>
-                          <!-- Profit Summary -->
-                          <VCard border class="pa-3 profit-card">
-                            <VRow>
-                              <VCol cols="4" class="text-caption grey--text pb-0">Gross Profit:</VCol>
-                              <VCol cols="2" class="text-sub-caption text-right pb-0">2.50</VCol>
-                              <VCol cols="3" class="text-caption grey--text pb-0 pl-0">Profit %:</VCol>
-                              <VCol cols="3" class="text-sub-caption text-right pb-0">2.02%</VCol>
-                              <VCol cols="2" class="text-caption grey--text pb-0 pt-1 pr-0">Fees:</VCol>
-                              <VCol cols="4" class="text-sub-caption text-right pb-0 pt-1">0.47372728</VCol>
-                              <VCol cols="4" class="text-caption grey--text pb-0 pt-1 pl-0 pr-0">Profit Avg Price:</VCol>
-                              <VCol cols="2" class="text-sub-caption text-right pb-0 pt-1 pl-0">1.01%</VCol>
-                              <VCol cols="6" class="text-caption font-weight-bold pb-1 pt-0">Net Profit:</VCol>
-                              <VCol cols="6" class="text-sub-caption text-right pb-1 pt-0"><VChip color="success" class="ml-2" size="small">1.01 (0.98%)</VChip></VCol>
-                            </VRow>
-                          </VCard>
-                        </VCol>
-                      </VRow>
-                    </VCard>
-                  </VExpansionPanelText>
-                </VExpansionPanel>
-                <VExpansionPanel style="margin-block-end: 0.5rem" expand-icon="tabler-plus" collapse-icon="tabler-minus">
-                  <VExpansionPanelTitle disable-icon-rotate>
-                    <div class="d-flex justify-space-between align-center w-100">
-                      <div class="text-h6">
-                        Session <strong>36950514</strong>
-                      </div>
-                      <span class="text-sub-caption text-success">$19.71</span>
-                    </div>
-                  </VExpansionPanelTitle>
-                  <VExpansionPanelText>
-                    <div class="mb-4 mt-2">
-                      <VRow>
-                        <VRow dense class="text-center">
-                          <!-- Row 1 -->
-                          <VCol cols="12">
-                            <div class="d-flex justify-space-between">
-                              <!-- Column 1 -->
-                              <div class="flex-1">
-                                <span class="text-caption text-grey">Trades closed</span><br>
-                                <strong class="font-weight-bold text-sub-caption">7</strong>
-                              </div>
-
-                              <!-- Vertical Divider -->
-                              <VDivider vertical class="mx-2" style="height: 40px;" />
-
-                              <!-- Column 2 -->
-                              <div class="flex-1">
-                                <span class="text-caption text-grey">Top positions sold</span><br>
-                                <strong class="font-weight-bold text-sub-caption">0</strong>
-                              </div>
-
-                              <!-- Vertical Divider -->
-                              <VDivider vertical class="mx-2" style="height: 40px;" />
-
-                              <!-- Column 3 -->
-                              <div class="flex-1">
-                                <span class="text-caption text-grey">Sliding covers</span><br>
-                                <strong class="font-weight-bold text-sub-caption">22</strong>
-                              </div>
-                            </div>
-                          </VCol>
-                          <VDivider />
-
-                          <!-- Row: Opening / Closing / Profit Used -->
-                          <VCol cols="12">
-                            <div class="d-flex justify-space-between align-start">
-                              <!-- Opening Price -->
-                              <div class="text-center flex-1">
-                                <span class="text-caption text-grey">Opening price</span><br>
-                                <strong class="font-weight-bold text-sub-caption">4016.66</strong>
-                              </div>
-
-                              <VDivider vertical class="mx-2" style="height: 40px;" />
-
-                              <!-- Closing Price -->
-                              <div class="text-center flex-1">
-                                <span class="text-caption text-grey">Closing price</span><br>
-                                <strong class="font-weight-bold text-sub-caption">4079.54</strong>
-                              </div>
-
-                              <VDivider vertical class="mx-2" style="height: 40px;" />
-
-                              <!-- Profit Used -->
-                              <div class="text-center flex-1">
-                                <span class="text-caption text-grey">Profit used<VIcon icon="tabler-info-circle" size="14" /></span><br>
-                                <strong class="font-weight-bold text-sub-caption">-</strong>
-                              </div>
-                            </div>
-                          </VCol>
-                          <VDivider />
-                          <!-- Row: Available Profit / Runtime -->
-                          <VCol cols="12">
-                            <div class="d-flex justify-space-between align-start">
-                              <!-- Available Profit -->
-                              <div class="text-center flex-1">
-                                <span class="text-caption text-grey">Available profit<VIcon icon="tabler-info-circle" size="14" /></span><br>
-                                <strong class="font-weight-bold text-sub-caption">2.42</strong>
-                              </div>
-
-                              <VDivider vertical class="mx-2" style="height: 40px;" />
-
-                              <!-- Runtime -->
-                              <div class="text-center flex-1">
-                                <span class="text-caption text-grey">Runtime</span><br>
-                                <strong class="font-weight-bold text-sub-caption">10D 58M</strong>
-                              </div>
-                            </div>
-                          </VCol>
-
-                          <VDivider />
-
-                          <!-- Footer -->
-                          <VCol cols="12">
-                            <div class="text-center">
-                              <strong class="font-weight-bold text-sub-caption">Session Trades - 12 Open</strong>
-                            </div>
-                          </VCol>
-                        </VRow>
-
-                        <VCol cols="12">
-                          <!-- Buy Info -->
-                          <VCard border class="pa-3 buy-card">
-                            <div class="d-flex justify-space-between align-center">
-                              <div class="d-flex align-center gap-2">
-                                <VChip color="success" class="text-white">Buy</VChip>
-                                <span class="font-weight-bold text-black text-left">Cover 4</span>
-                              </div>
-                              <div class="d-flex align-center gap-x-4">
-                                <VChip size="small">-2% X1</VChip>
-                              </div>
-                            </div>
-                            <div class="text-caption mt-1">Open: <span class="font-weight-light-bold">Dec 10, 2024 - 22:17</span></div>
-                            <VRow class="mt-1">
-                              <VCol cols="3" class="text-caption grey--text">Trade ID<br><span class="font-weight-bold">502426</span></VCol>
-                              <VCol cols="3" class="text-caption grey--text">Price<br><span class="font-weight-bold">3634.04</span></VCol>
-                              <VCol cols="3" class="text-caption grey--text">Quantity<br><span class="font-weight-bold">0.0291</span></VCol>
-                              <VCol cols="3" class="text-caption grey--text">Amount<br><span class="font-weight-bold">105.75</span></VCol>
-                            </VRow>
-                          </VCard>
-                          <!-- Sell Info -->
-                          <VCard border class="pa-3 sell-card" style="cursor: pointer;">
-                            <div class="d-flex justify-space-between align-center">
-                              <div class="d-flex align-center gap-2">
-                                <VChip color="error" class="text-white">Sell</VChip>
-                                <span class="font-weight-bold text-left">Cover 4</span>
-                              </div>
-                              <div class="d-flex align-center gap-x-4">
-                                <VChip size="small">-2% X1</VChip>
-                              </div>
-                            </div>
-                            <div class="text-caption mt-1">Open: <span class="font-weight-light-bold">Dec 10, 2024 - 22:17</span></div>
-                            <VRow class="mt-1">
-                              <VCol cols="3" class="text-caption grey--text">Trade ID<br><span class="font-weight-bold">502426</span></VCol>
-                              <VCol cols="3" class="text-caption grey--text">Price<br><span class="font-weight-bold">3634.04</span></VCol>
-                              <VCol cols="3" class="text-caption grey--text">Quantity<br><span class="font-weight-bold">0.0291</span></VCol>
-                              <VCol cols="3" class="text-caption grey--text">Amount<br><span class="font-weight-bold">105.75</span></VCol>
-                            </VRow>
-                          </VCard>
-                          <!-- Profit Summary -->
-                          <VCard border class="pa-3 profit-card">
-                            <VRow>
-                              <VCol cols="4" class="text-caption grey--text pb-0">Gross Profit:</VCol>
-                              <VCol cols="2" class="text-sub-caption text-right pb-0">2.50</VCol>
-                              <VCol cols="3" class="text-caption grey--text pb-0 pl-0">Profit %:</VCol>
-                              <VCol cols="3" class="text-sub-caption text-right pb-0">2.02%</VCol>
-                              <VCol cols="2" class="text-caption grey--text pb-0 pt-1 pr-0">Fees:</VCol>
-                              <VCol cols="4" class="text-sub-caption text-right pb-0 pt-1">0.47372728</VCol>
-                              <VCol cols="4" class="text-caption grey--text pb-0 pt-1 pl-0 pr-0">Profit Avg Price:</VCol>
-                              <VCol cols="2" class="text-sub-caption text-right pb-0 pt-1 pl-0">1.01%</VCol>
-                              <VCol cols="6" class="text-caption font-weight-bold pb-1 pt-0">Net Profit:</VCol>
-                              <VCol cols="6" class="text-sub-caption text-right pb-1 pt-0"><VChip color="success" class="ml-2" size="small">1.01 (0.98%)</VChip></VCol>
-                            </VRow>
-                          </VCard>
-                        </VCol>
-                      </VRow>
-                    </div>
-                    <div>
-                      <VCard class="mb-4" style="border: 1px solid rgb(240, 185, 11);">
-                        <VCardTitle class="border-bg-block" style="font-size: 12px;background-color: #ffdc6c;">Account has insufficient balance for requested action.</VCardTitle>
-                        <VDivider />
-                        <div class="pa-3">
-                          <div class="d-flex justify-space-between align-center">
-                            <div class="d-flex align-center gap-2">
-                              <VChip color="success" class="text-white">Buy</VChip>
-                              <span class="font-weight-bold text-black text-left">Cover 4</span>
-                            </div>
-                            <div class="d-flex align-center gap-x-4">
-                              <VChip size="small">-2% X1</VChip>
-                            </div>
-                          </div>
-                          <div class="text-caption mt-1">Open: <span class="font-weight-light-bold">Dec 10, 2024 - 22:17</span></div>
-                          <VRow class="mt-1">
-                            <VCol cols="3" class="text-caption grey--text">Trade ID<br><span class="font-weight-bold">502426</span></VCol>
-                            <VCol cols="3" class="text-caption grey--text">Price<br><span class="font-weight-bold">3634.04</span></VCol>
-                            <VCol cols="3" class="text-caption grey--text">Quantity<br><span class="font-weight-bold">0.0291</span></VCol>
-                            <VCol cols="3" class="text-caption grey--text">Amount<br><span class="font-weight-bold">105.75</span></VCol>
-                          </VRow>
-                        </div>
-                      </VCard>
-                      <VCard class="mb-4" style="border: 1px solid rgb(240, 185, 11);">
-                        <VCardTitle class="border-bg-block" style="font-size: 12px;background-color: #ffdc6c;">Account has insufficient balance for requested action.</VCardTitle>
-                        <VDivider />
-                        <div class="pa-3">
-                          <div class="d-flex justify-space-between align-center">
-                            <div class="d-flex align-center gap-2">
-                              <VChip color="success" class="text-white">Buy</VChip>
-                              <span class="font-weight-bold text-black text-left">Cover 4</span>
-                            </div>
-                            <div class="d-flex align-center gap-x-4">
-                              <VChip size="small">-2% X1</VChip>
-                            </div>
-                          </div>
-                          <div class="text-caption mt-1">Open: <span class="font-weight-light-bold">Dec 10, 2024 - 22:17</span></div>
-                          <VRow class="mt-1">
-                            <VCol cols="3" class="text-caption grey--text">Trade ID<br><span class="font-weight-bold">502426</span></VCol>
-                            <VCol cols="3" class="text-caption grey--text">Price<br><span class="font-weight-bold">3634.04</span></VCol>
-                            <VCol cols="3" class="text-caption grey--text">Quantity<br><span class="font-weight-bold">0.0291</span></VCol>
-                            <VCol cols="3" class="text-caption grey--text">Amount<br><span class="font-weight-bold">105.75</span></VCol>
-                          </VRow>
-                        </div>
-                      </VCard>
-                      <VCard class="mb-4" style="border: 1px solid rgb(240, 185, 11);">
-                        <VCardTitle class="border-bg-block" style="font-size: 12px;background-color: #ffdc6c;">Account has insufficient balance for requested action.</VCardTitle>
-                        <VDivider />
-                        <div class="pa-3">
-                          <div class="d-flex justify-space-between align-center">
-                            <div class="d-flex align-center gap-2">
-                              <VChip color="success" class="text-white">Buy</VChip>
-                              <span class="font-weight-bold text-black text-left">Cover 4</span>
-                            </div>
-                            <div class="d-flex align-center gap-x-4">
-                              <VChip size="small">-2% X1</VChip>
-                            </div>
-                          </div>
-                          <div class="text-caption mt-1">Open: <span class="font-weight-light-bold">Dec 10, 2024 - 22:17</span></div>
-                          <VRow class="mt-1">
-                            <VCol cols="3" class="text-caption grey--text">Trade ID<br><span class="font-weight-bold">502426</span></VCol>
-                            <VCol cols="3" class="text-caption grey--text">Price<br><span class="font-weight-bold">3634.04</span></VCol>
-                            <VCol cols="3" class="text-caption grey--text">Quantity<br><span class="font-weight-bold">0.0291</span></VCol>
-                            <VCol cols="3" class="text-caption grey--text">Amount<br><span class="font-weight-bold">105.75</span></VCol>
-                          </VRow>
-                        </div>
-                      </VCard>
-                    </div>
-                    <VCard>
-                      <VRow>
-                        <!-- Buy Info -->
-                        <VCol cols="12">
-                          <!-- Buy Info -->
-                          <VCard border class="pa-3 buy-card">
-                            <div class="d-flex justify-space-between align-center">
-                              <div class="d-flex align-center gap-2">
-                                <VChip color="success" class="text-white">Buy</VChip>
-                                <span class="font-weight-bold text-black text-left">Cover 4</span>
-                              </div>
-                              <div class="d-flex align-center gap-x-4">
-                                <VChip size="small">-2% X1</VChip>
-                              </div>
-                            </div>
-                            <div class="text-caption mt-1">Open: <span class="font-weight-light-bold">Dec 10, 2024 - 22:17</span></div>
-                            <VRow class="mt-1">
-                              <VCol cols="3" class="text-caption grey--text">Trade ID<br><span class="font-weight-bold">502426</span></VCol>
-                              <VCol cols="3" class="text-caption grey--text">Price<br><span class="font-weight-bold">3634.04</span></VCol>
-                              <VCol cols="3" class="text-caption grey--text">Quantity<br><span class="font-weight-bold">0.0291</span></VCol>
-                              <VCol cols="3" class="text-caption grey--text">Amount<br><span class="font-weight-bold">105.75</span></VCol>
-                            </VRow>
-                          </VCard>
-                          <!-- Sell Info -->
-                          <VCard border class="pa-3 sell-card" style="cursor: pointer;">
-                            <div class="d-flex justify-space-between align-center">
-                              <div class="d-flex align-center gap-2">
-                                <VChip color="error" class="text-white">Sell</VChip>
-                                <span class="font-weight-bold text-left">Cover 4</span>
-                              </div>
-                              <div class="d-flex align-center gap-x-4">
-                                <VChip size="small">-2% X1</VChip>
-                              </div>
-                            </div>
-                            <div class="text-caption mt-1">Open: <span class="font-weight-light-bold">Dec 10, 2024 - 22:17</span></div>
-                            <VRow class="mt-1">
-                              <VCol cols="3" class="text-caption grey--text">Trade ID<br><span class="font-weight-bold">502426</span></VCol>
-                              <VCol cols="3" class="text-caption grey--text">Price<br><span class="font-weight-bold">3634.04</span></VCol>
-                              <VCol cols="3" class="text-caption grey--text">Quantity<br><span class="font-weight-bold">0.0291</span></VCol>
-                              <VCol cols="3" class="text-caption grey--text">Amount<br><span class="font-weight-bold">105.75</span></VCol>
-                            </VRow>
-                          </VCard>
-                          <!-- Profit Summary -->
-                          <VCard border class="pa-3 profit-card">
-                            <VRow>
-                              <VCol cols="4" class="text-caption grey--text pb-0">Gross Profit:</VCol>
-                              <VCol cols="2" class="text-sub-caption text-right pb-0">2.50</VCol>
-                              <VCol cols="3" class="text-caption grey--text pb-0 pl-0">Profit %:</VCol>
-                              <VCol cols="3" class="text-sub-caption text-right pb-0">2.02%</VCol>
-                              <VCol cols="2" class="text-caption grey--text pb-0 pt-1 pr-0">Fees:</VCol>
-                              <VCol cols="4" class="text-sub-caption text-right pb-0 pt-1">0.47372728</VCol>
-                              <VCol cols="4" class="text-caption grey--text pb-0 pt-1 pl-0 pr-0">Profit Avg Price:</VCol>
-                              <VCol cols="2" class="text-sub-caption text-right pb-0 pt-1 pl-0">1.01%</VCol>
-                              <VCol cols="6" class="text-caption font-weight-bold pb-1 pt-0">Net Profit:</VCol>
-                              <VCol cols="6" class="text-sub-caption text-right pb-1 pt-0"><VChip color="success" class="ml-2" size="small">1.01 (0.98%)</VChip></VCol>
-                            </VRow>
-                          </VCard>
-                        </VCol>
-                      </VRow>
-                    </VCard>
-                  </VExpansionPanelText>
-                </VExpansionPanel>
-              </VExpansionPanels>
-            </VWindowItem>
-          </VWindow>
-      </VCard>
-    </div>
+                        </VCard>
+                      </VCol>
+                    </VRow>
+                  </VCard>
+                </VExpansionPanelText>
+              </VExpansionPanel>
+            </VExpansionPanels>
+        </VWindowItem>
+      </VWindow>
+    </VCardText>
+    </VCard>
   </div>
-
 </template>
 <style scoped>
 .text-sub-caption{
@@ -2984,9 +465,5 @@ const stats = [
   border-radius: 10px 10px 0px 0px;
   background-color: #f8f8f8;
   border: 1px solid #e3e3e3;
-}
-.v-expansion-panel{
-  margin-block-end: unset!important;
-  margin-block-start: unset!important;
 }
 </style>

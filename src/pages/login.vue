@@ -9,6 +9,8 @@ import authV2MaskDark from '@images/pages/misc-mask-dark.png'
 import authV2MaskLight from '@images/pages/misc-mask-light.png'
 import { VNodeRenderer } from '@layouts/components/VNodeRenderer'
 import { themeConfig } from '@themeConfig'
+import loginimage from '@images/auth/login-img.png'
+import goggleIcon from '@images/auth/google-icon.png'
 
 definePage({
   meta: {
@@ -33,11 +35,10 @@ const login = () => {
   // TODO: replace with real login logic / API call
   if (form.value.email && form.value.password) {
     localStorage.setItem('accessToken', 'demo-token')
-
     // ✅ Redirect to dashboard
     router.push({ name: 'root' }) // or router.push('/dashboard')
   } else {
-    alert('Please enter email and password')
+    // refForm.validate()
   }
 }
 </script>
@@ -60,14 +61,14 @@ const login = () => {
       md="8"
       class="d-none d-md-flex"
     >
-      <div class="position-relative bg-background w-100 me-0">
+      <div class="position-relative loginbg-background w-100 me-0">
         <div
           class="d-flex align-center justify-center w-100 h-100"
           style="padding-inline: 6.25rem;"
         >
           <VImg
             max-width="613"
-            :src="authThemeImg"
+            :src="loginimage"
             class="auth-illustration mt-16 mb-2"
           />
         </div>
@@ -93,14 +94,27 @@ const login = () => {
         class="mt-12 mt-sm-0 pa-6"
       >
         <VCardText>
-          <h4 class="text-h4 mb-1">
-            Welcome to <span class="text-capitalize">{{ themeConfig.app.title }}</span>! 👋🏻
-          </h4>
-          <p class="mb-0">
-            Please sign-in to your account and start the adventure
-          </p>
+          <h3 class="text-h3 mb-1">
+            Sign in to <span class="text-capitalize">{{ themeConfig.app.title }}</span>! 👋🏻
+          </h3>
+
         </VCardText>
         <VCardText>
+          <VBtn block>
+            <img
+                    :class="`${googleGLogo1Icon} mr-2`"
+                    :src="goggleIcon"
+                    alt="Google logo"
+            />
+            Sign Up with Google
+          </VBtn>
+
+
+          <div class="d-flex align-center my-4">
+            <v-divider class="flex-grow-1"></v-divider>
+            <span class="mx-4 text-subtitle-1">OR</span>
+            <v-divider class="flex-grow-1"></v-divider>
+          </div>
           <VForm @submit.prevent="login">
             <VRow>
               <!-- email -->
@@ -108,9 +122,10 @@ const login = () => {
                 <AppTextField
                   v-model="form.email"
                   autofocus
-                  label="Email"
+                  label="Email Address"
                   type="email"
                   placeholder="johndoe@email.com"
+                  :rules="[requiredValidator, emailValidator]"
                 />
               </VCol>
 
@@ -124,6 +139,7 @@ const login = () => {
                   autocomplete="password"
                   :append-inner-icon="isPasswordVisible ? 'tabler-eye-off' : 'tabler-eye'"
                   @click:append-inner="isPasswordVisible = !isPasswordVisible"
+                  :rules="[requiredValidator]"
                 />
 
                 <div class="d-flex align-center flex-wrap justify-space-between my-6">
@@ -189,4 +205,10 @@ const login = () => {
 
 <style lang="scss">
 @use "@core/scss/template/pages/page-auth";
+</style>
+<style setup>
+  .loginbg-background{
+    background: #2D57F8;
+    border-radius: 15px;
+  }
 </style>

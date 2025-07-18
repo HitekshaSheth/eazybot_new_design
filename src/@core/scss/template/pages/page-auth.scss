@@ -1,6 +1,7 @@
 .layout-blank {
   .auth-wrapper {
     min-block-size: 100dvh;
+    padding: 15px; //Added custom for figma design
   }
 
   .auth-v1-top-shape,
@@ -60,4 +61,36 @@
   letter-spacing: 0.25px;
   line-height: 1.5rem;
   text-transform: capitalize;
+}
+
+//Custom css
+.continueWithGoogleParent {
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 25px;
+  font-size: 14px;
+  color: rgba(27, 43, 65, 0.72);
+}
+.googleGLogo1Icon {
+  width: 19px;
+  position: relative;
+  height: 19px;
+  object-fit: cover;
+}
+.continueWithGoogle {
+  align-self: stretch;
+  border-radius: 6px;
+  border: 1px solid rgba(28, 52, 84, 0.26);
+  box-sizing: border-box;
+  height: 38px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 14px;
+  gap: 20px;
+  background-color: #fff;
 }
