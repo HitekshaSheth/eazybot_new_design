@@ -25,6 +25,11 @@ declare module 'vue-router/auto-routes' {
     'edit-bot': RouteRecordInfo<'edit-bot', '/edit-bot', Record<never, never>, Record<never, never>>,
     'forgot-password': RouteRecordInfo<'forgot-password', '/forgot-password', Record<never, never>, Record<never, never>>,
     'login': RouteRecordInfo<'login', '/login', Record<never, never>, Record<never, never>>,
+    'onboarding-landing': RouteRecordInfo<'onboarding-landing', '/onboarding/landing', Record<never, never>, Record<never, never>>,
+    'onboarding-step1': RouteRecordInfo<'onboarding-step1', '/onboarding/Step1', Record<never, never>, Record<never, never>>,
+    'onboarding-step2': RouteRecordInfo<'onboarding-step2', '/onboarding/Step2', Record<never, never>, Record<never, never>>,
+    'onboarding-verification': RouteRecordInfo<'onboarding-verification', '/onboarding/verification', Record<never, never>, Record<never, never>>,
+    'onboarding-welcome': RouteRecordInfo<'onboarding-welcome', '/onboarding/welcome', Record<never, never>, Record<never, never>>,
     'second-page': RouteRecordInfo<'second-page', '/second-page', Record<never, never>, Record<never, never>>,
     'view-bot': RouteRecordInfo<'view-bot', '/view-bot', Record<never, never>, Record<never, never>>,
   }
