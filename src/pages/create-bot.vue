@@ -38,7 +38,7 @@ const refAccountForm = ref()
 const refPersonalForm = ref()
 
 const accountForm = ref({
-  exchange: 'Select',
+  exchange: 'Select Exchange',
   email: '',
   password: '',
   cPassword: '',
@@ -280,17 +280,27 @@ label{
   flex: 1;
 }
 body .v-btn-group.v-btn-toggle .v-btn{
-  block-size: auto!important;
   inline-size: auto!important;
 }
 body .v-btn-group.v-btn-toggle.v-btn-group{
   height: 38px!important;
+  padding: 0;
 }
 .v-btn--active{
   color: rgb(var(--v-theme-primary)) !important;
 }
 ::v-deep(thead){
   background-color: #f5f8fb!important;
+}
+@media (max-width: 390px) {
+  label {
+    font-size: 0.8175rem;
+  }
+}
+@media (max-width: 365px) {
+  .v-label {
+    font-size: 0.8175rem;
+  }
 }
 </style>
 <template>
@@ -878,16 +888,13 @@ body .v-btn-group.v-btn-toggle.v-btn-group{
     </VCard>
   </div>
   <div v-else>
-    <VCard>
-      <VCardText>
-        <!-- 👉 Stepper -->
-        <AppStepper
-          v-model:current-step="currentStep"
-          :items="iconSteps"
-          :is-active-step-valid="isCurrentStepValid"
-        />
-      </VCardText>
-      </VCard>
+    <div class="mb-6">
+      <AppStepper
+        v-model:current-step="currentStep"
+        :items="iconSteps"
+        :is-active-step-valid="isCurrentStepValid"
+      />
+    </div>
 
       <VDivider />
 
@@ -905,30 +912,18 @@ body .v-btn-group.v-btn-toggle.v-btn-group{
                 <VCard>
                 <VCardText>
                   <VRow>
-                  <VCol cols="12">
-                    <h6 class="text-h6 font-weight-medium">
-                      Bot Setup
-                    </h6>
-                  </VCol>
 
                   <VCol cols="12">
                     <VRow class="align-stretch">
                       <!-- Left Column -->
                       <VCol cols="12" md="7" class="d-flex flex-column justify-center">
-                        <label>Exchange</label>
                         <AppSelect
                           v-model="accountForm.exchange"
-                          placeholder="Select"
+                          placeholder="Select Exchange"
                           :rules="[requiredValidator]"
                           :items="['Binance', 'KuCoin', 'Bitget', 'Kraken', 'Coinbase Advanced', 'Bybit', 'Coinbase Prime']"
                         />
-                      </VCol>
-
-                    </VRow>
-                    <VRow>
-                      <!-- Right Column: vertically centered, full height -->
-                      <VCol cols="12" md="12" class="d-flex">
-                        <div class="d-flex align-center gap-2">
+                        <div class="d-flex align-center gap-2 pt-2">
                           <span class="font-weight-medium">Assigned Balance</span>
                           <strong>11 BOT</strong>
                           <div style="width: 1px; height: 24px; background-color: #ccc;"></div>
@@ -938,12 +933,7 @@ body .v-btn-group.v-btn-toggle.v-btn-group{
                     </VRow>
                     <VRow>
                       <VCol cols="12">
-                        <label>Quote Currency</label>
-                        <!--                  <CustomRadios-->
-                        <!--                    v-model:selected-radio="selectedRadio"-->
-                        <!--                    :radio-content="radioContent"-->
-                        <!--                    :grid-column="{ sm: '3', cols: '6' }"-->
-                        <!--                  />-->
+                        <label class="mb-1 d-inline-block">Quote Currency</label>
                         <CustomRadios
                           v-model:selected-radio="selectedRadio"
                           :radio-content="radioContent"
@@ -962,7 +952,7 @@ body .v-btn-group.v-btn-toggle.v-btn-group{
                     </VRow>
                     <VRow>
                       <VCol cols="12">
-                        <label>Strategy</label>
+                        <label class="mb-1 d-inline-block">Strategy</label>
                         <!--                  <CustomRadios-->
                         <!--                    v-model:selected-radio="selectedRadio2"-->
                         <!--                    :radio-content="radioContent2"-->
@@ -985,11 +975,6 @@ body .v-btn-group.v-btn-toggle.v-btn-group{
                         </CustomRadios>
                       </VCol>
                     </VRow>
-
-
-                  </VCol>
-
-                  <VCol cols="12">
                     <VRow>
                       <VCol cols="12">
                         <label>Initial Order</label>
@@ -1028,33 +1013,30 @@ body .v-btn-group.v-btn-toggle.v-btn-group{
                       </VCol>
                     </VRow>
                     <VRow>
-                      <div>
-                        <VCol cols="12" class="pt-0 pb-0">
-                          <VSwitch
-                            v-model="autoCompounding"
-                            label="Auto Compounding"
-                          />
-                        </VCol>
-                        <VCol cols="12" class="pt-0 pb-0">
-                          <VSwitch
-                            v-model="eazybotStrategy"
-                            label="Use the EazyBot Strategy?"
-                          />
-                        </VCol>
-                        <VCol cols="12" class="pt-0 pb-0">
-                          <VSwitch
-                            v-model="isVirtual"
-                            label="Is Virtual"
-                          />
-                        </VCol>
-                        <VCol cols="12" class="pt-0 pb-0">
-                          <VSwitch
-                            v-model="multipleBots"
-                            label="Create Multiple Bots"
-                          />
-                        </VCol>
-                      </div>
-
+                      <VCol cols="6" class="pt-0 pb-0">
+                        <VSwitch
+                          v-model="autoCompounding"
+                          label="Auto Compounding"
+                        />
+                      </VCol>
+                      <VCol cols="6" class="pt-0 pb-0">
+                        <VSwitch
+                          v-model="eazybotStrategy"
+                          label="Default Strategy?"
+                        />
+                      </VCol>
+                      <VCol cols="6" class="pt-0 pb-0">
+                        <VSwitch
+                          v-model="isVirtual"
+                          label="Is Virtual"
+                        />
+                      </VCol>
+                      <VCol cols="6" class="pt-0 pb-0">
+                        <VSwitch
+                          v-model="multipleBots"
+                          label="Multiple Bots"
+                        />
+                      </VCol>
                     </VRow>
 
                   </VCol>
@@ -1075,7 +1057,7 @@ body .v-btn-group.v-btn-toggle.v-btn-group{
 
                           <!-- Base Currency -->
                           <VCol cols="12">
-                            <label>Base Currency</label>
+                            <label class="mb-1 d-inline-block">Base Currency</label>
                             <VSelect
                               v-model="botForm.baseCurrency"
                               :items="['USDT', 'BTC', 'ETH']"
@@ -1087,7 +1069,7 @@ body .v-btn-group.v-btn-toggle.v-btn-group{
 
                           <!-- Bot Option -->
                           <VCol cols="12">
-                            <label>Bot Option</label>
+                            <label class="mb-1 d-inline-block">Bot Option</label>
                             <VBtnToggle class="w-100 justify-center" v-model="botForm.option" divided mandatory>
                               <VBtn class="flex-grow-1 text-center" value="cycle" variant="text">Cycle</VBtn>
                               <VBtn class="flex-grow-1 text-center" value="single" variant="text">Single</VBtn>
@@ -1096,7 +1078,7 @@ body .v-btn-group.v-btn-toggle.v-btn-group{
 
                           <!-- Status -->
                           <VCol cols="12">
-                            <label>Status</label><br/>
+                            <label class="mb-1 d-inline-block">Status</label><br/>
                             <VBtnToggle class="w-100 justify-center" v-model="botForm.status" divided mandatory>
                               <VBtn class="flex-grow-1 text-center" value="active" variant="text">Active</VBtn>
                               <VBtn class="flex-grow-1 text-center" value="inactive" variant="text">In-Active</VBtn>
@@ -1105,7 +1087,7 @@ body .v-btn-group.v-btn-toggle.v-btn-group{
 
                           <!-- USDT Assigned -->
                           <VCol cols="12">
-                            <label>USDT Assigned</label>
+                            <label class="mb-1 d-inline-block">USDT Assigned</label>
                             <VTextField
                               v-model="botForm.usdt"
                               type="number"
@@ -1184,11 +1166,11 @@ body .v-btn-group.v-btn-toggle.v-btn-group{
 
               <VRow class="align-stretch pt-4">
                 <VCol cols="6" md="2"  class="d-flex flex-column justify-center">
-                  <label>Take Profit</label>
+                  <label class="mb-1 d-inline-block">Take Profit</label>
                   <VTextField v-model="takeProfit" type="number" :disabled="eazybotStrategy"/>
                 </VCol>
                 <VCol cols="6" md="2"  class="d-flex flex-column justify-center">
-                  <label>Profit Re-tracement</label>
+                  <label class="mb-1 d-inline-block">Profit Re-tracement</label>
                   <VTextField v-model="profitRetracement" type="number" :disabled="eazybotStrategy"/>
                 </VCol>
 
@@ -1264,19 +1246,19 @@ body .v-btn-group.v-btn-toggle.v-btn-group{
                 <VCardText>
                   <VRow>
                     <VCol cols="6" md="3">
-                      <label>Cover %</label>
+                      <label class="mb-1 d-inline-block">Cover %</label>
                       <VTextField v-model="sliding.coverPercent" label="" :disabled="eazybotStrategy"/>
                     </VCol>
                     <VCol cols="6" md="3">
-                      <label>Buy X Time</label>
+                      <label class="mb-1 d-inline-block">Buy X Time</label>
                       <VTextField v-model="sliding.buyXTime" label="" :disabled="eazybotStrategy"/>
                     </VCol>
                     <VCol cols="6" md="3">
-                      <label>Pullback</label>
+                      <label class="mb-1 d-inline-block">Pullback</label>
                       <VTextField v-model="sliding.pullback" label="" :disabled="eazybotStrategy"/>
                     </VCol>
                     <VCol cols="6" md="3">
-                      <label>Keep Profit (%)</label>
+                      <label class="mb-1 d-inline-block">Keep Profit (%)</label>
                       <VTextField v-model="sliding.keepProfit" label="" :disabled="eazybotStrategy"/>
                     </VCol>
                   </VRow>
@@ -1300,13 +1282,6 @@ body .v-btn-group.v-btn-toggle.v-btn-group{
                         <!-- Top row with Add/Delete Icon -->
                         <div class="d-flex justify-space-between align-center mb-4">
                           <div class="d-flex align-center gap-2">
-<!--                            <VCheckbox-->
-<!--                              v-model="selected"-->
-<!--                              :value="item.no"-->
-<!--                              :disabled="eazybotStrategy"-->
-<!--                              hide-details-->
-<!--                              class="ma-0 pa-0"-->
-<!--                            />-->
                             <strong>Cover {{ index + 1 }}</strong>
                           </div>
                           <VIcon
@@ -1349,7 +1324,7 @@ body .v-btn-group.v-btn-toggle.v-btn-group{
 
                           <!-- Type Toggle -->
                           <VCol cols="5">
-                            <label>Type</label>
+                            <label class="mb-1 text-body-2">Type</label>
                             <AppSelect
                               v-model="item.type"
                               placeholder="Select"
