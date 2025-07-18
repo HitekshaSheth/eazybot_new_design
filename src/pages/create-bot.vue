@@ -1013,28 +1013,28 @@ body .v-btn-group.v-btn-toggle.v-btn-group{
                       </VCol>
                     </VRow>
                     <VRow>
-                      <VCol cols="6" class="pt-0 pb-0">
+                      <VCol cols="12" class="pt-0 pb-0">
                         <VSwitch
                           v-model="autoCompounding"
                           label="Auto Compounding"
                         />
                       </VCol>
-                      <VCol cols="6" class="pt-0 pb-0">
+                      <VCol cols="12" class="pt-0 pb-0">
                         <VSwitch
                           v-model="eazybotStrategy"
-                          label="Default Strategy?"
+                          label="Use the EazyBot Strategy?"
                         />
                       </VCol>
-                      <VCol cols="6" class="pt-0 pb-0">
+                      <VCol cols="12" class="pt-0 pb-0">
                         <VSwitch
                           v-model="isVirtual"
                           label="Is Virtual"
                         />
                       </VCol>
-                      <VCol cols="6" class="pt-0 pb-0">
+                      <VCol cols="12" class="pt-0 pb-0">
                         <VSwitch
                           v-model="multipleBots"
-                          label="Multiple Bots"
+                          label="Create Multiple Bots"
                         />
                       </VCol>
                     </VRow>

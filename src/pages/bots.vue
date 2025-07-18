@@ -879,7 +879,7 @@ const moreList = [
         >
           <VCard>
             <VCardItem class="card-active">
-              <VCardTitle><a class="v-card-title" href="/view-bot">ETH/USDT - 1481.71</a>  </VCardTitle>
+              <VCardTitle><a class="v-card-title" href="/view-bot">ETH/USDT <strong>1481.71</strong></a>  </VCardTitle>
               <template #append>
                 <span class="font-weight-bold">Active</span>
                 <div>
@@ -1066,7 +1066,7 @@ const moreList = [
         >
           <VCard>
             <VCardItem class="card-sell-only">
-              <VCardTitle><a class="v-card-title" href="/view-bot">ETH/USDT - 1481.71</a>  </VCardTitle>
+              <VCardTitle><a class="v-card-title" href="/view-bot">ETH/USDT <strong>1481.71</strong></a>  </VCardTitle>
               <template #append>
                 <span class="font-weight-bold">Sell Only</span>
                 <div>
@@ -1252,7 +1252,7 @@ const moreList = [
         >
           <VCard>
             <VCardItem class="card-inactive">
-              <VCardTitle><a class="v-card-title" href="/view-bot">ETH/USDT - 1481.71</a>  </VCardTitle>
+              <VCardTitle><a class="v-card-title" href="/view-bot">ETH/USDT <strong>1481.71</strong></a>  </VCardTitle>
               <template #append>
                 <span class="font-weight-bold">Inactive</span>
                 <div>
