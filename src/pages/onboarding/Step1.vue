@@ -1,9 +1,9 @@
 <!-- src/views/onboarding/Step1.vue -->
 <template>
-    <VRow class="mg-lg-8 col-md-10">
-        <VCol cols="12" md="6">
-            <h5 class="text-h5 font-weight-medium">Account Details</h5>
-            &nbsp;
+    <VRow >
+        <VCol cols="12" md="7">
+            <h5 class="text-h5 font-weight-bold">Account Details</h5>
+            &nbsp
             <AppTextField class="mb-4"
                           v-model="formData.username"
                           placeholder="CarterLeonardo"
@@ -40,12 +40,12 @@
             />
         </VCol>
         <VCol md="1"></VCol>
-        <VCol  cols="12" md="5">
-            <h5 class="text-h5">
-                Need help? Please contact us or reach out to your sponsor
+        <VCol  cols="12" md="4">
+            <h5 class="text-h5 font-weight-bold">
+                Need help? Please reach out to your sponsor
             </h5>
             <br>
-            <VCard class="pa-2 rounded-xl"  style="background-color: rgba(241, 245, 249, 0.69);"
+            <VCard class="pa-2 mt-4 rounded-xl"  style="background-color: rgba(241, 245, 249, 0.69);"
             elevation="2">
                 <VCardItem>
                     <VCardTitle>
@@ -82,7 +82,7 @@
             </VCard>
             &nbsp;
 
-            <VCard class="pa-2 rounded-xl bg-img"   :style="{ backgroundImage: `url(${cardimg})` }"
+            <VCard class="pa-2 mt-4 rounded-xl bg-img"   :style="{ backgroundImage: `url(${cardimg})` }"
                    elevation="2" heigh="100vh"
             >
 

@@ -176,7 +176,7 @@
 
                                 <VBtn
                                         block
-                                        type="submit"
+                                        type="submit" :to="{ name: 'onboarding-welcome' }"
                                 >
                                     Create account
                                 </VBtn>

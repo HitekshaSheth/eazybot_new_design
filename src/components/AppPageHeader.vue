@@ -6,7 +6,7 @@
     </h4>
 
     <!-- Breadcrumbs -->
-    <div class="breadcrumbs d-flex align-center gap-2 text-sm text-medium-emphasis">
+    <div v-if="mdAndUp" class="breadcrumbs d-flex align-center gap-2 text-sm text-medium-emphasis">
       <template v-for="(crumb, index) in breadcrumbs" :key="index">
         <div class="d-flex align-center gap-1">
           <RouterLink
@@ -36,6 +36,10 @@
 </template>
 
 <script setup>
+import { useDisplay } from 'vuetify'
+
+const { mdAndUp } = useDisplay()
+
 defineProps({
   title: {
     type: String,

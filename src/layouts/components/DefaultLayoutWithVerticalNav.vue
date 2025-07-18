@@ -1,7 +1,9 @@
 <script setup>
 import navItems from '@/navigation/vertical'
 import { themeConfig } from '@themeConfig'
+import { useDisplay } from 'vuetify'
 
+const { mdAndUp } = useDisplay()
 // Components
 import Footer from '@/layouts/components/Footer.vue'
 import NavBarNotifications from '@/layouts/components/NavBarNotifications.vue'
@@ -31,14 +33,14 @@ import { VerticalNavLayout } from '@layouts'
         </IconBtn>
 
         <VSpacer />
-        <VIcon icon="tabler-cube" size="40" style="background-color: rgb(var(--v-global-theme-primary))"/>
-        <VListItem class="pl-0">
+        <VIcon v-if="mdAndUp" icon="tabler-cube" size="40" style="background-color: rgb(var(--v-global-theme-primary))"/>
+        <VListItem v-if="mdAndUp" class="pl-0">
           <VListItemSubtitle>Loyalty points</VListItemSubtitle>
           <VListItemTitle class="font-weight-bold" style="line-height: 1rem;">5302.79</VListItemTitle>
         </VListItem>
         <!-- Wallet Balance -->
-        <VIcon icon="tabler-wallet" size="40" style="background-color: rgb(var(--v-global-theme-primary))"/>
-        <VListItem class="pl-0">
+        <VIcon  v-if="mdAndUp" icon="tabler-wallet" size="40" style="background-color: rgb(var(--v-global-theme-primary))"/>
+        <VListItem  v-if="mdAndUp" class="pl-0">
         <VListItemSubtitle>
           Wallet Balance
         </VListItemSubtitle>
@@ -52,7 +54,7 @@ import { VerticalNavLayout } from '@layouts'
 
 <!--          </div>-->
 <!--        </VListItem>-->
-        <NavbarThemeSwitcher />
+        <NavbarThemeSwitcher  v-if="mdAndUp" />
         <NavBarNotifications class="me-1" />
         <UserProfile />
       </div>

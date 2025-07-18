@@ -17,6 +17,7 @@ export default [
   {
     title: 'My Wallet',
     icon: { icon: 'tabler-wallet' },
+    to: { name: 'my-wallet' },
   },
   {
     title: 'Packages',
@@ -26,6 +27,7 @@ export default [
   {
     title: 'My Loyalty Points',
     icon: { icon: 'tabler-cube' },
+    to: { name: 'my-loyalty-points' },
     // to: 'apps-chat',
   },
   { heading: 'Account' },
@@ -33,8 +35,12 @@ export default [
     title: 'My Account',
     icon: { icon: 'tabler-password-user' },
     children: [
-      { title: 'Test1' },
-      { title: 'Test2' }
+      { title: 'Account' , to : {name: 'account-settings-account'} },
+      { title: 'Security', to : {name: 'account-settings-security'} },
+      { title: 'Billing & Plans', to : {name: 'account-settings-billing-plans'} },
+      { title: 'Notifications', to : {name: 'account-settings-notification'} },
+      { title: 'My Exchanges' , to: { name: 'my-exchanges' }},
+      { title: 'My Vouchers' },
     ],
   },
   { heading: 'Help & Support' },
