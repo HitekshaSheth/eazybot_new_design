@@ -45,7 +45,7 @@
                 Need help? Please reach out to your sponsor
             </h5>
             <br>
-            <VCard class="pa-2 mt-4 rounded-xl"  style="background-color: rgba(241, 245, 249, 0.69);"
+            <VCard class="pa-2 mt-4 rounded-xl bg-light-primary"
             elevation="2">
                 <VCardItem>
                     <VCardTitle>
