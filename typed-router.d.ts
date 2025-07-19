@@ -37,6 +37,8 @@ declare module 'vue-router/auto-routes' {
     'onboarding-step1': RouteRecordInfo<'onboarding-step1', '/onboarding/Step1', Record<never, never>, Record<never, never>>,
     'onboarding-step2': RouteRecordInfo<'onboarding-step2', '/onboarding/Step2', Record<never, never>, Record<never, never>>,
     'onboarding-step3': RouteRecordInfo<'onboarding-step3', '/onboarding/Step3', Record<never, never>, Record<never, never>>,
+    'onboarding-step4': RouteRecordInfo<'onboarding-step4', '/onboarding/Step4', Record<never, never>, Record<never, never>>,
+    'onboarding-step5': RouteRecordInfo<'onboarding-step5', '/onboarding/Step5', Record<never, never>, Record<never, never>>,
     'onboarding-verification': RouteRecordInfo<'onboarding-verification', '/onboarding/verification', Record<never, never>, Record<never, never>>,
     'onboarding-welcome': RouteRecordInfo<'onboarding-welcome', '/onboarding/welcome', Record<never, never>, Record<never, never>>,
     'second-page': RouteRecordInfo<'second-page', '/second-page', Record<never, never>, Record<never, never>>,

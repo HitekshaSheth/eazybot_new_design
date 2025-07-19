@@ -2,6 +2,8 @@
     import Step1 from '@/pages/onboarding/Step1.vue'
     import Step2 from '@/pages/onboarding/Step2.vue'
     import Step3 from '@/pages/onboarding/Step3.vue'
+    import Step4 from '@/pages/onboarding/Step4.vue'
+    import Step5 from '@/pages/onboarding/Step5.vue'
     import welcomeVideo from '@images/auth/welcome-video.png'
     import { ref } from 'vue'
 
@@ -117,6 +119,20 @@
                                     <Step3></Step3>
                                 </VRow>
                             </VWindowItem>
+                            <VWindowItem>
+                                <VRow>
+                                    <VCol cols="12">
+                                        <h5 class="text-h5 font-weight-bold">Upgrade your subscription plan</h5>
+                                    </VCol>
+
+                                    <Step4></Step4>
+                                </VRow>
+                            </VWindowItem>
+                            <VWindowItem>
+                                <VRow>
+                                    <Step5></Step5>
+                                </VRow>
+                            </VWindowItem>
                         </VWindow>
 
                         <!-- Buttons -->
@@ -141,7 +157,7 @@
                                         v-if="currentStep === numberedSteps.length - 1"
                                         @click="onSubmit"
                                 >
-                                    Submit
+                                    Finish
                                 </VBtn>
 
                                 <VBtn v-else @click="handleNext">

@@ -96,8 +96,8 @@
                                     <div class="membership-pricing d-flex flex-column align-center justify-center">
                                         <VImg
                                         :src="cardimg"
-                                        width="145"
-                                        height="152"
+                                        width="400"
+                                        height="500"
                                         />
                                     </div>
                                 </VCol>
