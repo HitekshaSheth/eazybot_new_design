@@ -229,7 +229,7 @@ const moreList = [
 
             <!--      <VCardText>-->
             <VList class="card-list">
-              <VCardText class="pb-0">
+              <VCardText class="pb-0 pt-4">
                 <VListItem>
                   <div class="d-flex align-center gap-2">
                     <VAvatar>
@@ -416,7 +416,7 @@ const moreList = [
             <VDivider />
             <!--      <VCardText>-->
             <VList class="card-list">
-              <VCardText class="pb-0">
+              <VCardText class="pb-0 pt-4">
                 <VListItem>
                   <div class="d-flex align-center gap-2">
                     <VAvatar>
@@ -603,7 +603,7 @@ const moreList = [
 
             <!--      <VCardText>-->
             <VList class="card-list">
-              <VCardText class="pb-0">
+              <VCardText class="pb-0 pt-4">
                 <VListItem>
                   <div class="d-flex align-center gap-2">
                     <VAvatar>
@@ -891,7 +891,7 @@ const moreList = [
 
             <!--      <VCardText>-->
             <VList class="card-list">
-              <VCardText class="pb-0">
+              <VCardText class="pb-0 pt-4">
                 <VListItem>
                   <div class="d-flex align-center gap-2">
                     <VAvatar>
@@ -1077,7 +1077,7 @@ const moreList = [
             <VDivider />
             <!--      <VCardText>-->
             <VList class="card-list">
-              <VCardText class="pb-0">
+              <VCardText class="pb-0 pt-4">
                 <VListItem>
                   <div class="d-flex align-center gap-2">
                     <VAvatar>
@@ -1264,7 +1264,7 @@ const moreList = [
 
             <!--      <VCardText>-->
             <VList class="card-list">
-              <VCardText class="pb-0">
+              <VCardText class="pb-0 pt-4">
                 <VListItem>
                   <div class="d-flex align-center gap-2">
                     <VAvatar>
@@ -1449,20 +1449,21 @@ th{
 .card-active{
   background-color: #039855;
   color: #fff !important;
-  padding: 10px!important;
+  padding: 2px 10px!important;
 }
 .card-active .v-card-title,.card-active .v-card-item__append .v-btn,.card-inactive .v-card-title,.card-inactive .v-card-item__append .v-btn,.card-sell-only .v-card-title,.card-sell-only .v-card-item__append .v-btn{
   color: #fff !important;
+  font-size : 1rem!important;
 }
 .card-sell-only{
   background-color: #EAA700;
   color: #fff !important;
-  padding: 10px!important;
+  padding: 2px 10px!important;
 }
 .card-inactive{
   background-color: #FE391F;
   color: #fff !important;
-  padding: 10px!important;
+  padding: 2px 10px!important;
 }
 .text-sub-caption{
   font-weight: 500;

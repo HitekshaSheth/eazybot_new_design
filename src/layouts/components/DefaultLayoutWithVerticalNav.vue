@@ -32,6 +32,8 @@ import { VerticalNavLayout } from '@layouts'
           />
         </IconBtn>
 
+        <span v-if="mdAndUp" class="d-inline-block px-4 py-2 rounded font-weight-medium"
+              style="background-color: rgb(var(--v-theme-primary)); color: rgb(var(--v-theme-on-primary));">Hello Eazybot</span>
         <VSpacer />
         <VIcon v-if="mdAndUp" icon="tabler-cube" size="40" style="background-color: rgb(var(--v-global-theme-primary))"/>
         <VListItem v-if="mdAndUp" class="pl-0">

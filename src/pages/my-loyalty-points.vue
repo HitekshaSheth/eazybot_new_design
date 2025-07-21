@@ -3,130 +3,202 @@
     :title="pageTitle"
     :breadcrumbs="breadcrumbs"
   />
-  <!-- Wallet Header -->
-  <VCard class="mb-4" title="Current Points">
-    <template #append>
-      <VIcon icon="tabler-cube" size="50" style="background-color: rgb(var(--v-global-theme-primary))"/>
-    </template>
-    <VCardText>
-      <VRow align="center" justify="space-between">
-        <VCol>
-          <div class="d-flex align-center mt-2">
-            <img :src="Coin"> <span class="wallet-balance pl-2 pr-2">{{ balance }}</span>
-            <VIcon icon="tabler-s-turn-up" size="22"  style="background-color: green"/>
-            <span class="text-success pr-1">- {{ profitPercent }} % </span>
-            <span>Last month</span>
-          </div>
-        </VCol>
-        <VCol cols="auto" style="margin-top: auto;">
-          <VBtn color="primary" prepend-icon="tabler-transform-point">Transfer</VBtn>
-        </VCol>
-      </VRow>
-    </VCardText>
-  </VCard>
+  <div v-if="mdAndUp">
+    <!-- Wallet Header -->
+    <VCard class="mb-4" title="Current Points">
+      <template #append>
+        <VIcon icon="tabler-cube" size="50" style="background-color: rgb(var(--v-global-theme-primary))"/>
+      </template>
+      <VCardText>
+        <VRow align="center" justify="space-between">
+          <VCol>
+            <div class="d-flex align-center mt-2">
+              <img :src="Coin"> <span class="wallet-balance pl-2 pr-2">{{ balance }}</span>
+              <VIcon icon="tabler-s-turn-up" size="22"  style="background-color: green"/>
+              <span class="text-success pr-1">- {{ profitPercent }} % </span>
+              <span>Last month</span>
+            </div>
+          </VCol>
+          <VCol cols="auto" style="margin-top: auto;">
+            <VBtn color="primary" prepend-icon="tabler-transform-point">Transfer</VBtn>
+          </VCol>
+        </VRow>
+      </VCardText>
+    </VCard>
 
-  <!-- Tabs -->
-  <VTabs v-model="activeTab" class="mb-4">
-    <VTab v-for="tab in tabs" :key="tab" class="text-caption font-weight-bold">{{ tab }}</VTab>
-  </VTabs>
 
-  <!-- Search & Filter -->
-  <VCard>
-    <VCardText>
-      <VRow align="center" justify="space-between" class="pb-2">
-        <!-- Left: Title -->
-        <VCol cols="auto">
-          <h3 class="mb-0">All</h3>
-        </VCol>
+    <VCard>
+      <!-- Tabs -->
+      <VTabs v-model="activeTab" class="mb-4">
+        <VTab v-for="tab in tabs" :key="tab" class="text-caption font-weight-bold">{{ tab }}</VTab>
+      </VTabs>
 
-        <!-- Right: Controls (Search, Filter, Download) -->
-        <VCol cols="auto" class="d-flex align-center">
-          <!-- Search Box -->
-          <AppTextField
-            v-model="search"
-            placeholder="Search ..."
-            append-inner-icon="tabler-search"
-            style="width: 270px"
-            single-line
-            hide-details
-            dense
-            outlined
-          />
+      <!-- Search & Filter -->
+      <VCardText>
+        <VRow align="center" justify="space-between" class="pb-2">
+          <!-- Left: Title -->
+          <VCol cols="auto">
+            <h3 class="mb-0">All</h3>
+          </VCol>
 
-          <!-- Filter Menu -->
-          <VMenu v-model="filterMenu" :close-on-content-click="false" offset-y>
-            <template #activator="{ props }">
-              <VBtn class="ml-2" icon v-bind="props">
-                <VIcon icon="tabler-filter" />
-              </VBtn>
-            </template>
-            <VCard width="300">
-              <VCardText>
-                <div class="font-weight-medium mb-2">Transaction Type</div>
-                <VSwitch v-model="filters.deposit" label="Deposit" />
-                <VSwitch v-model="filters.withdraw" label="Withdraw" />
-                <VSwitch v-model="filters.transfer" label="Internal Transfer" />
+          <!-- Right: Controls (Search, Filter, Download) -->
+          <VCol cols="auto" class="d-flex align-center">
+            <!-- Search Box -->
+            <AppTextField
+              v-model="search"
+              placeholder="Search ..."
+              append-inner-icon="tabler-search"
+              style="width: 270px"
+              single-line
+              hide-details
+              dense
+              outlined
+            />
 
-                <div class="font-weight-medium mt-4 mb-2">Search By Date Range</div>
-                <AppDateTimePicker
-                  v-model="filters.dateRange"
-                  placeholder="MM/DD/YYYY to MM/DD/YYYY"
-                  :config="{ enableTime: true, dateFormat: 'Y-m-d H:i' }"
-                />
-              </VCardText>
-              <VCardActions>
-                <VSpacer />
-                <VBtn @click="applyFilters" color="primary" variant="flat">Apply</VBtn>
-                <VBtn @click="resetFilters" variant="outlined">Cancel</VBtn>
-              </VCardActions>
-            </VCard>
-          </VMenu>
+            <!-- Filter Menu -->
+            <VMenu v-model="filterMenu" :close-on-content-click="false" offset-y>
+              <template #activator="{ props }">
+                <VBtn class="ml-2" icon v-bind="props">
+                  <VIcon icon="tabler-filter" />
+                </VBtn>
+              </template>
+              <VCard width="300">
+                <VCardText>
+                  <div class="font-weight-medium mb-2">Transaction Type</div>
+                  <VSwitch v-model="filters.deposit" label="Deposit" />
+                  <VSwitch v-model="filters.withdraw" label="Withdraw" />
+                  <VSwitch v-model="filters.transfer" label="Internal Transfer" />
 
-          <!-- Download Button -->
-          <VBtn
-            icon="tabler-download"
-            color="primary"
-            class="ml-2"
-          />
-        </VCol>
-      </VRow>
+                  <div class="font-weight-medium mt-4 mb-2">Search By Date Range</div>
+                  <AppDateTimePicker
+                    v-model="filters.dateRange"
+                    placeholder="MM/DD/YYYY to MM/DD/YYYY"
+                    :config="{ enableTime: true, dateFormat: 'Y-m-d H:i' }"
+                  />
+                </VCardText>
+                <VCardActions>
+                  <VSpacer />
+                  <VBtn @click="applyFilters" color="primary" variant="flat">Apply</VBtn>
+                  <VBtn @click="resetFilters" variant="outlined">Cancel</VBtn>
+                </VCardActions>
+              </VCard>
+            </VMenu>
 
-      <!-- Table -->
-      <VDataTable
-        :headers="headers"
-        :items="filteredTransactions"
-        :search="search"
-      >
-        <template #item.comment="{ item }">
-          <div>
-            {{ item.comment }}
-            <div class="text-caption font-weight-bold mt-1" style="color: #475569;">{{ item.date }}</div>
-          </div>
-        </template>
+            <!-- Download Button -->
+            <VBtn
+              icon="tabler-download"
+              color="primary"
+              class="ml-2"
+            />
+          </VCol>
+        </VRow>
 
-        <template #item.status="{ item }">
-          <VIcon v-if="item.status === 'success'" icon="tabler-circle-check" color="success" />
-          <VIcon v-else icon="tabler-circle-x" color="error" />
-        </template>
+        <!-- Table -->
+        <VDataTable
+          :headers="headers"
+          :items="filteredTransactions"
+          :search="search"
+        >
+          <template #item.comment="{ item }">
+            <div>
+              {{ item.comment }}
+              <div class="text-caption font-weight-bold mt-1" style="color: #475569;">{{ item.date }}</div>
+            </div>
+          </template>
 
-        <template #item.type="{ item }">
-          <span class="text-error">DR</span>
-        </template>
+          <template #item.status="{ item }">
+            <VIcon v-if="item.status === 'success'" icon="tabler-circle-check" color="success" />
+            <VIcon v-else icon="tabler-circle-x" color="error" />
+          </template>
 
-        <template #item.amount="{ item }">
+          <template #item.type="{ item }">
+            <span class="text-error">DR</span>
+          </template>
+
+          <template #item.amount="{ item }">
             <span class="font-weight-bold" style="color: #475569;">
               $ {{ item.amount }}
             </span>
-        </template>
-      </VDataTable>
-    </VCardText>
-  </VCard>
+          </template>
+        </VDataTable>
+      </VCardText>
+    </VCard>
+  </div>
+  <div v-else>
+    <!-- Wallet Header -->
+    <VCard class="mb-4">
+      <VRow no-gutters>
+        <VCol cols="12">
+          <VCardText>
+            <h5 class="text-h5 text-no-wrap">
+              Current Points         <VIcon icon="tabler-cube" style="background-color: rgb(var(--v-global-theme-primary))"/>
+            </h5>
+            <p class="mb-2">
+              Last month
+            </p>
+            <div class="d-flex align-center mt-2 mb-1">
+              <img :src="Coin"> <span class="text-h4 text-primary mb-1 pl-2 pr-2">{{ balance }}</span>
+              <VIcon icon="tabler-s-turn-up" size="22"  style="background-color: green"/>
+              <span class="text-success pr-1">- {{ profitPercent }} % </span>
+            </div>
+            <VBtn color="primary" prepend-icon="tabler-transform-point">Transfer</VBtn>
+<!--            <VBtn color="primary" icon="tabler-transform-point"></VBtn>-->
+          </VCardText>
+        </VCol>
+      </VRow>
+    </VCard>
+    <VCard>
+      <VCardText>
+        <!-- Tabs -->
+        <VTabs v-model="activeTab" class="mb-4">
+          <VTab v-for="tab in tabs" :key="tab" class="text-caption font-weight-bold">{{ tab }}</VTab>
+        </VTabs>
+        <!-- Table -->
+        <VCard
+          v-for="item in filteredTransactions"
+          :key="item.id"
+          class="mb-4 pa-3"
+          elevation="1"
+        >
+          <VRow>
+            <VCol cols="1" class="pr-0 pl-1">
+              <!-- Type -->
+
+              <VIcon color="error" v-if="item.type === 1" icon="tabler-credit-card-pay"></VIcon>
+              <VIcon color="primary" icon="tabler-credit-card-refund" v-else></VIcon>
+            </VCol>
+            <VCol cols="8" class="pr-0 pl-1">
+              <div class="font-weight-medium">{{ item.comment }}</div>
+              <div class="text-caption" style="color: #475569;">{{ item.date }}</div>
+              <div class="text-caption">Expire in <span class="text-error">{{ item.daysToExpire }}</span>  days</div>
+            </VCol>
+            <VCol cols="3" class="pr-0 pl-1">
+              <!-- Amount -->
+              <div class="font-weight-bold" style="color: #475569;">
+                {{ item.points }}
+              </div>
+
+              <!-- Status -->
+              <div class="mt-2 d-flex align-center" v-if="item.status === 'failed'">
+                <span class="text-error font-weight-medium">Failed <VIcon icon="tabler-circle-x"/></span>
+              </div>
+
+            </VCol>
+          </VRow>
+        </VCard>
+
+      </VCardText>
+    </VCard>
+  </div>
+
 </template>
 
 <script setup>
 import {computed } from 'vue'
 import Coin from '@/assets/images/coin 1.svg?url'
+import { useDisplay } from 'vuetify'
 
+const { mdAndUp } = useDisplay()
 const pageTitle = 'My Loyalty Points'
 const breadcrumbs = [
   { title: 'Home', to: '/', icon: 'tabler-home' },
@@ -164,96 +236,112 @@ const allTransactions = ref([
     comment: 'Service fee 0.25% deduction from Trade 60741551',
     status: 'success',
     points: 993.62,
+    type : 1,
     daysToExpire : 257
   },{
     date: '2025-05-15',
     comment: 'Service fee 0.25% deduction from Trade 60741551',
     status: 'success',
     points: 993.62,
+    type : 2,
+    daysToExpire : 257
+  },{
+    date: '2025-05-15',
+    comment: 'Service fee 0.25% deduction from Trade 60741551',
+    status: 'failed',
+    points: 993.62,
+    type : 2,
     daysToExpire : 257
   },{
     date: '2025-05-15',
     comment: 'Service fee 0.25% deduction from Trade 60741551',
     status: 'success',
     points: 993.62,
+    type : 1,
     daysToExpire : 257
   },{
     date: '2025-05-15',
     comment: 'Service fee 0.25% deduction from Trade 60741551',
     status: 'success',
     points: 993.62,
+    type : 1,
+    daysToExpire : 257
+  },{
+    date: '2025-05-15',
+    comment: 'Service fee 0.25% deduction from Trade 60741551',
+    status: 'failed',
+    points: 993.62,
+    type : 1,
+    daysToExpire : 257
+  },{
+    date: '2025-05-15',
+    comment: 'Service fee 0.25% deduction from Trade 60741551',
+    status: 'failed',
+    points: 993.62,
+    type : 2,
     daysToExpire : 257
   },{
     date: '2025-05-15',
     comment: 'Service fee 0.25% deduction from Trade 60741551',
     status: 'success',
     points: 993.62,
+    type : 1,
     daysToExpire : 257
   },{
     date: '2025-05-15',
     comment: 'Service fee 0.25% deduction from Trade 60741551',
     status: 'success',
     points: 993.62,
+    type : 1,
     daysToExpire : 257
   },{
     date: '2025-05-15',
     comment: 'Service fee 0.25% deduction from Trade 60741551',
     status: 'success',
     points: 993.62,
+    type : 1,
     daysToExpire : 257
   },{
     date: '2025-05-15',
     comment: 'Service fee 0.25% deduction from Trade 60741551',
     status: 'success',
     points: 993.62,
+    type : 1,
     daysToExpire : 257
   },{
     date: '2025-05-15',
     comment: 'Service fee 0.25% deduction from Trade 60741551',
     status: 'success',
     points: 993.62,
+    type : 1,
     daysToExpire : 257
   },{
     date: '2025-05-15',
     comment: 'Service fee 0.25% deduction from Trade 60741551',
     status: 'success',
     points: 993.62,
+    type : 1,
     daysToExpire : 257
   },{
     date: '2025-05-15',
     comment: 'Service fee 0.25% deduction from Trade 60741551',
     status: 'success',
     points: 993.62,
+    type : 1,
     daysToExpire : 257
   },{
     date: '2025-05-15',
     comment: 'Service fee 0.25% deduction from Trade 60741551',
     status: 'success',
     points: 993.62,
+    type : 1,
     daysToExpire : 257
   },{
     date: '2025-05-15',
     comment: 'Service fee 0.25% deduction from Trade 60741551',
     status: 'success',
     points: 993.62,
-    daysToExpire : 257
-  },{
-    date: '2025-05-15',
-    comment: 'Service fee 0.25% deduction from Trade 60741551',
-    status: 'success',
-    points: 993.62,
-    daysToExpire : 257
-  },{
-    date: '2025-05-15',
-    comment: 'Service fee 0.25% deduction from Trade 60741551',
-    status: 'success',
-    points: 993.62,
-    daysToExpire : 257
-  },{
-    date: '2025-05-15',
-    comment: 'Service fee 0.25% deduction from Trade 60741551',
-    status: 'success',
-    points: 993.62,
+    type : 1,
     daysToExpire : 257
   },
 

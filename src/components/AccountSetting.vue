@@ -82,19 +82,29 @@ const activeTab = ref('account-settings-account')
 
 const tabs = [
   {
-    title: 'Account',
+    title: 'My Profile',
     icon: 'tabler-users',
     tab: 'account-settings-account',
   },
   {
-    title: 'Security',
-    icon: 'tabler-lock',
-    tab: 'account-settings-security',
-  },
-  {
-    title: 'Billing & Plans',
+    title: 'My Subscription',
     icon: 'tabler-file-text',
     tab: 'account-settings-billing-plans',
+  },
+  {
+    title: 'My Exchanges',
+    icon: 'tabler-exchange',
+    tab: 'my-exchanges',
+  },
+  {
+    title: 'My Vouchers',
+    icon: 'tabler-gift-card',
+    tab: 'my-exchanges',
+  },
+  {
+    title: 'Password and 2FA - Security',
+    icon: 'tabler-lock',
+    tab: 'account-settings-security',
   },
   {
     title: 'Notifications',
