@@ -56,7 +56,7 @@
             <h4>User Exchanges</h4>
             <VBtn color="primary" class="mt-5">+ Add User Exchange</VBtn>
           </div>
-          <img :src="Exchange1" style="height: 100px;margin: 10px;">
+          <img :src="Exchange1" style="height: 80px;margin: 10px;">
           <!--        <VAvatar size="80" image="/placeholder-image.png" /> &lt;!&ndash; Replace with actual image &ndash;&gt;-->
         </VCard>
       </VCol>
@@ -64,7 +64,7 @@
       <!-- Right: Instruction Card -->
       <VCol cols="12" md="7" class="d-flex justify-end align-center">
         <div class="d-flex align-center gap-4">
-          <img :src="Exchange2" style="height: 100px; margin-right: 10px;" />
+          <img :src="Exchange2" style="height: 80px; margin-right: 10px;" />
           <div>
             <div class="font-weight-medium">Click Here For Step-by-Step</div>
             <VBtn variant="outlined" class="mt-2">Instructions</VBtn>
@@ -93,7 +93,7 @@
             {{ item.connection }}
           </div>
         </VCol>
-        <VCol cols="2" class="pr-0 pl-1">
+        <VCol cols="2" class="pr-0 pl-0">
           <VBtn icon="tabler-pencil" size="25" color="primary" @click="editExchange(index)">
           </VBtn>
           <VBtn icon="tabler-trash" class="ml-1" size="25" color="error" @click="deleteExchange(index)">
