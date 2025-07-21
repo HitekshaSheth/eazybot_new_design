@@ -128,26 +128,28 @@
   </div>
   <div v-else>
     <VCard class="mb-4">
-      <VRow no-gutters>
-        <VCol cols="12">
-          <VCardText>
+
+          <VCardText class="pa-3">
+            <VRow no-gutters>
+              <VCol cols="6">
             <h5 class="text-h5 text-no-wrap">
-              Current Balance         <VIcon icon="tabler-wallet" style="background-color: rgb(var(--v-global-theme-primary))"/>
+              Current Balance <VIcon icon="tabler-wallet" style="background-color: rgb(var(--v-global-theme-primary))"/>
             </h5>
             <p class="mb-2">
               USDT Tether
             </p>
-            <div class="d-flex align-center mt-2 mb-1">
-              <img :src="Frame"> <span class="text-h4 text-primary mb-1 pl-2 pr-2">{{ balance }}</span>
-              <VIcon icon="tabler-s-turn-up" style="background-color: green"/>
-              <span class="text-success" label>-{{ profitPercent }}%</span>
-            </div>
+            </VCol>
+              <VCol cols="6" class="d-flex justify-end align-center mt-2 mb-1">
+                <img :src="Frame" height="20" style="margin-top: 8px" />
+                <span class="text-h4 text-primary mb-1 pl-2 pr-2">{{ balance }}</span>
+              </VCol>
+            <VCol cols="12">
               <VBtn class="mr-2" color="primary" icon="tabler-upload"></VBtn>
               <VBtn class="mr-2" color="primary" variant="outlined" icon="tabler-download"></VBtn>
               <VBtn color="primary" variant="outlined" icon="tabler-transform-point"></VBtn>
+            </VCol>
+            </VRow>
           </VCardText>
-        </VCol>
-      </VRow>
     </VCard>
 
     <VCard>
@@ -258,8 +260,8 @@
               <VIcon color="primary" icon="tabler-credit-card-refund" v-else></VIcon>
             </VCol>
             <VCol cols="8" class="pr-0 pl-1">
-              <div class="font-weight-medium">{{ item.comment }}</div>
-              <div class="text-caption mt-1" style="color: #475569;">{{ item.date }}</div>
+              <div class="font-weight-medium" style="color: #475569;">{{ item.comment }}</div>
+              <div class="text-caption mt-1">{{ formatDate(item.date) }}</div>
             </VCol>
             <VCol cols="3" class="pr-0 pl-1">
               <!-- Amount -->
@@ -268,8 +270,8 @@
               </div>
 
               <!-- Status -->
-              <div class="mt-2 d-flex align-center" v-if="item.status === 'failed'">
-                <span class="text-error font-weight-medium">Failed <VIcon icon="tabler-circle-x"/></span>
+              <div class="mt-1 d-flex align-center" v-if="item.status === 'failed'">
+                <span class="text-error font-weight-medium" style="font-size: 10px;text-align: right">Failed <VIcon icon="tabler-circle-x"/></span>
               </div>
 
             </VCol>
@@ -409,6 +411,14 @@ function resetFilters() {
     dateRange: '',
   }
   filterMenu.value = false
+}
+function formatDate(value) {
+  const date = new Date(value)
+  return date.toLocaleDateString('en-GB', {
+    day: '2-digit',
+    month: '2-digit',
+    year: 'numeric',
+  })
 }
 </script>
 

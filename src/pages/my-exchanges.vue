@@ -3,6 +3,7 @@
     :title="pageTitle"
     :breadcrumbs="breadcrumbs"
   />
+  <AccountSetting />
   <div v-if="mdAndUp">
     <VRow class="mb-6">
       <!-- Left: Add Exchange Card -->
@@ -102,11 +103,11 @@
       </VRow>
     </VCard>
   </div>
-
-
 </template>
 
 <script setup>
+import AccountSetting from '../components/AccountSetting.vue'
+
 const pageTitle = 'My Exchanges'
 const breadcrumbs = [
   { title: 'Home', to: '/', icon: 'tabler-home' },
