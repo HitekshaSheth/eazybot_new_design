@@ -3,49 +3,106 @@
     :title="pageTitle"
     :breadcrumbs="breadcrumbs"
   />
-  <VRow class="mb-6">
-    <!-- Left: Add Exchange Card -->
-    <VCol cols="12" md="5">
-      <VCard class="pa-8 d-flex align-center justify-space-between">
-        <div>
-          <h4>User Exchanges</h4>
-          <VBtn color="primary" class="mt-10">+ Add User Exchange</VBtn>
-        </div>
-        <img :src="Exchange1" style="height: 100px;margin: 10px;">
-<!--        <VAvatar size="80" image="/placeholder-image.png" /> &lt;!&ndash; Replace with actual image &ndash;&gt;-->
-      </VCard>
-    </VCol>
+  <div v-if="mdAndUp">
+    <VRow class="mb-6">
+      <!-- Left: Add Exchange Card -->
+      <VCol cols="12" md="5">
+        <VCard class="pa-8 d-flex align-center justify-space-between">
+          <div>
+            <h4>User Exchanges</h4>
+            <VBtn color="primary" class="mt-10">+ Add User Exchange</VBtn>
+          </div>
+          <img :src="Exchange1" style="height: 100px;margin: 10px;">
+          <!--        <VAvatar size="80" image="/placeholder-image.png" /> &lt;!&ndash; Replace with actual image &ndash;&gt;-->
+        </VCard>
+      </VCol>
 
-    <!-- Right: Instruction Card -->
-    <VCol cols="12" md="7" class="d-flex justify-end align-center">
-      <div class="d-flex align-center gap-4">
-        <img :src="Exchange2" style="height: 100px; margin-right: 10px;" />
-        <div>
-          <div class="font-weight-medium">Click Here For Step-by-Step</div>
-          <VBtn variant="outlined" class="mt-2">Instructions</VBtn>
+      <!-- Right: Instruction Card -->
+      <VCol cols="12" md="7" class="d-flex justify-end align-center">
+        <div class="d-flex align-center gap-4">
+          <img :src="Exchange2" style="height: 100px; margin-right: 10px;" />
+          <div>
+            <div class="font-weight-medium">Click Here For Step-by-Step</div>
+            <VBtn variant="outlined" class="mt-2">Instructions</VBtn>
+          </div>
         </div>
-      </div>
-    </VCol>
-  </VRow>
+      </VCol>
+    </VRow>
+    <!-- Exchange Table -->
+    <VCard>
+      <VDataTable
+        :headers="headers"
+        :items="pagedExchanges"
+        :items-per-page="itemsPerPage"
+        density="comfortable"
+      >
+        <template #item.actions="{ index }">
+          <VBtn icon variant="text" color="primary" @click="editExchange(index)">
+            <VIcon icon="tabler-pencil" />
+          </VBtn>
+          <VBtn icon variant="text" color="error" @click="deleteExchange(index)">
+            <VIcon icon="tabler-trash" />
+          </VBtn>
+        </template>
+      </VDataTable>
+    </VCard>
+  </div>
+  <div v-else>
+    <VRow class="mb-6">
+      <!-- Left: Add Exchange Card -->
+      <VCol cols="12">
+        <VCard class="pa-4 d-flex align-center justify-space-between">
+          <div>
+            <h4>User Exchanges</h4>
+            <VBtn color="primary" class="mt-5">+ Add User Exchange</VBtn>
+          </div>
+          <img :src="Exchange1" style="height: 100px;margin: 10px;">
+          <!--        <VAvatar size="80" image="/placeholder-image.png" /> &lt;!&ndash; Replace with actual image &ndash;&gt;-->
+        </VCard>
+      </VCol>
 
-  <!-- Exchange Table -->
-  <VCard>
-    <VDataTable
-      :headers="headers"
-      :items="pagedExchanges"
-      :items-per-page="itemsPerPage"
-      density="comfortable"
+      <!-- Right: Instruction Card -->
+      <VCol cols="12" md="7" class="d-flex justify-end align-center">
+        <div class="d-flex align-center gap-4">
+          <img :src="Exchange2" style="height: 100px; margin-right: 10px;" />
+          <div>
+            <div class="font-weight-medium">Click Here For Step-by-Step</div>
+            <VBtn variant="outlined" class="mt-2">Instructions</VBtn>
+          </div>
+        </div>
+      </VCol>
+    </VRow>
+    <VCard
+      v-for="item in exchanges"
+      :key="item.id"
+      class="mb-4 pa-3"
+      elevation="1"
     >
-      <template #item.actions="{ index }">
-        <VBtn icon variant="text" color="primary" @click="editExchange(index)">
-          <VIcon icon="tabler-pencil" />
-        </VBtn>
-        <VBtn icon variant="text" color="error" @click="deleteExchange(index)">
-          <VIcon icon="tabler-trash" />
-        </VBtn>
-      </template>
-    </VDataTable>
-  </VCard>
+      <VRow>
+        <VCol cols="2" class="pr-0 pl-1">
+          <!-- Type -->
+          <div class="font-weight-medium">{{ item.id }}</div>
+        </VCol>
+        <VCol cols="5" class="pr-0 pl-1">
+          <div class="font-weight-medium">{{ item.user }}</div>
+          <div class="text-caption" style="color: #475569;">{{ item.exchange }}</div>
+        </VCol>
+        <VCol cols="3" class="pr-0 pl-1">
+          <!-- Amount -->
+          <div class="font-weight-bold" style="color: #475569;">
+            {{ item.connection }}
+          </div>
+        </VCol>
+        <VCol cols="2" class="pr-0 pl-1">
+          <VBtn icon="tabler-pencil" size="25" color="primary" @click="editExchange(index)">
+          </VBtn>
+          <VBtn icon="tabler-trash" class="ml-1" size="25" color="error" @click="deleteExchange(index)">
+          </VBtn>
+        </VCol>
+      </VRow>
+    </VCard>
+  </div>
+
 
 </template>
 
@@ -59,7 +116,9 @@ const breadcrumbs = [
 import { computed } from 'vue'
 import Exchange1 from '@/assets/images/Exchange1.svg?url'
 import Exchange2 from '@/assets/images/Exchange2.svg?url'
+import { useDisplay } from 'vuetify'
 
+const { mdAndUp } = useDisplay()
 const headers = [
   { title: 'ID', key: 'id' },
   { title: 'Connection Name', key: 'connection' },
