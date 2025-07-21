@@ -292,15 +292,24 @@ body .v-btn-group.v-btn-toggle.v-btn-group{
 ::v-deep(thead){
   background-color: #f5f8fb!important;
 }
+@media (min-width: 390px) and (max-width: 600px) {
+  ::v-deep(.app-stepper-step) {
+    padding-right: 70px!important;
+  }
+}
 @media (max-width: 390px) {
   label {
     font-size: 0.8175rem;
   }
+  ::v-deep(.app-stepper-step) {
+    padding-right: 30px!important;
+  }
 }
-@media (max-width: 365px) {
+@media (max-width: 375px) {
   .v-label {
     font-size: 0.8175rem;
   }
+
 }
 </style>
 <template>
