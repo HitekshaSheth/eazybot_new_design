@@ -128,28 +128,27 @@
   </div>
   <div v-else>
     <VCard class="mb-4">
-
-          <VCardText class="pa-3">
-            <VRow no-gutters>
-              <VCol cols="6">
+      <VCardText class="pa-3">
+        <VRow no-gutters>
+          <VCol cols="6">
             <h5 class="text-h5 text-no-wrap">
               Current Balance <VIcon icon="tabler-wallet" style="background-color: rgb(var(--v-global-theme-primary))"/>
             </h5>
             <p class="mb-2">
               USDT Tether
             </p>
-            </VCol>
-              <VCol cols="6" class="d-flex justify-end align-center mt-2 mb-1">
-                <img :src="Frame" height="20" style="margin-top: 8px" />
-                <span class="text-h4 text-primary mb-1 pl-2 pr-2">{{ balance }}</span>
-              </VCol>
-            <VCol cols="12">
-              <VBtn class="mr-2" color="primary" icon="tabler-upload"></VBtn>
-              <VBtn class="mr-2" color="primary" variant="outlined" icon="tabler-download"></VBtn>
-              <VBtn color="primary" variant="outlined" icon="tabler-transform-point"></VBtn>
-            </VCol>
-            </VRow>
-          </VCardText>
+          </VCol>
+          <VCol cols="6" class="d-flex justify-end align-center mt-2 mb-1">
+            <img :src="Frame" height="20" />
+            <span class="text-h4 text-primary mb-1 pl-2 pr-2">{{ balance }}</span>
+          </VCol>
+          <VCol cols="12">
+            <VBtn class="mr-2" color="primary" icon="tabler-upload"></VBtn>
+            <VBtn class="mr-2" color="primary" variant="outlined" icon="tabler-download"></VBtn>
+            <VBtn color="primary" variant="outlined" icon="tabler-transform-point"></VBtn>
+          </VCol>
+        </VRow>
+      </VCardText>
     </VCard>
 
     <VCard>

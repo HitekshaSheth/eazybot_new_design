@@ -1,9 +1,10 @@
 <template>
-  <AppPageHeader
-    :title="pageTitle"
-    :breadcrumbs="breadcrumbs"
-  />
+
   <div v-if="mdAndUp">
+    <AppPageHeader
+      :title="pageTitle"
+      :breadcrumbs="breadcrumbs"
+    />
     <!-- Wallet Header -->
     <VCard class="mb-4" title="Current Points">
       <template #append>
@@ -125,28 +126,37 @@
     </VCard>
   </div>
   <div v-else>
-    <!-- Wallet Header -->
+    <div class="app-page-header d-flex justify-space-between align-center mb-6 flex-wrap gap-y-4">
+      <!-- Title -->
+      <h4 class="text-h4 m-0">
+        {{ pageTitle }}
+      </h4>
+
+      <!-- Breadcrumbs -->
+      <div class="d-flex align-center gap-x-2">
+        <VBtn color="primary" prepend-icon="tabler-transform-point">Transfer</VBtn>
+      </div>
+    </div>
+
     <VCard class="mb-4">
-      <VRow no-gutters>
-        <VCol cols="12">
-          <VCardText>
+      <VCardText class="pa-3">
+        <VRow no-gutters>
+          <VCol cols="6">
             <h5 class="text-h5 text-no-wrap">
-              Current Points         <VIcon icon="tabler-cube" style="background-color: rgb(var(--v-global-theme-primary))"/>
+              Current Points <VIcon icon="tabler-cube" style="background-color: rgb(var(--v-global-theme-primary))"/>
             </h5>
             <p class="mb-2">
               Last month
             </p>
-            <div class="d-flex align-center mt-2 mb-1">
-              <img :src="Coin"> <span class="text-h4 text-primary mb-1 pl-2 pr-2">{{ balance }}</span>
-              <VIcon icon="tabler-s-turn-up" size="22"  style="background-color: green"/>
-              <span class="text-success pr-1">- {{ profitPercent }} % </span>
-            </div>
-            <VBtn color="primary" prepend-icon="tabler-transform-point">Transfer</VBtn>
-<!--            <VBtn color="primary" icon="tabler-transform-point"></VBtn>-->
-          </VCardText>
-        </VCol>
-      </VRow>
+          </VCol>
+          <VCol cols="6" class="justify-end text-right">
+            <img :src="Coin" height="20" />
+            <span class="text-h4 text-primary mb-1 pl-2 pr-2">{{ balance }}</span>
+          </VCol>
+        </VRow>
+      </VCardText>
     </VCard>
+
     <VCard>
       <VCardText>
         <!-- Tabs -->
@@ -168,8 +178,8 @@
               <VIcon color="primary" icon="tabler-credit-card-refund" v-else></VIcon>
             </VCol>
             <VCol cols="8" class="pr-0 pl-1">
-              <div class="font-weight-medium">{{ item.comment }}</div>
-              <div class="text-caption" style="color: #475569;">{{ item.date }}</div>
+              <div class="font-weight-medium" style="color: #475569;">{{ item.comment }}</div>
+              <div class="text-caption">{{ formatDate(item.date) }}</div>
               <div class="text-caption">Expire in <span class="text-error">{{ item.daysToExpire }}</span>  days</div>
             </VCol>
             <VCol cols="3" class="pr-0 pl-1">
@@ -180,7 +190,7 @@
 
               <!-- Status -->
               <div class="mt-2 d-flex align-center" v-if="item.status === 'failed'">
-                <span class="text-error font-weight-medium">Failed <VIcon icon="tabler-circle-x"/></span>
+                <span class="text-error font-weight-medium" style="font-size: 10px;text-align: right">Failed <VIcon icon="tabler-circle-x"/></span>
               </div>
 
             </VCol>
