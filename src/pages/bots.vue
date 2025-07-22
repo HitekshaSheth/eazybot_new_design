@@ -248,7 +248,7 @@ const moreList = [
                     </div>
                   </div>
                 </VListItem>
-                <VDivider />
+<!--                <VDivider />-->
               </VCardText>
               <VListItem>
                 <VCardText class="pb-0 pt-0">
@@ -435,7 +435,7 @@ const moreList = [
                     </div>
                   </div>
                 </VListItem>
-                <VDivider />
+<!--                <VDivider />-->
               </VCardText>
               <VListItem>
                 <VCardText class="pb-0 pt-0">
@@ -622,7 +622,7 @@ const moreList = [
                     </div>
                   </div>
                 </VListItem>
-                <VDivider />
+<!--                <VDivider />-->
               </VCardText>
               <VListItem>
                 <VCardText class="pb-0 pt-0">
