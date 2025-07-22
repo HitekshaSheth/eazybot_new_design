@@ -381,6 +381,15 @@ function resetFilters() {
   }
   filterMenu.value = false
 }
+
+function formatDate(value) {
+  const date = new Date(value)
+  return date.toLocaleDateString('en-GB', {
+    day: '2-digit',
+    month: '2-digit',
+    year: 'numeric',
+  })
+}
 </script>
 
 <style scoped>
