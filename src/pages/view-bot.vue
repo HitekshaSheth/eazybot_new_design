@@ -628,7 +628,7 @@ const tradeItems = [
                           <VCol cols="12" v-for="(item, index) in tradeItems" :key="index">
                             <VCard :class="item.type === 'Buy' ? 'buy-card' : 'sell-card pb-1'" class="pa-3">
                               <VRow>
-                                <VCol cols="5" class="pt-2 pb-2">
+                                <VCol cols="5" class="pb-2">
                                   <div class="align-center gap-x-2" >
                                     <VChip :color="item.type === 'Buy' ? 'success' : 'error'" text-color="white" label size="small">
                                       {{ item.type }}
@@ -636,31 +636,31 @@ const tradeItems = [
                                     <span class="text-caption font-weight-bold pl-2">{{ item.title }}</span>
                                   </div>
                               </VCol>
-                              <VCol cols="3" class="pt-2 pb-2">
+                              <VCol cols="3" class="pb-2">
                                 <div class="text-caption">
                                   <span class="font-weight-bold">{{ item.qty }}</span> Qty @
                                   <span class="font-weight-bold">{{ item.rate }}</span>
                                 </div>
                               </VCol>
-                              <VCol cols="4" class="pt-2 pb-2">
+                              <VCol cols="4" class="pb-2">
                                 <div class="text-right text-caption">
                                   <div><strong>Open:</strong> <span class="text-caption font-weight-bold">{{ item.open }}</span></div>
                                 </div>
                               </VCol>
                               </VRow>
                               <VRow class="mt-0">
-                                <VCol cols="5" class="pt-2 pb-2">
+                                <VCol cols="5" class="pt-2">
                                   <div class="align-center gap-x-2" >
                                     <span class="text-caption pl-13 font-weight-bold">Trade ID : {{ item.tradeId }}</span>
                                   </div>
                               </VCol>
-                              <VCol cols="3" class="pt-2 pb-2">
+                              <VCol cols="3" class="pt-2">
                                 <div class="text-caption">
                                   <span class="font-weight-bold">Total : {{ item.total }}</span>
                                   <span class="text-grey text-uppercase">USDT</span>
                                 </div>
                               </VCol>
-                              <VCol cols="4" class="pt-2 pb-2">
+                              <VCol cols="4" class="pt-2">
                                 <div class="text-right text-caption">
                                   <div><strong>Close:</strong> <span class="text-caption font-weight-bold">{{ item.close }}</span></div>
                                 </div>
@@ -1075,7 +1075,7 @@ const tradeItems = [
 <!--                              <VCardTitle class="border-bg-block" > <VIcon icon="tabler-alert-triangle" class="mr-1" style="background-color:red"/> Insufficient Balance</VCardTitle>-->
                               <VCard :class="item.type === 'Buy' ? 'buy-card' : 'sell-card pb-1'" class="pa-3">
                                 <VRow>
-                                  <VCol cols="5" class="pt-2 pb-2">
+                                  <VCol cols="5" class="pb-2">
                                     <div class="align-center gap-x-2" >
                                       <VChip :color="item.type === 'Buy' ? 'success' : 'error'" text-color="white" label size="small">
                                         {{ item.type }}
@@ -1083,31 +1083,31 @@ const tradeItems = [
                                       <span class="text-caption font-weight-bold pl-2">{{ item.title }}</span>
                                     </div>
                                   </VCol>
-                                  <VCol cols="3" class="pt-2 pb-2">
+                                  <VCol cols="3" class="pb-2">
                                     <div class="text-caption">
                                       <span class="font-weight-bold">{{ item.qty }}</span> Qty @
                                       <span class="font-weight-bold">{{ item.rate }}</span>
                                     </div>
                                   </VCol>
-                                  <VCol cols="4" class="pt-2 pb-2">
+                                  <VCol cols="4" class="pb-2">
                                     <div class="text-right text-caption">
                                       <div><strong>Open:</strong> <span class="text-caption font-weight-bold">{{ item.open }}</span></div>
                                     </div>
                                   </VCol>
                                 </VRow>
                                 <VRow class="mt-0">
-                                  <VCol cols="5" class="pt-2 pb-2">
+                                  <VCol cols="5" class="pt-2">
                                     <div class="align-center gap-x-2" >
                                       <span class="text-caption pl-13 font-weight-bold">Trade ID : {{ item.tradeId }}</span>
                                     </div>
                                   </VCol>
-                                  <VCol cols="3" class="pt-2 pb-2">
+                                  <VCol cols="3" class="pt-2">
                                     <div class="text-caption">
                                       <span class="font-weight-bold">Total : {{ item.total }}</span>
                                       <span class="text-grey text-uppercase">USDT</span>
                                     </div>
                                   </VCol>
-                                  <VCol cols="4" class="pt-2 pb-2">
+                                  <VCol cols="4" class="pt-2">
                                     <div class="text-right text-caption">
                                       <div><strong>Close:</strong> <span class="text-caption font-weight-bold">{{ item.close }}</span></div>
                                     </div>
@@ -1515,7 +1515,7 @@ const tradeItems = [
                             <VCol cols="12" v-for="(item, index) in tradeItems" :key="index">
                               <VCard :class="item.type === 'Buy' ? 'buy-card' : 'sell-card pb-1'" class="pa-3">
                                 <VRow>
-                                  <VCol cols="5" class="pt-2 pb-2">
+                                  <VCol cols="5" class="pb-2">
                                     <div class="align-center gap-x-2" >
                                       <VChip :color="item.type === 'Buy' ? 'success' : 'error'" text-color="white" label size="small">
                                         {{ item.type }}
@@ -1523,31 +1523,31 @@ const tradeItems = [
                                       <span class="text-caption font-weight-bold pl-2">{{ item.title }}</span>
                                     </div>
                                   </VCol>
-                                  <VCol cols="3" class="pt-2 pb-2">
+                                  <VCol cols="3" class="pb-2">
                                     <div class="text-caption">
                                       <span class="font-weight-bold">{{ item.qty }}</span> Qty @
                                       <span class="font-weight-bold">{{ item.rate }}</span>
                                     </div>
                                   </VCol>
-                                  <VCol cols="4" class="pt-2 pb-2">
+                                  <VCol cols="4" class="pb-2">
                                     <div class="text-right text-caption">
                                       <div><strong>Open:</strong> <span class="text-caption font-weight-bold">{{ item.open }}</span></div>
                                     </div>
                                   </VCol>
                                 </VRow>
                                 <VRow class="mt-0">
-                                  <VCol cols="5" class="pt-2 pb-2">
+                                  <VCol cols="5" class="pt-2">
                                     <div class="align-center gap-x-2" >
                                       <span class="text-caption pl-13 font-weight-bold">Trade ID : {{ item.tradeId }}</span>
                                     </div>
                                   </VCol>
-                                  <VCol cols="3" class="pt-2 pb-2">
+                                  <VCol cols="3" class="pt-2">
                                     <div class="text-caption">
                                       <span class="font-weight-bold">Total : {{ item.total }}</span>
                                       <span class="text-grey text-uppercase">USDT</span>
                                     </div>
                                   </VCol>
-                                  <VCol cols="4" class="pt-2 pb-2">
+                                  <VCol cols="4" class="pt-2">
                                     <div class="text-right text-caption">
                                       <div><strong>Close:</strong> <span class="text-caption font-weight-bold">{{ item.close }}</span></div>
                                     </div>
@@ -1956,7 +1956,7 @@ const tradeItems = [
                             <VCol cols="12" v-for="(item, index) in tradeItems" :key="index">
                               <VCard :class="item.type === 'Buy' ? 'buy-card' : 'sell-card pb-1'" class="pa-3">
                                 <VRow>
-                                  <VCol cols="5" class="pt-2 pb-2">
+                                  <VCol cols="5" class="pb-2">
                                     <div class="align-center gap-x-2" >
                                       <VChip :color="item.type === 'Buy' ? 'success' : 'error'" text-color="white" label size="small">
                                         {{ item.type }}
@@ -1964,31 +1964,31 @@ const tradeItems = [
                                       <span class="text-caption font-weight-bold pl-2">{{ item.title }}</span>
                                     </div>
                                   </VCol>
-                                  <VCol cols="3" class="pt-2 pb-2">
+                                  <VCol cols="3" class="pb-2">
                                     <div class="text-caption">
                                       <span class="font-weight-bold">{{ item.qty }}</span> Qty @
                                       <span class="font-weight-bold">{{ item.rate }}</span>
                                     </div>
                                   </VCol>
-                                  <VCol cols="4" class="pt-2 pb-2">
+                                  <VCol cols="4" class="pb-2">
                                     <div class="text-right text-caption">
                                       <div><strong>Open:</strong> <span class="text-caption font-weight-bold">{{ item.open }}</span></div>
                                     </div>
                                   </VCol>
                                 </VRow>
                                 <VRow class="mt-0">
-                                  <VCol cols="5" class="pt-2 pb-2">
+                                  <VCol cols="5" class="pt-2">
                                     <div class="align-center gap-x-2" >
                                       <span class="text-caption pl-13 font-weight-bold">Trade ID : {{ item.tradeId }}</span>
                                     </div>
                                   </VCol>
-                                  <VCol cols="3" class="pt-2 pb-2">
+                                  <VCol cols="3" class="pt-2">
                                     <div class="text-caption">
                                       <span class="font-weight-bold">Total : {{ item.total }}</span>
                                       <span class="text-grey text-uppercase">USDT</span>
                                     </div>
                                   </VCol>
-                                  <VCol cols="4" class="pt-2 pb-2">
+                                  <VCol cols="4" class="pt-2">
                                     <div class="text-right text-caption">
                                       <div><strong>Close:</strong> <span class="text-caption font-weight-bold">{{ item.close }}</span></div>
                                     </div>
