@@ -30,6 +30,104 @@ const stats = [
   { label: 'Available profit', value: '2.42', icon: true },
   { label: 'Session profit', value: '$19.71', icon: true, color: 'text-success' },
 ]
+
+const tradeItems = [
+  {
+    type: 'Buy',
+    title: 'Cover 5 @ -0.25%X0.143',
+    tradeId: '504426',
+    qty: '0.0291',
+    rate: '3,634.04',
+    total: '105.75',
+    open: 'Dec 10, 2024 - 22:17',
+    close: 'Dec 10, 2024 - 22:17',
+  },
+  {
+    type: 'Sell',
+    title: 'Cover 5 @ -0.25%X0.143',
+    tradeId: '504426',
+    qty: '0.0291',
+    rate: '3,634.04',
+    total: '105.75',
+    open: 'Dec 10, 2024 - 22:17',
+    close: 'Dec 10, 2024 - 22:17',
+    gross: '12.90',
+    fees: '12.90',
+    profit: '12.90',
+    toTank: '12.90',
+    net: '1.01',
+    percent: '0.98%',
+  },
+  {
+    type: 'Sell',
+    title: 'Cover 5 @ -0.25%X0.143',
+    tradeId: '504426',
+    qty: '0.0291',
+    rate: '3,634.04',
+    total: '105.75',
+    open: 'Dec 10, 2024 - 22:17',
+    close: 'Dec 10, 2024 - 22:17',
+    gross: '12.90',
+    fees: '12.90',
+    profit: '12.90',
+    toTank: '12.90',
+    net: '1.01',
+    percent: '0.98%',
+  },
+  {
+    type: 'Buy',
+    title: 'Cover 5 @ -0.25%X0.143',
+    tradeId: '504426',
+    qty: '0.0291',
+    rate: '3,634.04',
+    total: '105.75',
+    open: 'Dec 10, 2024 - 22:17',
+    close: 'Dec 10, 2024 - 22:17',
+  },
+  {
+    type: 'Sell',
+    title: 'Cover 5 @ -0.25%X0.143',
+    tradeId: '504426',
+    qty: '0.0291',
+    rate: '3,634.04',
+    total: '105.75',
+    open: 'Dec 10, 2024 - 22:17',
+    close: 'Dec 10, 2024 - 22:17',
+    gross: '12.90',
+    fees: '12.90',
+    profit: '12.90',
+    toTank: '12.90',
+    net: '1.01',
+    percent: '0.98%',
+  },
+  {
+    type: 'Buy',
+    title: 'Cover 5 @ -0.25%X0.143',
+    tradeId: '504426',
+    qty: '0.0291',
+    rate: '3,634.04',
+    total: '105.75',
+    open: 'Dec 10, 2024 - 22:17',
+    close: 'Dec 10, 2024 - 22:17',
+  },
+  {
+    type: 'Sell',
+    title: 'Cover 5 @ -0.25%X0.143',
+    tradeId: '504426',
+    qty: '0.0291',
+    rate: '3,634.04',
+    total: '105.75',
+    open: 'Dec 10, 2024 - 22:17',
+    close: 'Dec 10, 2024 - 22:17',
+    gross: '12.90',
+    fees: '12.90',
+    profit: '12.90',
+    toTank: '12.90',
+    net: '1.01',
+    percent: '0.98%',
+  },
+  // Add more items as needed...
+]
 </script>
 <template>
   <AppPageHeader
@@ -527,201 +625,69 @@ const stats = [
                           </VCol>
                         </VRow>
                         <VRow>
-                          <VCol cols="12" md="3">
-                            <span class="text-caption font-weight-bold">Info</span>
-                          </VCol>
-                          <VCol cols="12" md="5">
-                            <span class="text-caption font-weight-bold">Data</span>
-                          </VCol>
-                          <VCol cols="12" md="4">
-                            <span class="text-caption font-weight-bold">Trade Profit</span>
-                          </VCol>
-                        </VRow>
-                        <VDivider />
-                        <VRow class="pt-2">
-                          <VCol cols="12" md="3" style="margin-top: auto;margin-bottom: auto;">
-                            <VChip color="success" class="text-white">Buy</VChip><br/>
-                            <span class="text-caption font-weight-medium">Account has insufficient balance for requested action.</span><br/>
-                            <span class="text-caption font-bold">Cover 4 @ -2% X1</span><br/>
-                            <span class="text-caption font-bold">Open : Dec 10 2024, 22:17</span><br/>
-                            <span class="text-caption font-bold">Close: Pending</span><br/>
-                          </VCol>
-                          <VCol cols="12" md="5" style="margin-top: auto;margin-bottom: auto;">
-                            <!-- Price -->
-                            <div class="d-flex justify-space-between align-center mb-2">
-                              <span class="text-caption font-bold">Price</span>
-                              <span class="text-caption font-bold">195.37</span>
-                            </div>
-                            <VDivider />
+                          <VCol cols="12" v-for="(item, index) in tradeItems" :key="index">
+                            <VCard :class="item.type === 'Buy' ? 'buy-card' : 'sell-card pb-1'" class="pa-3">
+                              <VRow>
+                                <VCol cols="5" class="pt-2 pb-2">
+                                  <div class="align-center gap-x-2" >
+                                    <VChip :color="item.type === 'Buy' ? 'success' : 'error'" text-color="white" label size="small">
+                                      {{ item.type }}
+                                    </VChip>
+                                    <span class="text-caption font-weight-bold pl-2">{{ item.title }}</span>
+                                  </div>
+                              </VCol>
+                              <VCol cols="3" class="pt-2 pb-2">
+                                <div class="text-caption">
+                                  <span class="font-weight-bold">{{ item.qty }}</span> Qty @
+                                  <span class="font-weight-bold">{{ item.rate }}</span>
+                                </div>
+                              </VCol>
+                              <VCol cols="4" class="pt-2 pb-2">
+                                <div class="text-right text-caption">
+                                  <div><strong>Open:</strong> <span class="text-caption font-weight-bold">{{ item.open }}</span></div>
+                                </div>
+                              </VCol>
+                              </VRow>
+                              <VRow class="mt-0">
+                                <VCol cols="5" class="pt-2 pb-2">
+                                  <div class="align-center gap-x-2" >
+                                    <span class="text-caption pl-13 font-weight-bold">Trade ID : {{ item.tradeId }}</span>
+                                  </div>
+                              </VCol>
+                              <VCol cols="3" class="pt-2 pb-2">
+                                <div class="text-caption">
+                                  <span class="font-weight-bold">Total : {{ item.total }}</span>
+                                  <span class="text-grey text-uppercase">USDT</span>
+                                </div>
+                              </VCol>
+                              <VCol cols="4" class="pt-2 pb-2">
+                                <div class="text-right text-caption">
+                                  <div><strong>Close:</strong> <span class="text-caption font-weight-bold">{{ item.close }}</span></div>
+                                </div>
+                              </VCol>
+                              </VRow>
+                              <!-- Divider for Sell only -->
+                              <VDivider v-if="item.type === 'Sell'" class="my-2" />
 
-                            <!-- Quantity -->
-                            <div class="d-flex justify-space-between align-center my-2">
-                              <span class="text-caption font-bold">Quantity</span>
-                              <span class="text-caption font-bold">1.301352</span>
-                            </div>
-                            <VDivider />
-
-                            <!-- Amount -->
-                            <div class="d-flex justify-space-between align-center my-2">
-                              <span class="text-caption font-bold">Amount</span>
-                              <span class="text-caption font-bold">254.25</span>
-                            </div>
-                            <VDivider />
-
-                            <!-- Trade ID -->
-                            <div class="d-flex justify-space-between align-center mt-2">
-                              <span class="text-caption font-bold">Trade ID</span>
-                              <span class="text-caption font-bold">70490034</span>
-                            </div>
-                          </VCol>
-
-                          <VCol cols="12" md="4" style="margin-top: auto;margin-bottom: auto;">
-                          </VCol>
-                        </VRow>
-                        <VDivider />
-                        <VRow class="pt-2">
-                          <VCol cols="12" md="3" style="margin-top: auto;margin-bottom: auto;">
-                            <VChip color="success" class="text-white">Buy</VChip><br/>
-                            <span class="text-caption font-weight-bold">Cover 4 @ -2% X1</span><br/>
-                            <span class="text-caption font-weight-bold">Open : Dec 10 2024, 22:17</span><br/>
-                            <span class="text-caption font-weight-bold">Close: Pending</span><br/>
-                          </VCol>
-                          <VCol cols="12" md="5" style="margin-top: auto;margin-bottom: auto;">
-                            <!-- Price -->
-                            <div class="d-flex justify-space-between align-center mb-2">
-                              <span class="text-caption font-weight-bold">Price</span>
-                              <span class="text-caption font-weight-bold">195.37</span>
-                            </div>
-                            <VDivider />
-
-                            <!-- Quantity -->
-                            <div class="d-flex justify-space-between align-center my-2">
-                              <span class="text-caption font-weight-bold">Quantity</span>
-                              <span class="text-caption font-weight-bold">1.301352</span>
-                            </div>
-                            <VDivider />
-
-                            <!-- Amount -->
-                            <div class="d-flex justify-space-between align-center my-2">
-                              <span class="text-caption font-weight-bold">Amount</span>
-                              <span class="text-caption font-weight-bold">254.25</span>
-                            </div>
-                            <VDivider />
-
-                            <!-- Trade ID -->
-                            <div class="d-flex justify-space-between align-center mt-2">
-                              <span class="text-caption font-weight-bold">Trade ID</span>
-                              <span class="text-caption font-weight-bold">70490034</span>
-                            </div>
-                          </VCol>
-
-                          <VCol cols="12" md="4" style="margin-top: auto;margin-bottom: auto;">
+                              <!-- Profit Row for Sell -->
+                              <div
+                                v-if="item.type === 'Sell'"
+                                class="d-flex justify-space-between flex-wrap text-caption"
+                              >
+                                <span class="text-caption"><strong>Gross Profit :</strong> <span class="font-weight-bold"> {{ item.gross }}</span></span>
+                                <span class="text-caption"><strong>Fees :</strong><span class="font-weight-bold"> {{ item.fees }}</span></span>
+                                <span class="text-caption"><strong>Profit :</strong><span class="font-weight-bold"> {{ item.profit }}</span></span>
+                                <span class="text-caption"><strong>Profit to Tank :</strong><span class="font-weight-bold"> {{ item.toTank }}</span></span>
+                                <span class="text-caption font-weight-bold">
+                                  <strong>Net Profit :</strong>
+                                  <VChip color="success" size="small" class="font-bold ml-1">
+                                    {{ item.net }} [{{ item.percent }}]
+                                  </VChip>
+                                </span>
+                              </div>
+                            </VCard>
                           </VCol>
                         </VRow>
-                        <VDivider />
-                        <VRow class="pt-2">
-                          <VCol cols="12" md="3" style="margin-top: auto;margin-bottom: auto;">
-                            <VChip color="success" class="text-white">Buy</VChip><br/>
-                            <span class="text-caption font-weight-bold">Cover 4 @ -2% X1</span><br/>
-                            <span class="text-caption font-weight-bold">Open : Dec 10 2024, 22:17</span><br/>
-                            <span class="text-caption font-weight-bold">Close: Pending</span><br/>
-                          </VCol>
-                          <VCol cols="12" md="5" style="margin-top: auto;margin-bottom: auto;">
-                            <!-- Price -->
-                            <div class="d-flex justify-space-between align-center mb-2">
-                              <span class="text-caption font-weight-bold">Price</span>
-                              <span class="text-caption font-weight-bold">195.37</span>
-                            </div>
-                            <VDivider />
-
-                            <!-- Quantity -->
-                            <div class="d-flex justify-space-between align-center my-2">
-                              <span class="text-caption font-weight-bold">Quantity</span>
-                              <span class="text-caption font-weight-bold">1.301352</span>
-                            </div>
-                            <VDivider />
-
-                            <!-- Amount -->
-                            <div class="d-flex justify-space-between align-center my-2">
-                              <span class="text-caption font-weight-bold">Amount</span>
-                              <span class="text-caption font-weight-bold">254.25</span>
-                            </div>
-                            <VDivider />
-
-                            <!-- Trade ID -->
-                            <div class="d-flex justify-space-between align-center mt-2">
-                              <span class="text-caption font-weight-bold">Trade ID</span>
-                              <span class="text-caption font-weight-bold">70490034</span>
-                            </div>
-                          </VCol>
-
-                          <VCol cols="12" md="4" style="margin-top: auto;margin-bottom: auto;">
-                          </VCol>
-                        </VRow>
-                        <VDivider />
-                        <VRow class="pt-2">
-                          <VCol cols="12" md="3" style="margin-top: auto;margin-bottom: auto;">
-                            <VChip color="error" class="text-white">Sell</VChip><br/>
-                            <span class="text-caption font-weight-bold">Sell Cover 4 @ 2.48% TP</span><br/>
-                            <span class="text-caption font-weight-bold">Close : Dec 10 2024, 22:17</span><br/>
-                          </VCol>
-                          <VCol cols="12" md="5" style="margin-top: auto;margin-bottom: auto;">
-                            <!-- Price -->
-                            <div class="d-flex justify-space-between align-center mb-2">
-                              <span class="text-caption font-weight-bold">Price</span>
-                              <span class="text-caption font-weight-bold">195.37</span>
-                            </div>
-                            <VDivider />
-
-                            <!-- Quantity -->
-                            <div class="d-flex justify-space-between align-center my-2">
-                              <span class="text-caption font-weight-bold">Quantity</span>
-                              <span class="text-caption font-weight-bold">1.301352</span>
-                            </div>
-                            <VDivider />
-
-                            <!-- Amount -->
-                            <div class="d-flex justify-space-between align-center my-2">
-                              <span class="text-caption font-weight-bold">Amount</span>
-                              <span class="text-caption font-weight-bold">254.25</span>
-                            </div>
-                            <VDivider />
-
-                            <!-- Trade ID -->
-                            <div class="d-flex justify-space-between align-center mt-2">
-                              <span class="text-caption font-weight-bold">Trade ID</span>
-                              <span class="text-caption font-weight-bold">70490034</span>
-                            </div>
-                          </VCol>
-
-                          <VCol cols="12" md="4" style="margin-top: auto;margin-bottom: auto;">
-                            <div class="d-flex justify-space-between align-center mb-2">
-                              <span class="text-caption font-weight-bold">Gross Profit</span>
-                              <span class="text-caption font-weight-bold">0.922222</span>
-                            </div>
-                            <VDivider />
-                            <div class="d-flex justify-space-between align-center mb-2">
-                              <span class="text-caption font-weight-bold">Fees</span>
-                              <span class="text-caption font-weight-bold">0.2111222</span>
-                            </div>
-                            <VDivider />
-                            <div class="d-flex justify-space-between align-center mb-2">
-                              <span class="text-caption font-weight-bold">Profit</span>
-                              <span class="text-caption font-weight-bold">0.7111</span>
-                            </div>
-                            <VDivider />
-                            <div class="d-flex justify-space-between align-center mb-2">
-                              <span class="text-caption font-weight-bold">Profit for avg price</span>
-                              <span class="text-caption font-weight-bold">0.07111</span>
-                            </div>
-                            <VDivider />
-                            <div class="d-flex justify-space-between align-center mb-2">
-                              <span class="text-caption font-weight-bold">Net Profit</span>
-                              <span class="text-caption font-weight-bold">0.639084(1.41%)</span>
-                            </div>
-                          </VCol>
-                        </VRow>
-                        <VDivider />
                       </div>
                     </VCardText>
 
@@ -1105,201 +1071,70 @@ const stats = [
                             </VCol>
                           </VRow>
                           <VRow>
-                            <VCol cols="12" md="3">
-                              <span class="text-caption font-weight-bold">Info</span>
-                            </VCol>
-                            <VCol cols="12" md="5">
-                              <span class="text-caption font-weight-bold">Data</span>
-                            </VCol>
-                            <VCol cols="12" md="4">
-                              <span class="text-caption font-weight-bold">Trade Profit</span>
-                            </VCol>
-                          </VRow>
-                          <VDivider />
-                          <VRow class="pt-2">
-                            <VCol cols="12" md="3" style="margin-top: auto;margin-bottom: auto;">
-                              <VChip color="success" class="text-white">Buy</VChip><br/>
-                              <span class="text-caption font-weight-medium">Account has insufficient balance for requested action.</span><br/>
-                              <span class="text-caption font-bold">Cover 4 @ -2% X1</span><br/>
-                              <span class="text-caption font-bold">Open : Dec 10 2024, 22:17</span><br/>
-                              <span class="text-caption font-bold">Close: Pending</span><br/>
-                            </VCol>
-                            <VCol cols="12" md="5" style="margin-top: auto;margin-bottom: auto;">
-                              <!-- Price -->
-                              <div class="d-flex justify-space-between align-center mb-2">
-                                <span class="text-caption font-bold">Price</span>
-                                <span class="text-caption font-bold">195.37</span>
-                              </div>
-                              <VDivider />
+                            <VCol cols="12" v-for="(item, index) in tradeItems" :key="index">
+<!--                              <VCardTitle class="border-bg-block" > <VIcon icon="tabler-alert-triangle" class="mr-1" style="background-color:red"/> Insufficient Balance</VCardTitle>-->
+                              <VCard :class="item.type === 'Buy' ? 'buy-card' : 'sell-card pb-1'" class="pa-3">
+                                <VRow>
+                                  <VCol cols="5" class="pt-2 pb-2">
+                                    <div class="align-center gap-x-2" >
+                                      <VChip :color="item.type === 'Buy' ? 'success' : 'error'" text-color="white" label size="small">
+                                        {{ item.type }}
+                                      </VChip>
+                                      <span class="text-caption font-weight-bold pl-2">{{ item.title }}</span>
+                                    </div>
+                                  </VCol>
+                                  <VCol cols="3" class="pt-2 pb-2">
+                                    <div class="text-caption">
+                                      <span class="font-weight-bold">{{ item.qty }}</span> Qty @
+                                      <span class="font-weight-bold">{{ item.rate }}</span>
+                                    </div>
+                                  </VCol>
+                                  <VCol cols="4" class="pt-2 pb-2">
+                                    <div class="text-right text-caption">
+                                      <div><strong>Open:</strong> <span class="text-caption font-weight-bold">{{ item.open }}</span></div>
+                                    </div>
+                                  </VCol>
+                                </VRow>
+                                <VRow class="mt-0">
+                                  <VCol cols="5" class="pt-2 pb-2">
+                                    <div class="align-center gap-x-2" >
+                                      <span class="text-caption pl-13 font-weight-bold">Trade ID : {{ item.tradeId }}</span>
+                                    </div>
+                                  </VCol>
+                                  <VCol cols="3" class="pt-2 pb-2">
+                                    <div class="text-caption">
+                                      <span class="font-weight-bold">Total : {{ item.total }}</span>
+                                      <span class="text-grey text-uppercase">USDT</span>
+                                    </div>
+                                  </VCol>
+                                  <VCol cols="4" class="pt-2 pb-2">
+                                    <div class="text-right text-caption">
+                                      <div><strong>Close:</strong> <span class="text-caption font-weight-bold">{{ item.close }}</span></div>
+                                    </div>
+                                  </VCol>
+                                </VRow>
+                                <!-- Divider for Sell only -->
+                                <VDivider v-if="item.type === 'Sell'" class="my-2" />
 
-                              <!-- Quantity -->
-                              <div class="d-flex justify-space-between align-center my-2">
-                                <span class="text-caption font-bold">Quantity</span>
-                                <span class="text-caption font-bold">1.301352</span>
-                              </div>
-                              <VDivider />
-
-                              <!-- Amount -->
-                              <div class="d-flex justify-space-between align-center my-2">
-                                <span class="text-caption font-bold">Amount</span>
-                                <span class="text-caption font-bold">254.25</span>
-                              </div>
-                              <VDivider />
-
-                              <!-- Trade ID -->
-                              <div class="d-flex justify-space-between align-center mt-2">
-                                <span class="text-caption font-bold">Trade ID</span>
-                                <span class="text-caption font-bold">70490034</span>
-                              </div>
-                            </VCol>
-
-                            <VCol cols="12" md="4" style="margin-top: auto;margin-bottom: auto;">
-                            </VCol>
-                          </VRow>
-                          <VDivider />
-                          <VRow class="pt-2">
-                            <VCol cols="12" md="3" style="margin-top: auto;margin-bottom: auto;">
-                              <VChip color="success" class="text-white">Buy</VChip><br/>
-                              <span class="text-caption font-weight-bold">Cover 4 @ -2% X1</span><br/>
-                              <span class="text-caption font-weight-bold">Open : Dec 10 2024, 22:17</span><br/>
-                              <span class="text-caption font-weight-bold">Close: Pending</span><br/>
-                            </VCol>
-                            <VCol cols="12" md="5" style="margin-top: auto;margin-bottom: auto;">
-                              <!-- Price -->
-                              <div class="d-flex justify-space-between align-center mb-2">
-                                <span class="text-caption font-weight-bold">Price</span>
-                                <span class="text-caption font-weight-bold">195.37</span>
-                              </div>
-                              <VDivider />
-
-                              <!-- Quantity -->
-                              <div class="d-flex justify-space-between align-center my-2">
-                                <span class="text-caption font-weight-bold">Quantity</span>
-                                <span class="text-caption font-weight-bold">1.301352</span>
-                              </div>
-                              <VDivider />
-
-                              <!-- Amount -->
-                              <div class="d-flex justify-space-between align-center my-2">
-                                <span class="text-caption font-weight-bold">Amount</span>
-                                <span class="text-caption font-weight-bold">254.25</span>
-                              </div>
-                              <VDivider />
-
-                              <!-- Trade ID -->
-                              <div class="d-flex justify-space-between align-center mt-2">
-                                <span class="text-caption font-weight-bold">Trade ID</span>
-                                <span class="text-caption font-weight-bold">70490034</span>
-                              </div>
-                            </VCol>
-
-                            <VCol cols="12" md="4" style="margin-top: auto;margin-bottom: auto;">
+                                <!-- Profit Row for Sell -->
+                                <div
+                                  v-if="item.type === 'Sell'"
+                                  class="d-flex justify-space-between flex-wrap text-caption"
+                                >
+                                  <span class="text-caption"><strong>Gross Profit :</strong> <span class="font-weight-bold"> {{ item.gross }}</span></span>
+                                  <span class="text-caption"><strong>Fees :</strong><span class="font-weight-bold"> {{ item.fees }}</span></span>
+                                  <span class="text-caption"><strong>Profit :</strong><span class="font-weight-bold"> {{ item.profit }}</span></span>
+                                  <span class="text-caption"><strong>Profit to Tank :</strong><span class="font-weight-bold"> {{ item.toTank }}</span></span>
+                                  <span class="text-caption font-weight-bold">
+                                  <strong>Net Profit :</strong>
+                                  <VChip color="success" size="small" class="font-bold ml-1">
+                                    {{ item.net }} [{{ item.percent }}]
+                                  </VChip>
+                                </span>
+                                </div>
+                              </VCard>
                             </VCol>
                           </VRow>
-                          <VDivider />
-                          <VRow class="pt-2">
-                            <VCol cols="12" md="3" style="margin-top: auto;margin-bottom: auto;">
-                              <VChip color="success" class="text-white">Buy</VChip><br/>
-                              <span class="text-caption font-weight-bold">Cover 4 @ -2% X1</span><br/>
-                              <span class="text-caption font-weight-bold">Open : Dec 10 2024, 22:17</span><br/>
-                              <span class="text-caption font-weight-bold">Close: Pending</span><br/>
-                            </VCol>
-                            <VCol cols="12" md="5" style="margin-top: auto;margin-bottom: auto;">
-                              <!-- Price -->
-                              <div class="d-flex justify-space-between align-center mb-2">
-                                <span class="text-caption font-weight-bold">Price</span>
-                                <span class="text-caption font-weight-bold">195.37</span>
-                              </div>
-                              <VDivider />
-
-                              <!-- Quantity -->
-                              <div class="d-flex justify-space-between align-center my-2">
-                                <span class="text-caption font-weight-bold">Quantity</span>
-                                <span class="text-caption font-weight-bold">1.301352</span>
-                              </div>
-                              <VDivider />
-
-                              <!-- Amount -->
-                              <div class="d-flex justify-space-between align-center my-2">
-                                <span class="text-caption font-weight-bold">Amount</span>
-                                <span class="text-caption font-weight-bold">254.25</span>
-                              </div>
-                              <VDivider />
-
-                              <!-- Trade ID -->
-                              <div class="d-flex justify-space-between align-center mt-2">
-                                <span class="text-caption font-weight-bold">Trade ID</span>
-                                <span class="text-caption font-weight-bold">70490034</span>
-                              </div>
-                            </VCol>
-
-                            <VCol cols="12" md="4" style="margin-top: auto;margin-bottom: auto;">
-                            </VCol>
-                          </VRow>
-                          <VDivider />
-                          <VRow class="pt-2">
-                            <VCol cols="12" md="3" style="margin-top: auto;margin-bottom: auto;">
-                              <VChip color="error" class="text-white">Sell</VChip><br/>
-                              <span class="text-caption font-weight-bold">Sell Cover 4 @ 2.48% TP</span><br/>
-                              <span class="text-caption font-weight-bold">Close : Dec 10 2024, 22:17</span><br/>
-                            </VCol>
-                            <VCol cols="12" md="5" style="margin-top: auto;margin-bottom: auto;">
-                              <!-- Price -->
-                              <div class="d-flex justify-space-between align-center mb-2">
-                                <span class="text-caption font-weight-bold">Price</span>
-                                <span class="text-caption font-weight-bold">195.37</span>
-                              </div>
-                              <VDivider />
-
-                              <!-- Quantity -->
-                              <div class="d-flex justify-space-between align-center my-2">
-                                <span class="text-caption font-weight-bold">Quantity</span>
-                                <span class="text-caption font-weight-bold">1.301352</span>
-                              </div>
-                              <VDivider />
-
-                              <!-- Amount -->
-                              <div class="d-flex justify-space-between align-center my-2">
-                                <span class="text-caption font-weight-bold">Amount</span>
-                                <span class="text-caption font-weight-bold">254.25</span>
-                              </div>
-                              <VDivider />
-
-                              <!-- Trade ID -->
-                              <div class="d-flex justify-space-between align-center mt-2">
-                                <span class="text-caption font-weight-bold">Trade ID</span>
-                                <span class="text-caption font-weight-bold">70490034</span>
-                              </div>
-                            </VCol>
-
-                            <VCol cols="12" md="4" style="margin-top: auto;margin-bottom: auto;">
-                              <div class="d-flex justify-space-between align-center mb-2">
-                                <span class="text-caption font-weight-bold">Gross Profit</span>
-                                <span class="text-caption font-weight-bold">0.922222</span>
-                              </div>
-                              <VDivider />
-                              <div class="d-flex justify-space-between align-center mb-2">
-                                <span class="text-caption font-weight-bold">Fees</span>
-                                <span class="text-caption font-weight-bold">0.2111222</span>
-                              </div>
-                              <VDivider />
-                              <div class="d-flex justify-space-between align-center mb-2">
-                                <span class="text-caption font-weight-bold">Profit</span>
-                                <span class="text-caption font-weight-bold">0.7111</span>
-                              </div>
-                              <VDivider />
-                              <div class="d-flex justify-space-between align-center mb-2">
-                                <span class="text-caption font-weight-bold">Profit for avg price</span>
-                                <span class="text-caption font-weight-bold">0.07111</span>
-                              </div>
-                              <VDivider />
-                              <div class="d-flex justify-space-between align-center mb-2">
-                                <span class="text-caption font-weight-bold">Net Profit</span>
-                                <span class="text-caption font-weight-bold">0.639084(1.41%)</span>
-                              </div>
-                            </VCol>
-                          </VRow>
-                          <VDivider />
                         </div>
                       </VCardText>
 
@@ -1677,201 +1512,69 @@ const stats = [
                             </VCol>
                           </VRow>
                           <VRow>
-                            <VCol cols="12" md="3">
-                              <span class="text-caption font-weight-bold">Info</span>
-                            </VCol>
-                            <VCol cols="12" md="5">
-                              <span class="text-caption font-weight-bold">Data</span>
-                            </VCol>
-                            <VCol cols="12" md="4">
-                              <span class="text-caption font-weight-bold">Trade Profit</span>
-                            </VCol>
-                          </VRow>
-                          <VDivider />
-                          <VRow class="pt-2">
-                            <VCol cols="12" md="3" style="margin-top: auto;margin-bottom: auto;">
-                              <VChip color="success" class="text-white">Buy</VChip><br/>
-                              <span class="text-caption font-weight-medium">Account has insufficient balance for requested action.</span><br/>
-                              <span class="text-caption font-bold">Cover 4 @ -2% X1</span><br/>
-                              <span class="text-caption font-bold">Open : Dec 10 2024, 22:17</span><br/>
-                              <span class="text-caption font-bold">Close: Pending</span><br/>
-                            </VCol>
-                            <VCol cols="12" md="5" style="margin-top: auto;margin-bottom: auto;">
-                              <!-- Price -->
-                              <div class="d-flex justify-space-between align-center mb-2">
-                                <span class="text-caption font-bold">Price</span>
-                                <span class="text-caption font-bold">195.37</span>
-                              </div>
-                              <VDivider />
+                            <VCol cols="12" v-for="(item, index) in tradeItems" :key="index">
+                              <VCard :class="item.type === 'Buy' ? 'buy-card' : 'sell-card pb-1'" class="pa-3">
+                                <VRow>
+                                  <VCol cols="5" class="pt-2 pb-2">
+                                    <div class="align-center gap-x-2" >
+                                      <VChip :color="item.type === 'Buy' ? 'success' : 'error'" text-color="white" label size="small">
+                                        {{ item.type }}
+                                      </VChip>
+                                      <span class="text-caption font-weight-bold pl-2">{{ item.title }}</span>
+                                    </div>
+                                  </VCol>
+                                  <VCol cols="3" class="pt-2 pb-2">
+                                    <div class="text-caption">
+                                      <span class="font-weight-bold">{{ item.qty }}</span> Qty @
+                                      <span class="font-weight-bold">{{ item.rate }}</span>
+                                    </div>
+                                  </VCol>
+                                  <VCol cols="4" class="pt-2 pb-2">
+                                    <div class="text-right text-caption">
+                                      <div><strong>Open:</strong> <span class="text-caption font-weight-bold">{{ item.open }}</span></div>
+                                    </div>
+                                  </VCol>
+                                </VRow>
+                                <VRow class="mt-0">
+                                  <VCol cols="5" class="pt-2 pb-2">
+                                    <div class="align-center gap-x-2" >
+                                      <span class="text-caption pl-13 font-weight-bold">Trade ID : {{ item.tradeId }}</span>
+                                    </div>
+                                  </VCol>
+                                  <VCol cols="3" class="pt-2 pb-2">
+                                    <div class="text-caption">
+                                      <span class="font-weight-bold">Total : {{ item.total }}</span>
+                                      <span class="text-grey text-uppercase">USDT</span>
+                                    </div>
+                                  </VCol>
+                                  <VCol cols="4" class="pt-2 pb-2">
+                                    <div class="text-right text-caption">
+                                      <div><strong>Close:</strong> <span class="text-caption font-weight-bold">{{ item.close }}</span></div>
+                                    </div>
+                                  </VCol>
+                                </VRow>
+                                <!-- Divider for Sell only -->
+                                <VDivider v-if="item.type === 'Sell'" class="my-2" />
 
-                              <!-- Quantity -->
-                              <div class="d-flex justify-space-between align-center my-2">
-                                <span class="text-caption font-bold">Quantity</span>
-                                <span class="text-caption font-bold">1.301352</span>
-                              </div>
-                              <VDivider />
-
-                              <!-- Amount -->
-                              <div class="d-flex justify-space-between align-center my-2">
-                                <span class="text-caption font-bold">Amount</span>
-                                <span class="text-caption font-bold">254.25</span>
-                              </div>
-                              <VDivider />
-
-                              <!-- Trade ID -->
-                              <div class="d-flex justify-space-between align-center mt-2">
-                                <span class="text-caption font-bold">Trade ID</span>
-                                <span class="text-caption font-bold">70490034</span>
-                              </div>
-                            </VCol>
-
-                            <VCol cols="12" md="4" style="margin-top: auto;margin-bottom: auto;">
-                            </VCol>
-                          </VRow>
-                          <VDivider />
-                          <VRow class="pt-2">
-                            <VCol cols="12" md="3" style="margin-top: auto;margin-bottom: auto;">
-                              <VChip color="success" class="text-white">Buy</VChip><br/>
-                              <span class="text-caption font-weight-bold">Cover 4 @ -2% X1</span><br/>
-                              <span class="text-caption font-weight-bold">Open : Dec 10 2024, 22:17</span><br/>
-                              <span class="text-caption font-weight-bold">Close: Pending</span><br/>
-                            </VCol>
-                            <VCol cols="12" md="5" style="margin-top: auto;margin-bottom: auto;">
-                              <!-- Price -->
-                              <div class="d-flex justify-space-between align-center mb-2">
-                                <span class="text-caption font-weight-bold">Price</span>
-                                <span class="text-caption font-weight-bold">195.37</span>
-                              </div>
-                              <VDivider />
-
-                              <!-- Quantity -->
-                              <div class="d-flex justify-space-between align-center my-2">
-                                <span class="text-caption font-weight-bold">Quantity</span>
-                                <span class="text-caption font-weight-bold">1.301352</span>
-                              </div>
-                              <VDivider />
-
-                              <!-- Amount -->
-                              <div class="d-flex justify-space-between align-center my-2">
-                                <span class="text-caption font-weight-bold">Amount</span>
-                                <span class="text-caption font-weight-bold">254.25</span>
-                              </div>
-                              <VDivider />
-
-                              <!-- Trade ID -->
-                              <div class="d-flex justify-space-between align-center mt-2">
-                                <span class="text-caption font-weight-bold">Trade ID</span>
-                                <span class="text-caption font-weight-bold">70490034</span>
-                              </div>
-                            </VCol>
-
-                            <VCol cols="12" md="4" style="margin-top: auto;margin-bottom: auto;">
+                                <!-- Profit Row for Sell -->
+                                <div
+                                  v-if="item.type === 'Sell'"
+                                  class="d-flex justify-space-between flex-wrap text-caption"
+                                >
+                                  <span class="text-caption"><strong>Gross Profit :</strong> <span class="font-weight-bold"> {{ item.gross }}</span></span>
+                                  <span class="text-caption"><strong>Fees :</strong><span class="font-weight-bold"> {{ item.fees }}</span></span>
+                                  <span class="text-caption"><strong>Profit :</strong><span class="font-weight-bold"> {{ item.profit }}</span></span>
+                                  <span class="text-caption"><strong>Profit to Tank :</strong><span class="font-weight-bold"> {{ item.toTank }}</span></span>
+                                  <span class="text-caption font-weight-bold">
+                                  <strong>Net Profit :</strong>
+                                  <VChip color="success" size="small" class="font-bold ml-1">
+                                    {{ item.net }} [{{ item.percent }}]
+                                  </VChip>
+                                </span>
+                                </div>
+                              </VCard>
                             </VCol>
                           </VRow>
-                          <VDivider />
-                          <VRow class="pt-2">
-                            <VCol cols="12" md="3" style="margin-top: auto;margin-bottom: auto;">
-                              <VChip color="success" class="text-white">Buy</VChip><br/>
-                              <span class="text-caption font-weight-bold">Cover 4 @ -2% X1</span><br/>
-                              <span class="text-caption font-weight-bold">Open : Dec 10 2024, 22:17</span><br/>
-                              <span class="text-caption font-weight-bold">Close: Pending</span><br/>
-                            </VCol>
-                            <VCol cols="12" md="5" style="margin-top: auto;margin-bottom: auto;">
-                              <!-- Price -->
-                              <div class="d-flex justify-space-between align-center mb-2">
-                                <span class="text-caption font-weight-bold">Price</span>
-                                <span class="text-caption font-weight-bold">195.37</span>
-                              </div>
-                              <VDivider />
-
-                              <!-- Quantity -->
-                              <div class="d-flex justify-space-between align-center my-2">
-                                <span class="text-caption font-weight-bold">Quantity</span>
-                                <span class="text-caption font-weight-bold">1.301352</span>
-                              </div>
-                              <VDivider />
-
-                              <!-- Amount -->
-                              <div class="d-flex justify-space-between align-center my-2">
-                                <span class="text-caption font-weight-bold">Amount</span>
-                                <span class="text-caption font-weight-bold">254.25</span>
-                              </div>
-                              <VDivider />
-
-                              <!-- Trade ID -->
-                              <div class="d-flex justify-space-between align-center mt-2">
-                                <span class="text-caption font-weight-bold">Trade ID</span>
-                                <span class="text-caption font-weight-bold">70490034</span>
-                              </div>
-                            </VCol>
-
-                            <VCol cols="12" md="4" style="margin-top: auto;margin-bottom: auto;">
-                            </VCol>
-                          </VRow>
-                          <VDivider />
-                          <VRow class="pt-2">
-                            <VCol cols="12" md="3" style="margin-top: auto;margin-bottom: auto;">
-                              <VChip color="error" class="text-white">Sell</VChip><br/>
-                              <span class="text-caption font-weight-bold">Sell Cover 4 @ 2.48% TP</span><br/>
-                              <span class="text-caption font-weight-bold">Close : Dec 10 2024, 22:17</span><br/>
-                            </VCol>
-                            <VCol cols="12" md="5" style="margin-top: auto;margin-bottom: auto;">
-                              <!-- Price -->
-                              <div class="d-flex justify-space-between align-center mb-2">
-                                <span class="text-caption font-weight-bold">Price</span>
-                                <span class="text-caption font-weight-bold">195.37</span>
-                              </div>
-                              <VDivider />
-
-                              <!-- Quantity -->
-                              <div class="d-flex justify-space-between align-center my-2">
-                                <span class="text-caption font-weight-bold">Quantity</span>
-                                <span class="text-caption font-weight-bold">1.301352</span>
-                              </div>
-                              <VDivider />
-
-                              <!-- Amount -->
-                              <div class="d-flex justify-space-between align-center my-2">
-                                <span class="text-caption font-weight-bold">Amount</span>
-                                <span class="text-caption font-weight-bold">254.25</span>
-                              </div>
-                              <VDivider />
-
-                              <!-- Trade ID -->
-                              <div class="d-flex justify-space-between align-center mt-2">
-                                <span class="text-caption font-weight-bold">Trade ID</span>
-                                <span class="text-caption font-weight-bold">70490034</span>
-                              </div>
-                            </VCol>
-
-                            <VCol cols="12" md="4" style="margin-top: auto;margin-bottom: auto;">
-                              <div class="d-flex justify-space-between align-center mb-2">
-                                <span class="text-caption font-weight-bold">Gross Profit</span>
-                                <span class="text-caption font-weight-bold">0.922222</span>
-                              </div>
-                              <VDivider />
-                              <div class="d-flex justify-space-between align-center mb-2">
-                                <span class="text-caption font-weight-bold">Fees</span>
-                                <span class="text-caption font-weight-bold">0.2111222</span>
-                              </div>
-                              <VDivider />
-                              <div class="d-flex justify-space-between align-center mb-2">
-                                <span class="text-caption font-weight-bold">Profit</span>
-                                <span class="text-caption font-weight-bold">0.7111</span>
-                              </div>
-                              <VDivider />
-                              <div class="d-flex justify-space-between align-center mb-2">
-                                <span class="text-caption font-weight-bold">Profit for avg price</span>
-                                <span class="text-caption font-weight-bold">0.07111</span>
-                              </div>
-                              <VDivider />
-                              <div class="d-flex justify-space-between align-center mb-2">
-                                <span class="text-caption font-weight-bold">Net Profit</span>
-                                <span class="text-caption font-weight-bold">0.639084(1.41%)</span>
-                              </div>
-                            </VCol>
-                          </VRow>
-                          <VDivider />
                         </div>
                       </VCardText>
 
@@ -2250,201 +1953,69 @@ const stats = [
                             </VCol>
                           </VRow>
                           <VRow>
-                            <VCol cols="12" md="3">
-                              <span class="text-caption font-weight-bold">Info</span>
-                            </VCol>
-                            <VCol cols="12" md="5">
-                              <span class="text-caption font-weight-bold">Data</span>
-                            </VCol>
-                            <VCol cols="12" md="4">
-                              <span class="text-caption font-weight-bold">Trade Profit</span>
-                            </VCol>
-                          </VRow>
-                          <VDivider />
-                          <VRow class="pt-2">
-                            <VCol cols="12" md="3" style="margin-top: auto;margin-bottom: auto;">
-                              <VChip color="success" class="text-white">Buy</VChip><br/>
-                              <span class="text-caption font-weight-medium">Account has insufficient balance for requested action.</span><br/>
-                              <span class="text-caption font-bold">Cover 4 @ -2% X1</span><br/>
-                              <span class="text-caption font-bold">Open : Dec 10 2024, 22:17</span><br/>
-                              <span class="text-caption font-bold">Close: Pending</span><br/>
-                            </VCol>
-                            <VCol cols="12" md="5" style="margin-top: auto;margin-bottom: auto;">
-                              <!-- Price -->
-                              <div class="d-flex justify-space-between align-center mb-2">
-                                <span class="text-caption font-bold">Price</span>
-                                <span class="text-caption font-bold">195.37</span>
-                              </div>
-                              <VDivider />
+                            <VCol cols="12" v-for="(item, index) in tradeItems" :key="index">
+                              <VCard :class="item.type === 'Buy' ? 'buy-card' : 'sell-card pb-1'" class="pa-3">
+                                <VRow>
+                                  <VCol cols="5" class="pt-2 pb-2">
+                                    <div class="align-center gap-x-2" >
+                                      <VChip :color="item.type === 'Buy' ? 'success' : 'error'" text-color="white" label size="small">
+                                        {{ item.type }}
+                                      </VChip>
+                                      <span class="text-caption font-weight-bold pl-2">{{ item.title }}</span>
+                                    </div>
+                                  </VCol>
+                                  <VCol cols="3" class="pt-2 pb-2">
+                                    <div class="text-caption">
+                                      <span class="font-weight-bold">{{ item.qty }}</span> Qty @
+                                      <span class="font-weight-bold">{{ item.rate }}</span>
+                                    </div>
+                                  </VCol>
+                                  <VCol cols="4" class="pt-2 pb-2">
+                                    <div class="text-right text-caption">
+                                      <div><strong>Open:</strong> <span class="text-caption font-weight-bold">{{ item.open }}</span></div>
+                                    </div>
+                                  </VCol>
+                                </VRow>
+                                <VRow class="mt-0">
+                                  <VCol cols="5" class="pt-2 pb-2">
+                                    <div class="align-center gap-x-2" >
+                                      <span class="text-caption pl-13 font-weight-bold">Trade ID : {{ item.tradeId }}</span>
+                                    </div>
+                                  </VCol>
+                                  <VCol cols="3" class="pt-2 pb-2">
+                                    <div class="text-caption">
+                                      <span class="font-weight-bold">Total : {{ item.total }}</span>
+                                      <span class="text-grey text-uppercase">USDT</span>
+                                    </div>
+                                  </VCol>
+                                  <VCol cols="4" class="pt-2 pb-2">
+                                    <div class="text-right text-caption">
+                                      <div><strong>Close:</strong> <span class="text-caption font-weight-bold">{{ item.close }}</span></div>
+                                    </div>
+                                  </VCol>
+                                </VRow>
+                                <!-- Divider for Sell only -->
+                                <VDivider v-if="item.type === 'Sell'" class="my-2" />
 
-                              <!-- Quantity -->
-                              <div class="d-flex justify-space-between align-center my-2">
-                                <span class="text-caption font-bold">Quantity</span>
-                                <span class="text-caption font-bold">1.301352</span>
-                              </div>
-                              <VDivider />
-
-                              <!-- Amount -->
-                              <div class="d-flex justify-space-between align-center my-2">
-                                <span class="text-caption font-bold">Amount</span>
-                                <span class="text-caption font-bold">254.25</span>
-                              </div>
-                              <VDivider />
-
-                              <!-- Trade ID -->
-                              <div class="d-flex justify-space-between align-center mt-2">
-                                <span class="text-caption font-bold">Trade ID</span>
-                                <span class="text-caption font-bold">70490034</span>
-                              </div>
-                            </VCol>
-
-                            <VCol cols="12" md="4" style="margin-top: auto;margin-bottom: auto;">
-                            </VCol>
-                          </VRow>
-                          <VDivider />
-                          <VRow class="pt-2">
-                            <VCol cols="12" md="3" style="margin-top: auto;margin-bottom: auto;">
-                              <VChip color="success" class="text-white">Buy</VChip><br/>
-                              <span class="text-caption font-weight-bold">Cover 4 @ -2% X1</span><br/>
-                              <span class="text-caption font-weight-bold">Open : Dec 10 2024, 22:17</span><br/>
-                              <span class="text-caption font-weight-bold">Close: Pending</span><br/>
-                            </VCol>
-                            <VCol cols="12" md="5" style="margin-top: auto;margin-bottom: auto;">
-                              <!-- Price -->
-                              <div class="d-flex justify-space-between align-center mb-2">
-                                <span class="text-caption font-weight-bold">Price</span>
-                                <span class="text-caption font-weight-bold">195.37</span>
-                              </div>
-                              <VDivider />
-
-                              <!-- Quantity -->
-                              <div class="d-flex justify-space-between align-center my-2">
-                                <span class="text-caption font-weight-bold">Quantity</span>
-                                <span class="text-caption font-weight-bold">1.301352</span>
-                              </div>
-                              <VDivider />
-
-                              <!-- Amount -->
-                              <div class="d-flex justify-space-between align-center my-2">
-                                <span class="text-caption font-weight-bold">Amount</span>
-                                <span class="text-caption font-weight-bold">254.25</span>
-                              </div>
-                              <VDivider />
-
-                              <!-- Trade ID -->
-                              <div class="d-flex justify-space-between align-center mt-2">
-                                <span class="text-caption font-weight-bold">Trade ID</span>
-                                <span class="text-caption font-weight-bold">70490034</span>
-                              </div>
-                            </VCol>
-
-                            <VCol cols="12" md="4" style="margin-top: auto;margin-bottom: auto;">
+                                <!-- Profit Row for Sell -->
+                                <div
+                                  v-if="item.type === 'Sell'"
+                                  class="d-flex justify-space-between flex-wrap text-caption"
+                                >
+                                  <span class="text-caption"><strong>Gross Profit :</strong> <span class="font-weight-bold"> {{ item.gross }}</span></span>
+                                  <span class="text-caption"><strong>Fees :</strong><span class="font-weight-bold"> {{ item.fees }}</span></span>
+                                  <span class="text-caption"><strong>Profit :</strong><span class="font-weight-bold"> {{ item.profit }}</span></span>
+                                  <span class="text-caption"><strong>Profit to Tank :</strong><span class="font-weight-bold"> {{ item.toTank }}</span></span>
+                                  <span class="text-caption font-weight-bold">
+                                  <strong>Net Profit :</strong>
+                                  <VChip color="success" size="small" class="font-bold ml-1">
+                                    {{ item.net }} [{{ item.percent }}]
+                                  </VChip>
+                                </span>
+                                </div>
+                              </VCard>
                             </VCol>
                           </VRow>
-                          <VDivider />
-                          <VRow class="pt-2">
-                            <VCol cols="12" md="3" style="margin-top: auto;margin-bottom: auto;">
-                              <VChip color="success" class="text-white">Buy</VChip><br/>
-                              <span class="text-caption font-weight-bold">Cover 4 @ -2% X1</span><br/>
-                              <span class="text-caption font-weight-bold">Open : Dec 10 2024, 22:17</span><br/>
-                              <span class="text-caption font-weight-bold">Close: Pending</span><br/>
-                            </VCol>
-                            <VCol cols="12" md="5" style="margin-top: auto;margin-bottom: auto;">
-                              <!-- Price -->
-                              <div class="d-flex justify-space-between align-center mb-2">
-                                <span class="text-caption font-weight-bold">Price</span>
-                                <span class="text-caption font-weight-bold">195.37</span>
-                              </div>
-                              <VDivider />
-
-                              <!-- Quantity -->
-                              <div class="d-flex justify-space-between align-center my-2">
-                                <span class="text-caption font-weight-bold">Quantity</span>
-                                <span class="text-caption font-weight-bold">1.301352</span>
-                              </div>
-                              <VDivider />
-
-                              <!-- Amount -->
-                              <div class="d-flex justify-space-between align-center my-2">
-                                <span class="text-caption font-weight-bold">Amount</span>
-                                <span class="text-caption font-weight-bold">254.25</span>
-                              </div>
-                              <VDivider />
-
-                              <!-- Trade ID -->
-                              <div class="d-flex justify-space-between align-center mt-2">
-                                <span class="text-caption font-weight-bold">Trade ID</span>
-                                <span class="text-caption font-weight-bold">70490034</span>
-                              </div>
-                            </VCol>
-
-                            <VCol cols="12" md="4" style="margin-top: auto;margin-bottom: auto;">
-                            </VCol>
-                          </VRow>
-                          <VDivider />
-                          <VRow class="pt-2">
-                            <VCol cols="12" md="3" style="margin-top: auto;margin-bottom: auto;">
-                              <VChip color="error" class="text-white">Sell</VChip><br/>
-                              <span class="text-caption font-weight-bold">Sell Cover 4 @ 2.48% TP</span><br/>
-                              <span class="text-caption font-weight-bold">Close : Dec 10 2024, 22:17</span><br/>
-                            </VCol>
-                            <VCol cols="12" md="5" style="margin-top: auto;margin-bottom: auto;">
-                              <!-- Price -->
-                              <div class="d-flex justify-space-between align-center mb-2">
-                                <span class="text-caption font-weight-bold">Price</span>
-                                <span class="text-caption font-weight-bold">195.37</span>
-                              </div>
-                              <VDivider />
-
-                              <!-- Quantity -->
-                              <div class="d-flex justify-space-between align-center my-2">
-                                <span class="text-caption font-weight-bold">Quantity</span>
-                                <span class="text-caption font-weight-bold">1.301352</span>
-                              </div>
-                              <VDivider />
-
-                              <!-- Amount -->
-                              <div class="d-flex justify-space-between align-center my-2">
-                                <span class="text-caption font-weight-bold">Amount</span>
-                                <span class="text-caption font-weight-bold">254.25</span>
-                              </div>
-                              <VDivider />
-
-                              <!-- Trade ID -->
-                              <div class="d-flex justify-space-between align-center mt-2">
-                                <span class="text-caption font-weight-bold">Trade ID</span>
-                                <span class="text-caption font-weight-bold">70490034</span>
-                              </div>
-                            </VCol>
-
-                            <VCol cols="12" md="4" style="margin-top: auto;margin-bottom: auto;">
-                              <div class="d-flex justify-space-between align-center mb-2">
-                                <span class="text-caption font-weight-bold">Gross Profit</span>
-                                <span class="text-caption font-weight-bold">0.922222</span>
-                              </div>
-                              <VDivider />
-                              <div class="d-flex justify-space-between align-center mb-2">
-                                <span class="text-caption font-weight-bold">Fees</span>
-                                <span class="text-caption font-weight-bold">0.2111222</span>
-                              </div>
-                              <VDivider />
-                              <div class="d-flex justify-space-between align-center mb-2">
-                                <span class="text-caption font-weight-bold">Profit</span>
-                                <span class="text-caption font-weight-bold">0.7111</span>
-                              </div>
-                              <VDivider />
-                              <div class="d-flex justify-space-between align-center mb-2">
-                                <span class="text-caption font-weight-bold">Profit for avg price</span>
-                                <span class="text-caption font-weight-bold">0.07111</span>
-                              </div>
-                              <VDivider />
-                              <div class="d-flex justify-space-between align-center mb-2">
-                                <span class="text-caption font-weight-bold">Net Profit</span>
-                                <span class="text-caption font-weight-bold">0.639084(1.41%)</span>
-                              </div>
-                            </VCol>
-                          </VRow>
-                          <VDivider />
                         </div>
                       </VCardText>
 
