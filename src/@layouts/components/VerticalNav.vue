@@ -128,7 +128,7 @@ const hideTitleAndIcon = configStore.isVerticalNavMini(isHovered)
       </slot>
     </div>
     <slot name="before-nav-items">
-      <div class="vertical-nav-items-shadow" />
+<!--      <div class="vertical-nav-items-shadow" />-->
     </slot>
     <slot
       name="nav-items"
@@ -147,11 +147,11 @@ const hideTitleAndIcon = configStore.isVerticalNavMini(isHovered)
           :key="index"
           :item="item"
         />
-        <li class="pa-4">
-          <VCard>
-            <VCardItem>
-              <VCardTitle>Trial Pro Plan</VCardTitle>
-              <VCardSubtitle>Expires in 3 days</VCardSubtitle>
+        <li class="pa-3">
+          <VCard style="background-color: #f1f5f9">
+            <VCardItem class="pl-3">
+              <VCardTitle class="font-weight-bold">Trial Pro Plan</VCardTitle>
+              <VCardSubtitle class="pb-2 font-weight-medium" style="font-size: 1rem">Expires in 3 days</VCardSubtitle>
               <!--        <VProgressLinear value="35" max="100" class="progress-bar-primary" variant="primary" />-->
               <VProgressLinear
                 :model-value="80"
@@ -159,7 +159,7 @@ const hideTitleAndIcon = configStore.isVerticalNavMini(isHovered)
                 height="6"
                 rounded
               />
-              <div class="d-flex justify-space-between">
+              <div class="d-flex justify-space-between pt-4 font-weight-medium" style="font-size: 1rem">
                 <a href="#">Dismiss</a>
                 <a href="#">Upgrade plan</a>
               </div>
