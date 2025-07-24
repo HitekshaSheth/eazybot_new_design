@@ -20,9 +20,9 @@
             </div>
           </VCol>
           <VCol cols="auto" style="margin-top: auto;">
-            <VBtn class="mr-2" color="primary" prepend-icon="tabler-upload">Deposit</VBtn>
-            <VBtn class="mr-2" color="primary" variant="outlined" prepend-icon="tabler-download">Withdraw</VBtn>
-            <VBtn color="primary" variant="outlined" prepend-icon="tabler-transform-point">Internal Transfer</VBtn>
+            <VBtn class="mr-2" color="primary" prepend-icon="tabler-upload" :to="{ name: 'deposit'}">Deposit</VBtn>
+            <VBtn class="mr-2" color="primary" variant="outlined" prepend-icon="tabler-download" :to="{ name: 'withdraw'}">Withdraw</VBtn>
+            <VBtn color="primary" variant="outlined" prepend-icon="tabler-transform-point" :to="{ name: 'internal-transfer'}">Internal Transfer</VBtn>
           </VCol>
         </VRow>
       </VCardText>
@@ -285,6 +285,7 @@
 <script setup>
 import { ref, computed } from 'vue'
 import Frame from '@/assets/images/Frame.svg?url'
+import AppPageHeader from '@/components/AppPageHeader.vue'
 import { useDisplay } from 'vuetify'
 
 const { mdAndUp } = useDisplay()

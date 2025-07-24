@@ -27,8 +27,10 @@ declare module 'vue-router/auto-routes' {
     'account-settings-security': RouteRecordInfo<'account-settings-security', '/account-settings/security', Record<never, never>, Record<never, never>>,
     'bots': RouteRecordInfo<'bots', '/bots', Record<never, never>, Record<never, never>>,
     'create-bot': RouteRecordInfo<'create-bot', '/create-bot', Record<never, never>, Record<never, never>>,
+    'deposit': RouteRecordInfo<'deposit', '/deposit', Record<never, never>, Record<never, never>>,
     'edit-bot': RouteRecordInfo<'edit-bot', '/edit-bot', Record<never, never>, Record<never, never>>,
     'forgot-password': RouteRecordInfo<'forgot-password', '/forgot-password', Record<never, never>, Record<never, never>>,
+    'internal-transfer': RouteRecordInfo<'internal-transfer', '/internal-transfer', Record<never, never>, Record<never, never>>,
     'login': RouteRecordInfo<'login', '/login', Record<never, never>, Record<never, never>>,
     'my-exchanges': RouteRecordInfo<'my-exchanges', '/my-exchanges', Record<never, never>, Record<never, never>>,
     'my-loyalty-points': RouteRecordInfo<'my-loyalty-points', '/my-loyalty-points', Record<never, never>, Record<never, never>>,
@@ -43,5 +45,6 @@ declare module 'vue-router/auto-routes' {
     'onboarding-welcome': RouteRecordInfo<'onboarding-welcome', '/onboarding/welcome', Record<never, never>, Record<never, never>>,
     'second-page': RouteRecordInfo<'second-page', '/second-page', Record<never, never>, Record<never, never>>,
     'view-bot': RouteRecordInfo<'view-bot', '/view-bot', Record<never, never>, Record<never, never>>,
+    'withdraw': RouteRecordInfo<'withdraw', '/withdraw', Record<never, never>, Record<never, never>>,
   }
 }
