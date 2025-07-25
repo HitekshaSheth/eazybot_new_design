@@ -1,25 +1,53 @@
-<template>
-    <VLayout class="onboarding-layout">
-        <!-- Sidebar -->
+<script setup>
+    import { useConfigStore } from '@core/stores/config'
+    import { AppContentLayoutNav } from '@layouts/enums'
+    import { switchToVerticalNavOnLtOverlayNavBreakpoint } from '@layouts/utils'
+    import customHeader  from '@/components/onboarding/Header.vue'
 
-        <!-- Main content -->
-        <VMain class="bg-grey-lighten-5">
-            <!-- Header -->
-            <CustomHeader />
+    const DefaultLayoutWithVerticalNav = defineAsyncComponent(() => import('./components/DefaultLayoutWithVerticalNav.vue'))
+    const configStore = useConfigStore()
 
-            <!-- Page content -->
-            <RouterView />
-        </VMain>
-    </VLayout>
-</template>
+    // ℹ️ This will switch to vertical nav when define breakpoint is reached when in horizontal nav layout
 
-<script setup lang="ts">
-    import CustomSidebar from '@/components/onboarding/Sidebar.vue'
-    import CustomHeader from '@/components/onboarding/Header.vue'
+    // Remove below composable usage if you are not using horizontal nav layout in your app
+    switchToVerticalNavOnLtOverlayNavBreakpoint()
+
+    const { layoutAttrs, injectSkinClasses } = useSkins()
+
+    injectSkinClasses()
+
+    // SECTION: Loading Indicator
+    const isFallbackStateActive = ref(false)
+    const refLoadingIndicator = ref(null)
+
+    watch([
+        isFallbackStateActive,
+        refLoadingIndicator,
+    ], () => {
+        if (isFallbackStateActive.value && refLoadingIndicator.value)
+            refLoadingIndicator.value.fallbackHandle()
+        if (!isFallbackStateActive.value && refLoadingIndicator.value)
+            refLoadingIndicator.value.resolveHandle()
+    }, { immediate: true })
+    // !SECTION
 </script>
 
-<style scoped>
-    .onboarding-layout {
-        min-height: 100vh;
-    }
+<template>
+    <customHeader></customHeader>
+    <AppLoadingIndicator ref="refLoadingIndicator" />
+
+    <RouterView v-slot="{ Component }">
+        <Suspense
+                :timeout="0"
+                @fallback="isFallbackStateActive = true"
+                @resolve="isFallbackStateActive = false"
+        >
+            <Component :is="Component" />
+        </Suspense>
+    </RouterView>
+</template>
+
+<style lang="scss">
+    // As we are using `layouts` plugin we need its styles to be imported
+    @use "@layouts/styles/default-layout";
 </style>

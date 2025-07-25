@@ -313,7 +313,13 @@
         width: 50%;
         padding: 0 !important;
         margin: 0 !important;
-        line-height: 1;
+        /*line-height: 1;*/
+    }
+    :deep(label.v-label.custom-input.custom-radio.rounded.cursor-pointer) {
+        padding: 1rem 1rem 0.7rem 1rem !important;
+    }
+    :deep(.v-alert__prepend){
+        display: none !important;
     }
     .divider-vertical {
         height: 24px;

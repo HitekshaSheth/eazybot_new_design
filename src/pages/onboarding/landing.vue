@@ -176,7 +176,7 @@
 
                                 <VBtn
                                         block
-                                        type="submit" :to="{ name: 'onboarding-welcome' }"
+                                        type="submit" :to="{ name: 'onboarding-verification' }"
                                 >
                                     Create account
                                 </VBtn>
@@ -192,7 +192,6 @@
                                             </span>
                                             <a
                                               class="text-primary ms-1 d-inline-block text-body-1"
-                                              href="javascript:void(0)"
                                             >
                                               Sign In
                                             </a>
