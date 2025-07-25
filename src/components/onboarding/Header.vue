@@ -1,7 +1,7 @@
 <template>
     <VAppBar app flat color="white" elevation="1">
-        <VToolbar flat>
-            <div v-html="logo" style="height: 40px;" class="me-4"  md="2" />
+        <VToolbar flat >
+            <div v-html="logo" style="height: 50px;" class="mb-lg-10 pt-lg-5 pl-lg-5"  md="2" />
 
 
         </VToolbar>

@@ -5,6 +5,7 @@
     import Step4 from '@/pages/onboarding/Step4.vue'
     import Step5 from '@/pages/onboarding/Step5.vue'
     import welcomeVideo from '@images/auth/welcome-video.png'
+
     import { ref } from 'vue'
 
     // Stepper data
@@ -60,9 +61,9 @@
 </script>
 
 <template>
-    <div style="padding-top: 20px;">
+    <div style="padding-top: 20px;" class="pt-20 mt-lg-10   ">
         <VRow style="height: auto">
-            <VCol cols="12" md="2" :class="$vuetify.display.smAndDown ? 'border-b' : 'border-e' ">
+            <VCol cols="12" md="3" :class=" $vuetify.display.smAndDown ? 'border-b mainsidebar' : 'border-e mainsidebar' ">
                 <VCardText>
                     <AppStepper
                             v-model:current-step="currentStep"
@@ -72,9 +73,9 @@
                 </VCardText>
             </VCol>
 
-            <VCol cols="12" md="10">
+            <VCol cols="12" md="9">
                 <VCardText>
-                    <VForm ref="stepperForm" class="ml-lg-15 mr-lg-15">
+                    <VForm ref="stepperForm" >
                         <VWindow v-model="currentStep" class="disable-tab-transition">
                             <VWindowItem>
                                 <VRow class="mg-lg-8 col-md-10">
@@ -172,3 +173,19 @@
         </VRow>
     </div>
 </template>
+<style scoped>
+    .mainsidebar{
+        max-width: 20%;
+    }
+    .v-col-md-9 {
+        flex: 0 0 80%;
+        max-width: 80%;
+    }
+    .v-container{
+        max-width: 100%;
+    }
+    .border-e {
+        height: 950px;
+    }
+
+    </style>

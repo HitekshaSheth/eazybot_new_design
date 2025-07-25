@@ -98,7 +98,7 @@
 
 
 
-                    <VBtn block @click="handleSubmitOtp" class="margin-top-3">
+                    <VBtn block @click="handleSubmitOtp" class="margin-top-3" :to="{ name: 'onboarding-welcome' }">
                         Verify
                     </VBtn>
                     <div class="text-center text-body-1 mb-6 margin-top-3">

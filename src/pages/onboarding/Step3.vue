@@ -1,459 +1,531 @@
 <script setup>
+    import paperPlane from '@images/visa.png'
+    import plane from '@images/visa.png'
+    import pricingPlanArrow from '@images/visa.png'
+    import shuttleRocket from '@images/visa.png'
+    import DepositDialog from '@/layouts/components/DepositDialog.vue'
 
-    import { useConfigStore } from '@core/stores/config'
+    const annualMonthlyPlanPriceToggler = ref(true)
+    const drawer = ref(false)
+    const submit = () => {
+        // your submit logic
+        drawer.value = false
+    }
+    const pricingPlans = [
+        {
+            title: 'Starter',
+            image: paperPlane,
+            monthlyPrice: 100,
+            yearlyPrice: 168,
+            features: [
+                'Trade 5 Bots**',
+                '1 Connections',
+                'Group Support',
+                'Referral Program',
+                '-'
+            ],
+            supportType: 'Starter',
+            supportMedium: 'Only Email',
+            respondTime: 'AVG. Time: 24h',
+            current: false,
+        },
+        {
+            title: 'Advanced',
+            image: plane,
+            monthlyPrice: 29,
+            yearlyPrice: 264,
+            features: [
+                'Trade 5 Bots**',
+                '1 Connections',
+                'Group Support',
+                'Referral Program',
+                '-'
+            ],
+            supportType: 'Standard',
+            supportMedium: 'Email & Chat',
+            respondTime: 'AVG. Time: 6h',
+            current: true,
+        },
+        {
+            title: 'Pro',
+            image: shuttleRocket,
+            monthlyPrice: 49,
+            yearlyPrice: 444,
+            features: [
+                'Trade 5 Bots**',
+                '1 Connections',
+                'Group Support',
+                'Referral Program',
+                '-'
+            ],
+            supportType: 'Exclusive',
+            supportMedium: 'Email, Chat & Google Meet',
+            respondTime: 'Live Support',
+            current: false,
+        },
+        {
+            title: 'VIP',
+            image: shuttleRocket,
+            monthlyPrice: 49,
+            yearlyPrice: 444,
+            features: [
+                'Trade 5 Bots**',
+                '1 Connections',
+                'Group Support',
+                'Referral Program',
+                '-'
 
+            ],
+            supportType: 'Exclusive',
+            supportMedium: 'Email, Chat & Google Meet',
+            respondTime: 'Live Support',
+            current: false,
+        },
+        {
+            title: 'VIP+',
+            image: paperPlane,
+            monthlyPrice: 19,
+            yearlyPrice: 168,
+            features: [
+                'Trade 5 Bots**',
+                '1 Connections',
+                'Group Support',
+                'Referral  Program',
+                'Maximum ',
 
-    const store = useConfigStore()
-
-
-    const features = [
-        {
-            feature: 'Software Service Fee (SSF)',
-            starter: true,
-            enterprise: true,
-            pro:true,
-            vip:true,
-            advanced: true,
-            free:true,
-            addOnAvailable: {
-                starter: false,
-                pro: false,
-                enterprise: '(Ex: 100 USDT/USDC closing trade | 0.4 USDT/USDC SSF)',
-                vip:true,
-                advanced: true,
-                free:true,
-            },
-        },
-        {
-            feature: 'Trade Bots**',
-            starter: false,
-            pro: false,
-            enterprise: true,
-            vip:true,
-            advanced: true,
-            free:true,
-            addOnAvailable: {
-                starter: false,
-                pro: false,
-                enterprise: false,
-                vip:true,
-                advanced: true,
-                free:true,
-            },
-        },
-        {
-            feature: 'Connection',
-            starter: false,
-            pro: true,
-            enterprise: true,
-            vip:true,
-            advanced: true,
-            free:true,
-            addOnAvailable: {
-                starter: false,
-                pro: false,
-                enterprise: false,
-                vip:true,
-                advanced: true,
-                free:true,
-            },
-        },
-        {
-            feature: 'Group Support',
-            starter: false,
-            pro: false,
-            enterprise: true,
-            vip:true,
-            advanced: true,
-            free:true,
-            addOnAvailable: {
-                starter: false,
-                pro: true,
-                enterprise: false,
-                vip:true,
-                advanced: true,
-                free:true,
-            },
-        },
-        {
-            feature: 'Referral Rewards Program',
-            starter: false,
-            pro: true,
-            enterprise: true,
-            vip:true,
-            advanced: true,
-            free:true,
-            addOnAvailable: {
-                starter: false,
-                pro: false,
-                enterprise: false,
-                vip:true,
-                advanced: true,
-                free:true,
-            },
-        },
-        {
-            feature: 'Membership App',
-            starter: false,
-            pro: false,
-            enterprise: true,
-            vip:true,
-            advanced: true,
-            free:true,
-            addOnAvailable: {
-                starter: false,
-                pro: true,
-                enterprise: false,
-                vip:true,
-                advanced: true,
-                free:true,
-            },
-        },
-        {
-            feature: 'Maximum Diversification',
-            starter: false,
-            pro: false,
-            enterprise: true,
-            vip:true,
-            advanced: true,
-            free:true,
-            addOnAvailable: {
-                starter: false,
-                pro: false,
-                enterprise: false,
-                vip:true,
-                advanced: true,
-                free:true,
-            },
-        },
-        {
-            feature: 'Savings',
-            starter: false,
-            pro: false,
-            enterprise: true,
-            vip:true,
-            advanced: true,
-            free:true,
-            addOnAvailable: {
-                starter: false,
-                pro: false,
-                enterprise: false,
-                vip:true,
-                advanced: true,
-                free:true,
-            },
+            ],
+            supportType: 'Basic',
+            supportMedium: 'Only Email',
+            respondTime: 'AVG. Time: 24h',
+            current: false,
         },
     ]
+    const presets = [100, 200, 500, 1000]
+    const selectedAmount = ref(null)
+    const agreed = ref(false)
+    const showDepositDialog = ref(false)
+
+    const displayAmount = computed(() => selectedAmount.value || 0)
+    const fee = computed(() => (displayAmount.value * 0.01).toFixed(2))
+    const recAdditional = computed(() => selectedAmount.value ? 50 : 0)
+    const total = computed(() => (displayAmount.value + +fee.value + recAdditional.value).toFixed(2))
+
+    function selectPreset(amt) {
+        selectedAmount.value = amt
+    }
+    function onSubmit() {
+        showDepositDialog.value = true
+
+        console.log('Submitting deposit:', {
+            amount: displayAmount.value,
+            fee: fee.value,
+            additional: recAdditional.value,
+            total: total.value
+        })
+        // API call or navigation here...
+    }
+
+    function openTerms() {
+        window.open('/terms', '_blank')
+    }
 </script>
 
 <template>
-    <VRow>
-        <Vcol class="v-col v-col-12">
-            <VContainer style="max-width: 100%">
-                <VCardText class="text-left " style="padding: 0px;">
-                    <!-- 👉 Features & Tables -->
-                    <VTable class="text-no-wrap border rounded pricing-table">
-                        <!-- 👉 Table head -->
-                        <thead>
-                        <tr>
-                            <th
-                                    scope="col"
-                                    class="py-4"
-                            >
-                                <div>
-                                    Features
-                                </div>
-                                <div class="text-body-2">
-                                    Native Font Features
-                                </div>
-                            </th>
-                            <th
-                                    v-for="{ plan, price } in [
-                    { plan: 'Starter', price: '$100/Annually' },
-                    { plan: 'Advanced', price: '$250/Annually' },
-                    { plan: 'Pro', price: ' $550/Annually' },
-                     { plan: 'VIP', price: '$995/Annually' },
-                    { plan: 'VIP+', price: '$1450/Annually' },
-                    { plan: 'Free', price: 'UNLIMITED ACCESS' }
-                  ]"
-                                    :key="plan"
-                                    scope="col"
-                                    class="text-center py-4"
-                            >
-                                <div class="position-relative">
-                                    {{ plan }}
-                                    <VAvatar
-                                            v-if="plan === 'Pro'"
-                                            size="20"
-                                            class="ms-2 position-absolute"
-                                            variant="elevated"
-                                            color="primary"
-                                            style="inset-block-end: 7px;"
+    <VContainer>
+        <div class="">
+            <VRow>
+                <VCol cols="12">
+                    <VCard>
+
+                        <VCardText>
+                            <VRow>
+                                <VCol cols="12"
+                                         md="8"
+                                >
+                                    <div>
+                                        <div class="mb-6">
+                                            <h2 class="text-body-1 text-primary text-high-emphasis font-weight-bold mb-1">
+                                                45 Days - FREE TRIAL
+                                            </h2>
+                                        </div>
+
+
+                                        <div>
+                                            <h3 class="text-body-1 text-high-emphasis font-weight-medium mb-1">
+                                                <span class="me-2">Platform Access</span>
+                                                <!--<VChip-->
+                                                        <!--color="primary"-->
+                                                        <!--size="small"-->
+                                                        <!--label-->
+                                                <!--&gt;-->
+                                                    <!--Popular-->
+                                                <!--</VChip>-->
+                                            </h3>
+
+                                            <div class="text-primary text-sm font-weight-bold text-base mb-0">
+                                                SOFTWARE SERVICE FEE (SSF)
+                                                <p class="text-disabled mb-2"> ‌0.4% of closing trade only
+                                        Ex: $100 Closing Trade | $0.40 SSF</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </VCol>
+                                <VCol  cols="12"  md="4"
+                                      >
+                                    <VList class="card-list">
+                                        <VListItem
+                                        >
+                                            <template #prepend>
+                                                <VAvatar
+                                                         size="16"
+                                                         color="primary"
+                                                         class="me-3"
+                                                >
+                                                    <VIcon
+                                                            icon="tabler-check"
+                                                            size="12"
+                                                            :color="primary"
+                                                    />
+                                                </VAvatar>
+                                                <h5 class="text-h5">                                                    2 Trade Bots
+                                                </h5>
+                                            </template>
+                                        </VListItem>
+                                        <VListItem
+                                        >
+                                            <template #prepend>
+                                                <VAvatar
+                                                        size="16"
+                                                        color="primary"
+                                                        class="me-3"
+                                                >
+                                                    <VIcon
+                                                            icon="tabler-check"
+                                                            size="12"
+                                                            :color="primary"
+                                                    />
+                                                </VAvatar>
+                                                <h5 class="text-h5">
+                                                    2 Trade Bots
+                                                </h5>
+                                            </template>
+                                        </VListItem>
+                                        <VListItem
+                                        >
+                                            <template #prepend>
+                                                <VAvatar
+                                                        size="16"
+                                                        color="primary"
+                                                        class="me-3"
+                                                >
+                                                    <VIcon
+                                                            icon="tabler-check"
+                                                            size="12"
+                                                            :color="primary"
+                                                    />
+                                                </VAvatar>
+                                                <h5 class="text-h5">                                                    2 Trade Bots
+                                                </h5>
+                                            </template>
+                                        </VListItem>
+                                    </VList>
+                                </VCol>
+                                <VCol cols="12">
+                                    <div class="d-flex flex-wrap gap-4">
+                                        <VBtn >
+                                            Get Started
+                                        </VBtn>
+                                    </div>
+                                    </VCol>
+
+                            </VRow>
+
+                            <!-- 👉 plan and pricing dialog -->
+                            <PricingPlanDialog v-model:is-dialog-visible="isPricingPlanDialogVisible" />
+                        </VCardText>
+                    </VCard>
+                </VCol>
+
+
+            </VRow>
+            <!-- 👉 Headers  -->
+            <!--<div class="headers d-flex justify-center flex-column align-center flex-wrap">-->
+            <!--<VChip-->
+            <!--label-->
+            <!--color="primary"-->
+            <!--class="mb-4"-->
+            <!--size="small"-->
+            <!--&gt;-->
+            <!--Pricing Plans-->
+            <!--</VChip>-->
+
+            <!--</div>-->
+            <!-- 👉 Annual and monthly price toggler -->
+            <VRow>
+                <VCol
+                        v-for="(plan, index) in pricingPlans"
+                        :key="index"
+                >
+                    <VCard :style="plan.title == 'Pro' ? 'border:2px solid rgb(var(--v-theme-primary))' : ''">
+                        <VCardText class="pa-6 pt-5">
+                            <VImg
+                                    :src="plan.image"
+                                    width="55"
+                                    height="55"
+                                    class="mx-auto mb-4"
+                            />
+                            <div class="text-center mb-lg-5">
+                                <h4 class="text-h4 text-center">
+                                    {{ plan.title }}
+                                    <VChip v-if="plan.title == 'Pro'"
+                                    label
+                                    color="primary"
+                                    class="mb-4"
+                                    size="small"
                                     >
-                                        <VIcon
-                                                icon="tabler-star"
-                                                size="14"
-                                                color="white"
-                                        />
-                                    </VAvatar>
+                                    Most Popular
+                                    </VChip>
+
+                                </h4>
+                                <span class="text-center text-disabled text-sm text-primary-300 ">Platform Access</span>
+
+                            </div>
+
+
+
+                            <div class="d-flex justify-center mb-lg-15 position-relative">
+                                <div class="d-flex align-end">
+                                    <div class="pricing-title text-primary me-1">
+                                        ${{plan.monthlyPrice}}
+                                    </div>
+                                    <span class="text-disabled mb-2">/mo</span>
                                 </div>
-                                <div class="text-body-2">
-                                    {{ price }}
+
+                                <!-- 👉 Annual Price -->
+                                <span
+                                        v-show="annualMonthlyPlanPriceToggler"
+                                        class="annual-price-text position-absolute text-sm text-disabled"
+                                >
+                    Billed Annually
+                  </span>
+
+                            </div>
+                            <div class="d-flex justify-center mb-lg-5 position-relative">
+                                <div class="d-flex align-end">
+                                    <div class="text-primary text-sm font-weight-bold">
+                                        SOFTWARE SERVICE FEE (SSF)
+                                        <span class="text-disabled mb-2"> ‌0.4% of closing trade only
+                                        Ex: $100 Closing Trade | $0.40 SSF</span>
+                                    </div>
                                 </div>
-                            </th>
-                        </tr>
-                        </thead>
-                        <!-- 👉 Table Body -->
-                        <tbody>
-                        <tr
-                                v-for="feature in features"
-                                :key="feature.feature"
-                        >
-                            <td class="text-start text-body-1 text-high-emphasis">
-                                {{ feature.feature }}
-                            </td>
-                            <td class="text-center">
-                                <VAvatar
-                                        variant="tonal"
-                                        size="20"
-                                        :color="feature.starter ? 'primary' : 'secondary'"
-                                >
-                                    <VIcon
-                                            v-if="!feature.addOnAvailable.starter"
-                                            :color="feature.starter ? 'primary' : 'secondary'"
-                                            size="14"
-                                            :icon="feature.starter ? 'tabler-check' : 'tabler-x'"
-                                    />
-                                </VAvatar>
-                                <VChip
-                                        v-if="feature.addOnAvailable.starter"
-                                        color="primary"
-                                        size="small"
-                                        label
-                                >
-                                    Add-On Available
-                                </VChip>
-                            </td>
-                            <td class="text-center">
-                                <VChip
-                                        v-if="feature.addOnAvailable.pro"
-                                        color="primary"
-                                        size="small"
-                                        label
-                                >
-                                    Add-On Available
-                                </VChip>
-                                <VAvatar
-                                        v-else
-                                        size="20"
-                                        variant="tonal"
-                                        :color="feature.pro ? 'primary' : 'secondary'"
-                                >
-                                    <VIcon
-                                            :color="feature.pro ? 'primary' : 'secondary'"
-                                            size="14"
-                                            :icon="feature.pro ? 'tabler-check' : 'tabler-x'"
-                                    />
-                                </VAvatar>
-                            </td>
-                            <td class="text-center">
-                                <VChip
-                                        v-if="feature.addOnAvailable.enterprise"
-                                        label
-                                        color="primary"
-                                        size="small"
-                                >
-                                    Add-On Available
-                                </VChip>
-                                <VAvatar
-                                        v-else
-                                        size="20"
-                                        variant="tonal"
-                                        :color="feature.enterprise ? 'primary' : 'disabled'"
-                                >
-                                    <VIcon
-                                            :color="feature.enterprise ? 'primary' : 'disabled'"
-                                            size="14"
-                                            :icon="feature.enterprise ? 'tabler-check' : 'tabler-x'"
-                                    />
-                                </VAvatar>
-                            </td>
-                            <td class="text-center">
-                                <VChip
-                                        v-if="feature.addOnAvailable.enterprise"
-                                        label
-                                        color="primary"
-                                        size="small"
-                                >
-                                    Add-On Available
-                                </VChip>
-                                <VAvatar
-                                        v-else
-                                        size="20"
-                                        variant="tonal"
-                                        :color="feature.enterprise ? 'primary' : 'disabled'"
-                                >
-                                    <VIcon
-                                            :color="feature.enterprise ? 'primary' : 'disabled'"
-                                            size="14"
-                                            :icon="feature.enterprise ? 'tabler-check' : 'tabler-x'"
-                                    />
-                                </VAvatar>
-                            </td>
-                            <td class="text-center">
-                                <VChip
-                                        v-if="feature.addOnAvailable.enterprise"
-                                        label
-                                        color="primary"
-                                        size="small"
-                                >
-                                    Add-On Available
-                                </VChip>
-                                <VAvatar
-                                        v-else
-                                        size="20"
-                                        variant="tonal"
-                                        :color="feature.enterprise ? 'primary' : 'disabled'"
-                                >
-                                    <VIcon
-                                            :color="feature.enterprise ? 'primary' : 'disabled'"
-                                            size="14"
-                                            :icon="feature.enterprise ? 'tabler-check' : 'tabler-x'"
-                                    />
-                                </VAvatar>
-                            </td>
-                            <td class="text-center">
-                                <VChip
-                                        v-if="feature.addOnAvailable.enterprise"
-                                        label
-                                        color="primary"
-                                        size="small"
-                                >
-                                    Add-On Available
-                                </VChip>
-                                <VAvatar
-                                        v-else
-                                        size="20"
-                                        variant="tonal"
-                                        :color="feature.enterprise ? 'primary' : 'disabled'"
-                                >
-                                    <VIcon
-                                            :color="feature.enterprise ? 'primary' : 'disabled'"
-                                            size="14"
-                                            :icon="feature.enterprise ? 'tabler-check' : 'tabler-x'"
-                                    />
-                                </VAvatar>
-                            </td>
-                        </tr>
-                        </tbody>
-                        <!-- 👉 Table footer -->
-                        <tfoot>
-                        <tr>
-                            <td class="py-2" />
-                            <td class="text-center py-2">
-                                <VBtn
-                                        variant="tonal"
 
+                            </div>
+                            <v-divider class="flex-grow-1 mb-lg-15"></v-divider>
+                            <VList class="card-list">
+                                <VListItem
+                                        v-for="(item, i) in plan.features"
+                                        :key="i"
                                 >
-                                    Choose Plan
-                                </VBtn>
-                            </td>
-                            <td class="text-center py-2">
-                                <VBtn >
-                                    Choose Plan
-                                </VBtn>
-                            </td>
-                            <td class="text-center py-2">
-                                <VBtn
-                                        variant="tonal"
+                                    <template #prepend>
+                                        <VAvatar v-if="item != '-'"
+                                                size="16"
+                                                :variant="!plan.current ? 'tonal' : 'elevated'"
+                                                color="primary"
+                                                class="me-3"
+                                        >
+                                            <VIcon
+                                                    icon="tabler-check"
+                                                    size="12"
+                                                    :color="!plan.current ? 'primary' : 'white'"
+                                            />
+                                        </VAvatar>
+                                        <h6 class="text-h6">
+                                            {{ item }}
+                                        </h6>
+                                    </template>
+                                </VListItem>
+                            </VList>
+                            <VBtn
+                                    @click="drawer = true"
+                                    block
+                                    :variant="plan.title == 'Pro'  ? 'elevated' : 'tonal'"
+                                    class="mt-8"
 
-                                >
-                                    Choose Plan
-                                </VBtn>
-                            </td>
-                            <td class="text-center py-2">
-                                <VBtn
-                                        variant="tonal"
+                            >
+                                Select
+                            </VBtn>
+                        </VCardText>
+                    </VCard>
+                </VCol>
+            </VRow>
+        </div>
+        <VNavigationDrawer
+                v-model="drawer"
+                location="right"
+                temporary
+                width="450"
+                class="right-drawer"
+        >
+            <VToolbar flat>
+                <VToolbarTitle>Deposit Balance</VToolbarTitle>
+                <VSpacer />
+                <VBtn class="text-primary"icon @click="drawer = false">
+                    <VIcon icon="tabler-square-rounded-x" />
+                </VBtn>
+            </VToolbar>
+            <VDivider />
+            <v-card class="pa-6">
+                <!-- Secure Transfer Header -->
+                <VChip class="d-flex align-left mb-6 text-primary">
+                    <VIcon
+                            icon="tabler-cloud-lock"
+                            class="flip-in-rtl text-primary me-1"
+                    />
 
-                                >
-                                    Choose Plan
-                                </VBtn>
-                            </td>
+                    <span class="subtitle-2">Secure transfer</span>
+                </VChip>
 
-                            <td class="text-center py-2">
-                                <VBtn
-                                        variant="tonal"
+                <!-- Preset Buttons -->
+                <div class="d-flex mb-8">
+                    <v-btn
+                            v-for="amt in presets"
+                            :key="amt"
+                            :class="{'ma-1': true}"
+                            :outlined="selectedAmount !== amt"
+                            :block="false"
+                            @click="selectPreset(amt)"
+                    >
+                        {{ amt }} ₮
+                    </v-btn>
+                </div>
 
-                                >
-                                    Choose Plan
-                                </VBtn>
-                            </td>
+                <!-- Dropdown & Notice -->
+                <v-select
+                        v-model="selectedAmount"
+                        :items="presets"
+                        label="Select amount"
+                        dense
+                        hide-details class="no-m mb-8"
+                >
+                </v-select>
+                <div class="text-body-2 text--secondary my-2 mb-8">
+                    <VChip class="d-flex align-left mb-6 text-primary">
+                        <VIcon
+                                icon="tabler-access-point"
+                                class="flip-in-rtl text-sm text-primary me-1"
+                        />
 
-                            <td class="text-center py-2">
-                                <VBtn
-                                        variant="tonal"
+                         Add 50 USDT/USDC to cover SSF for smooth bot trading.
+                    </VChip>
+                </div>
 
-                                >
-                                    Choose Plan
-                                </VBtn>
-                            </td>
+                <!-- Summary Box -->
+                <v-sheet class="pa-4  mb-8 border rounded" elevation="1">
+                    <div class="d-flex justify-space-between mb-2">
+                        <span>Enter Amount</span><span>{{ displayAmount }} ₮</span>
+                    </div>
+                    <div class="d-flex justify-space-between mb-2">
+                        <span>Processing Fee</span><span>{{ fee }} ₮</span>
+                    </div>
+                    <div class="d-flex justify-space-between mb-2">
+                        <span>Recommend additional fund (Cover SSF)</span><span>{{ recAdditional }} ₮</span>
+                    </div>
+                    <div class="d-flex justify-space-between font-weight-bold">
+                        <span>Total included fees</span><span>{{ total }} ₮</span>
+                    </div>
+                </v-sheet>
 
-                        </tr>
-                        </tfoot>
-                    </VTable>
-                </VCardText>
-            </VContainer>
+                <!-- Terms Checkbox -->
+                <v-checkbox
+                        v-model="agreed"
+                        hide-details
+                        class="mb-8"
+                        label="I agree with terms and conditions. "
+                >
+                    <template #label>
+                        I agree with terms and conditions
+                        <a href="#" @click.prevent="openTerms">&nbspClick here.</a>
+                    </template>
+                </v-checkbox>
 
-        </Vcol>
-    </VRow>
+                <!-- Submit Button -->
+                <v-btn
+                        :disabled="!agreed"
+                        color="primary"
+                        block
+                        @click="onSubmit"
+                >
+                    Add
+                </v-btn>
+            </v-card>
+            <!--<VCardActions>-->
+                <!--<VSpacer />-->
+                <!--<VBtn color="primary" @click="submit">Submit</VBtn>-->
+                <!--<VBtn variant="outlined" @click="drawer = false">Cancel</VBtn>-->
+            <!--</VCardActions>-->
+        </VNavigationDrawer>
+        <DepositDialog v-model="showDepositDialog" />
 
+
+    </VContainer>
 
 </template>
 
 <style lang="scss" scoped>
-    .pricing-section {
-        padding-block: 5.25rem !important;
-        padding-inline: 0 !important;
+    .card-list {
+        --v-card-list-gap: 12px;
     }
 
-    .page-pricing-free-trial-banner-bg {
-        /* stylelint-disable-next-line color-function-notation */
-        background-color: rgba(var(--v-theme-primary), var(--v-activated-opacity));
-        margin-block-start: 8.9375rem !important;
+    #pricing-plan {
+        border-radius: 3.75rem;
+        background-color: rgb(var(--v-theme-background));
     }
 
-    .pricing-card {
-        padding-block-start: 10.5rem !important;
+    .pricing-title {
+        font-size: 38px;
+        font-weight: 800;
+        line-height: 52px;
     }
 
-    @media screen and (min-width: 960px) {
-        .free-trial-illustrator {
-            position: absolute;
-            inset-block-end: -1rem !important;
-            inset-inline-end: 0%;
+    .pricing-plans {
+        margin-block: 5.25rem;
+    }
+
+    @media (max-width: 600px) {
+        .pricing-plans {
+            margin-block: 4rem;
         }
     }
 
-    @media screen and (max-width: 959px) {
-        .free-trial-illustrator {
-            position: relative;
-            inset-block-end: -1rem !important;
-        }
+    .save-upto-chip {
+        inset-block-start: -1.5rem;
+        inset-inline-end: -7rem;
     }
 
-    .pricing-table {
-        tr:nth-child(even) {
-            background: rgba(var(--v-theme-on-surface), var(--v-hover-opacity));
-        }
+    .pricing-plan-arrow {
+        inset-block-start: -0.5rem;
+        inset-inline-end: -8rem;
     }
-</style>
 
-<style lang="scss">
-    .pricing-page {
-        @media (min-width: 600px) and (max-width: 960px) {
-            .v-container {
-                padding-inline: 2rem !important;
-            }
-        }
+    .section-title {
+        font-size: 24px;
+        font-weight: 800;
+        line-height: 36px;
+    }
+
+    .section-title::after {
+        position: absolute;
+        background: url("../../../assets/images/front-pages/icons/section-title-icon.png") no-repeat left bottom;
+        background-size: contain;
+        block-size: 100%;
+        content: "";
+        font-weight: 700;
+        inline-size: 120%;
+        inset-block-end: 0;
+        inset-inline-start: -12%;
+    }
+
+    .annual-price-text {
+        inset-block-end: -40%;
     }
 </style>
