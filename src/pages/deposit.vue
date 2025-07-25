@@ -48,7 +48,7 @@
             </VCol>
             <VCol cols="12">
             <VCol cols="12" class="pt-2 pb-2 mb-2" style="background-color: #f1f5f9">
-              <span><VIcon icon="tabler-info-circle" size="18"/> Add 50 USDT/USDC to cover SSF for smooth bot trading.</span>
+              <span :style="smAndDown ? 'font-size: 11px;' : ''"><VIcon icon="tabler-info-circle" size="15"/> Add 50 USDT/USDC to cover SSF for smooth bot trading.</span>
             </VCol>
             </VCol>
           </VRow>
@@ -76,8 +76,7 @@
               label="I agree with terms and conditions. "
             >
               <template #label>
-                I agree with terms and conditions.
-                <a href="#" class="text-primary text-decoration-underline">Click here.</a>
+                <span :style="smAndDown ? 'font-size: 13px;' : ''">I agree with terms and conditions.<a href="#" class="text-primary text-decoration-underline">Click here.</a></span>
               </template>
             </VCheckbox>
             </VCol>
@@ -89,7 +88,7 @@
           </div>
         </VForm>
 
-        <VDialog v-model="depositModal" max-width="500">
+        <VDialog v-model="depositModal" max-width="500" :style="smAndDown ? 'position: sticky;' : ''">
           <VCard class="pa-6 rounded-lg">
             <!-- Title & Close Button -->
             <div class="d-flex justify-end align-end">
@@ -147,7 +146,7 @@
           </VCard>
         </VDialog>
 
-        <VDialog v-model="disable2FA" max-width="400">
+        <VDialog v-model="disable2FA" :max-width="smAndDown ? 500 : 400" :style="smAndDown ? 'position: sticky;' : ''">
           <VCard class="pa-6 rounded-lg">
             <div class="d-flex justify-end align-end">
               <VBtn icon="tabler-x" variant="text" @click="disable2FA = false" />
@@ -190,6 +189,10 @@ import Btc from '@/assets/images/btc.svg?url'
 import Busd from '@/assets/images/busd.svg?url'
 import Usdc from '@/assets/images/usdc.svg?url'
 import QR from '@/assets/images/image18.png'
+
+import { useDisplay } from 'vuetify'
+
+const { smAndDown } = useDisplay()
 
 const depositModal = ref(false)
 const disable2FA = ref(false)
@@ -286,4 +289,26 @@ const submitPayment = () => {
 ::v-deep( .v-label.custom-input) {
    padding: 0.5rem;
  }
+@media (max-width: 490px) {
+  ::v-deep(.v-overlay__content) {
+    position: sticky;
+    width: 100% !important;
+    margin : 0 !important;
+  }
+  ::v-deep(.v-overlay__content > .v-card) {
+    border-radius: 20px!important;
+  }
+  ::v-deep(.v-selection-control--density-comfortable) {
+   --v-selection-control-size: 25px!important;
+ }
+  .custom-radio-item{
+    font-size: 12px!important;
+  }
+  .text-caption{
+    font-size: 12px!important;
+  }
+  .text-sub-caption{
+    font-size: 13px!important;
+  }
+}
 </style>

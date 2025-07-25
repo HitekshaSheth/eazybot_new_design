@@ -143,9 +143,9 @@
             <span class="text-h4 text-primary mb-1 pl-2 pr-2">{{ balance }}</span>
           </VCol>
           <VCol cols="12">
-            <VBtn class="mr-2" color="primary" icon="tabler-upload"></VBtn>
-            <VBtn class="mr-2" color="primary" variant="outlined" icon="tabler-download"></VBtn>
-            <VBtn color="primary" variant="outlined" icon="tabler-transform-point"></VBtn>
+            <VBtn class="mr-2" color="primary" icon="tabler-upload" :to="{ name: 'deposit'}"></VBtn>
+            <VBtn class="mr-2" color="primary" variant="outlined" icon="tabler-download" :to="{ name: 'withdraw'}"></VBtn>
+            <VBtn color="primary" variant="outlined" icon="tabler-transform-point" :to="{ name: 'internal-transfer'}"></VBtn>
           </VCol>
         </VRow>
       </VCardText>
