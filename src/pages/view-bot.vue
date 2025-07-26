@@ -2078,7 +2078,7 @@ const tradeItems = [
               </VAvatar>
               <div>
                 <div class="font-weight-medium">ETH/USDT</div>
-                <div class="text-caption grey--text">1481.71</div>
+                <h3>1481.71</h3>
               </div>
             </div>
           </VListItem>
@@ -2086,7 +2086,7 @@ const tradeItems = [
 
         <!-- Right: Statuses -->
         <div class="d-flex align-center gap-x-4">
-          <span class="text-caption grey--text text-right">Sessions Closed<br /><span class="text-sub-caption">10</span></span>
+          <span class="text-caption grey--text text-right" style="font-size: 13px!important;">Sessions Closed<br /><span class="text-subCaption">10</span></span>
         </div>
       </VCardText>
       <VCardText class="justify-space-between align-center flex-wrap gap-4">
@@ -2120,11 +2120,11 @@ const tradeItems = [
       <VCardText class="d-flex justify-space-between align-center flex-wrap pt-2 pb-2" style="border-radius: 0px 0px 10px 10px;background-color: #fafafa;border-top: 1px solid #e2e8f0;">
         <!-- Left: Title -->
         <div class="d-flex align-center gap-x-4">
-          <span class="text-sub-caption-mobile">Day’s P&L (7h:27m)<br /><span class="text-sub-caption" style="color: green">$ 6.30</span></span>
+          <span class="text-sub-caption-mobile">Day’s P&L (7h:27m)<br /><span class="text-subCaption" style="color: green">$ 6.30</span></span>
         </div>
         <!-- Right: Statuses -->
         <div class="d-flex align-center gap-x-4">
-          <span class="text-sub-caption-mobile text-right">Overall P&L<br /><span class="text-sub-caption" style="color: green">$ 166.30</span></span>
+          <span class="text-sub-caption-mobile text-right">Overall P&L<br /><span class="text-subCaption" style="color: green">$ 166.30</span></span>
         </div>
       </VCardText>
     </VCard>
@@ -2474,14 +2474,15 @@ const tradeItems = [
                       <VCol cols="12" class="pb-1 pt-1" v-for="(item, index) in tradeItems" :key="index">
                         <VCard :class="item.type === 'Buy' ? 'buy-card' : 'sell-card pb-1'" class="pa-3">
                           <VRow>
-                            <VCol cols="3" class="pb-2">
+                            <VCol cols="3" class="pb-1">
                               <div class="align-center gap-x-2" >
-                                <VChip :color="item.type === 'Buy' ? 'success' : 'error'" text-color="white" label size="small">
-                                  {{ item.type }}
-                                </VChip>
+                                <span class="text-caption" :class="item.type === 'Buy' ? 'text-success' : 'text-error'">{{ item.type }}</span>
+<!--                                <VChip :color="item.type === 'Buy' ? 'success' : 'error'" text-color="white" label size="small">-->
+<!--                                  {{ item.type }}-->
+<!--                                </VChip>-->
                               </div>
                             </VCol>
-                            <VCol cols="9" class="pb-2">
+                            <VCol cols="9" class="pb-1">
                               <div class="text-right text-caption">
                                 <span class="font-weight-bold">{{ item.qty }}</span> Qty @
                                 <span class="font-weight-bold">{{ item.rate }}</span>
@@ -2489,25 +2490,25 @@ const tradeItems = [
                             </VCol>
                           </VRow>
                           <VRow class="mt-0">
-                            <VCol cols="7" class="pt-1 pb-2">
+                            <VCol cols="7" class="pt-1 pb-1">
                               <div class="align-center gap-x-2" >
                                 <span class="text-caption font-weight-bold">{{ item.title }}</span>
                               </div>
                             </VCol>
-                            <VCol cols="5" class="pl-0 pt-1 pb-2">
-                              <div class="text-right text-caption">
-                                <span class="font-weight-bold">Total : {{ item.total }}</span>
-                                <span class="text-grey text-uppercase">USDT</span>
+                            <VCol cols="5" class="pl-0 pt-1 pb-1">
+                              <div class="text-right align-center gap-x-2">
+                                <span class="text-caption font-weight-bold">Total : {{ item.total }}</span>
+                                <span class="text-caption text-grey">USDT</span>
                               </div>
                             </VCol>
                           </VRow>
                           <VRow class="mt-0">
-                            <VCol cols="5" class="pb-2 pt-1 pr-0">
+                            <VCol cols="5" class="pb-1 pt-1 pr-0">
                               <div class="align-center gap-x-2" >
                                 <span class="text-caption font-weight-bold">ID : {{ item.tradeId }}</span>
                               </div>
                             </VCol>
-                            <VCol cols="7" class="pb-2 pt-1 pl-0">
+                            <VCol cols="7" class="pb-1 pt-1 pl-0">
                               <div class="text-right text-caption">
                                 <div><span class="font-weight-bold">{{ item.open }}</span></div>
                               </div>
@@ -2519,13 +2520,12 @@ const tradeItems = [
                           <!-- Profit Row for Sell -->
                           <div
                             v-if="item.type === 'Sell'"
-                            class="d-flex justify-space-between flex-wrap text-caption"
-                          >
+                            class="d-flex justify-space-between flex-wrap text-caption">
                             <span class="text-caption"><strong>GP :</strong> <span class="font-weight-bold"> {{ item.gross }}</span></span>
                             <span class="text-caption "><strong>Fees :</strong><span class="font-weight-bold"> {{ item.fees }}</span></span>
                             <span class="text-caption"><strong>Profit :</strong><span class="font-weight-bold"> {{ item.profit }}</span></span>
                             <span class="text-caption"><strong>Tank :</strong><span class="font-weight-bold"> {{ item.toTank }}</span></span>
-                            <div class="d-flex justify-space-between align-center w-100 mt-2">
+                            <div class="d-flex justify-space-between align-center w-100">
     <span class="text-caption font-weight-bold">
       <strong>Net Profit :</strong>
     </span>
@@ -4148,6 +4148,11 @@ const tradeItems = [
   margin-block-end: unset!important;
   margin-block-start: unset!important;
 }
+.text-subCaption{
+  font-weight: 700;
+  color:#475569;
+  font-size: 15px !important;
+}
 .text-sub-caption{
   font-weight: 500;
   color:#475569;
@@ -4158,21 +4163,21 @@ const tradeItems = [
 }
 @media (min-width: 390px) and (max-width: 600px) {
   .text-caption{
-    font-size: 12px !important;
+    font-size: 13px !important;
   }
   .text-sub-caption{
-    font-size: 12px !important;
+    font-size: 13px !important;
   }
 }
 @media (max-width: 390px) {
   .text-sub-caption-mobile {
-    font-size: 0.6225rem;
+    font-size:12px!important;
   }
   .text-caption{
-    font-size: 10px !important;
+    font-size: 11px !important;
   }
   .text-sub-caption{
-    font-size: 10px !important;
+    font-size: 10px!important;
   }
 }
 </style>

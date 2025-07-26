@@ -1,5 +1,6 @@
 <script setup>
-
+import { register } from 'swiper/element/bundle'
+register()
     import { useConfigStore } from '@core/stores/config'
 
     import { ref, computed } from 'vue'
@@ -119,7 +120,7 @@ import paperPlane from '@images/visa.png'
 <template>
 <VContainer>
     <VRow>
-        <VCol cols="4">
+        <VCol md="4" cols="12">
             <VCard class="mb-4" title="Current Balance" style="max-width: 100%">
                 <template #append>
                     <VIcon icon="tabler-wallet" size="50" style="background-color: rgb(var(--v-global-theme-primary))"/>
@@ -141,11 +142,35 @@ import paperPlane from '@images/visa.png'
         </VCol>
     </VRow>
 
-               <VRow>
-                   <VCol
-                           v-for="(plan, index) in pricingPlans"
-                           :key="index"
-                   >
+  <swiper-container
+    pagination="true"
+    navigation="true"
+    events-prefix="swiper-"
+    slides-per-view="5"
+    space-between="50"
+    :breakpoints="{
+      1024: {
+        slidesPerView: 4,
+        spaceBetween: 40,
+      },
+      768: {
+        slidesPerView: 3,
+        spaceBetween: 30,
+      },
+      640: {
+        slidesPerView: 2,
+        spaceBetween: 20,
+      },
+      320: {
+        slidesPerView: 1,
+        spaceBetween: 10,
+      },
+    }"
+  >
+    <swiper-slide
+      v-for="(plan, index) in pricingPlans"
+      :key="index"
+    >
                        <VCard :style="plan.title == 'VIP' ? 'border:2px solid rgb(var(--v-theme-primary))' : ''">
                            <VCardText class="pa-6 pt-5">
                                <VImg
@@ -220,20 +245,19 @@ import paperPlane from '@images/visa.png'
                                        </template>
                                    </VListItem>
                                </VList>
+                             <div class="d-flex justify-center">
                                <VBtn
-                                       @click="drawer = true"
-                                       block
-                                       :variant="plan.title == 'VIP'  ? 'elevated' : 'tonal'"
-                                       class="mt-8"
-
+                                 @click="drawer = true"
+                                 :variant="plan.title === 'Pro' ? 'elevated' : 'tonal'"
+                                 class="mt-8"
                                >
-                                   Upgrade
+                                 Select
                                </VBtn>
+                             </div>
                            </VCardText>
                        </VCard>
-                   </VCol>
-               </VRow>
-
+      </swiper-slide>
+  </swiper-container>
 </VContainer>
 
 </template>

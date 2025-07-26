@@ -1,5 +1,6 @@
 <script setup>
-
+import { register } from 'swiper/element/bundle'
+register()
 import { useConfigStore } from '@core/stores/config'
 
 import { ref, computed } from 'vue'
@@ -171,8 +172,32 @@ function openTerms() {
       </VCol>
     </VRow>
 
-    <VRow>
-      <VCol
+    <swiper-container
+      pagination="true"
+      navigation="true"
+      events-prefix="swiper-"
+      slides-per-view="5"
+      space-between="50"
+      :breakpoints="{
+      1024: {
+        slidesPerView: 4,
+        spaceBetween: 40,
+      },
+      768: {
+        slidesPerView: 3,
+        spaceBetween: 30,
+      },
+      640: {
+        slidesPerView: 2,
+        spaceBetween: 20,
+      },
+      320: {
+        slidesPerView: 1,
+        spaceBetween: 10,
+      },
+    }"
+    >
+      <swiper-slide
         v-for="(plan, index) in pricingPlans"
         :key="index"
       >
@@ -255,19 +280,22 @@ function openTerms() {
                 </template>
               </VListItem>
             </VList>
-            <VBtn
-              @click="drawer = true"
-              block
-              :variant="plan.title == 'Pro'  ? 'elevated' : 'tonal'"
-              class="mt-8"
+            <div class="d-flex justify-center">
+              <VBtn
+                @click="drawer = true"
+                :variant="plan.title === 'Pro' ? 'elevated' : 'tonal'"
+                class="mt-8"
+              >
+                Select
+              </VBtn>
+            </div>
 
-            >
-              Select
-            </VBtn>
           </VCardText>
         </VCard>
-      </VCol>
-    </VRow>
+
+
+      </swiper-slide>
+    </swiper-container>
 
     <VNavigationDrawer
       v-model="drawer"
