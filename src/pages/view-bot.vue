@@ -2311,7 +2311,7 @@ const tradeItems = [
                         </div>
                         <div class="text-caption mt-1">Open: <span class="font-weight-light-bold">Dec 10, 2024 - 22:17</span></div>
                         <VRow class="mt-1">
-                          <VCol cols="3" class="text-caption grey--text">Trade ID<br><span class="font-weight-bold">502426</span></VCol>
+                          <VCol cols="3" class="text-caption grey--text">ID<br><span class="font-weight-bold">502426</span></VCol>
                           <VCol cols="3" class="text-caption grey--text">Price<br><span class="font-weight-bold">3634.04</span></VCol>
                           <VCol cols="3" class="text-caption grey--text">Quantity<br><span class="font-weight-bold">0.0291</span></VCol>
                           <VCol cols="3" class="text-caption grey--text">Amount<br><span class="font-weight-bold">105.75</span></VCol>
@@ -2330,7 +2330,7 @@ const tradeItems = [
                         </div>
                         <div class="text-caption mt-1">Open: <span class="font-weight-light-bold">Dec 10, 2024 - 22:17</span></div>
                         <VRow class="mt-1">
-                          <VCol cols="3" class="text-caption grey--text">Trade ID<br><span class="font-weight-bold">502426</span></VCol>
+                          <VCol cols="3" class="text-caption grey--text">ID<br><span class="font-weight-bold">502426</span></VCol>
                           <VCol cols="3" class="text-caption grey--text">Price<br><span class="font-weight-bold">3634.04</span></VCol>
                           <VCol cols="3" class="text-caption grey--text">Quantity<br><span class="font-weight-bold">0.0291</span></VCol>
                           <VCol cols="3" class="text-caption grey--text">Amount<br><span class="font-weight-bold">105.75</span></VCol>
@@ -2365,7 +2365,7 @@ const tradeItems = [
                         </div>
                         <div class="text-caption mt-1">Open: <span class="font-weight-light-bold">Dec 10, 2024 - 22:17</span></div>
                         <VRow class="mt-1">
-                          <VCol cols="3" class="text-caption grey--text">Trade ID<br><span class="font-weight-bold">502426</span></VCol>
+                          <VCol cols="3" class="text-caption grey--text">ID<br><span class="font-weight-bold">502426</span></VCol>
                           <VCol cols="3" class="text-caption grey--text">Price<br><span class="font-weight-bold">3634.04</span></VCol>
                           <VCol cols="3" class="text-caption grey--text">Quantity<br><span class="font-weight-bold">0.0291</span></VCol>
                           <VCol cols="3" class="text-caption grey--text">Amount<br><span class="font-weight-bold">105.75</span></VCol>
@@ -2386,7 +2386,7 @@ const tradeItems = [
                         </div>
                         <div class="text-caption mt-1">Open: <span class="font-weight-light-bold">Dec 10, 2024 - 22:17</span></div>
                         <VRow class="mt-1">
-                          <VCol cols="3" class="text-caption grey--text">Trade ID<br><span class="font-weight-bold">502426</span></VCol>
+                          <VCol cols="3" class="text-caption grey--text">ID<br><span class="font-weight-bold">502426</span></VCol>
                           <VCol cols="3" class="text-caption grey--text">Price<br><span class="font-weight-bold">3634.04</span></VCol>
                           <VCol cols="3" class="text-caption grey--text">Quantity<br><span class="font-weight-bold">0.0291</span></VCol>
                           <VCol cols="3" class="text-caption grey--text">Amount<br><span class="font-weight-bold">105.75</span></VCol>
@@ -2407,7 +2407,7 @@ const tradeItems = [
                         </div>
                         <div class="text-caption mt-1">Open: <span class="font-weight-light-bold">Dec 10, 2024 - 22:17</span></div>
                         <VRow class="mt-1">
-                          <VCol cols="3" class="text-caption grey--text">Trade ID<br><span class="font-weight-bold">502426</span></VCol>
+                          <VCol cols="3" class="text-caption grey--text">ID<br><span class="font-weight-bold">502426</span></VCol>
                           <VCol cols="3" class="text-caption grey--text">Price<br><span class="font-weight-bold">3634.04</span></VCol>
                           <VCol cols="3" class="text-caption grey--text">Quantity<br><span class="font-weight-bold">0.0291</span></VCol>
                           <VCol cols="3" class="text-caption grey--text">Amount<br><span class="font-weight-bold">105.75</span></VCol>
@@ -2428,7 +2428,7 @@ const tradeItems = [
                         </div>
                         <div class="text-caption mt-1">Open: <span class="font-weight-light-bold">Dec 10, 2024 - 22:17</span></div>
                         <VRow class="mt-1">
-                          <VCol cols="3" class="text-caption grey--text">Trade ID<br><span class="font-weight-bold">502426</span></VCol>
+                          <VCol cols="3" class="text-caption grey--text">ID<br><span class="font-weight-bold">502426</span></VCol>
                           <VCol cols="3" class="text-caption grey--text">Price<br><span class="font-weight-bold">3634.04</span></VCol>
                           <VCol cols="3" class="text-caption grey--text">Quantity<br><span class="font-weight-bold">0.0291</span></VCol>
                           <VCol cols="3" class="text-caption grey--text">Amount<br><span class="font-weight-bold">105.75</span></VCol>
@@ -2447,7 +2447,7 @@ const tradeItems = [
                         </div>
                         <div class="text-caption mt-1">Open: <span class="font-weight-light-bold">Dec 10, 2024 - 22:17</span></div>
                         <VRow class="mt-1">
-                          <VCol cols="3" class="text-caption grey--text">Trade ID<br><span class="font-weight-bold">502426</span></VCol>
+                          <VCol cols="3" class="text-caption grey--text">ID<br><span class="font-weight-bold">502426</span></VCol>
                           <VCol cols="3" class="text-caption grey--text">Price<br><span class="font-weight-bold">3634.04</span></VCol>
                           <VCol cols="3" class="text-caption grey--text">Quantity<br><span class="font-weight-bold">0.0291</span></VCol>
                           <VCol cols="3" class="text-caption grey--text">Amount<br><span class="font-weight-bold">105.75</span></VCol>
@@ -2504,12 +2504,12 @@ const tradeItems = [
                           <VRow class="mt-0">
                             <VCol cols="5" class="pb-2 pt-1 pr-0">
                               <div class="align-center gap-x-2" >
-                                <span class="text-caption font-weight-bold">Trade ID : {{ item.tradeId }}</span>
+                                <span class="text-caption font-weight-bold">ID : {{ item.tradeId }}</span>
                               </div>
                             </VCol>
                             <VCol cols="7" class="pb-2 pt-1 pl-0">
                               <div class="text-right text-caption">
-                                <div><strong>Open:</strong> <span class="font-weight-bold">{{ item.open }}</span></div>
+                                <div><span class="font-weight-bold">{{ item.open }}</span></div>
                               </div>
                             </VCol>
                           </VRow>
@@ -2521,16 +2521,18 @@ const tradeItems = [
                             v-if="item.type === 'Sell'"
                             class="d-flex justify-space-between flex-wrap text-caption"
                           >
-                            <span class="text-caption"><strong>Gross Profit :</strong> <span class="font-weight-bold"> {{ item.gross }}</span></span>
+                            <span class="text-caption"><strong>GP :</strong> <span class="font-weight-bold"> {{ item.gross }}</span></span>
                             <span class="text-caption "><strong>Fees :</strong><span class="font-weight-bold"> {{ item.fees }}</span></span>
                             <span class="text-caption"><strong>Profit :</strong><span class="font-weight-bold"> {{ item.profit }}</span></span>
-                            <span class="text-caption"><strong>Profit to Tank :</strong><span class="font-weight-bold"> {{ item.toTank }}</span></span>
-                            <span class="text-caption font-weight-bold">
-                                  <strong>Net Profit :</strong>
-                                  <VChip color="success" size="small" class="font-bold ml-1">
-                                    {{ item.net }} [{{ item.percent }}]
-                                  </VChip>
-                                </span>
+                            <span class="text-caption"><strong>Tank :</strong><span class="font-weight-bold"> {{ item.toTank }}</span></span>
+                            <div class="d-flex justify-space-between align-center w-100 mt-2">
+    <span class="text-caption font-weight-bold">
+      <strong>Net Profit :</strong>
+    </span>
+                              <VChip color="success" size="small" class="font-bold">
+                                {{ item.net }} [{{ item.percent }}]
+                              </VChip>
+                            </div>
                           </div>
                         </VCard>
                       </VCol>
@@ -2702,7 +2704,7 @@ const tradeItems = [
                       </div>
                       <div class="text-caption mt-1">Open: <span class="font-weight-light-bold">Dec 10, 2024 - 22:17</span></div>
                       <VRow class="mt-1">
-                        <VCol cols="3" class="text-caption grey--text">Trade ID<br><span class="font-weight-bold">502426</span></VCol>
+                        <VCol cols="3" class="text-caption grey--text">ID<br><span class="font-weight-bold">502426</span></VCol>
                         <VCol cols="3" class="text-caption grey--text">Price<br><span class="font-weight-bold">3634.04</span></VCol>
                         <VCol cols="3" class="text-caption grey--text">Quantity<br><span class="font-weight-bold">0.0291</span></VCol>
                         <VCol cols="3" class="text-caption grey--text">Amount<br><span class="font-weight-bold">105.75</span></VCol>
@@ -2721,7 +2723,7 @@ const tradeItems = [
                       </div>
                       <div class="text-caption mt-1">Open: <span class="font-weight-light-bold">Dec 10, 2024 - 22:17</span></div>
                       <VRow class="mt-1">
-                        <VCol cols="3" class="text-caption grey--text">Trade ID<br><span class="font-weight-bold">502426</span></VCol>
+                        <VCol cols="3" class="text-caption grey--text">ID<br><span class="font-weight-bold">502426</span></VCol>
                         <VCol cols="3" class="text-caption grey--text">Price<br><span class="font-weight-bold">3634.04</span></VCol>
                         <VCol cols="3" class="text-caption grey--text">Quantity<br><span class="font-weight-bold">0.0291</span></VCol>
                         <VCol cols="3" class="text-caption grey--text">Amount<br><span class="font-weight-bold">105.75</span></VCol>
@@ -2756,7 +2758,7 @@ const tradeItems = [
                         </div>
                         <div class="text-caption mt-1">Open: <span class="font-weight-light-bold">Dec 10, 2024 - 22:17</span></div>
                         <VRow class="mt-1">
-                          <VCol cols="3" class="text-caption grey--text">Trade ID<br><span class="font-weight-bold">502426</span></VCol>
+                          <VCol cols="3" class="text-caption grey--text">ID<br><span class="font-weight-bold">502426</span></VCol>
                           <VCol cols="3" class="text-caption grey--text">Price<br><span class="font-weight-bold">3634.04</span></VCol>
                           <VCol cols="3" class="text-caption grey--text">Quantity<br><span class="font-weight-bold">0.0291</span></VCol>
                           <VCol cols="3" class="text-caption grey--text">Amount<br><span class="font-weight-bold">105.75</span></VCol>
@@ -2777,7 +2779,7 @@ const tradeItems = [
                         </div>
                         <div class="text-caption mt-1">Open: <span class="font-weight-light-bold">Dec 10, 2024 - 22:17</span></div>
                         <VRow class="mt-1">
-                          <VCol cols="3" class="text-caption grey--text">Trade ID<br><span class="font-weight-bold">502426</span></VCol>
+                          <VCol cols="3" class="text-caption grey--text">ID<br><span class="font-weight-bold">502426</span></VCol>
                           <VCol cols="3" class="text-caption grey--text">Price<br><span class="font-weight-bold">3634.04</span></VCol>
                           <VCol cols="3" class="text-caption grey--text">Quantity<br><span class="font-weight-bold">0.0291</span></VCol>
                           <VCol cols="3" class="text-caption grey--text">Amount<br><span class="font-weight-bold">105.75</span></VCol>
@@ -2798,7 +2800,7 @@ const tradeItems = [
                         </div>
                         <div class="text-caption mt-1">Open: <span class="font-weight-light-bold">Dec 10, 2024 - 22:17</span></div>
                         <VRow class="mt-1">
-                          <VCol cols="3" class="text-caption grey--text">Trade ID<br><span class="font-weight-bold">502426</span></VCol>
+                          <VCol cols="3" class="text-caption grey--text">ID<br><span class="font-weight-bold">502426</span></VCol>
                           <VCol cols="3" class="text-caption grey--text">Price<br><span class="font-weight-bold">3634.04</span></VCol>
                           <VCol cols="3" class="text-caption grey--text">Quantity<br><span class="font-weight-bold">0.0291</span></VCol>
                           <VCol cols="3" class="text-caption grey--text">Amount<br><span class="font-weight-bold">105.75</span></VCol>
@@ -2819,7 +2821,7 @@ const tradeItems = [
                       </div>
                       <div class="text-caption mt-1">Open: <span class="font-weight-light-bold">Dec 10, 2024 - 22:17</span></div>
                       <VRow class="mt-1">
-                        <VCol cols="3" class="text-caption grey--text">Trade ID<br><span class="font-weight-bold">502426</span></VCol>
+                        <VCol cols="3" class="text-caption grey--text">ID<br><span class="font-weight-bold">502426</span></VCol>
                         <VCol cols="3" class="text-caption grey--text">Price<br><span class="font-weight-bold">3634.04</span></VCol>
                         <VCol cols="3" class="text-caption grey--text">Quantity<br><span class="font-weight-bold">0.0291</span></VCol>
                         <VCol cols="3" class="text-caption grey--text">Amount<br><span class="font-weight-bold">105.75</span></VCol>
@@ -2838,7 +2840,7 @@ const tradeItems = [
                       </div>
                       <div class="text-caption mt-1">Open: <span class="font-weight-light-bold">Dec 10, 2024 - 22:17</span></div>
                       <VRow class="mt-1">
-                        <VCol cols="3" class="text-caption grey--text">Trade ID<br><span class="font-weight-bold">502426</span></VCol>
+                        <VCol cols="3" class="text-caption grey--text">ID<br><span class="font-weight-bold">502426</span></VCol>
                         <VCol cols="3" class="text-caption grey--text">Price<br><span class="font-weight-bold">3634.04</span></VCol>
                         <VCol cols="3" class="text-caption grey--text">Quantity<br><span class="font-weight-bold">0.0291</span></VCol>
                         <VCol cols="3" class="text-caption grey--text">Amount<br><span class="font-weight-bold">105.75</span></VCol>
@@ -2895,12 +2897,12 @@ const tradeItems = [
                           <VRow class="mt-0">
                             <VCol cols="5" class="pb-2 pt-1 pr-0">
                               <div class="align-center gap-x-2" >
-                                <span class="text-caption font-weight-bold">Trade ID : {{ item.tradeId }}</span>
+                                <span class="text-caption font-weight-bold">ID : {{ item.tradeId }}</span>
                               </div>
                             </VCol>
                             <VCol cols="7" class="pb-2 pt-1 pl-0">
                               <div class="text-right text-caption">
-                                <div><strong>Open:</strong> <span class="font-weight-bold">{{ item.open }}</span></div>
+                                <div><span class="font-weight-bold">{{ item.open }}</span></div>
                               </div>
                             </VCol>
                           </VRow>
@@ -2912,16 +2914,18 @@ const tradeItems = [
                             v-if="item.type === 'Sell'"
                             class="d-flex justify-space-between flex-wrap text-caption"
                           >
-                            <span class="text-caption"><strong>Gross Profit :</strong> <span class="font-weight-bold"> {{ item.gross }}</span></span>
+                            <span class="text-caption"><strong>GP :</strong> <span class="font-weight-bold"> {{ item.gross }}</span></span>
                             <span class="text-caption "><strong>Fees :</strong><span class="font-weight-bold"> {{ item.fees }}</span></span>
                             <span class="text-caption"><strong>Profit :</strong><span class="font-weight-bold"> {{ item.profit }}</span></span>
-                            <span class="text-caption"><strong>Profit to Tank :</strong><span class="font-weight-bold"> {{ item.toTank }}</span></span>
-                            <span class="text-caption font-weight-bold">
-                                  <strong>Net Profit :</strong>
-                                  <VChip color="success" size="small" class="font-bold ml-1">
-                                    {{ item.net }} [{{ item.percent }}]
-                                  </VChip>
-                                </span>
+                            <span class="text-caption"><strong>Tank :</strong><span class="font-weight-bold"> {{ item.toTank }}</span></span>
+                            <div class="d-flex justify-space-between align-center w-100 mt-2">
+    <span class="text-caption font-weight-bold">
+      <strong>Net Profit :</strong>
+    </span>
+                              <VChip color="success" size="small" class="font-bold">
+                                {{ item.net }} [{{ item.percent }}]
+                              </VChip>
+                            </div>
                           </div>
                         </VCard>
                       </VCol>
@@ -3089,7 +3093,7 @@ const tradeItems = [
                       </div>
                       <div class="text-caption mt-1">Open: <span class="font-weight-light-bold">Dec 10, 2024 - 22:17</span></div>
                       <VRow class="mt-1">
-                        <VCol cols="3" class="text-caption grey--text">Trade ID<br><span class="font-weight-bold">502426</span></VCol>
+                        <VCol cols="3" class="text-caption grey--text">ID<br><span class="font-weight-bold">502426</span></VCol>
                         <VCol cols="3" class="text-caption grey--text">Price<br><span class="font-weight-bold">3634.04</span></VCol>
                         <VCol cols="3" class="text-caption grey--text">Quantity<br><span class="font-weight-bold">0.0291</span></VCol>
                         <VCol cols="3" class="text-caption grey--text">Amount<br><span class="font-weight-bold">105.75</span></VCol>
@@ -3108,7 +3112,7 @@ const tradeItems = [
                       </div>
                       <div class="text-caption mt-1">Open: <span class="font-weight-light-bold">Dec 10, 2024 - 22:17</span></div>
                       <VRow class="mt-1">
-                        <VCol cols="3" class="text-caption grey--text">Trade ID<br><span class="font-weight-bold">502426</span></VCol>
+                        <VCol cols="3" class="text-caption grey--text">ID<br><span class="font-weight-bold">502426</span></VCol>
                         <VCol cols="3" class="text-caption grey--text">Price<br><span class="font-weight-bold">3634.04</span></VCol>
                         <VCol cols="3" class="text-caption grey--text">Quantity<br><span class="font-weight-bold">0.0291</span></VCol>
                         <VCol cols="3" class="text-caption grey--text">Amount<br><span class="font-weight-bold">105.75</span></VCol>
@@ -3143,7 +3147,7 @@ const tradeItems = [
                         </div>
                         <div class="text-caption mt-1">Open: <span class="font-weight-light-bold">Dec 10, 2024 - 22:17</span></div>
                         <VRow class="mt-1">
-                          <VCol cols="3" class="text-caption grey--text">Trade ID<br><span class="font-weight-bold">502426</span></VCol>
+                          <VCol cols="3" class="text-caption grey--text">ID<br><span class="font-weight-bold">502426</span></VCol>
                           <VCol cols="3" class="text-caption grey--text">Price<br><span class="font-weight-bold">3634.04</span></VCol>
                           <VCol cols="3" class="text-caption grey--text">Quantity<br><span class="font-weight-bold">0.0291</span></VCol>
                           <VCol cols="3" class="text-caption grey--text">Amount<br><span class="font-weight-bold">105.75</span></VCol>
@@ -3164,7 +3168,7 @@ const tradeItems = [
                         </div>
                         <div class="text-caption mt-1">Open: <span class="font-weight-light-bold">Dec 10, 2024 - 22:17</span></div>
                         <VRow class="mt-1">
-                          <VCol cols="3" class="text-caption grey--text">Trade ID<br><span class="font-weight-bold">502426</span></VCol>
+                          <VCol cols="3" class="text-caption grey--text">ID<br><span class="font-weight-bold">502426</span></VCol>
                           <VCol cols="3" class="text-caption grey--text">Price<br><span class="font-weight-bold">3634.04</span></VCol>
                           <VCol cols="3" class="text-caption grey--text">Quantity<br><span class="font-weight-bold">0.0291</span></VCol>
                           <VCol cols="3" class="text-caption grey--text">Amount<br><span class="font-weight-bold">105.75</span></VCol>
@@ -3185,7 +3189,7 @@ const tradeItems = [
                         </div>
                         <div class="text-caption mt-1">Open: <span class="font-weight-light-bold">Dec 10, 2024 - 22:17</span></div>
                         <VRow class="mt-1">
-                          <VCol cols="3" class="text-caption grey--text">Trade ID<br><span class="font-weight-bold">502426</span></VCol>
+                          <VCol cols="3" class="text-caption grey--text">ID<br><span class="font-weight-bold">502426</span></VCol>
                           <VCol cols="3" class="text-caption grey--text">Price<br><span class="font-weight-bold">3634.04</span></VCol>
                           <VCol cols="3" class="text-caption grey--text">Quantity<br><span class="font-weight-bold">0.0291</span></VCol>
                           <VCol cols="3" class="text-caption grey--text">Amount<br><span class="font-weight-bold">105.75</span></VCol>
@@ -3206,7 +3210,7 @@ const tradeItems = [
                       </div>
                       <div class="text-caption mt-1">Open: <span class="font-weight-light-bold">Dec 10, 2024 - 22:17</span></div>
                       <VRow class="mt-1">
-                        <VCol cols="3" class="text-caption grey--text">Trade ID<br><span class="font-weight-bold">502426</span></VCol>
+                        <VCol cols="3" class="text-caption grey--text">ID<br><span class="font-weight-bold">502426</span></VCol>
                         <VCol cols="3" class="text-caption grey--text">Price<br><span class="font-weight-bold">3634.04</span></VCol>
                         <VCol cols="3" class="text-caption grey--text">Quantity<br><span class="font-weight-bold">0.0291</span></VCol>
                         <VCol cols="3" class="text-caption grey--text">Amount<br><span class="font-weight-bold">105.75</span></VCol>
@@ -3225,7 +3229,7 @@ const tradeItems = [
                       </div>
                       <div class="text-caption mt-1">Open: <span class="font-weight-light-bold">Dec 10, 2024 - 22:17</span></div>
                       <VRow class="mt-1">
-                        <VCol cols="3" class="text-caption grey--text">Trade ID<br><span class="font-weight-bold">502426</span></VCol>
+                        <VCol cols="3" class="text-caption grey--text">ID<br><span class="font-weight-bold">502426</span></VCol>
                         <VCol cols="3" class="text-caption grey--text">Price<br><span class="font-weight-bold">3634.04</span></VCol>
                         <VCol cols="3" class="text-caption grey--text">Quantity<br><span class="font-weight-bold">0.0291</span></VCol>
                         <VCol cols="3" class="text-caption grey--text">Amount<br><span class="font-weight-bold">105.75</span></VCol>
@@ -3282,12 +3286,12 @@ const tradeItems = [
                           <VRow class="mt-0">
                             <VCol cols="5" class="pb-2 pt-1 pr-0">
                               <div class="align-center gap-x-2" >
-                                <span class="text-caption font-weight-bold">Trade ID : {{ item.tradeId }}</span>
+                                <span class="text-caption font-weight-bold">ID : {{ item.tradeId }}</span>
                               </div>
                             </VCol>
                             <VCol cols="7" class="pb-2 pt-1 pl-0">
                               <div class="text-right text-caption">
-                                <div><strong>Open:</strong> <span class="font-weight-bold">{{ item.open }}</span></div>
+                                <div><span class="font-weight-bold">{{ item.open }}</span></div>
                               </div>
                             </VCol>
                           </VRow>
@@ -3299,16 +3303,18 @@ const tradeItems = [
                             v-if="item.type === 'Sell'"
                             class="d-flex justify-space-between flex-wrap text-caption"
                           >
-                            <span class="text-caption"><strong>Gross Profit :</strong> <span class="font-weight-bold"> {{ item.gross }}</span></span>
+                            <span class="text-caption"><strong>GP :</strong> <span class="font-weight-bold"> {{ item.gross }}</span></span>
                             <span class="text-caption "><strong>Fees :</strong><span class="font-weight-bold"> {{ item.fees }}</span></span>
                             <span class="text-caption"><strong>Profit :</strong><span class="font-weight-bold"> {{ item.profit }}</span></span>
-                            <span class="text-caption"><strong>Profit to Tank :</strong><span class="font-weight-bold"> {{ item.toTank }}</span></span>
-                            <span class="text-caption font-weight-bold">
-                                  <strong>Net Profit :</strong>
-                                  <VChip color="success" size="small" class="font-bold ml-1">
-                                    {{ item.net }} [{{ item.percent }}]
-                                  </VChip>
-                                </span>
+                            <span class="text-caption"><strong>Tank :</strong><span class="font-weight-bold"> {{ item.toTank }}</span></span>
+                            <div class="d-flex justify-space-between align-center w-100 mt-2">
+    <span class="text-caption font-weight-bold">
+      <strong>Net Profit :</strong>
+    </span>
+                              <VChip color="success" size="small" class="font-bold">
+                                {{ item.net }} [{{ item.percent }}]
+                              </VChip>
+                            </div>
                           </div>
                         </VCard>
                       </VCol>
@@ -3476,7 +3482,7 @@ const tradeItems = [
                       </div>
                       <div class="text-caption mt-1">Open: <span class="font-weight-light-bold">Dec 10, 2024 - 22:17</span></div>
                       <VRow class="mt-1">
-                        <VCol cols="3" class="text-caption grey--text">Trade ID<br><span class="font-weight-bold">502426</span></VCol>
+                        <VCol cols="3" class="text-caption grey--text">ID<br><span class="font-weight-bold">502426</span></VCol>
                         <VCol cols="3" class="text-caption grey--text">Price<br><span class="font-weight-bold">3634.04</span></VCol>
                         <VCol cols="3" class="text-caption grey--text">Quantity<br><span class="font-weight-bold">0.0291</span></VCol>
                         <VCol cols="3" class="text-caption grey--text">Amount<br><span class="font-weight-bold">105.75</span></VCol>
@@ -3495,7 +3501,7 @@ const tradeItems = [
                       </div>
                       <div class="text-caption mt-1">Open: <span class="font-weight-light-bold">Dec 10, 2024 - 22:17</span></div>
                       <VRow class="mt-1">
-                        <VCol cols="3" class="text-caption grey--text">Trade ID<br><span class="font-weight-bold">502426</span></VCol>
+                        <VCol cols="3" class="text-caption grey--text">ID<br><span class="font-weight-bold">502426</span></VCol>
                         <VCol cols="3" class="text-caption grey--text">Price<br><span class="font-weight-bold">3634.04</span></VCol>
                         <VCol cols="3" class="text-caption grey--text">Quantity<br><span class="font-weight-bold">0.0291</span></VCol>
                         <VCol cols="3" class="text-caption grey--text">Amount<br><span class="font-weight-bold">105.75</span></VCol>
@@ -3530,7 +3536,7 @@ const tradeItems = [
                         </div>
                         <div class="text-caption mt-1">Open: <span class="font-weight-light-bold">Dec 10, 2024 - 22:17</span></div>
                         <VRow class="mt-1">
-                          <VCol cols="3" class="text-caption grey--text">Trade ID<br><span class="font-weight-bold">502426</span></VCol>
+                          <VCol cols="3" class="text-caption grey--text">ID<br><span class="font-weight-bold">502426</span></VCol>
                           <VCol cols="3" class="text-caption grey--text">Price<br><span class="font-weight-bold">3634.04</span></VCol>
                           <VCol cols="3" class="text-caption grey--text">Quantity<br><span class="font-weight-bold">0.0291</span></VCol>
                           <VCol cols="3" class="text-caption grey--text">Amount<br><span class="font-weight-bold">105.75</span></VCol>
@@ -3551,7 +3557,7 @@ const tradeItems = [
                         </div>
                         <div class="text-caption mt-1">Open: <span class="font-weight-light-bold">Dec 10, 2024 - 22:17</span></div>
                         <VRow class="mt-1">
-                          <VCol cols="3" class="text-caption grey--text">Trade ID<br><span class="font-weight-bold">502426</span></VCol>
+                          <VCol cols="3" class="text-caption grey--text">ID<br><span class="font-weight-bold">502426</span></VCol>
                           <VCol cols="3" class="text-caption grey--text">Price<br><span class="font-weight-bold">3634.04</span></VCol>
                           <VCol cols="3" class="text-caption grey--text">Quantity<br><span class="font-weight-bold">0.0291</span></VCol>
                           <VCol cols="3" class="text-caption grey--text">Amount<br><span class="font-weight-bold">105.75</span></VCol>
@@ -3572,7 +3578,7 @@ const tradeItems = [
                         </div>
                         <div class="text-caption mt-1">Open: <span class="font-weight-light-bold">Dec 10, 2024 - 22:17</span></div>
                         <VRow class="mt-1">
-                          <VCol cols="3" class="text-caption grey--text">Trade ID<br><span class="font-weight-bold">502426</span></VCol>
+                          <VCol cols="3" class="text-caption grey--text">ID<br><span class="font-weight-bold">502426</span></VCol>
                           <VCol cols="3" class="text-caption grey--text">Price<br><span class="font-weight-bold">3634.04</span></VCol>
                           <VCol cols="3" class="text-caption grey--text">Quantity<br><span class="font-weight-bold">0.0291</span></VCol>
                           <VCol cols="3" class="text-caption grey--text">Amount<br><span class="font-weight-bold">105.75</span></VCol>
@@ -3593,7 +3599,7 @@ const tradeItems = [
                       </div>
                       <div class="text-caption mt-1">Open: <span class="font-weight-light-bold">Dec 10, 2024 - 22:17</span></div>
                       <VRow class="mt-1">
-                        <VCol cols="3" class="text-caption grey--text">Trade ID<br><span class="font-weight-bold">502426</span></VCol>
+                        <VCol cols="3" class="text-caption grey--text">ID<br><span class="font-weight-bold">502426</span></VCol>
                         <VCol cols="3" class="text-caption grey--text">Price<br><span class="font-weight-bold">3634.04</span></VCol>
                         <VCol cols="3" class="text-caption grey--text">Quantity<br><span class="font-weight-bold">0.0291</span></VCol>
                         <VCol cols="3" class="text-caption grey--text">Amount<br><span class="font-weight-bold">105.75</span></VCol>
@@ -3612,7 +3618,7 @@ const tradeItems = [
                       </div>
                       <div class="text-caption mt-1">Open: <span class="font-weight-light-bold">Dec 10, 2024 - 22:17</span></div>
                       <VRow class="mt-1">
-                        <VCol cols="3" class="text-caption grey--text">Trade ID<br><span class="font-weight-bold">502426</span></VCol>
+                        <VCol cols="3" class="text-caption grey--text">ID<br><span class="font-weight-bold">502426</span></VCol>
                         <VCol cols="3" class="text-caption grey--text">Price<br><span class="font-weight-bold">3634.04</span></VCol>
                         <VCol cols="3" class="text-caption grey--text">Quantity<br><span class="font-weight-bold">0.0291</span></VCol>
                         <VCol cols="3" class="text-caption grey--text">Amount<br><span class="font-weight-bold">105.75</span></VCol>
@@ -3669,12 +3675,12 @@ const tradeItems = [
                           <VRow class="mt-0">
                             <VCol cols="5" class="pb-2 pt-1 pr-0">
                               <div class="align-center gap-x-2" >
-                                <span class="text-caption font-weight-bold">Trade ID : {{ item.tradeId }}</span>
+                                <span class="text-caption font-weight-bold">ID : {{ item.tradeId }}</span>
                               </div>
                             </VCol>
                             <VCol cols="7" class="pb-2 pt-1 pl-0">
                               <div class="text-right text-caption">
-                                <div><strong>Open:</strong> <span class="font-weight-bold">{{ item.open }}</span></div>
+                                <div><span class="font-weight-bold">{{ item.open }}</span></div>
                               </div>
                             </VCol>
                           </VRow>
@@ -3686,16 +3692,18 @@ const tradeItems = [
                             v-if="item.type === 'Sell'"
                             class="d-flex justify-space-between flex-wrap text-caption"
                           >
-                            <span class="text-caption"><strong>Gross Profit :</strong> <span class="font-weight-bold"> {{ item.gross }}</span></span>
+                            <span class="text-caption"><strong>GP :</strong> <span class="font-weight-bold"> {{ item.gross }}</span></span>
                             <span class="text-caption "><strong>Fees :</strong><span class="font-weight-bold"> {{ item.fees }}</span></span>
                             <span class="text-caption"><strong>Profit :</strong><span class="font-weight-bold"> {{ item.profit }}</span></span>
-                            <span class="text-caption"><strong>Profit to Tank :</strong><span class="font-weight-bold"> {{ item.toTank }}</span></span>
-                            <span class="text-caption font-weight-bold">
-                                  <strong>Net Profit :</strong>
-                                  <VChip color="success" size="small" class="font-bold ml-1">
-                                    {{ item.net }} [{{ item.percent }}]
-                                  </VChip>
-                                </span>
+                            <span class="text-caption"><strong>Tank :</strong><span class="font-weight-bold"> {{ item.toTank }}</span></span>
+                            <div class="d-flex justify-space-between align-center w-100 mt-2">
+    <span class="text-caption font-weight-bold">
+      <strong>Net Profit :</strong>
+    </span>
+                              <VChip color="success" size="small" class="font-bold">
+                                {{ item.net }} [{{ item.percent }}]
+                              </VChip>
+                            </div>
                           </div>
                         </VCard>
                       </VCol>
@@ -3863,7 +3871,7 @@ const tradeItems = [
                       </div>
                       <div class="text-caption mt-1">Open: <span class="font-weight-light-bold">Dec 10, 2024 - 22:17</span></div>
                       <VRow class="mt-1">
-                        <VCol cols="3" class="text-caption grey--text">Trade ID<br><span class="font-weight-bold">502426</span></VCol>
+                        <VCol cols="3" class="text-caption grey--text">ID<br><span class="font-weight-bold">502426</span></VCol>
                         <VCol cols="3" class="text-caption grey--text">Price<br><span class="font-weight-bold">3634.04</span></VCol>
                         <VCol cols="3" class="text-caption grey--text">Quantity<br><span class="font-weight-bold">0.0291</span></VCol>
                         <VCol cols="3" class="text-caption grey--text">Amount<br><span class="font-weight-bold">105.75</span></VCol>
@@ -3882,7 +3890,7 @@ const tradeItems = [
                       </div>
                       <div class="text-caption mt-1">Open: <span class="font-weight-light-bold">Dec 10, 2024 - 22:17</span></div>
                       <VRow class="mt-1">
-                        <VCol cols="3" class="text-caption grey--text">Trade ID<br><span class="font-weight-bold">502426</span></VCol>
+                        <VCol cols="3" class="text-caption grey--text">ID<br><span class="font-weight-bold">502426</span></VCol>
                         <VCol cols="3" class="text-caption grey--text">Price<br><span class="font-weight-bold">3634.04</span></VCol>
                         <VCol cols="3" class="text-caption grey--text">Quantity<br><span class="font-weight-bold">0.0291</span></VCol>
                         <VCol cols="3" class="text-caption grey--text">Amount<br><span class="font-weight-bold">105.75</span></VCol>
@@ -3917,7 +3925,7 @@ const tradeItems = [
                         </div>
                         <div class="text-caption mt-1">Open: <span class="font-weight-light-bold">Dec 10, 2024 - 22:17</span></div>
                         <VRow class="mt-1">
-                          <VCol cols="3" class="text-caption grey--text">Trade ID<br><span class="font-weight-bold">502426</span></VCol>
+                          <VCol cols="3" class="text-caption grey--text">ID<br><span class="font-weight-bold">502426</span></VCol>
                           <VCol cols="3" class="text-caption grey--text">Price<br><span class="font-weight-bold">3634.04</span></VCol>
                           <VCol cols="3" class="text-caption grey--text">Quantity<br><span class="font-weight-bold">0.0291</span></VCol>
                           <VCol cols="3" class="text-caption grey--text">Amount<br><span class="font-weight-bold">105.75</span></VCol>
@@ -3938,7 +3946,7 @@ const tradeItems = [
                         </div>
                         <div class="text-caption mt-1">Open: <span class="font-weight-light-bold">Dec 10, 2024 - 22:17</span></div>
                         <VRow class="mt-1">
-                          <VCol cols="3" class="text-caption grey--text">Trade ID<br><span class="font-weight-bold">502426</span></VCol>
+                          <VCol cols="3" class="text-caption grey--text">ID<br><span class="font-weight-bold">502426</span></VCol>
                           <VCol cols="3" class="text-caption grey--text">Price<br><span class="font-weight-bold">3634.04</span></VCol>
                           <VCol cols="3" class="text-caption grey--text">Quantity<br><span class="font-weight-bold">0.0291</span></VCol>
                           <VCol cols="3" class="text-caption grey--text">Amount<br><span class="font-weight-bold">105.75</span></VCol>
@@ -3959,7 +3967,7 @@ const tradeItems = [
                         </div>
                         <div class="text-caption mt-1">Open: <span class="font-weight-light-bold">Dec 10, 2024 - 22:17</span></div>
                         <VRow class="mt-1">
-                          <VCol cols="3" class="text-caption grey--text">Trade ID<br><span class="font-weight-bold">502426</span></VCol>
+                          <VCol cols="3" class="text-caption grey--text">ID<br><span class="font-weight-bold">502426</span></VCol>
                           <VCol cols="3" class="text-caption grey--text">Price<br><span class="font-weight-bold">3634.04</span></VCol>
                           <VCol cols="3" class="text-caption grey--text">Quantity<br><span class="font-weight-bold">0.0291</span></VCol>
                           <VCol cols="3" class="text-caption grey--text">Amount<br><span class="font-weight-bold">105.75</span></VCol>
@@ -3980,7 +3988,7 @@ const tradeItems = [
                       </div>
                       <div class="text-caption mt-1">Open: <span class="font-weight-light-bold">Dec 10, 2024 - 22:17</span></div>
                       <VRow class="mt-1">
-                        <VCol cols="3" class="text-caption grey--text">Trade ID<br><span class="font-weight-bold">502426</span></VCol>
+                        <VCol cols="3" class="text-caption grey--text">ID<br><span class="font-weight-bold">502426</span></VCol>
                         <VCol cols="3" class="text-caption grey--text">Price<br><span class="font-weight-bold">3634.04</span></VCol>
                         <VCol cols="3" class="text-caption grey--text">Quantity<br><span class="font-weight-bold">0.0291</span></VCol>
                         <VCol cols="3" class="text-caption grey--text">Amount<br><span class="font-weight-bold">105.75</span></VCol>
@@ -3999,7 +4007,7 @@ const tradeItems = [
                       </div>
                       <div class="text-caption mt-1">Open: <span class="font-weight-light-bold">Dec 10, 2024 - 22:17</span></div>
                       <VRow class="mt-1">
-                        <VCol cols="3" class="text-caption grey--text">Trade ID<br><span class="font-weight-bold">502426</span></VCol>
+                        <VCol cols="3" class="text-caption grey--text">ID<br><span class="font-weight-bold">502426</span></VCol>
                         <VCol cols="3" class="text-caption grey--text">Price<br><span class="font-weight-bold">3634.04</span></VCol>
                         <VCol cols="3" class="text-caption grey--text">Quantity<br><span class="font-weight-bold">0.0291</span></VCol>
                         <VCol cols="3" class="text-caption grey--text">Amount<br><span class="font-weight-bold">105.75</span></VCol>
@@ -4056,12 +4064,12 @@ const tradeItems = [
                           <VRow class="mt-0">
                             <VCol cols="5" class="pb-2 pt-1 pr-0">
                               <div class="align-center gap-x-2" >
-                                <span class="text-caption font-weight-bold">Trade ID : {{ item.tradeId }}</span>
+                                <span class="text-caption font-weight-bold">ID : {{ item.tradeId }}</span>
                               </div>
                             </VCol>
                             <VCol cols="7" class="pb-2 pt-1 pl-0">
                               <div class="text-right text-caption">
-                                <div><strong>Open:</strong> <span class="font-weight-bold">{{ item.open }}</span></div>
+                                <div><span class="font-weight-bold">{{ item.open }}</span></div>
                               </div>
                             </VCol>
                           </VRow>
@@ -4073,16 +4081,18 @@ const tradeItems = [
                             v-if="item.type === 'Sell'"
                             class="d-flex justify-space-between flex-wrap text-caption"
                           >
-                            <span class="text-caption"><strong>Gross Profit :</strong> <span class="font-weight-bold"> {{ item.gross }}</span></span>
+                            <span class="text-caption"><strong>GP :</strong> <span class="font-weight-bold"> {{ item.gross }}</span></span>
                             <span class="text-caption "><strong>Fees :</strong><span class="font-weight-bold"> {{ item.fees }}</span></span>
                             <span class="text-caption"><strong>Profit :</strong><span class="font-weight-bold"> {{ item.profit }}</span></span>
-                            <span class="text-caption"><strong>Profit to Tank :</strong><span class="font-weight-bold"> {{ item.toTank }}</span></span>
-                            <span class="text-caption font-weight-bold">
-                                  <strong>Net Profit :</strong>
-                                  <VChip color="success" size="small" class="font-bold ml-1">
-                                    {{ item.net }} [{{ item.percent }}]
-                                  </VChip>
-                                </span>
+                            <span class="text-caption"><strong>Tank :</strong><span class="font-weight-bold"> {{ item.toTank }}</span></span>
+                            <div class="d-flex justify-space-between align-center w-100 mt-2">
+    <span class="text-caption font-weight-bold">
+      <strong>Net Profit :</strong>
+    </span>
+                              <VChip color="success" size="small" class="font-bold">
+                                {{ item.net }} [{{ item.percent }}]
+                              </VChip>
+                            </div>
                           </div>
                         </VCard>
                       </VCol>

@@ -76,12 +76,8 @@
     const amount = computed(() => 103.22)
     const walletAddress = ref('TLcK1jxtV3LW51kugYXPUWgzXkkJfnnAyD')
 
-    function close() {
-        isOpen.value = false
-    }
-
     function onPaid() {
-        close
+      isOpen.value = false
         // After confirming payment, open the processing modal
         processingDialog.value = true
         // simulate backend confirmation delay

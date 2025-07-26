@@ -22,7 +22,7 @@ export default [
   {
     title: 'Packages',
     icon: { icon: 'tabler-rocket' },
-    // to: 'apps-email',
+    to: { name: 'packages' },
   },
   {
     title: 'My Loyalty Points',
