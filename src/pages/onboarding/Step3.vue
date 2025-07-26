@@ -263,6 +263,7 @@ register()
 
             <!--</div>-->
             <!-- 👉 Annual and monthly price toggler -->
+          <div class="mt-4">
           <swiper-container
             pagination="true"
             navigation="true"
@@ -385,6 +386,7 @@ register()
               </VCard>
             </swiper-slide>
           </swiper-container>
+          </div>
         </div>
         <VNavigationDrawer
                 v-model="drawer"
