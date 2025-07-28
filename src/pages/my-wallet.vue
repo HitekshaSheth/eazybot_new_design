@@ -245,37 +245,46 @@
 <!--          </template>-->
 <!--        </VDataTable>-->
 
-        <VCard
-          v-for="item in filteredTransactions"
-          :key="item.id"
-          class="mb-4 pa-3"
-          elevation="1"
+        <VDataTable
+          :items="filteredTransactions"
+          item-value="id"
+          hide-default-header
+          class="elevation-0"
         >
-          <VRow>
-            <VCol cols="1" class="pr-0 pl-1">
-              <!-- Type -->
+          <!-- Custom card-style row rendering -->
+          <template #item="{ item }">
+            <VCard class="mb-4 pa-3" elevation="1">
+              <VRow>
+                <VCol cols="1" class="pr-0 pl-1">
+                  <VIcon v-if="item.type === 1" color="error" icon="tabler-credit-card-pay" />
+                  <VIcon v-else color="primary" icon="tabler-credit-card-refund" />
+                </VCol>
 
-              <VIcon color="error" v-if="item.type === 1" icon="tabler-credit-card-pay"></VIcon>
-              <VIcon color="primary" icon="tabler-credit-card-refund" v-else></VIcon>
-            </VCol>
-            <VCol cols="8" class="pr-0 pl-1">
-              <div class="font-weight-medium" style="color: #475569;">{{ item.comment }}</div>
-              <div class="text-caption mt-1">{{ formatDate(item.date) }}</div>
-            </VCol>
-            <VCol cols="3" class="pr-0 pl-1">
-              <!-- Amount -->
-              <div class="font-weight-bold" style="color: #475569;">
-                $ {{ item.amount }}
-              </div>
+                <VCol cols="8" class="pr-0 pl-1">
+                  <div class="font-weight-medium" style="color: #475569;">
+                    {{ item.comment }}
+                  </div>
+                  <div class="text-caption mt-1">
+                    {{ formatDate(item.date) }}
+                  </div>
+                </VCol>
 
-              <!-- Status -->
-              <div class="mt-1 d-flex align-center" v-if="item.status === 'failed'">
-                <span class="text-error font-weight-medium" style="font-size: 10px;text-align: right">Failed <VIcon icon="tabler-circle-x"/></span>
-              </div>
+                <VCol cols="3" class="pr-0 pl-1">
+                  <div class="font-weight-bold" style="color: #475569;">
+                    $ {{ item.amount }}
+                  </div>
 
-            </VCol>
-          </VRow>
-        </VCard>
+                  <div class="mt-1 d-flex align-center" v-if="item.status === 'failed'">
+            <span class="text-error font-weight-medium" style="font-size: 10px;">
+              Failed <VIcon icon="tabler-circle-x" />
+            </span>
+                  </div>
+                </VCol>
+              </VRow>
+            </VCard>
+          </template>
+        </VDataTable>
+
       </VCardText>
     </VCard>
   </div>
@@ -381,7 +390,19 @@ const allTransactions = ref([
   },
   {
     date: '2025-05-15',
+    comment: 'Serviceeee fee 0.25% deduction from Trade 60741551',
+    status: 'failed',
+    amount: 993.62,
+    type : 1
+  },{
+    date: '2025-05-15',
     comment: 'Service fee 0.25% deduction from Trade 60741551',
+    status: 'success',
+    amount: 993.62,
+  },
+  {
+    date: '2025-05-15',
+    comment: 'Servicesss fee 0.25% deduction from Trade 60741551',
     status: 'failed',
     amount: 993.62,
     type : 1
@@ -451,5 +472,10 @@ function formatDate(value) {
 ::v-deep(.v-table th) {
   text-transform: capitalize;
   font-weight: bold!important;
+}
+@media (max-width: 600px) {
+  ::v-deep(.v-table__wrapper){
+    overflow: unset;
+  }
 }
 </style>

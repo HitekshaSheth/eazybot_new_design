@@ -2045,7 +2045,6 @@ const tradeItems = [
 
 
     <VCard>
-
       <VCardText class="d-flex justify-space-between align-center flex-wrap gap-4">
         <!-- Left: Title -->
         <span class="font-weight-bold">

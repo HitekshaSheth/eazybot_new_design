@@ -164,12 +164,17 @@
           <VTab v-for="tab in tabs" :key="tab" class="text-caption font-weight-bold">{{ tab }}</VTab>
         </VTabs>
         <!-- Table -->
-        <VCard
-          v-for="item in filteredTransactions"
-          :key="item.id"
-          class="mb-4 pa-3"
-          elevation="1"
+        <VDataTable
+          :items="filteredTransactions"
+          item-value="id"
+          hide-default-header
+          class="elevation-0"
         >
+          <!-- Custom card-style row rendering -->
+          <template #item="{ item }">
+        <VCard
+          class="mb-4 pa-3"
+          elevation="1">
           <VRow>
             <VCol cols="1" class="pr-0 pl-1">
               <!-- Type -->
@@ -196,6 +201,8 @@
             </VCol>
           </VRow>
         </VCard>
+          </template>
+        </VDataTable>
 
       </VCardText>
     </VCard>
@@ -421,5 +428,10 @@ function formatDate(value) {
 ::v-deep(.v-table th) {
   text-transform: capitalize;
   font-weight: bold!important;
+}
+@media (max-width: 600px) {
+  ::v-deep(.v-table__wrapper){
+    overflow: unset;
+  }
 }
 </style>
