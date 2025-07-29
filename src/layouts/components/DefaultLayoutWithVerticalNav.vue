@@ -10,6 +10,7 @@ import NavBarNotifications from '@/layouts/components/NavBarNotifications.vue'
 import CustomNotifications from '@/layouts/components/CustomNotification.vue'
 import NavbarThemeSwitcher from '@/layouts/components/NavbarThemeSwitcher.vue'
 import UserProfile from '@/layouts/components/UserProfile.vue'
+import ThemeCustomizer from '@core/components/TheCustomizer.vue'
 import NavBarI18n from '@core/components/I18n.vue'
 import AuthProvider from '@/views/pages/authentication/AuthProvider.vue'
 
@@ -63,6 +64,8 @@ import { VerticalNavLayout } from '@layouts'
         <UserProfile />
       </div>
     </template>
+    <ThemeCustomizer />
+
 
     <!-- 👉 Pages -->
     <slot />

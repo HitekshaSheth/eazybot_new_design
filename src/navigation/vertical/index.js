@@ -43,6 +43,20 @@ export default [
       { title: 'Notifications', icon: { icon: 'tabler-bell' }, to : {name: 'account-settings-notification'} },
     ],
   },
+  { heading: 'Error Pages' },
+  {
+    title: 'Comming Soon',
+    icon: { icon: 'tabler-telescope' },
+    to : {name: 'error-coming-soon'}
+  },
+  {
+    title: 'Under Maintenance',
+    icon: { icon: 'tabler-folder-question' },
+    to : {name: 'error-under-maintenance'}
+  },
+  { title: 'Page Not Found - 404',icon: { icon: 'tabler-error-404' }, to: { path: '/error/404' }, target: '_blank' },
+  { title: 'Not Authorized - 401',icon: { icon: 'tabler-license-off' }, to: { name: 'error-not-authorized' }, target: '_blank' },
+
   { heading: 'Help & Support' },
   {
     title: 'Resource Guide',
