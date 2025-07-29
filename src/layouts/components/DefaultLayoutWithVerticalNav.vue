@@ -59,38 +59,7 @@ import { VerticalNavLayout } from '@layouts'
 <!--        </VListItem>-->
         <NavbarThemeSwitcher  v-if="mdAndUp" />
 <!--        <NavBarNotifications class="me-1" />-->
-        <CustomNotifications :notifications="[
-  { type: 'alert', message: 'New trade is trying to get placed but trade id 59026733 exists with same cover index' },
-  { type: 'alert', message: 'New trade is trying to get placed but trade id 59026733 exists with same cover index' },
-  { type: 'alert', message: 'New trade is trying to get placed but trade id 59026733 exists with same cover index' },
-  { type: 'alert', message: 'New trade is trying to get placed but trade id 59026733 exists with same cover index' },
-  { type: 'alert', message: 'New trade is trying to get placed but trade id 59026733 exists with same cover index' },
-  { type: 'alert', message: 'New trade is trying to get placed but trade id 59026733 exists with same cover index' },
-  { type: 'alert', message: 'New trade is trying to get placed but trade id 59026733 exists with same cover index' },
-  { type: 'alert', message: 'New trade is trying to get placed but trade id 59026733 exists with same cover index' },
-  { type: 'alert', message: 'New trade is trying to get placed but trade id 59026733 exists with same cover index' },
-  { type: 'alert', message: 'New trade is trying to get placed but trade id 59026733 exists with same cover index' },
-  { type: 'alert', message: 'New trade is trying to get placed but trade id 59026733 exists with same cover index' },
-  { type: 'alert', message: 'New trade is trying to get placed but trade id 59026733 exists with same cover index' },
-  { type: 'update', message: 'System update scheduled for tonight System update scheduled for tonight' },
-  { type: 'update', message: 'System update scheduled for tonight System update scheduled for tonight' },
-  { type: 'update', message: 'System update scheduled for tonight System update scheduled for tonight' },
-  { type: 'update', message: 'System update scheduled for tonight System update scheduled for tonight' },
-  { type: 'update', message: 'System update scheduled for tonight System update scheduled for tonight' },
-  { type: 'update', message: 'System update scheduled for tonight System update scheduled for tonight' },
-  { type: 'update', message: 'System update scheduled for tonight System update scheduled for tonight' },
-  { type: 'update', message: 'System update scheduled for tonight System update scheduled for tonight' },
-  { type: 'update', message: 'System update scheduled for tonight System update scheduled for tonight' },
-  { type: 'update', message: 'System update scheduled for tonight System update scheduled for tonight' },
-  { type: 'update', message: 'System update scheduled for tonight System update scheduled for tonight' },
-  { type: 'update', message: 'System update scheduled for tonight System update scheduled for tonight' },
-  { type: 'update', message: 'System update scheduled for tonight System update scheduled for tonight' },
-  { type: 'update', message: 'System update scheduled for tonight System update scheduled for tonight' },
-  { type: 'log', message: 'User logged in from new device System update scheduled for tonight' },
-  { type: 'log', message: 'User logged in from new device System update scheduled for tonight' },
-  { type: 'log', message: 'User logged in from new device System update scheduled for tonight' },
-  { type: 'log', message: 'User logged in from new device System update scheduled for tonight' }
-]" />
+        <CustomNotifications class="me-1" />
         <UserProfile />
       </div>
     </template>

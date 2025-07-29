@@ -1,160 +1,233 @@
-<template>
-  <div>
-    <!-- Notification Bell Icon -->
-    <VBtn
-      icon
-      variant="text"
-      @click.stop="menu = !menu"
-      ref="bellRef"
-    >
-<!--      <VBadge-->
-<!--        :content="totalUnread"-->
-<!--        color="error"-->
-<!--        overlap-->
-<!--        offset-x="4"-->
-<!--        offset-y="4"-->
-<!--        bordered-->
-<!--      >-->
-<!--        <VIcon icon="tabler-bell" />-->
-<!--      </VBadge>-->
-      <VBadge
-        v-bind="props.badgeProps"
-       :content="totalUnread"
-        color="error"
-        dot
-        offset-x="2"
-        offset-y="3"
-      >
-        <VIcon icon="tabler-bell" />
-      </VBadge>
-    </VBtn>
-
-
-    <!-- Notification Dropdown -->
-    <VMenu
-      v-model="menu"
-      :close-on-content-click="false"
-      activator="parent"
-      location="bottom end"
-      width="360"
-      offset="10"
-    >
-      <VCard class="pa-0 rounded-lg" max-height="400">
-        <!-- Tabs -->
-        <VTabs
-          v-model="tab"
-          color="primary"
-          slider-color="primary"
-          class="px-4 pt-2"
-        >
-          <VTab>Bot Alerts</VTab>
-          <VTab>
-            <div class="d-flex align-center gap-x-1">
-              Update
-              <VChip size="small" color="grey-lighten-3" class="font-weight-medium" label>
-                {{ updates.length }}
-              </VChip>
-            </div>
-          </VTab>
-          <VTab>Logs</VTab>
-        </VTabs>
-
-        <VDivider />
-
-        <!-- Tab Content -->
-        <VWindow v-model="tab" class="px-4 pt-3 pb-4" style="max-height: 320px; overflow-y: auto;">
-          <!-- Alerts -->
-          <VWindowItem>
-            <div v-for="(item, i) in alerts" :key="`alert-${i}`" class="d-flex py-1 align-start">
-              <VAvatar size="28" color="error" class="mt-1 mr-2">
-                <VIcon icon="tabler-info-circle" size="16" />
-              </VAvatar>
-              <div class="notification-msg">{{ item.message }}</div>
-            </div>
-          </VWindowItem>
-
-          <!-- Updates -->
-          <VWindowItem>
-            <div v-for="(item, i) in updates" :key="`update-${i}`" class="d-flex py-1 align-start">
-              <VAvatar size="28" color="info" class="mt-1 mr-2">
-                <VIcon icon="tabler-bell" size="16" />
-              </VAvatar>
-              <div class="notification-msg">{{ item.message }}</div>
-            </div>
-          </VWindowItem>
-
-          <!-- Logs -->
-          <VWindowItem>
-            <div v-for="(item, i) in logs" :key="`log-${i}`" class="d-flex py-1 align-start">
-              <VAvatar size="28" color="grey-darken-1" class="mt-1 mr-2">
-                <VIcon icon="tabler-file-text" size="16" />
-              </VAvatar>
-              <div class="notification-msg">{{ item.message }}</div>
-            </div>
-          </VWindowItem>
-        </VWindow>
-      </VCard>
-    </VMenu>
-  </div>
-</template>
-
 <script setup>
-import { ref, computed } from 'vue'
+import avatar3 from '@images/avatars/avatar-3.png'
+import avatar4 from '@images/avatars/avatar-4.png'
+import avatar5 from '@images/avatars/avatar-5.png'
+import paypal from '@images/cards/paypal-rounded.png'
 
-const menu = ref(false)
-const tab = ref(0)
-
-const props = defineProps({
-  notifications: {
-    type: Array,
-    required: true,
+const notifications = ref([
+  {
+    type : 'alert',
+    id: 1,
+    img: avatar4,
+    title: 'Congratulation Flora! 🎉',
+    subtitle: 'Won the monthly best seller badge',
+    time: 'Today',
+    isSeen: true,
   },
-})
+  {
+    type : 'alert',
+    id: 2,
+    text: 'Tom Holland',
+    title: 'New user registered.',
+    subtitle: '5 hours ago',
+    time: 'Yesterday',
+    isSeen: false,
+  },
+  {
+    type : 'alert',
+    id: 3,
+    img: avatar5,
+    title: 'New message received 👋🏻',
+    subtitle: 'You have 10 unread messages',
+    time: '11 Aug',
+    isSeen: true,
+  },
+  {
+    type : 'alert',
+    id: 4,
+    img: paypal,
+    title: 'PayPal',
+    subtitle: 'Received Payment',
+    time: '25 May',
+    isSeen: false,
+    color: 'error',
+  },
+  {
+    type : 'alert',
+    id: 5,
+    img: avatar3,
+    title: 'Received Order 📦',
+    subtitle: 'New order received from john',
+    time: '19 Mar',
+    isSeen: true,
+  },
+  {
+    type : 'alert',
+    id: 6,
+    img: avatar4,
+    title: 'Congratulation Flora! 🎉',
+    subtitle: 'Won the monthly best seller badge',
+    time: 'Today',
+    isSeen: true,
+  },
+  {
+    type : 'alert',
+    id: 7,
+    text: 'Tom Holland',
+    title: 'New user registered.',
+    subtitle: '5 hours ago',
+    time: 'Yesterday',
+    isSeen: false,
+  },
+  {
+    type : 'alert',
+    id: 8,
+    img: avatar5,
+    title: 'New message received 👋🏻',
+    subtitle: 'You have 10 unread messages',
+    time: '11 Aug',
+    isSeen: true,
+  },
+  {
+    type : 'alert',
+    id: 9,
+    img: paypal,
+    title: 'PayPal',
+    subtitle: 'Received Payment',
+    time: '25 May',
+    isSeen: false,
+    color: 'error',
+  },
+  {
+    type : 'alert',
+    id: 10,
+    img: avatar3,
+    title: 'Received Order 📦',
+    subtitle: 'New order received from john',
+    time: '19 Mar',
+    isSeen: true,
+  },
+  {
+    type : 'update',
+    id: 11,
+    img: avatar4,
+    title: 'Congratulation Flora! 🎉',
+    subtitle: 'Won the monthly best seller badge',
+    time: 'Today',
+    isSeen: true,
+  },
+  {
+    type : 'update',
+    id: 12,
+    text: 'Tom Holland',
+    title: 'New user registered.',
+    subtitle: '5 hours ago',
+    time: 'Yesterday',
+    isSeen: false,
+  },
+  {
+    type : 'log',
+    id: 13,
+    img: avatar5,
+    title: 'New message received 👋🏻',
+    subtitle: 'You have 10 unread messages',
+    time: '11 Aug',
+    isSeen: true,
+  },
+  {
+    type : 'update',
+    id: 14,
+    img: paypal,
+    title: 'PayPal',
+    subtitle: 'Received Payment',
+    time: '25 May',
+    isSeen: false,
+    color: 'error',
+  },
+  {
+    type : 'update',
+    id: 15,
+    img: avatar3,
+    title: 'Received Order 📦',
+    subtitle: 'New order received from john',
+    time: '19 Mar',
+    isSeen: true,
+  },
+  {
+    type : 'log',
+    id: 16,
+    img: avatar4,
+    title: 'Congratulation Flora! 🎉',
+    subtitle: 'Won the monthly best seller badge',
+    time: 'Today',
+    isSeen: true,
+  },
+  {
+    type : 'update',
+    id: 17,
+    text: 'Tom Holland',
+    title: 'New user registered.',
+    subtitle: '5 hours ago',
+    time: 'Yesterday',
+    isSeen: false,
+  },
+  {
+    type : 'update',
+    id: 18,
+    img: avatar5,
+    title: 'New message received 👋🏻',
+    subtitle: 'You have 10 unread messages',
+    time: '11 Aug',
+    isSeen: true,
+  },
+  {
+    type : 'update',
+    id: 19,
+    img: paypal,
+    title: 'PayPal',
+    subtitle: 'Received Payment',
+    time: '25 May',
+    isSeen: false,
+    color: 'error',
+  },
+  {
+    type : 'log',
+    id: 20,
+    img: avatar3,
+    title: 'Received Order 📦',
+    subtitle: 'New order received from john',
+    time: '19 Mar',
+    isSeen: true,
+  },
+])
 
-const alerts = computed(() => props.notifications.filter(n => n.type === 'alert').slice(0, 10))
-const updates = computed(() => props.notifications.filter(n => n.type === 'update').slice(0, 20))
-const logs = computed(() => props.notifications.filter(n => n.type === 'log').slice(0, 10))
+const removeNotification = notificationId => {
+  notifications.value.forEach((item, index) => {
+    if (notificationId === item.id)
+      notifications.value.splice(index, 1)
+  })
+}
 
-const totalUnread = computed(() =>
-  props.notifications.filter(n => !n.read).length
-)
+const markRead = notificationId => {
+  notifications.value.forEach(item => {
+    notificationId.forEach(id => {
+      if (id === item.id)
+        item.isSeen = true
+    })
+  })
+}
+
+const markUnRead = notificationId => {
+  notifications.value.forEach(item => {
+    notificationId.forEach(id => {
+      if (id === item.id)
+        item.isSeen = false
+    })
+  })
+}
+
+const handleNotificationClick = notification => {
+  if (!notification.isSeen)
+    markRead([notification.id])
+}
 </script>
-<style lang="scss">
-.notification-section {
-  padding-block: 0.75rem;
-  padding-inline: 1rem;
-}
 
-.list-item-hover-class {
-  .visible-in-hover {
-    display: none;
-  }
-
-  &:hover {
-    .visible-in-hover {
-      display: block;
-    }
-  }
-}
-
-.notification-list.v-list {
-  .v-list-item {
-    border-radius: 0 !important;
-    margin: 0 !important;
-    padding-block: 0.75rem !important;
-  }
-}
-
-// Badge Style Override for Notification Badge
-.notification-badge {
-  .v-badge__badge {
-    /* stylelint-disable-next-line liberty/use-logical-spec */
-    min-width: 18px;
-    padding: 0;
-    block-size: 18px;
-  }
-}
-.notification-msg{
-  font-size: 14px;
-}
-</style>
+<template>
+  <TabNotifications
+    :notifications="notifications"
+    @remove="removeNotification"
+    @read="markRead"
+    @unread="markUnRead"
+    @click:notification="handleNotificationClick"
+  />
+</template>
