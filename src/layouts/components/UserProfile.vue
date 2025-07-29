@@ -56,7 +56,7 @@ import avatar1 from '@images/avatars/avatar-1.png'
           <VDivider class="my-2" />
 
           <!-- 👉 Profile -->
-          <VListItem link>
+          <VListItem :to="{name: 'account-settings-account'}">
             <template #prepend>
               <VIcon
                 class="me-2"
@@ -69,17 +69,17 @@ import avatar1 from '@images/avatars/avatar-1.png'
           </VListItem>
 
           <!-- 👉 Settings -->
-          <VListItem link>
-            <template #prepend>
-              <VIcon
-                class="me-2"
-                icon="tabler-settings"
-                size="22"
-              />
-            </template>
+<!--          <VListItem link>-->
+<!--            <template #prepend>-->
+<!--              <VIcon-->
+<!--                class="me-2"-->
+<!--                icon="tabler-settings"-->
+<!--                size="22"-->
+<!--              />-->
+<!--            </template>-->
 
-            <VListItemTitle>Settings</VListItemTitle>
-          </VListItem>
+<!--            <VListItemTitle>Settings</VListItemTitle>-->
+<!--          </VListItem>-->
 
           <!-- 👉 Pricing -->
 <!--          <VListItem link>-->

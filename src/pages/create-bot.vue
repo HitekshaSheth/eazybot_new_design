@@ -19,14 +19,17 @@ const numberedSteps = [
     title: 'Cover Configuration',
   }
 ]
-const iconSteps = [
+const steps = [
   {
+    number: 1,
     title: 'Bot Setup',
   },
   {
+    number: 2,
     title: 'Take Profit',
   },
   {
+    number: 3,
     title: 'Cover Configuration',
   }
 
@@ -897,15 +900,57 @@ body .v-btn-group.v-btn-toggle.v-btn-group{
     </VCard>
   </div>
   <div v-else>
-    <div class="mb-6">
-      <AppStepper
-        v-model:current-step="currentStep"
-        :items="iconSteps"
-        :is-active-step-valid="isCurrentStepValid"
-      />
-    </div>
+<!--    <div class="mb-6">-->
+<!--      <AppStepper-->
+<!--        v-model:current-step="currentStep"-->
+<!--        :items="iconSteps"-->
+<!--        :is-active-step-valid="isCurrentStepValid"-->
+<!--      />-->
+<!--    </div>-->
 
-      <VDivider />
+    <div class="d-flex justify-space-between align-center mb-6">
+      <div v-for="(step, index) in steps" :key="step.number" class="d-flex align-center">
+      <!-- Step circle -->
+      <div
+        class="rounded-circle d-flex align-center justify-center"
+        :style="{
+backgroundColor:
+      currentStep + 1 === step.number
+        ? 'rgb(var(--v-theme-primary))'  // primary
+        : currentStep + 1 > step.number
+        ? 'rgb(var(--v-theme-success))' // success
+        : '#e5e7eb', // gray-200
+        //          color: 'white',
+            color: currentStep + 1 < step.number ? '#64748b' : 'white', // next step = gray-500 text
+
+          width: '34px',
+          height: '26px',
+          fontSize: '14px',
+        }"
+      >
+        {{ step.number }}
+      </div>
+
+      <!-- Step label -->
+      <div class="ml-2 font-weight-medium"
+           :class="{
+    'text-primary': currentStep + 1 === step.number,
+    'text-success': currentStep + 1 > step.number,
+    'text-caption': currentStep + 1 < step.number,
+  }" style="font-size: 12px!important;">
+        {{ step.title }}
+      </div>
+
+      <!-- Dashes (except last step) -->
+      <div
+        v-if="index < steps.length - 1"
+        class="d-flex align-center"
+        style="gap: 4px; margin-right: 12px;"
+      >
+        <div v-for="i in 3" :key="i" style="width: 8px; height: 2px; background-color: #d1d5db;"></div>
+      </div>
+    </div>
+  </div>
 
 <!--      <VCardText>-->
         <!-- 👉 stepper content -->

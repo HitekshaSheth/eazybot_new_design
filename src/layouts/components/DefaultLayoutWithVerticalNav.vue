@@ -7,6 +7,7 @@ const { mdAndUp } = useDisplay()
 // Components
 import Footer from '@/layouts/components/Footer.vue'
 import NavBarNotifications from '@/layouts/components/NavBarNotifications.vue'
+import CustomNotifications from '@/layouts/components/CustomNotification.vue'
 import NavbarThemeSwitcher from '@/layouts/components/NavbarThemeSwitcher.vue'
 import UserProfile from '@/layouts/components/UserProfile.vue'
 import NavBarI18n from '@core/components/I18n.vue'
@@ -57,7 +58,39 @@ import { VerticalNavLayout } from '@layouts'
 <!--          </div>-->
 <!--        </VListItem>-->
         <NavbarThemeSwitcher  v-if="mdAndUp" />
-        <NavBarNotifications class="me-1" />
+<!--        <NavBarNotifications class="me-1" />-->
+        <CustomNotifications :notifications="[
+  { type: 'alert', message: 'New trade is trying to get placed but trade id 59026733 exists with same cover index' },
+  { type: 'alert', message: 'New trade is trying to get placed but trade id 59026733 exists with same cover index' },
+  { type: 'alert', message: 'New trade is trying to get placed but trade id 59026733 exists with same cover index' },
+  { type: 'alert', message: 'New trade is trying to get placed but trade id 59026733 exists with same cover index' },
+  { type: 'alert', message: 'New trade is trying to get placed but trade id 59026733 exists with same cover index' },
+  { type: 'alert', message: 'New trade is trying to get placed but trade id 59026733 exists with same cover index' },
+  { type: 'alert', message: 'New trade is trying to get placed but trade id 59026733 exists with same cover index' },
+  { type: 'alert', message: 'New trade is trying to get placed but trade id 59026733 exists with same cover index' },
+  { type: 'alert', message: 'New trade is trying to get placed but trade id 59026733 exists with same cover index' },
+  { type: 'alert', message: 'New trade is trying to get placed but trade id 59026733 exists with same cover index' },
+  { type: 'alert', message: 'New trade is trying to get placed but trade id 59026733 exists with same cover index' },
+  { type: 'alert', message: 'New trade is trying to get placed but trade id 59026733 exists with same cover index' },
+  { type: 'update', message: 'System update scheduled for tonight System update scheduled for tonight' },
+  { type: 'update', message: 'System update scheduled for tonight System update scheduled for tonight' },
+  { type: 'update', message: 'System update scheduled for tonight System update scheduled for tonight' },
+  { type: 'update', message: 'System update scheduled for tonight System update scheduled for tonight' },
+  { type: 'update', message: 'System update scheduled for tonight System update scheduled for tonight' },
+  { type: 'update', message: 'System update scheduled for tonight System update scheduled for tonight' },
+  { type: 'update', message: 'System update scheduled for tonight System update scheduled for tonight' },
+  { type: 'update', message: 'System update scheduled for tonight System update scheduled for tonight' },
+  { type: 'update', message: 'System update scheduled for tonight System update scheduled for tonight' },
+  { type: 'update', message: 'System update scheduled for tonight System update scheduled for tonight' },
+  { type: 'update', message: 'System update scheduled for tonight System update scheduled for tonight' },
+  { type: 'update', message: 'System update scheduled for tonight System update scheduled for tonight' },
+  { type: 'update', message: 'System update scheduled for tonight System update scheduled for tonight' },
+  { type: 'update', message: 'System update scheduled for tonight System update scheduled for tonight' },
+  { type: 'log', message: 'User logged in from new device System update scheduled for tonight' },
+  { type: 'log', message: 'User logged in from new device System update scheduled for tonight' },
+  { type: 'log', message: 'User logged in from new device System update scheduled for tonight' },
+  { type: 'log', message: 'User logged in from new device System update scheduled for tonight' }
+]" />
         <UserProfile />
       </div>
     </template>
