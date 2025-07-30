@@ -557,4 +557,11 @@ register()
     .annual-price-text {
         inset-block-end: -40%;
     }
+
+    @media (max-width: 600px) {
+      :deep(.swiper-button-next svg, .swiper-button-prev svg) {
+        width: 50%;
+        height: 50%;
+      }
+    }
 </style>

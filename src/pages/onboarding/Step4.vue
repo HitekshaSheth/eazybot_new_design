@@ -262,8 +262,15 @@ import paperPlane from '@images/visa.png'
 
 </template>
 
-<style lang="scss" scoped>
-    .card-list {
+<style scoped>
+@media (max-width: 600px) {
+  .swiper-button-next svg,
+  .swiper-button-prev svg {
+    width: 50% !important;
+    height: 50% !important;
+  }
+}
+.card-list {
         --v-card-list-gap: 12px;
     }
 
@@ -319,4 +326,5 @@ import paperPlane from '@images/visa.png'
     .annual-price-text {
         inset-block-end: -40%;
     }
+
 </style>
