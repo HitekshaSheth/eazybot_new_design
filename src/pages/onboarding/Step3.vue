@@ -6,6 +6,9 @@ register()
     import pricingPlanArrow from '@images/visa.png'
     import shuttleRocket from '@images/visa.png'
     import DepositDialog from '@/layouts/components/DepositDialog.vue'
+import { useDisplay } from 'vuetify'
+
+const { mdAndUp } = useDisplay()
 
     const annualMonthlyPlanPriceToggler = ref(true)
     const drawer = ref(false)
@@ -438,7 +441,7 @@ register()
                 >
                 </v-select>
                 <div class="text-body-2 text--secondary my-2 mb-8">
-                    <VChip class="d-flex align-left mb-6 text-primary">
+                    <VChip class="d-flex align-left mb-6 text-primary" :style="mdAndUp ? '' : 'font-size: 11px;'">
                         <VIcon
                                 icon="tabler-access-point"
                                 class="flip-in-rtl text-sm text-primary me-1"
@@ -468,13 +471,10 @@ register()
                 <v-checkbox
                         v-model="agreed"
                         hide-details
-                        class="mb-8"
-                        label="I agree with terms and conditions. "
-                >
-                    <template #label>
-                        I agree with terms and conditions
-                        <a href="#" @click.prevent="openTerms">&nbspClick here.</a>
-                    </template>
+                        class="mb-8">
+                  <template #label>
+                    <span :style="mdAndUp ? '' : 'font-size: 13px;'">I agree with terms and conditions.<a href="#" class="text-primary text-decoration-underline">Click here.</a></span>
+                  </template>
                 </v-checkbox>
 
                 <!-- Submit Button -->
@@ -562,6 +562,11 @@ register()
       :deep(.swiper-button-next svg, .swiper-button-prev svg) {
         width: 50%;
         height: 50%;
+      }
+    }
+    @media (max-width: 390px) {
+      .v-btn--size-default{
+        font-size: 12px!important;
       }
     }
 </style>

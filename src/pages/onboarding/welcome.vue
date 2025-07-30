@@ -223,9 +223,7 @@
             <!-- Step Title -->
             <div
               class="font-weight-bold"
-              :class="getTextClass(index)"
-              style="font-size: 14px!important;"
-            >
+              :class="getTextClass(index)">
               {{ step.title }}
             </div>
 
@@ -342,6 +340,16 @@
     .border-e {
         height: 950px;
     }
-
+    .text-caption,.text-primary{
+      font-size: 14px!important;
+    }
+    @media (max-width: 390px) {
+      .text-caption,.text-primary{
+        font-size: 12px!important;
+      }
+      .v-btn--size-default{
+        font-size: 12px!important;
+      }
+    }
 
     </style>

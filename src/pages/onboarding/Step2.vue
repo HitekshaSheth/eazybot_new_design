@@ -266,12 +266,6 @@
                                       label="Api Secret"
                                       placeholder="*****"
                         />
-                    </VCol>
-
-                    <VCol
-                            cols="12"
-                            md="6"
-                    >
                         <AppTextarea class="pt-4"
                                 label="Trusted IP (Recommended)"
                                 auto-grow
