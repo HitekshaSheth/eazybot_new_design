@@ -23,48 +23,24 @@
 
 
     // Only show current and next step
-    const visibleSteps = computed(() => {
-      if (currentStep.value === numberedSteps.length - 1) {
-        // Last step: show previous and current
-        return numberedSteps.slice(currentStep.value - 1, currentStep.value + 1)
-      } else {
-        // Default: show current and next
-        return numberedSteps.slice(currentStep.value, currentStep.value + 2)
-      }
-    })
-
+    const visibleSteps = computed(() =>
+      numberedSteps.slice(currentStep.value, currentStep.value + 2)
+    )
 
     // Styling helpers
     const getBgColor = index => {
-      const isLastStep = currentStep.value === numberedSteps.length - 1
-
-      const realIndex = isLastStep
-        ? currentStep.value - 1 + index  // showing [prev, current]
-        : currentStep.value + index      // showing [current, next]
-
-      return realIndex === currentStep.value
-        ? 'rgb(var(--v-theme-primary))'
-        : '#e5e7eb'
+      const realIndex = currentStep.value + index
+      if (realIndex === currentStep.value) return 'rgb(var(--v-theme-primary))'
+      return '#e5e7eb'
     }
 
-
     const getTextColor = index => {
-      const isLastStep = currentStep.value === numberedSteps.length - 1
-
-      const realIndex = isLastStep
-        ? currentStep.value - 1 + index  // last step: show previous + current
-        : currentStep.value + index      // otherwise: current + next
-
+      const realIndex = currentStep.value + index
       return realIndex === currentStep.value ? 'white' : '#64748b'
     }
 
     const getTextClass = index => {
-      const isLastStep = currentStep.value === numberedSteps.length - 1
-
-      const realIndex = isLastStep
-        ? currentStep.value - 1 + index  // Shows prev + current at last step
-        : currentStep.value + index      // Shows current + next by default
-
+      const realIndex = currentStep.value + index
       return {
         'text-primary': realIndex === currentStep.value,
         'text-caption': realIndex !== currentStep.value,
@@ -228,11 +204,12 @@
       <!-- Stepper container with horizontal scroll -->
 
       <VRow style="height: auto">
-        <div class="d-flex align-center justify-space-between pa-4" style="width: 100%;">
+        <div class="d-flex align-center pa-4" style="width: 100%;" :class = "currentStep < numberedSteps.length - 1 ? ' justify-space-between' : ''">
           <template v-for="(step, index) in visibleSteps" :key="step.number">
             <!-- Step Number -->
             <div
               class="rounded-circle d-flex align-center justify-center"
+              :class = "step.number < numberedSteps.length ? '' : 'mr-4'"
               :style="{
         backgroundColor: getBgColor(index),
         color: getTextColor(index),
