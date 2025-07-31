@@ -23,24 +23,48 @@
 
 
     // Only show current and next step
-    const visibleSteps = computed(() =>
-      numberedSteps.slice(currentStep.value, currentStep.value + 2)
-    )
+    const visibleSteps = computed(() => {
+      if (currentStep.value === numberedSteps.length - 1) {
+        // Last step: show previous and current
+        return numberedSteps.slice(currentStep.value - 1, currentStep.value + 1)
+      } else {
+        // Default: show current and next
+        return numberedSteps.slice(currentStep.value, currentStep.value + 2)
+      }
+    })
+
 
     // Styling helpers
     const getBgColor = index => {
-      const realIndex = currentStep.value + index
-      if (realIndex === currentStep.value) return 'rgb(var(--v-theme-primary))'
-      return '#e5e7eb'
+      const isLastStep = currentStep.value === numberedSteps.length - 1
+
+      const realIndex = isLastStep
+        ? currentStep.value - 1 + index  // showing [prev, current]
+        : currentStep.value + index      // showing [current, next]
+
+      return realIndex === currentStep.value
+        ? 'rgb(var(--v-theme-primary))'
+        : '#e5e7eb'
     }
 
+
     const getTextColor = index => {
-      const realIndex = currentStep.value + index
+      const isLastStep = currentStep.value === numberedSteps.length - 1
+
+      const realIndex = isLastStep
+        ? currentStep.value - 1 + index  // last step: show previous + current
+        : currentStep.value + index      // otherwise: current + next
+
       return realIndex === currentStep.value ? 'white' : '#64748b'
     }
 
     const getTextClass = index => {
-      const realIndex = currentStep.value + index
+      const isLastStep = currentStep.value === numberedSteps.length - 1
+
+      const realIndex = isLastStep
+        ? currentStep.value - 1 + index  // Shows prev + current at last step
+        : currentStep.value + index      // Shows current + next by default
+
       return {
         'text-primary': realIndex === currentStep.value,
         'text-caption': realIndex !== currentStep.value,
@@ -212,7 +236,7 @@
               :style="{
         backgroundColor: getBgColor(index),
         color: getTextColor(index),
-        width: '34px',
+        width: '26px',
         height: '26px',
         fontSize: '14px',
       }"
@@ -235,97 +259,92 @@
         </div>
 
         <VCol cols="12">
-                <VCard>
-                <VCardText>
-                    <VForm ref="stepperForm" >
-                        <VWindow v-model="currentStep" class="disable-tab-transition">
-                            <VWindowItem>
-                                <VRow class="mg-lg-8 col-md-10">
-                                    <VCol cols="12" md="6">
-                                        <h5 class="text-h5 font-weight-bold">Welcome
-                                        </h5>
-                                        <p class="mb-0">Here’s a quick overview of our onboarding
-                                        </p>
-                                    </VCol>
-                                    <VCol cols="12">
-                                        <div>
-                                            <VImg :src="welcomeVideo"/>
-                                        </div>
-                                    </VCol>
-                                </VRow>
-                            </VWindowItem>
-                            <!-- STEP 1 -->
-                            <VWindowItem>
-                                <Step1 :formData="formData" />
-                            </VWindowItem>
+          <VForm ref="stepperForm" >
+            <VWindow v-model="currentStep" class="disable-tab-transition">
+              <VWindowItem>
+                <VRow class="mg-lg-8 col-md-10">
+                  <VCol cols="12" md="6">
+                    <h5 class="text-h5 font-weight-bold">Welcome
+                    </h5>
+                    <p class="mb-0">Here’s a quick overview of our onboarding
+                    </p>
+                  </VCol>
+                  <VCol cols="12">
+                    <div>
+                      <VImg :src="welcomeVideo"/>
+                    </div>
+                  </VCol>
+                </VRow>
+              </VWindowItem>
+              <!-- STEP 1 -->
+              <VWindowItem>
+                <Step1 :formData="formData" />
+              </VWindowItem>
 
-                            <!-- STEP 2 -->
-                            <VWindowItem value="step2">
-                                <Step2 :formData="formData" />
-                            </VWindowItem>
+              <!-- STEP 2 -->
+              <VWindowItem value="step2">
+                <Step2 :formData="formData" />
+              </VWindowItem>
 
-                            <!-- STEP 3 -->
-                            <VWindowItem>
-                                <VRow>
-                                    <VCol cols="12">
-                                        <h5 class="text-h5 font-weight-bold">Pick a plan that works best for you</h5>
-                                        <p class="mb-0">                            Stay cool, we have a 48-hour money back guarantee!
-                                        </p>
-                                    </VCol>
+              <!-- STEP 3 -->
+              <VWindowItem>
+                <VRow>
+                  <VCol cols="12">
+                    <h5 class="text-h5 font-weight-bold">Pick a plan that works best for you</h5>
+                    <p class="mb-0">                            Stay cool, we have a 48-hour money back guarantee!
+                    </p>
+                  </VCol>
 
-                                    <Step3></Step3>
-                                </VRow>
-                            </VWindowItem>
-                            <VWindowItem>
-                                <VRow>
-                                    <VCol cols="12">
-                                        <h5 class="text-h5 font-weight-bold">Upgrade your subscription plan</h5>
-                                    </VCol>
+                  <Step3></Step3>
+                </VRow>
+              </VWindowItem>
+              <VWindowItem>
+                <VRow>
+                  <VCol cols="12">
+                    <h5 class="text-h5 font-weight-bold">Upgrade your subscription plan</h5>
+                  </VCol>
 
-                                    <Step4></Step4>
-                                </VRow>
-                            </VWindowItem>
-                            <VWindowItem>
-                                <VRow>
-                                    <Step5></Step5>
-                                </VRow>
-                            </VWindowItem>
-                        </VWindow>
+                  <Step4></Step4>
+                </VRow>
+              </VWindowItem>
+              <VWindowItem>
+                <VRow>
+                  <Step5></Step5>
+                </VRow>
+              </VWindowItem>
+            </VWindow>
 
-                        <!-- Buttons -->
-                        <VCol cols="12">
-                            <div class="d-flex flex-wrap gap-2 justify-sm-space-between justify-center mt-4">
-                                <VBtn
-                                        color="secondary"
-                                        variant="tonal"
-                                        v-if="currentStep > 0"
-                                        @click="currentStep--"
-                                >
-                                    <VIcon
-                                            icon="tabler-arrow-left"
-                                            start
-                                            class="flip-in-rtl"
-                                    />
-                                    Previous
-                                </VBtn>
+            <!-- Buttons -->
+            <VCol cols="12">
+              <div class="d-flex flex-wrap gap-2 justify-center mt-4" :class="currentStep === 0 ? 'justify-sm-space-between' : 'justify-space-between'">
+                <VBtn
+                  color="secondary"
+                  variant="tonal"
+                  v-if="currentStep > 0"
+                  @click="currentStep--"
+                >
+                  <VIcon
+                    icon="tabler-arrow-left"
+                    start
+                    class="flip-in-rtl"
+                  />
+                  Previous
+                </VBtn>
 
-                                <VBtn
-                                        color="success"
-                                        v-if="currentStep === numberedSteps.length - 1"
-                                        @click="onSubmit"
-                                >
-                                    Finish
-                                </VBtn>
+                <VBtn
+                  v-if="currentStep === numberedSteps.length - 1"
+                  @click="onSubmit"
+                >
+                  Finish
+                </VBtn>
 
-                                <VBtn v-else @click="handleNext">
-                                    Continue
-                                    <VIcon icon="tabler-arrow-right" end class="flip-in-rtl" />
-                                </VBtn>
-                            </div>
-                        </VCol>
-                    </VForm>
-                </VCardText>
-                </VCard>
+                <VBtn v-else @click="handleNext">
+                  Continue
+                  <VIcon icon="tabler-arrow-right" end class="flip-in-rtl" />
+                </VBtn>
+              </div>
+            </VCol>
+          </VForm>
             </VCol>
         </VRow>
     </div>

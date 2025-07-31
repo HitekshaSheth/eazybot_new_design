@@ -162,25 +162,29 @@
             border="start" border-color="primary" icon="tabler-accessible" type="primary" variant="tonal">
 <!--            <VAlertTitle class="mb-1" >-->
               <VRow class="pt-4 pl-4">Do you have any of the below exchange account?</VRow><br/>
-            <VRadioGroup v-model="inlineRadio">
-              <VRow class="justify-space-between" no-gutters>
-                <VCol cols="6" class="pr-2">
-                  <VRadio
-                    label="Yes"
-                    value="1"
-                    class="v-label custom-input"
-                    style="padding: 0rem 1.5rem 0px 1rem; border-radius: 0.375rem;"
-                  />
-                </VCol>
+            <VRadioGroup v-model="inlineRadio" class="mt-4">
+              <VRow>
+              <VCol cols="6">
+                <div
+                  class="custom-radio d-flex align-center justify-space-between"
+                  :class="{ selected: inlineRadio === '1' }"
+                  @click="inlineRadio = '1'"
+                >
+                  <span>Yes</span>
+                  <VIcon icon="tabler-thumb-up" class="mr-2" />
+                </div>
+              </VCol>
 
-                <VCol cols="6" class="d-flex justify-end pl-2">
-                  <VRadio
-                    label="No"
-                    value="0"
-                    class="v-label custom-input"
-                    style="padding: 0rem 1.5rem 0px 1rem; border-radius: 0.375rem;"
-                  />
-                </VCol>
+              <VCol cols="6">
+                <div
+                  class="custom-radio d-flex align-center justify-center justify-space-between"
+                  :class="{ selected: inlineRadio === '0' }"
+                  @click="inlineRadio = '0'"
+                >
+                  <span>No</span>
+                  <VIcon icon="tabler-thumb-down" class="mr-2" />
+                </div>
+              </VCol>
               </VRow>
             </VRadioGroup>
 <!--            </VAlertTitle>-->
@@ -196,35 +200,29 @@
                         </p>
                     </VCol>
                 </VRow>
-                <VRow>
-                    <Vcol>
-                        <CustomRadios v-model:selected-radio="selectedRadio" :radio-content="radioContent" :grid-column="{ sm: '3', cols: '6' }">
-                            <template #default="{ item, isSelected }">
-                                <div class="d-flex align-center justify-space-between w-100  custom-radio-item">
-                                    <div>
-                                        <span class="font-weight-medium">{{ item.title }}</span>
-                                    </div>
-                                    <img :src="item.img" alt="" height="20" />
-                                </div>
-                            </template>
-                        </CustomRadios>
-                    </Vcol>
-                </VRow>
+              <VRow>
+                <VCol cols="12" sm="6">
+                  <VSelect
+                    v-model="selectedRadio"
+                    :items="radioContent"
+                    item-title="title"
+                    item-value="value"
+                    label="Select Exchange"
+                    variant="outlined"
+                    dense
+                    class="custom-select"/>
+                </VCol>
+              </VRow>
                 <VRow v-if="inlineRadio === '0'">
                     <VCol>
-                        <VCard>
+<!--                        <VCard>-->
                             <VRow>
                                 <VCol cols="12">
-                                    <VCardItem>
-                                        <VCardTitle>Create an API key on Binance
-                                        </VCardTitle>
-                                    </VCardItem>
+<!--                                    <VCardItem>-->
+                                        <VCardTitle>Create an API key on Binance</VCardTitle>
+<!--                                    </VCardItem>-->
 
-                                    <VCardText class="text-lg-h6 font-medium pb-0">
-                                        <VList :items="items" />
-                                    </VCardText>
-
-
+                                  <VList :items="items" />
                                 </VCol>
 
                                 <VCol cols="12" class="member-pricing-bg text-center pt-0">
@@ -233,7 +231,7 @@
                                     </div>
                                 </VCol>
                             </VRow>
-                        </VCard>
+<!--                        </VCard>-->
 
                     </VCol>
                 </VRow>
@@ -365,6 +363,7 @@
             },
         },
     ]
+
     const radioContent = [
         {
             title: 'Binance',
@@ -387,7 +386,7 @@
             img : Btc
         },
         {
-            title: 'Coinbase Advanced\n',
+            title: 'Coinbase Advanced',
             value: 'Coinbase',
             img : Btc
         },
@@ -397,7 +396,7 @@
             img : Btc
         },
         {
-            title: 'Coinbase Prime\n',
+            title: 'Coinbase Prime',
             value: 'prime',
             img : Btc
         },
@@ -426,7 +425,6 @@
         if (!phoneRegex.test(v)) return 'Enter a valid phone number'
         return true
     }
-
 </script>
 
 <style scoped>
@@ -446,6 +444,19 @@
     @media (max-width: 600px) {
       :deep(label.v-label.custom-input.custom-radio.rounded.cursor-pointer) {
         padding: 0.5rem !important;
+      }
+      .custom-radio {
+        border: 1px solid #ccc;
+        border-radius: 0.5rem;
+        padding: 0.75rem 1rem;
+        cursor: pointer;
+        transition: all 0.2s ease-in-out;
+        text-align: center;
+      }
+      .custom-radio.selected {
+        border-color: #1976d2;
+        background-color: #e3f2fd;
+        color: #1976d2;
       }
     }
     :deep(.v-alert__prepend){

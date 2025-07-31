@@ -119,6 +119,7 @@ import paperPlane from '@images/visa.png'
 
 <template>
 <VContainer>
+  <div  v-if="mdAndUp" >
     <VRow>
         <VCol md="4" cols="12">
             <VCard class="mb-4" title="Current Balance" style="max-width: 100%">
@@ -258,6 +259,140 @@ import paperPlane from '@images/visa.png'
                        </VCard>
       </swiper-slide>
   </swiper-container>
+  </div>
+  <div v-else>
+    <VRow>
+      <VCol md="4" cols="12">
+        <VCard class="mb-4" title="Current Balance" style="max-width: 100%">
+          <template #append>
+            <img :src="Frame"> <span class="wallet-balance pl-2 pr-2">{{ balance }}</span>
+          </template>
+        </VCard>
+      </VCol>
+    </VRow>
+
+    <swiper-container
+      pagination="true"
+      navigation="true"
+      events-prefix="swiper-"
+      slides-per-view="5"
+      space-between="50"
+      :breakpoints="{
+      1024: {
+        slidesPerView: 4,
+        spaceBetween: 40,
+      },
+      768: {
+        slidesPerView: 3,
+        spaceBetween: 30,
+      },
+      640: {
+        slidesPerView: 2,
+        spaceBetween: 20,
+      },
+      320: {
+        slidesPerView: 1,
+        spaceBetween: 10,
+      },
+    }"
+    >
+      <swiper-slide
+        v-for="(plan, index) in pricingPlans"
+        :key="index"
+      >
+        <VCard :style="plan.title == 'Pro' ? 'border:2px solid rgb(var(--v-theme-primary))' : ''">
+          <VCardText class="pa-6 pt-5">
+            <VImg
+              :src="plan.image"
+              width="55"
+              height="55"
+              class="mx-auto mb-4"
+            />
+            <div class="text-center mb-2">
+              <h4 class="text-h4 text-center">
+                {{ plan.title }}
+                <VChip v-if="plan.title == 'Pro'"
+                       label
+                       color="primary"
+                       class="mb-4"
+                       size="small"
+                >
+                  Most Popular
+                </VChip>
+
+              </h4>
+              <span class="text-center text-disabled text-sm text-primary-300 ">Platform Access</span>
+
+            </div>
+
+
+
+            <div class="d-flex justify-center mb-8 position-relative">
+              <div class="d-flex align-end">
+                <div class="pricing-title text-primary me-1">
+                  ${{plan.monthlyPrice}}
+                </div>
+                <span class="text-disabled mb-2">/mo</span>
+              </div>
+
+              <!-- 👉 Annual Price -->
+              <span
+                v-show="annualMonthlyPlanPriceToggler"
+                class="annual-price-text position-absolute text-sm text-disabled"
+              >
+                    Billed Annually
+                  </span>
+
+            </div>
+            <div class="d-flex justify-center mb-2 position-relative">
+              <div class="d-flex align-end">
+                <div class="text-primary text-sm font-weight-bold">
+                  SOFTWARE SERVICE FEE (SSF)
+                  <span class="text-disabled mb-2"> ‌0.4% of closing trade only
+                                        Ex: $100 Closing Trade | $0.40 SSF</span>
+                </div>
+              </div>
+
+            </div>
+            <div class="mt-8 card-list">
+              <VListItem
+                v-for="(item, i) in plan.features"
+                :key="i"
+              >
+                <template #prepend>
+                  <VAvatar v-if="item != '-'"
+                           size="16"
+                           :variant="!plan.current ? 'tonal' : 'elevated'"
+                           color="primary"
+                           class="me-3"
+                  >
+                    <VIcon
+                      icon="tabler-check"
+                      size="12"
+                      :color="!plan.current ? 'primary' : 'white'"
+                    />
+                  </VAvatar>
+                  <h6 class="text-h6">
+                    {{ item }}
+                  </h6>
+                </template>
+              </VListItem>
+            </div>
+            <div class="d-flex justify-center">
+              <VBtn
+                @click="drawer = true"
+                :variant="plan.title === 'Pro' ? 'elevated' : 'tonal'"
+                class="mt-4 mb-4"
+              >
+                Select
+              </VBtn>
+            </div>
+
+          </VCardText>
+        </VCard>
+      </swiper-slide>
+    </swiper-container>
+  </div>
 </VContainer>
 
 </template>
@@ -268,6 +403,9 @@ import paperPlane from '@images/visa.png'
   .swiper-button-prev svg {
     width: 50% !important;
     height: 50% !important;
+  }
+  swiper-container {
+    --swiper-navigation-size: 22px !important;
   }
 }
 .card-list {
