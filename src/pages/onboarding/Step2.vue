@@ -445,8 +445,9 @@
       :deep(label.v-label.custom-input.custom-radio.rounded.cursor-pointer) {
         padding: 0.5rem !important;
       }
-      :deep(.v-list-item__content){
-        grid-area: unset!important;
+      :deep(.v-list-item-title){
+        white-space: normal !important;
+        word-break: break-word;
       }
       .custom-radio {
         border: 1px solid #ccc;
