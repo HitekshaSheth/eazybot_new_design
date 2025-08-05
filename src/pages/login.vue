@@ -11,6 +11,7 @@ import { VNodeRenderer } from '@layouts/components/VNodeRenderer'
 import { themeConfig } from '@themeConfig'
 import loginimage from '@images/auth/login-img.png'
 import goggleIcon from '@images/auth/google-icon.png'
+import axios from 'axios'
 
 definePage({
   meta: {
@@ -31,16 +32,51 @@ const isPasswordVisible = ref(false)
 const authThemeImg = useGenerateImageVariant(authV2LoginIllustrationLight, authV2LoginIllustrationDark, authV2LoginIllustrationBorderedLight, authV2LoginIllustrationBorderedDark, true)
 const authThemeMask = useGenerateImageVariant(authV2MaskLight, authV2MaskDark)
 
-const login = () => {
-  // TODO: replace with real login logic / API call
-  if (form.value.email && form.value.password) {
-    localStorage.setItem('accessToken', 'demo-token')
-    // ✅ Redirect to dashboard
-    router.push({ name: 'root' }) // or router.push('/dashboard')
-  } else {
-    // refForm.validate()
+// const login = () => {
+//   // TODO: replace with real login logic / API call
+//   if (form.value.email && form.value.password) {
+//     localStorage.setItem('accessToken', 'demo-token')
+//     // ✅ Redirect to dashboard
+//     router.push({ name: 'root' }) // or router.push('/dashboard')
+//   } else {
+//     // refForm.validate()
+//   }
+// }
+const errorMessage = ref('') // 🆕 store error message
+
+const login = async () => {
+  errorMessage.value = '' // clear previous error
+  try {
+    const response = await axios.post('https://stocktrader.eazybot.com/api/login', {
+      email: form.value.email,
+      password: form.value.password,
+    }, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      withCredentials: true, // ✅ Important if you need cookies
+    })
+    if (response.data.result) {
+      localStorage.setItem('accessToken', response.data.api_token)
+      router.push({ name: 'root' }) // redirect after login
+    }
+  } catch (error) {
+    console.log(error.response);
+    if (error.response.status == 401) {
+      errorMessage.value = error.response.data.message || 'Login failed. Please try again.'
+    }
+    else {
+      if (error.response && error.response.data && error.response.data.error) {
+        const apiError = error.response.data.error
+        const emailError = apiError.email?.[0]
+        errorMessage.value = emailError || 'Login failed. Please try again.'
+      } else {
+        errorMessage.value = 'Server error. Please try again later.'
+      }
+    }
   }
 }
+
 </script>
 
 <template>
@@ -115,6 +151,16 @@ const login = () => {
             <span class="mx-4 text-subtitle-1">OR</span>
             <v-divider class="flex-grow-1"></v-divider>
           </div>
+          <VAlert
+            v-if="errorMessage"
+            type="error"
+            class="mb-4"
+            dense
+            border="start"
+            border-color="error"
+          >
+            {{ errorMessage }}
+          </VAlert>
           <VForm @submit.prevent="login">
             <VRow>
               <!-- email -->
