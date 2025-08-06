@@ -2,10 +2,37 @@
 import AppPageHeader from '@/components/AppPageHeader.vue'
 import Frame from '@/assets/images/Frame.svg?url'
 import Group from '@/assets/images/Group.svg?url'
+import { onMounted } from 'vue'
+import axios from 'axios'
 import { useDisplay } from 'vuetify'
 
 const { mdAndUp } = useDisplay()
+const botList = ref([])
+const errorMessage = ref('')
+const fetchBots = async () => {
+  try {
+    const token = localStorage.getItem('accessToken')
+    console.log(token);
+    const response = await axios.get('https://stocktrader.eazybot.com/api/v1/0/bots?is_backtest=0', {
+      'Accept': 'application/json',
+      headers: {
+        'X-CSRF-TOKEN': token,
+      }
+    })
 
+    if (response.data.result && response.data.data?.bots) {
+      botList.value = response.data.data.bots
+    } else {
+      errorMessage.value = 'No bots found.'
+    }
+  } catch (error) {
+    errorMessage.value = 'Error fetching bots.'
+  }
+}
+
+onMounted(() => {
+  fetchBots()
+})
 
 const pageTitle = 'Bots'
 const breadcrumbs = [
@@ -210,11 +237,7 @@ const moreList = [
         </div>
       </div>
       <VRow>
-        <VCol
-          cols="12"
-          sm="6"
-          lg="4"
-        >
+        <VCol cols="12" sm="6" lg="4">
           <VCard>
             <VCardItem class="card-active">
               <VCardTitle><a class="v-card-title" href="/view-bot">ETH/USDT - 1481.71</a>  </VCardTitle>
@@ -248,7 +271,7 @@ const moreList = [
                     </div>
                   </div>
                 </VListItem>
-<!--                <VDivider />-->
+                <!--                <VDivider />-->
               </VCardText>
               <VListItem>
                 <VCardText class="pb-0 pt-0">
@@ -435,7 +458,7 @@ const moreList = [
                     </div>
                   </div>
                 </VListItem>
-<!--                <VDivider />-->
+                <!--                <VDivider />-->
               </VCardText>
               <VListItem>
                 <VCardText class="pb-0 pt-0">
@@ -622,7 +645,7 @@ const moreList = [
                     </div>
                   </div>
                 </VListItem>
-<!--                <VDivider />-->
+                <!--                <VDivider />-->
               </VCardText>
               <VListItem>
                 <VCardText class="pb-0 pt-0">
@@ -765,6 +788,195 @@ const moreList = [
                 <VCardText class="align-center">
                   <div class="text-caption text-center mt-2 grey--text">
                     Bot ID: 107543 <VIcon icon="tabler-copy" size="20" />
+                  </div>
+                </VCardText>
+              </VListItem>
+            </VList>
+            <!--      </VCardText>-->
+          </VCard>
+        </VCol>
+      </VRow>
+      <VRow>
+
+        <VCol v-for="(item, index) in botlist"
+              :key="item.id" cols="12" sm="6" lg="4">
+          <VCard>
+            <VCardItem :class="item.status == 1 ? 'card-active' : 'card-inactive'">
+              <VCardTitle><a class="v-card-title" href="/view-bot">{{item.title}} - 1481.71</a>  </VCardTitle>
+              <template #append>
+                <span class="font-weight-bold" v-if="item.status == 1">Active</span>
+                <span class="font-weight-bold" v-else>Inactive</span>
+                <div>
+                  <MoreBtn :menu-list="moreList" />
+                </div>
+              </template>
+            </VCardItem>
+            <VDivider />
+
+            <!--      <VCardText>-->
+            <VList class="card-list">
+              <VCardText class="pb-0 pt-4">
+                <VListItem>
+                  <div class="d-flex align-center gap-2">
+                    <VAvatar>
+                      <img :src="Group">
+                    </VAvatar>
+                    <VAvatar style="margin-left: -25px">
+                      <img :src="Frame">
+                    </VAvatar>
+                    <div>
+                      <div class="font-weight-medium">ETH</div>
+                      <div class="text-caption grey--text">ID: {{item.id}} <VIcon icon="tabler-copy" size="20" /></div>
+                    </div>
+                    <div class="ml-auto text-right">
+                      <div class="text-caption grey--text">Strategy Type</div>
+                      <div class="font-weight-medium">{{item.strategy}}</div>
+                    </div>
+                  </div>
+                </VListItem>
+                <!--                <VDivider />-->
+              </VCardText>
+              <VListItem>
+                <VCardText class="pb-0 pt-0">
+                  <div class="d-flex align-center gap-2 py-2">
+                    <VRow dense class="w-100">
+                      <VCol cols="3">
+                        <div class="d-flex flex-column justify-center">
+                          <span class="text-caption grey--text">Exchange<br /><span class="text-sub-caption">{{item.user_exchange_id}}</span></span>
+                        </div>
+                      </VCol>
+
+                      <VCol cols="3">
+                        <div class="d-flex flex-column justify-center">
+                          <span class="text-caption grey--text">Cycle Type<br /><span class="text-sub-caption">{{item.is_cycle}}</span></span>
+                        </div>
+                      </VCol>
+
+                      <VCol cols="3">
+                        <div class="d-flex flex-column justify-center">
+                          <span class="text-caption grey--text">Strategy<br /><span class="text-sub-caption">{{item.strategy}}</span></span>
+                        </div>
+                      </VCol>
+
+                      <VCol cols="3">
+                        <div class="d-flex flex-column justify-center">
+                          <span class="text-caption grey--text">Category<br /><span class="text-sub-caption">{{item.category_id}}</span></span>
+                        </div>
+                      </VCol>
+                    </VRow>
+                  </div>
+
+                  <VDivider />
+                  <VRow dense class="py-2 align-center">
+                    <VCol cols="6">
+                      <div class="d-flex flex-column justify-center">
+                        <span class="text-caption grey--text">Profit</span>
+                        <span class="text-h4 font-weight-bold">166.30</span>
+                      </div>
+                    </VCol>
+
+                    <VCol cols="6">
+                      <div class="d-flex flex-column justify-center align-end">
+                        <span class="text-caption grey--text">Market Vs Average</span>
+                        <span class="text-h4 font-weight-bold d-flex align-center" style="color: red">
+                    <VIcon icon="tabler-s-turn-down" size="22" />-50.15%</span>
+                      </div>
+                    </VCol>
+                  </VRow>
+                  <!--              <VDivider />-->
+                </VCardText>
+                <!-- Other Metrics -->
+                <div class="card-bg-metrics">
+                  <VCardText class="pb-0 pt-0">
+                    <VRow dense class="py-2 align-center">
+                      <VCol cols="6">
+                        <div class="d-flex flex-column justify-center">
+                          <span class="text-caption">Today Profit (9h:19m)</span>
+                        </div>
+                      </VCol>
+
+                      <VCol cols="6">
+                        <div class="d-flex flex-column justify-center align-end">
+                          <span class="text-right text-h6 font-weight-medium"><img :src="Frame" height="15" style="vertical-align: middle;"/> -</span>
+                        </div>
+                      </VCol>
+                    </VRow>
+                    <VDivider />
+                    <VRow dense class="py-2 align-center">
+                      <VCol cols="6">
+                        <div class="d-flex flex-column justify-center">
+                          <span class="text-caption">Initial Capital</span>
+                        </div>
+                      </VCol>
+
+                      <VCol cols="6">
+                        <div class="d-flex flex-column justify-center align-end">
+                          <span class="text-right text-h6 font-weight-medium"><img :src="Frame" height="15" style="vertical-align: middle;"/> 2000.00</span>
+                        </div>
+                      </VCol>
+                    </VRow>
+                    <VDivider />
+                    <VRow dense class="py-2 align-center">
+                      <VCol cols="6">
+                        <div class="d-flex flex-column justify-center">
+                          <span class="text-caption">Current Capital</span>
+                        </div>
+                      </VCol>
+
+                      <VCol cols="6">
+                        <div class="d-flex flex-column justify-center align-end">
+                          <span class="text-right text-h6 font-weight-medium"><img :src="Frame" height="15" style="vertical-align: middle;"/> 2166.30</span>
+                        </div>
+                      </VCol>
+                    </VRow>
+                    <VDivider />
+                    <VRow dense class="py-2 align-center">
+                      <VCol cols="6">
+                        <div class="d-flex flex-column justify-center">
+                          <span class="text-caption">Available Quote Coins</span>
+                        </div>
+                      </VCol>
+
+                      <VCol cols="6">
+                        <div class="d-flex flex-column justify-center align-end">
+                          <span class="text-right text-h6 font-weight-medium"><img :src="Frame" height="15" style="vertical-align: middle;"/> 993.62</span>
+                        </div>
+                      </VCol>
+                    </VRow>
+                    <VDivider />
+                    <VRow dense class="py-2 align-center">
+                      <VCol cols="6">
+                        <div class="d-flex flex-column justify-center">
+                          <span class="text-caption">Runtime</span>
+                        </div>
+                      </VCol>
+
+                      <VCol cols="6">
+                        <div class="d-flex flex-column justify-center align-end">
+                          <span class="text-right text-h6 font-weight-medium"><VIcon icon="tabler-clock-hour-4" size="20" />144D 23H 17M</span>
+                        </div>
+                      </VCol>
+                    </VRow>
+                    <VDivider />
+                    <VRow dense class="py-2 align-center">
+                      <VCol cols="6">
+                        <div class="d-flex flex-column justify-center">
+                          <span class="text-caption">Last Trade</span>
+                        </div>
+                      </VCol>
+
+                      <VCol cols="6">
+                        <div class="d-flex flex-column justify-center align-end">
+                          <span class="text-right text-h6 font-weight-medium">BUY C9 15D ago</span>
+                        </div>
+                      </VCol>
+                    </VRow>
+                  </VCardText>
+                </div>
+                <!-- Footer -->
+                <VCardText class="align-center">
+                  <div class="text-caption text-center mt-2 grey--text">
+                    Bot ID: {{item.active_session_id}} <VIcon icon="tabler-copy" size="20" />
                   </div>
                 </VCardText>
               </VListItem>

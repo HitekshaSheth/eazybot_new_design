@@ -47,7 +47,18 @@ const errorMessage = ref('') // 🆕 store error message
 const login = async () => {
   errorMessage.value = '' // clear previous error
   try {
-    const response = await axios.post('https://stocktrader.eazybot.com/api/login', {
+    // Set base URL
+    axios.defaults.baseURL = 'https://stocktrader.eazybot.com'
+
+// Ensure credentials are sent (needed for cookies including CSRF token)
+    axios.defaults.withCredentials = true
+    axios.defaults.withXSRFToken = true;
+
+// Step 1: First, get CSRF token
+    await axios.get('/sanctum/csrf-cookie')
+
+// Step 2: Then, make the login request
+    const response = await axios.post('/api/login', {
       email: form.value.email,
       password: form.value.password,
     }, {
