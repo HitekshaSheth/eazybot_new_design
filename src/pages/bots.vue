@@ -240,7 +240,7 @@ const moreList = [
         <VCol cols="12" sm="6" lg="4">
           <VCard>
             <VCardItem class="card-active">
-              <VCardTitle><a class="v-card-title" href="/view-bot">ETH/USDT - 1481.71</a>  </VCardTitle>
+              <VCardTitle><RouterLink class="v-card-title" to="/view-bot">ETH/USDT - 1481.71</RouterLink>  </VCardTitle>
               <template #append>
                 <span class="font-weight-bold">Active</span>
                 <div>
@@ -802,7 +802,12 @@ const moreList = [
               :key="item.id" cols="12" sm="6" lg="4">
           <VCard>
             <VCardItem :class="item.status == 1 ? 'card-active' : 'card-inactive'">
-              <VCardTitle><a class="v-card-title" href="/view-bot">{{item.title}} - 1481.71</a>  </VCardTitle>
+              <VCardTitle><RouterLink
+                class="v-card-title"
+                to="/view-bot"
+              >
+                {{item.title}} - 1481.71
+              </RouterLink>  </VCardTitle>
               <template #append>
                 <span class="font-weight-bold" v-if="item.status == 1">Active</span>
                 <span class="font-weight-bold" v-else>Inactive</span>
