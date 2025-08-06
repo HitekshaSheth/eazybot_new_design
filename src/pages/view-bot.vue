@@ -159,6 +159,25 @@ const currentTrades = async () => {
     errorMessage.value = 'Error fetching bots.'
   }
 }
+
+const formatDateTime = dateStr => {
+  const date = new Date(dateStr)
+
+  const datePart = new Intl.DateTimeFormat('en-US', {
+    month: 'short',
+    day: 'numeric',
+    year: 'numeric',
+  }).format(date)
+
+  const timePart = new Intl.DateTimeFormat('en-US', {
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: false, // Use true for AM/PM
+  }).format(date)
+
+  return `${datePart} - ${timePart}`
+}
+
 onMounted(() => {
   currentTrades()
 })
@@ -658,11 +677,11 @@ onMounted(() => {
                         </VRow>
                         <VRow>
                           <VCol cols="12" v-for="(item, index) in currentTradeList" :key="index">
-                            <VCard :class="item.side === 'Buy' ? 'buy-card' : 'sell-card pb-1'" class="pa-3">
+                            <VCard :class="item.side === 'BUY' ? 'buy-card' : 'sell-card pb-1'" class="pa-3">
                               <VRow>
                                 <VCol cols="5" class="pb-2">
                                   <div class="align-center gap-x-2" >
-                                    <VChip :color="item.side === 'Buy' ? 'success' : 'error'" text-color="white" label size="small">
+                                    <VChip :color="item.side === 'BUY' ? 'success' : 'error'" text-color="white" label size="small">
                                       {{ item.side }}
                                     </VChip>
                                     <span class="text-caption font-weight-bold pl-2">{{ item.comment }}</span>
@@ -676,7 +695,7 @@ onMounted(() => {
                               </VCol>
                               <VCol cols="4" class="pb-2">
                                 <div class="text-right text-caption">
-                                  <div  v-if="item.side === 'Sell'"><strong>Open:</strong> <span class="text-caption font-weight-bold">{{ item.created_at }}</span></div>
+                                  <div  v-if="item.side === 'SELL'"><strong>Open:</strong> <span class="text-caption font-weight-bold">{{ formatDateTime(item.created_at) }}</span></div>
                                 </div>
                               </VCol>
                               </VRow>
@@ -694,16 +713,16 @@ onMounted(() => {
                               </VCol>
                               <VCol cols="4" class="pt-2">
                                 <div class="text-right text-caption">
-                                  <div><strong>Close:</strong> <span class="text-caption font-weight-bold">{{ item.closed_at }}</span></div>
+                                  <div><strong>Close:</strong> <span class="text-caption font-weight-bold">{{ formatDateTime(item.closed_at) }}</span></div>
                                 </div>
                               </VCol>
                               </VRow>
                               <!-- Divider for Sell only -->
-                              <VDivider v-if="item.side === 'Sell'" class="my-2" />
+                              <VDivider v-if="item.side === 'SELL'" class="my-2" />
 
                               <!-- Profit Row for Sell -->
                               <div
-                                v-if="item.side === 'Sell'"
+                                v-if="item.side === 'SELL'"
                                 class="d-flex justify-space-between flex-wrap text-caption">
                                 <span class="text-caption"><strong>Gross Profit :</strong> <span class="font-weight-bold"> {{ item.gross_profit }}</span></span>
                                 <span class="text-caption"><strong>Fees :</strong><span class="font-weight-bold"> {{ item.exchange_fee_buy_sell }}</span></span>
