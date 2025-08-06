@@ -798,7 +798,7 @@ const moreList = [
       </VRow>
       <VRow>
 
-        <VCol v-for="(item, index) in botlist"
+        <VCol v-for="(item, index) in botList"
               :key="item.id" cols="12" sm="6" lg="4">
           <VCard>
             <VCardItem :class="item.status == 1 ? 'card-active' : 'card-inactive'">
