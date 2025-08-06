@@ -133,6 +133,8 @@ const tradeItems = [
   // Add more items as needed...
 ]
 
+const isNull = val => val === null || val === undefined || val === '' || val === 'null'
+
 const currentTrades = async () => {
   try {
     const token = localStorage.getItem('accessToken')
