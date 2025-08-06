@@ -232,6 +232,7 @@ const formatDateTime = dateStr => {
 onMounted(() => {
   currentTrades()
   currentSessions()
+  previousSessions()
 })
 </script>
 <template>
