@@ -695,7 +695,7 @@ onMounted(() => {
                               </VCol>
                               <VCol cols="4" class="pb-2">
                                 <div class="text-right text-caption">
-                                  <div  v-if="item.side === 'BUY'"><strong>Open:</strong> <span class="text-caption font-weight-bold">{{ isNull(item.created_at) ? "-" : formatDateTime(item.created_at) }}</span></div>
+                                  <div v-if="item.side === 'BUY'"><strong>Open:</strong> <span class="text-caption font-weight-bold">{{ formatDateTime(item.created_at) }}</span></div>
                                 </div>
                               </VCol>
                               </VRow>
