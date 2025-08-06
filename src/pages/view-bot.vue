@@ -713,8 +713,7 @@ onMounted(() => {
                               </VCol>
                               <VCol cols="4" class="pt-2">
                                 <div class="text-right text-caption">
-                                  <div><strong>Close:</strong> <span class="text-caption font-weight-bold">{{ isNull(item.closed_at) ? "-" : formatDateTime(item.closed_at) }}</span></div>
-                                </div>
+                                  <div><strong>Close:</strong> <span class="text-caption font-weight-bold">{{ isNull(item.closed_at) ? '-' : formatDateTime(item.closed_at) }}</span></div</div>
                               </VCol>
                               </VRow>
                               <!-- Divider for Sell only -->
