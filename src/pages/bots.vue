@@ -804,7 +804,7 @@ const moreList = [
             <VCardItem :class="item.status == 1 ? 'card-active' : 'card-inactive'">
               <VCardTitle><RouterLink
                 class="v-card-title"
-                to="/view-bot"
+                :to="`/view-bot/${item.id}`"
               >
                 {{item.title}} - 1481.71
               </RouterLink>  </VCardTitle>

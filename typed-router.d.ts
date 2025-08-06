@@ -25,6 +25,7 @@ declare module 'vue-router/auto-routes' {
     'account-settings-billing-history-table': RouteRecordInfo<'account-settings-billing-history-table', '/account-settings/BillingHistoryTable', Record<never, never>, Record<never, never>>,
     'account-settings-notification': RouteRecordInfo<'account-settings-notification', '/account-settings/notification', Record<never, never>, Record<never, never>>,
     'account-settings-security': RouteRecordInfo<'account-settings-security', '/account-settings/security', Record<never, never>, Record<never, never>>,
+    'bot-id': RouteRecordInfo<'bot-id', '/bot/:id', { id: ParamValue<true> }, { id: ParamValue<false> }>,
     'bots': RouteRecordInfo<'bots', '/bots', Record<never, never>, Record<never, never>>,
     'create-bot': RouteRecordInfo<'create-bot', '/create-bot', Record<never, never>, Record<never, never>>,
     'deposit': RouteRecordInfo<'deposit', '/deposit', Record<never, never>, Record<never, never>>,
