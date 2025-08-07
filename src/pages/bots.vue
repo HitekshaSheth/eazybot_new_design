@@ -70,7 +70,7 @@ const getExchangeSlug = userExchangeId => {
 
 import moment from 'moment'
 
-function formatProfit(profit: number | null | undefined): string {
+function formatProfit(profit) {
   const tradeProfit = profit || 0
 
   if (tradeProfit === 0) return '-'
@@ -82,7 +82,7 @@ function formatProfit(profit: number | null | undefined): string {
   return tradeProfit.toFixed(2)
 }
 
-function formatDuration(created_at: string, updated_at: string | null = null): string {
+function formatDuration(created_at, updated_at = null) {
   const currentDate = updated_at
     ? moment.utc(updated_at, 'YYYY-MM-DD HH:mm:ss')
     : moment().utc()
@@ -102,7 +102,8 @@ function formatDuration(created_at: string, updated_at: string | null = null): s
 
   return formattedDuration.trim()
 }
-function formatDate(created_at: string | number): string {
+
+function formatDate(created_at) {
   if (!created_at || created_at == 0) {
     return '0D ago'
   }
@@ -113,6 +114,7 @@ function formatDate(created_at: string | number): string {
 
   return diffDays === 0 ? 'Today' : `${diffDays}D ago`
 }
+
 onMounted(() => {
   fetchBots()
 })
