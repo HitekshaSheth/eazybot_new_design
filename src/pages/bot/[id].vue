@@ -157,7 +157,7 @@ const currentSessions = async () => {
       const sessions = response.data.sessions
 
       for (const session of sessions) {
-        session.trades = await fetchTrades(session.session_id)
+        session.trades = await fetchTrades(session.id)
       }
 
       currentSessionList.value = sessions
@@ -186,7 +186,7 @@ const previousSessions = async () => {
       const sessions = response.data.sessions
 
       for (const session of sessions) {
-        session.trades = await fetchTrades(session.session_id)
+        session.trades = await fetchTrades(session.id)
       }
 
       previousSessionList.value = sessions
