@@ -8,7 +8,23 @@ import { useDisplay } from 'vuetify'
 
 const { mdAndUp } = useDisplay()
 const botList = ref([])
+const profits = ref([])
+const quoteWiseProfits = ref([])
+const balances = ref([])
+const botSessions = ref([])
+const lastTrades = ref([])
+const initialbalances = ref([])
+const exchanges = ref([])
 const errorMessage = ref('')
+
+const currentTime = () => {
+  const date = new Date()
+  const hours = date.getUTCHours().toString().padStart(2, '0')
+  const minutes = date.getUTCMinutes().toString().padStart(2, '0')
+
+  return `${hours}h:${minutes}m`
+}
+
 const fetchBots = async () => {
   try {
     const token = localStorage.getItem('accessToken')
@@ -22,6 +38,13 @@ const fetchBots = async () => {
 
     if (response.data.result && response.data.data?.bots) {
       botList.value = response.data.data.bots
+      profits.value = response.data.data.profits
+      quoteWiseProfits.value = response.data.data.quoteWiseProfits
+      balances.value = response.data.data.balances
+      botSessions.value = response.data.data.sessions
+      lastTrades.value = response.data.data.lastTrades
+      initialbalances.value = response.data.data.initialbalances
+      exchanges.value = response.data.data.exchanges
     } else {
       errorMessage.value = 'No bots found.'
     }
@@ -29,7 +52,67 @@ const fetchBots = async () => {
     errorMessage.value = 'Error fetching bots.'
   }
 }
+// const getCategoryName = categoryId => {
+//   const categoryMap = JSON.parse(botCategory)
+//   const category = categoryMap[categoryId] || ''
+//   return category.split(' (')[0]
+// }
 
+const getExchangeName = userExchangeId => {
+  const exchange = exchanges[userExchangeId] || ''
+  return exchange.split('|')[0]
+}
+
+const getExchangeSlug = userExchangeId => {
+  const exchange = exchanges[userExchangeId] || ''
+  return exchange.split('|')[1]
+}
+
+import moment from 'moment'
+
+function formatProfit(profit: number | null | undefined): string {
+  const tradeProfit = profit || 0
+
+  if (tradeProfit === 0) return '-'
+
+  if (tradeProfit < 0 || (tradeProfit > 0 && tradeProfit < 1)) {
+    return tradeProfit.toFixed(8)
+  }
+
+  return tradeProfit.toFixed(2)
+}
+
+function formatDuration(created_at: string, updated_at: string | null = null): string {
+  const currentDate = updated_at
+    ? moment.utc(updated_at, 'YYYY-MM-DD HH:mm:ss')
+    : moment().utc()
+
+  const createdAtDate = moment.utc(created_at, 'YYYY-MM-DD HH:mm:ss')
+  const diffMs = currentDate.diff(createdAtDate)
+  const duration = moment.duration(diffMs)
+
+  const diffDays = Math.floor(duration.asDays())
+  const diffHours = duration.hours()
+  const diffMinutes = duration.minutes()
+
+  let formattedDuration = ''
+  if (diffDays > 0) formattedDuration += `${diffDays}D `
+  if (diffHours > 0) formattedDuration += `${diffHours}H `
+  if (diffMinutes > 0) formattedDuration += `${diffMinutes}M`
+
+  return formattedDuration.trim()
+}
+function formatDate(created_at: string | number): string {
+  if (!created_at || created_at == 0) {
+    return '0D ago'
+  }
+
+  const createdDate = moment.utc(created_at, 'YYYY-MM-DD HH:mm:ss')
+  const now = moment().utc()
+  const diffDays = now.diff(createdDate, 'days')
+
+  return diffDays === 0 ? 'Today' : `${diffDays}D ago`
+}
 onMounted(() => {
   fetchBots()
 })
@@ -801,16 +884,15 @@ const moreList = [
         <VCol v-for="(item, index) in botList"
               :key="item.id" cols="12" sm="6" lg="4">
           <VCard>
-            <VCardItem :class="item.status == 1 ? 'card-active' : 'card-inactive'">
+            <VCardItem :class="item.status == 0 ? 'card-inactive' : (item.sell_only > 0 ? 'card-sell-only' : 'card-active')">
               <VCardTitle><RouterLink
                 class="v-card-title"
                 :to="`/bot/${item.id}`"
               >
-                {{item.title}} - 1481.71
+                {{item.symbol.code}} - 1481.71
               </RouterLink>  </VCardTitle>
               <template #append>
-                <span class="font-weight-bold" v-if="item.status == 1">Active</span>
-                <span class="font-weight-bold" v-else>Inactive</span>
+                <span class="font-weight-bold">{{ item.status == 0 ? 'Inactive' : (item.sell_only > 0 ? 'Sell Only' : 'Active')}}</span>
                 <div>
                   <MoreBtn :menu-list="moreList" />
                 </div>
@@ -830,7 +912,7 @@ const moreList = [
                       <img :src="Frame">
                     </VAvatar>
                     <div>
-                      <div class="font-weight-medium">ETH</div>
+                      <div class="font-weight-medium">{{ item.title }}</div>
                       <div class="text-caption grey--text">ID: {{item.id}} <VIcon icon="tabler-copy" size="20" /></div>
                     </div>
                     <div class="ml-auto text-right">
@@ -847,19 +929,26 @@ const moreList = [
                     <VRow dense class="w-100">
                       <VCol cols="3">
                         <div class="d-flex flex-column justify-center">
-                          <span class="text-caption grey--text">Exchange<br /><span class="text-sub-caption">{{item.user_exchange_id}}</span></span>
+                          <span class="text-caption grey--text">Exchange<br /><span class="text-sub-caption">{{ getExchangeName(item.user_exchange_id)}}</span></span>
                         </div>
                       </VCol>
 
                       <VCol cols="3">
                         <div class="d-flex flex-column justify-center">
-                          <span class="text-caption grey--text">Cycle Type<br /><span class="text-sub-caption">{{item.is_cycle}}</span></span>
+                          <span class="text-caption grey--text">Cycle Type<br /><span class="text-sub-caption">{{
+                              item.is_cycle
+                                ? 'Cycle'
+                                : 'Single'}}</span></span>
                         </div>
                       </VCol>
 
                       <VCol cols="3">
                         <div class="d-flex flex-column justify-center">
-                          <span class="text-caption grey--text">Strategy<br /><span class="text-sub-caption">{{item.strategy}}</span></span>
+                          <span class="text-caption grey--text">Strategy<br /><span class="text-sub-caption">{{
+                              item.preset
+                                ? 'Default EZB'
+                                : 'Custom'
+                            }}</span></span>
                         </div>
                       </VCol>
 
@@ -876,7 +965,18 @@ const moreList = [
                     <VCol cols="6">
                       <div class="d-flex flex-column justify-center">
                         <span class="text-caption grey--text">Profit</span>
-                        <span class="text-h4 font-weight-bold">166.30</span>
+                        <span class="text-h4 font-weight-bold">
+                          {{
+                            profits[item.id] ===
+                            undefined
+                              ? 0
+                              : formatProfit(
+                                profits[
+                                  item.id
+                                  ].profit_total
+                              )
+                          }}
+                        </span>
                       </div>
                     </VCol>
 
@@ -896,13 +996,24 @@ const moreList = [
                     <VRow dense class="py-2 align-center">
                       <VCol cols="6">
                         <div class="d-flex flex-column justify-center">
-                          <span class="text-caption">Today Profit (9h:19m)</span>
+                          <span class="text-caption">Today Profit ({{ currentTime() }})</span>
                         </div>
                       </VCol>
 
                       <VCol cols="6">
                         <div class="d-flex flex-column justify-center align-end">
-                          <span class="text-right text-h6 font-weight-medium"><img :src="Frame" height="15" style="vertical-align: middle;"/> -</span>
+                          <span class="text-right text-h6 font-weight-medium"><img :src="Frame" height="15" style="vertical-align: middle;"/>
+                          {{
+                              profits[item.id] ===
+                              undefined
+                                ? 0
+                                : formatProfit(
+                                  profits[
+                                    item.id
+                                    ].profit_today
+                                )
+                            }}
+                          </span>
                         </div>
                       </VCol>
                     </VRow>
@@ -916,7 +1027,19 @@ const moreList = [
 
                       <VCol cols="6">
                         <div class="d-flex flex-column justify-center align-end">
-                          <span class="text-right text-h6 font-weight-medium"><img :src="Frame" height="15" style="vertical-align: middle;"/> 2000.00</span>
+                          <span class="text-right text-h6 font-weight-medium"><img :src="Frame" height="15" style="vertical-align: middle;"/>
+                          {{
+                              initialbalances[
+                                item.id
+                                ] === undefined
+                                ? 0
+                                : formatProfit(
+                                  initialbalances[
+                                    item.id
+                                    ]
+                                )
+                            }}
+                          </span>
                         </div>
                       </VCol>
                     </VRow>
@@ -930,7 +1053,18 @@ const moreList = [
 
                       <VCol cols="6">
                         <div class="d-flex flex-column justify-center align-end">
-                          <span class="text-right text-h6 font-weight-medium"><img :src="Frame" height="15" style="vertical-align: middle;"/> 2166.30</span>
+                          <span class="text-right text-h6 font-weight-medium"><img :src="Frame" height="15" style="vertical-align: middle;"/>
+                          {{
+                              balances[item.id] ===
+                              undefined
+                                ? 0
+                                : formatProfit(
+                                  balances[
+                                    item.id
+                                    ]
+                                )
+                            }}
+                          </span>
                         </div>
                       </VCol>
                     </VRow>
@@ -944,7 +1078,31 @@ const moreList = [
 
                       <VCol cols="6">
                         <div class="d-flex flex-column justify-center align-end">
-                          <span class="text-right text-h6 font-weight-medium"><img :src="Frame" height="15" style="vertical-align: middle;"/> 993.62</span>
+                          <span class="text-right text-h6 font-weight-medium" v-if="item.open_orders_sum_executed_amount"><img :src="Frame" height="15" style="vertical-align: middle;"/>
+{{
+                              balances[item.id] ===
+                              undefined
+                                ? 0
+                                : formatProfit(
+                                  balances[
+                                    item.id
+                                    ] -
+                                 item.open_orders_sum_executed_amount
+                                )
+                            }}
+                          </span>
+                          <span class="text-right text-h6 font-weight-medium" v-if="item.open_orders_sum_executed_amount"><img :src="Frame" height="15" style="vertical-align: middle;"/>
+{{
+                                balances[item.id] ===
+                                undefined
+                                  ? 0
+                                  : formatProfit(
+                                    balances[
+                                      item.id
+                                      ]
+                                  )
+                              }}
+                          </span>
                         </div>
                       </VCol>
                     </VRow>
@@ -958,7 +1116,11 @@ const moreList = [
 
                       <VCol cols="6">
                         <div class="d-flex flex-column justify-center align-end">
-                          <span class="text-right text-h6 font-weight-medium"><VIcon icon="tabler-clock-hour-4" size="20" />144D 23H 17M</span>
+                          <span class="text-right text-h6 font-weight-medium"><VIcon icon="tabler-clock-hour-4" size="20" />{{
+                              formatDuration(
+                                item.created_at
+                              )
+                            }}</span>
                         </div>
                       </VCol>
                     </VRow>
@@ -972,7 +1134,50 @@ const moreList = [
 
                       <VCol cols="6">
                         <div class="d-flex flex-column justify-center align-end">
-                          <span class="text-right text-h6 font-weight-medium">BUY C9 15D ago</span>
+                          <span class="text-right text-h6 font-weight-medium">
+                             {{
+                              lastTrades[item.id]
+                                ? lastTrades[item.id]
+                                  .side
+                                : ''
+                            }}
+
+                                                    {{
+                              lastTrades[item.id]
+                                ? lastTrades[item.id]
+                                  .stage == 2
+                                  ? 'MCR'
+                                  : ''
+                                : ''
+                            }}
+
+                                                    {{
+                              lastTrades[item.id]
+                                ? lastTrades[item.id]
+                                  .cover_index ===
+                                null
+                                  ? ''
+                                  : 'C' +
+                                  lastTrades[
+                                    item.id
+                                    ].cover_index
+                                : ''
+                            }}
+                                                    {{
+                              formatDate(
+                                lastTrades[item.id]
+                                  ? lastTrades[
+                                    item.id
+                                    ].created_at
+                                    ? lastTrades[
+                                      item.id
+                                      ]
+                                      .created_at
+                                    : 0
+                                  : 0
+                              )
+                            }}
+                          </span>
                         </div>
                       </VCol>
                     </VRow>
