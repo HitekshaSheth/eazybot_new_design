@@ -1093,7 +1093,7 @@ const moreList = [
                                 )
                             }}
                           </span>
-                          <span class="text-right text-h6 font-weight-medium" v-if="item.open_orders_sum_executed_amount"><img :src="Frame" height="15" style="vertical-align: middle;"/>
+                          <span class="text-right text-h6 font-weight-medium" v-else><img :src="Frame" height="15" style="vertical-align: middle;"/>
 {{
                                 balances[item.id] ===
                                 undefined
