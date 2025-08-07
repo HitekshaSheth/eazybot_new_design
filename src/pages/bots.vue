@@ -887,12 +887,9 @@ const moreList = [
               :key="item.id" cols="12" sm="6" lg="4">
           <VCard>
             <VCardItem :class="item.status == 0 ? 'card-inactive' : (item.sell_only > 0 ? 'card-sell-only' : 'card-active')">
-              <VCardTitle><RouterLink
-                class="v-card-title"
-                :to="`/bot/${item.id}`"
-              >
-                {{item.symbol.code}} - 1481.71
-              </RouterLink>  </VCardTitle>
+              <VCardTitle>
+                <RouterLink class="v-card-title" :to="`/bot/${item.id}`">{{item.symbol.code}} - 1481.71</RouterLink>
+              </VCardTitle>
               <template #append>
                 <span class="font-weight-bold">{{ item.status == 0 ? 'Inactive' : (item.sell_only > 0 ? 'Sell Only' : 'Active')}}</span>
                 <div>
@@ -1188,7 +1185,7 @@ const moreList = [
                 <!-- Footer -->
                 <VCardText class="align-center">
                   <div class="text-caption text-center mt-2 grey--text">
-                    Bot ID: {{item.active_session_id}} <VIcon icon="tabler-copy" size="20" />
+                    Bot ID: {{item.id}} <VIcon icon="tabler-copy" size="20" />
                   </div>
                 </VCardText>
               </VListItem>

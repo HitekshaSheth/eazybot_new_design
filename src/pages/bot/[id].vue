@@ -154,7 +154,13 @@ const currentSessions = async () => {
     })
 
     if (response.data.success && response.data?.sessions) {
-      currentSessionList.value = response.data.sessions
+      const sessions = response.data.sessions
+
+      for (const session of sessions) {
+        session.trades = await fetchTrades(session.session_id)
+      }
+
+      currentSessionList.value = sessions
     }
   } catch (error) {
     errorMessage.value = 'Error fetching Sessions.'
@@ -177,16 +183,47 @@ const previousSessions = async () => {
     })
 
     if (response.data.success && response.data?.sessions) {
-      previousSessionList.value = response.data.sessions
+      const sessions = response.data.sessions
+
+      for (const session of sessions) {
+        session.trades = await fetchTrades(session.session_id)
+      }
+
+      previousSessionList.value = sessions
     }
   } catch (error) {
     errorMessage.value = 'Error fetching Sessions.'
   }
 }
+const token = localStorage.getItem('accessToken')
+
+function fetchTrades(session_id){
+  try {
+    const Trades = ref([])
+    const response = axios.post('/api/v1/trades', {
+      "bot_id": route.params.id,
+      "session_id": session_id,
+      "records": 20,
+      "total_records": 0
+    },{
+      headers: {
+        'Accept': 'application/json',
+        'X-CSRF-TOKEN': token,
+      },
+      withCredentials: true,
+    })
+
+    if (response.data.success && response.data?.trades) {
+      Trades.value = response.data.trades
+    }
+    return Trades;
+  } catch (error) {
+    errorMessage.value = 'Error fetching trades.'
+  }
+}
 
 const currentTrades = async () => {
   try {
-    const token = localStorage.getItem('accessToken')
     const response = await axios.post('/api/v1/trades', {
       "bot_id": route.params.id,
       "session_id": 18261,
@@ -202,7 +239,6 @@ const currentTrades = async () => {
 
     if (response.data.success && response.data?.trades) {
       currentTradeList.value = response.data.trades
-      console.log(currentTradeList)
     } else {
       errorMessage.value = 'No Trades found.'
     }
@@ -230,7 +266,6 @@ const formatDateTime = dateStr => {
 }
 
 onMounted(() => {
-  currentTrades()
   currentSessions()
   previousSessions()
 })
@@ -729,7 +764,7 @@ onMounted(() => {
                         </VCol>
                       </VRow>
                       <VRow>
-                        <VCol cols="12" v-for="(item, index) in currentTradeList" :key="index">
+                        <VCol cols="12" v-for="(item, index) in currentSession.trades" :key="index">
                           <VCard :class="item.side === 'BUY' ? 'buy-card' : 'sell-card pb-1'" class="pa-3">
                             <VRow>
                               <VCol cols="5" class="pb-2">
@@ -1174,7 +1209,7 @@ onMounted(() => {
                         </VCol>
                       </VRow>
                       <VRow>
-                        <VCol cols="12" v-for="(item, index) in tradeItems" :key="index">
+                        <VCol cols="12" v-for="(item, index) in previousSession.trades" :key="index">
                           <!--                              <VCardTitle class="border-bg-block" > <VIcon icon="tabler-alert-triangle" class="mr-1" style="background-color:red"/> Insufficient Balance</VCardTitle>-->
                           <VCard :class="item.type === 'Buy' ? 'buy-card' : 'sell-card pb-1'" class="pa-3">
                             <VRow>
