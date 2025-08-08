@@ -161,6 +161,7 @@ const currentSessions = async () => {
       }
 
       currentSessionList.value = sessions
+      console.log(currentSessionList);
     }
   } catch (error) {
     errorMessage.value = 'Error fetching Sessions.'
