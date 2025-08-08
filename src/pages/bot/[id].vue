@@ -1218,63 +1218,61 @@ onMounted(() => {
                       </VRow>
                       <VRow>
                         <VCol cols="12" v-for="(item, index) in previousSession.trades" :key="index">
-                          <!--                              <VCardTitle class="border-bg-block" > <VIcon icon="tabler-alert-triangle" class="mr-1" style="background-color:red"/> Insufficient Balance</VCardTitle>-->
-                          <VCard :class="item.type === 'Buy' ? 'buy-card' : 'sell-card pb-1'" class="pa-3">
+                          <VCard :class="item.side === 'BUY' ? 'buy-card' : 'sell-card pb-1'" class="pa-3">
                             <VRow>
                               <VCol cols="5" class="pb-2">
                                 <div class="align-center gap-x-2" >
-                                  <VChip :color="item.type === 'Buy' ? 'success' : 'error'" text-color="white" label size="small">
-                                    {{ item.type }}
+                                  <VChip :color="item.side === 'BUY' ? 'success' : 'error'" text-color="white" label size="small">
+                                    {{ item.side }}
                                   </VChip>
-                                  <span class="text-caption font-weight-bold pl-2">{{ item.title }}</span>
+                                  <span class="text-caption font-weight-bold pl-2">{{ item.comment }}</span>
                                 </div>
                               </VCol>
                               <VCol cols="3" class="pb-2">
                                 <div class="text-caption">
-                                  <span class="font-weight-bold">{{ item.qty }}</span> Qty @
-                                  <span class="font-weight-bold">{{ item.rate }}</span>
+                                  <span class="font-weight-bold">{{ item.executed_quantity }}</span> Qty @
+                                  <span class="font-weight-bold">{{ item.executed_price }}</span>
                                 </div>
                               </VCol>
                               <VCol cols="4" class="pb-2">
                                 <div class="text-right text-caption">
-                                  <div><strong>Open:</strong> <span class="text-caption font-weight-bold">{{ item.open }}</span></div>
+                                  <div v-if="item.side === 'BUY'"><strong>Open:</strong> <span class="text-caption font-weight-bold">{{ formatDateTime(item.created_at) }}</span></div>
                                 </div>
                               </VCol>
                             </VRow>
                             <VRow class="mt-0">
                               <VCol cols="5" class="pt-2">
                                 <div class="align-center gap-x-2" >
-                                  <span class="text-caption pl-13 font-weight-bold">Trade ID : {{ item.tradeId }}</span>
+                                  <span class="text-caption pl-13 font-weight-bold">Trade ID : {{ item.id }}</span>
                                 </div>
                               </VCol>
                               <VCol cols="3" class="pt-2">
                                 <div class="text-caption">
-                                  <span class="font-weight-bold">Total : {{ item.total }}</span>
+                                  <span class="font-weight-bold">Total : {{ item.executed_amount }}</span>
                                   <span class="text-grey text-uppercase">USDT</span>
                                 </div>
                               </VCol>
                               <VCol cols="4" class="pt-2">
                                 <div class="text-right text-caption">
-                                  <div><strong>Close:</strong> <span class="text-caption font-weight-bold">{{ item.close }}</span></div>
+                                  <div><strong>Close:</strong> <span class="text-caption font-weight-bold">{{ isNull(item.closed_at) ? '-' : formatDateTime(item.closed_at) }}</span></div>
                                 </div>
                               </VCol>
                             </VRow>
                             <!-- Divider for Sell only -->
-                            <VDivider v-if="item.type === 'Sell'" class="my-2" />
+                            <VDivider v-if="item.side === 'SELL'" class="my-2" />
 
                             <!-- Profit Row for Sell -->
                             <div
-                              v-if="item.type === 'Sell'"
-                              class="d-flex justify-space-between flex-wrap text-caption"
-                            >
-                              <span class="text-caption"><strong>Gross Profit :</strong> <span class="font-weight-bold"> {{ item.gross }}</span></span>
-                              <span class="text-caption"><strong>Fees :</strong><span class="font-weight-bold"> {{ item.fees }}</span></span>
-                              <span class="text-caption"><strong>Profit :</strong><span class="font-weight-bold"> {{ item.profit }}</span></span>
-                              <span class="text-caption"><strong>Profit to Tank :</strong><span class="font-weight-bold"> {{ item.toTank }}</span></span>
+                              v-if="item.side === 'SELL'"
+                              class="d-flex justify-space-between flex-wrap text-caption">
+                              <span class="text-caption"><strong>Gross Profit :</strong> <span class="font-weight-bold"> {{ item.gross_profit }}</span></span>
+                              <span class="text-caption"><strong>Fees :</strong><span class="font-weight-bold"> {{ item.exchange_fee_buy_sell }}</span></span>
+                              <span class="text-caption"><strong>Profit :</strong><span class="font-weight-bold"> {{ item.gross_profit }}</span></span>
+                              <span class="text-caption"><strong>Profit to Tank :</strong><span class="font-weight-bold"> {{ item.profit_avg }}</span></span>
                               <span class="text-caption font-weight-bold">
                                   <strong>Net Profit :</strong>
                                   <VChip color="success" size="small" class="font-bold ml-1">
-                                    {{ item.net }} [{{ item.percent }}]
+                                    {{ item.used_profit }} [{{ item.used_profit }}]
                                   </VChip>
                                 </span>
                             </div>
