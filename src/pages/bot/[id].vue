@@ -137,15 +137,17 @@ const tradeItems = [
 ]
 
 const isNull = val => val === null || val === undefined || val === '' || val === 'null'
+const token = localStorage.getItem('accessToken')
 
 const currentSessions = async () => {
   try {
     const token = localStorage.getItem('accessToken')
+
     const response = await axios.post('/api/v1/sessions', {
-      "bot_id": route.params.id,
-      "status": "OPEN",
-      "total_records": 0
-    },{
+      bot_id: route.params.id,
+      status: 'OPEN',
+      total_records: 0
+    }, {
       headers: {
         'Accept': 'application/json',
         'X-CSRF-TOKEN': token,
@@ -156,16 +158,45 @@ const currentSessions = async () => {
     if (response.data.success && response.data?.sessions) {
       const sessions = response.data.sessions
 
+      // Loop and await fetchTrades
       for (const session of sessions) {
-        session.trades = fetchTrades(session.id)
-      console.log("Session trade mapping")
-      console.log(session.trades)
+        session.trades = await fetchTrades(session.id, token)
+        console.log(`Trades for session ${session.id}`, session.trades)
       }
+
       currentSessionList.value = sessions
-      console.log(currentSessionList);
+      console.log("Final session list with trades:", currentSessionList.value)
     }
   } catch (error) {
     errorMessage.value = 'Error fetching Sessions.'
+    console.error(error)
+  }
+}
+
+const fetchTrades = async (session_id, token) => {
+  try {
+    console.log("Fetching trades for session:", session_id)
+
+    const response = await axios.post('/api/v1/trades', {
+      bot_id: route.params.id,
+      session_id: session_id,
+      records: 20,
+      total_records: 0
+    }, {
+      headers: {
+        'Accept': 'application/json',
+        'X-CSRF-TOKEN': token,
+      },
+      withCredentials: true,
+    })
+
+    if (response.data.success && response.data?.trades) {
+      return response.data.trades
+    }
+    return []
+  } catch (error) {
+    console.error(`Error fetching trades for session ${session_id}:`, error)
+    return []
   }
 }
 
@@ -188,41 +219,14 @@ const previousSessions = async () => {
       const sessions = response.data.sessions
 
       for (const session of sessions) {
-        session.trades = fetchTrades(session.id)
+        session.trades = await fetchTrades(session.id, token)
+        console.log(`Trades for session ${session.id}`, session.trades)
       }
 
       previousSessionList.value = sessions
     }
   } catch (error) {
     errorMessage.value = 'Error fetching Sessions.'
-  }
-}
-const token = localStorage.getItem('accessToken')
-
-function fetchTrades(session_id){
-  try {
-    const Trades = ref([])
-    const response = axios.post('/api/v1/trades', {
-      "bot_id": route.params.id,
-      "session_id": session_id,
-      "records": 20,
-      "total_records": 0
-    },{
-      headers: {
-        'Accept': 'application/json',
-        'X-CSRF-TOKEN': token,
-      },
-      withCredentials: true,
-    })
-
-    if (response.data.success && response.data?.trades) {
-      Trades.value = response.data.trades
-    }
-    console.log("Trades for session -"  +  session_id)
-    console.log(Trades)
-    return Trades;
-  } catch (error) {
-    errorMessage.value = 'Error fetching trades.'
   }
 }
 
