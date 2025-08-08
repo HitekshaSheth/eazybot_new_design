@@ -158,8 +158,9 @@ const currentSessions = async () => {
 
       for (const session of sessions) {
         session.trades = await fetchTrades(session.id)
+      console.log("Session trade mapping")
+      console.log(session.trades)
       }
-
       currentSessionList.value = sessions
       console.log(currentSessionList);
     }
@@ -217,6 +218,8 @@ function fetchTrades(session_id){
     if (response.data.success && response.data?.trades) {
       Trades.value = response.data.trades
     }
+    console.log("Trades for session -"  +  session_id)
+    console.log(Trades)
     return Trades;
   } catch (error) {
     errorMessage.value = 'Error fetching trades.'
