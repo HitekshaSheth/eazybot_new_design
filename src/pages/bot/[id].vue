@@ -530,7 +530,7 @@ onMounted(() => {
                   Profit used
                   <VIcon icon="tabler-info-circle" size="14" />
                   <br />
-                  <span class="text-sub-caption">{{ currentSession.data.used_profit}}</span>
+                  <span class="text-sub-caption">{{ formatProfit(currentSession.data.used_profit)}}</span>
                 </span>
                             </div>
                             <div style="width: 1px; height: 24px; background-color: #ccc; margin: 0 12px;"/>
@@ -541,7 +541,7 @@ onMounted(() => {
                   Available profit
                   <VIcon icon="tabler-info-circle" size="14" />
                   <br />
-                  <span class="text-sub-caption">{{ currentSession.data.profit_avg}}</span>
+                  <span class="text-sub-caption">{{ formatProfit(currentSession.data.profit_avg)}}</span>
                 </span>
                             </div>
                             <div style="width: 1px; height: 24px; background-color: #ccc; margin: 0 12px;"/>
@@ -552,7 +552,7 @@ onMounted(() => {
                   Session profit
                   <VIcon icon="tabler-info-circle" size="14" />
                   <br />
-                  <span class="text-sub-caption text-success">{{ currentSession.data.profit_loss}}</span>
+                  <span class="text-sub-caption text-success">{{ formatProfit(currentSession.data.profit_loss)}}</span>
                 </span>
                             </div>
                           </div>
@@ -975,12 +975,12 @@ onMounted(() => {
 
                       <VCol cols="12" md="6" class="d-flex align-center justify-end text-right">
                         <span class="text-caption grey--text mr-2">Runtime:</span>
-                        <strong class="mr-2">10D 58M</strong>
+                        <strong class="mr-2">{{formatDuration(previousSession.created_at)}}</strong>
                         <div style="width: 1px; height: 24px; background-color: #ccc;" class="mx-2" />
                         <span class="text-caption grey--text">
-          <span class="font-weight-bold">Dec 6</span>, 2024 23:30
+          <span class="font-weight-bold">{{ formatDateTime(previousSession.created_at) }}</span>
           <VIcon icon="tabler-arrow-right" size="20" />
-          <span class="font-weight-bold">Dec 17</span>, 2024 23:30
+          <span class="font-weight-bold">{{ formatDateTime(previousSession.updated_at) }}</span>
         </span>
                       </VCol>
                     </VRow>
@@ -989,24 +989,78 @@ onMounted(() => {
                     <VRow>
                       <VCol cols="12">
                         <div class="d-flex align-center justify-start flex-wrap">
-                          <template v-for="(item, index) in stats" :key="index">
-                            <div class="d-flex align-center" style="flex: 1; min-width: 120px;">
-                              <div>
+                          <div class="d-flex align-center" style="flex: 1; min-width: 120px;">
+                            <div>
                 <span class="text-caption grey--text">
-                  {{ item.label }}
-                  <VIcon v-if="item.icon" icon="tabler-info-circle" size="14" />
+                  Trades closed
                   <br />
-                  <span :class="['text-sub-caption', item.color]">
-                    {{ item.value }}
-                  </span>
+                  <span class="text-sub-caption">{{ previousSession.data.closed_trades || 0}}</span>
                 </span>
-                              </div>
-                              <div
-                                v-if="index !== stats.length - 1"
-                                style="width: 1px; height: 24px; background-color: #ccc; margin: 0 12px;"
-                              />
                             </div>
-                          </template>
+                            <div style="width: 1px; height: 24px; background-color: #ccc; margin: 0 12px;"/>
+                          </div>
+                          <div class="d-flex align-center" style="flex: 1; min-width: 120px;">
+                            <div>
+                <span class="text-caption grey--text">
+                  Top positions sold
+                  <br />
+                  <span class="text-sub-caption">{{ previousSession.data.positions_sold}}</span>
+                </span>
+                            </div>
+                            <div style="width: 1px; height: 24px; background-color: #ccc; margin: 0 12px;"/>
+                          </div>
+                          <div class="d-flex align-center" style="flex: 1; min-width: 120px;">
+                            <div>
+                <span class="text-caption grey--text">
+                  Sliding covers
+                  <br />
+                  <span class="text-sub-caption">{{ previousSession.data.sliding_covers}}</span>
+                </span>
+                            </div>
+                            <div style="width: 1px; height: 24px; background-color: #ccc; margin: 0 12px;"/>
+                          </div>
+                          <div class="d-flex align-center" style="flex: 1; min-width: 120px;">
+                            <div>
+                <span class="text-caption grey--text">
+                  Opening price
+                  <br />
+                  <span class="text-sub-caption">{{ previousSession.data.opening_price}}</span>
+                </span>
+                            </div>
+                            <div style="width: 1px; height: 24px; background-color: #ccc; margin: 0 12px;"/>
+                          </div>
+                          <div class="d-flex align-center" style="flex: 1; min-width: 120px;">
+                            <div>
+                <span class="text-caption grey--text">
+                  Profit used
+                  <VIcon icon="tabler-info-circle" size="14" />
+                  <br />
+                  <span class="text-sub-caption">{{ formatProfit(previousSession.data.used_profit)}}</span>
+                </span>
+                            </div>
+                            <div style="width: 1px; height: 24px; background-color: #ccc; margin: 0 12px;"/>
+                          </div>
+                          <div class="d-flex align-center" style="flex: 1; min-width: 120px;">
+                            <div>
+                <span class="text-caption grey--text">
+                  Available profit
+                  <VIcon icon="tabler-info-circle" size="14" />
+                  <br />
+                  <span class="text-sub-caption">{{ formatProfit(previousSession.data.profit_avg)}}</span>
+                </span>
+                            </div>
+                            <div style="width: 1px; height: 24px; background-color: #ccc; margin: 0 12px;"/>
+                          </div>
+                          <div class="d-flex align-center" style="flex: 1; min-width: 120px;">
+                            <div>
+                <span class="text-caption grey--text">
+                  Session profit
+                  <VIcon icon="tabler-info-circle" size="14" />
+                  <br />
+                  <span class="text-sub-caption text-success">{{ formatProfit(previousSession.data.profit_loss)}}</span>
+                </span>
+                            </div>
+                          </div>
                         </div>
                       </VCol>
                     </VRow>
@@ -1297,7 +1351,7 @@ onMounted(() => {
                           <div class="d-flex align-center" style="flex: 1; min-width: 120px;">
                             <div>
                               <span class="text-caption grey--text">Average Price <VIcon icon="tabler-info-circle" size="14" /><br />
-                              <span class="text-sub-caption">225.25</span></span>
+                              <span class="text-sub-caption">{{formatProfit(previousSession.average_price) }}</span></span>
                             </div>
                           </div>
                         </VCol>
@@ -1313,7 +1367,7 @@ onMounted(() => {
                           <div class="d-flex align-center" style="flex: 1; min-width: 120px;">
                             <div>
                               <span class="text-caption grey--text">USDT Assigned <VIcon icon="tabler-info-circle" size="14" /><br />
-                              <span class="text-sub-caption">25399.12</span></span>
+                              <span class="text-sub-caption">{{formatProfit(previousSession.sessionDetail.usdt_assigned)}}</span></span>
                             </div>
                           </div>
                         </VCol>
@@ -1321,7 +1375,14 @@ onMounted(() => {
                           <div class="d-flex align-center" style="flex: 1; min-width: 120px;">
                             <div>
                               <span class="text-caption grey--text">USDT In Trade <VIcon icon="tabler-info-circle" size="14" /><br />
-                              <span class="text-sub-caption">3160.37</span></span>
+                              <span class="text-sub-caption">{{
+                                  previousSession.sessionDetail.usdt_assigned
+                                    ? formatProfit(
+                                      previousSession.sessionDetail.usdt_assigned -
+                                      previousSession.sessionDetail.usdt_available
+                                    )
+                                    : 0
+                                }}</span></span>
                             </div>
                           </div>
                         </VCol>
@@ -1329,7 +1390,7 @@ onMounted(() => {
                           <div class="d-flex align-center" style="flex: 1; min-width: 120px;">
                             <div>
                               <span class="text-caption grey--text">USDT Available <VIcon icon="tabler-info-circle" size="14" /><br />
-                              <span class="text-sub-caption">22238.75</span></span>
+                              <span class="text-sub-caption">{{formatProfit(previousSession.sessionDetail.usdt_available)}}</span></span>
                             </div>
                           </div>
                         </VCol>
