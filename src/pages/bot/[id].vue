@@ -157,7 +157,7 @@ const currentSessions = async () => {
       const sessions = response.data.sessions
 
       for (const session of sessions) {
-        session.trades = await fetchTrades(session.id)
+        session.trades = fetchTrades(session.id)
       console.log("Session trade mapping")
       console.log(session.trades)
       }
@@ -188,7 +188,7 @@ const previousSessions = async () => {
       const sessions = response.data.sessions
 
       for (const session of sessions) {
-        session.trades = await fetchTrades(session.id)
+        session.trades = fetchTrades(session.id)
       }
 
       previousSessionList.value = sessions
