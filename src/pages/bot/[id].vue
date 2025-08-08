@@ -1,4 +1,6 @@
 <script setup>
+import moment from "moment";
+
 const route = useRoute('view-bot')
 import AppPageHeader from '../../components/AppPageHeader.vue'
 import Frame from '@/assets/images/Frame.svg?url'
@@ -160,8 +162,9 @@ const currentSessions = async () => {
 
       // Loop and await fetchTrades
       for (const session of sessions) {
+        session.sessionDetail = await fetchSessionDetail(session.id, token)
         session.trades = await fetchTrades(session.id, token)
-        console.log(`Trades for session ${session.id}`, session.trades)
+        console.log(`session detail ${session.id}`, session.sessionDetail)
       }
 
       currentSessionList.value = sessions
@@ -175,7 +178,6 @@ const currentSessions = async () => {
 
 const fetchTrades = async (session_id, token) => {
   try {
-    console.log("Fetching trades for session:", session_id)
 
     const response = await axios.post('/api/v1/trades', {
       bot_id: route.params.id,
@@ -200,6 +202,26 @@ const fetchTrades = async (session_id, token) => {
   }
 }
 
+const fetchSessionDetail = async (session_id, token) => {
+  try {
+
+    const response = await axios.get('/api/v1/bot/session/'+route.params.id+'/'+session_id, {
+      'Accept': 'application/json',
+      headers: {
+        'X-CSRF-TOKEN': token,
+      }
+    })
+
+    if (response.data.success && response.data) {
+      return response.data
+    }
+    return []
+  } catch (error) {
+    console.error(`Error fetching session detail ${session_id}:`, error)
+    return []
+  }
+}
+
 const previousSessions = async () => {
   try {
     const token = localStorage.getItem('accessToken')
@@ -219,7 +241,9 @@ const previousSessions = async () => {
       const sessions = response.data.sessions
 
       for (const session of sessions) {
+        session.sessionDetail = await fetchSessionDetail(session.id, token)
         session.trades = await fetchTrades(session.id, token)
+        console.log(`session detail ${session.id}`, session.sessionDetail)
         console.log(`Trades for session ${session.id}`, session.trades)
       }
 
@@ -271,6 +295,39 @@ const formatDateTime = dateStr => {
   }).format(date)
 
   return `${datePart} - ${timePart}`
+}
+
+function formatDuration(created_at, updated_at = null) {
+  const currentDate = updated_at
+    ? moment.utc(updated_at, 'YYYY-MM-DD HH:mm:ss')
+    : moment().utc()
+
+  const createdAtDate = moment.utc(created_at, 'YYYY-MM-DD HH:mm:ss')
+  const diffMs = currentDate.diff(createdAtDate)
+  const duration = moment.duration(diffMs)
+
+  const diffDays = Math.floor(duration.asDays())
+  const diffHours = duration.hours()
+  const diffMinutes = duration.minutes()
+
+  let formattedDuration = ''
+  if (diffDays > 0) formattedDuration += `${diffDays}D `
+  if (diffHours > 0) formattedDuration += `${diffHours}H `
+  if (diffMinutes > 0) formattedDuration += `${diffMinutes}M`
+
+  return formattedDuration.trim()
+}
+
+function formatProfit(profit) {
+  const tradeProfit = profit || 0
+
+  if (tradeProfit === 0) return '-'
+
+  if (tradeProfit < 0 || (tradeProfit > 0 && tradeProfit < 1)) {
+    return tradeProfit.toFixed(8)
+  }
+
+  return tradeProfit.toFixed(2)
 }
 
 onMounted(() => {
@@ -413,12 +470,12 @@ onMounted(() => {
 
                       <VCol cols="12" md="6" class="d-flex align-center justify-end text-right">
                         <span class="text-caption grey--text mr-2">Runtime:</span>
-                        <strong class="mr-2">10D 58M</strong>
+                        <strong class="mr-2">{{formatDuration(currentSession.created_at)}}</strong>
                         <div style="width: 1px; height: 24px; background-color: #ccc;" class="mx-2" />
                         <span class="text-caption grey--text">
-          <span class="font-weight-bold">Dec 6</span>, 2024 23:30
+          <span class="font-weight-bold">{{ formatDateTime(currentSession.created_at) }}</span>
           <VIcon icon="tabler-arrow-right" size="20" />
-          <span class="font-weight-bold">Dec 17</span>, 2024 23:30
+          <span class="font-weight-bold">{{ formatDateTime(currentSession.updated_at) }}</span>
         </span>
                       </VCol>
                     </VRow>
@@ -427,24 +484,78 @@ onMounted(() => {
                     <VRow>
                       <VCol cols="12">
                         <div class="d-flex align-center justify-start flex-wrap">
-                          <template v-for="(item, index) in stats" :key="index">
-                            <div class="d-flex align-center" style="flex: 1; min-width: 120px;">
-                              <div>
+                          <div class="d-flex align-center" style="flex: 1; min-width: 120px;">
+                            <div>
                 <span class="text-caption grey--text">
-                  {{ item.label }}
-                  <VIcon v-if="item.icon" icon="tabler-info-circle" size="14" />
+                  Trades closed
                   <br />
-                  <span :class="['text-sub-caption', item.color]">
-                    {{ item.value }}
-                  </span>
+                  <span class="text-sub-caption">{{ currentSession.data.closed_trades || 0}}</span>
                 </span>
-                              </div>
-                              <div
-                                v-if="index !== stats.length - 1"
-                                style="width: 1px; height: 24px; background-color: #ccc; margin: 0 12px;"
-                              />
                             </div>
-                          </template>
+                            <div style="width: 1px; height: 24px; background-color: #ccc; margin: 0 12px;"/>
+                          </div>
+                          <div class="d-flex align-center" style="flex: 1; min-width: 120px;">
+                            <div>
+                <span class="text-caption grey--text">
+                  Top positions sold
+                  <br />
+                  <span class="text-sub-caption">{{ currentSession.data.positions_sold}}</span>
+                </span>
+                            </div>
+                            <div style="width: 1px; height: 24px; background-color: #ccc; margin: 0 12px;"/>
+                          </div>
+                          <div class="d-flex align-center" style="flex: 1; min-width: 120px;">
+                            <div>
+                <span class="text-caption grey--text">
+                  Sliding covers
+                  <br />
+                  <span class="text-sub-caption">{{ currentSession.data.sliding_covers}}</span>
+                </span>
+                            </div>
+                            <div style="width: 1px; height: 24px; background-color: #ccc; margin: 0 12px;"/>
+                          </div>
+                          <div class="d-flex align-center" style="flex: 1; min-width: 120px;">
+                            <div>
+                <span class="text-caption grey--text">
+                  Opening price
+                  <br />
+                  <span class="text-sub-caption">{{ currentSession.data.opening_price}}</span>
+                </span>
+                            </div>
+                            <div style="width: 1px; height: 24px; background-color: #ccc; margin: 0 12px;"/>
+                          </div>
+                          <div class="d-flex align-center" style="flex: 1; min-width: 120px;">
+                            <div>
+                <span class="text-caption grey--text">
+                  Profit used
+                  <VIcon icon="tabler-info-circle" size="14" />
+                  <br />
+                  <span class="text-sub-caption">{{ currentSession.data.used_profit}}</span>
+                </span>
+                            </div>
+                            <div style="width: 1px; height: 24px; background-color: #ccc; margin: 0 12px;"/>
+                          </div>
+                          <div class="d-flex align-center" style="flex: 1; min-width: 120px;">
+                            <div>
+                <span class="text-caption grey--text">
+                  Available profit
+                  <VIcon icon="tabler-info-circle" size="14" />
+                  <br />
+                  <span class="text-sub-caption">{{ currentSession.data.profit_avg}}</span>
+                </span>
+                            </div>
+                            <div style="width: 1px; height: 24px; background-color: #ccc; margin: 0 12px;"/>
+                          </div>
+                          <div class="d-flex align-center" style="flex: 1; min-width: 120px;">
+                            <div>
+                <span class="text-caption grey--text">
+                  Session profit
+                  <VIcon icon="tabler-info-circle" size="14" />
+                  <br />
+                  <span class="text-sub-caption text-success">{{ currentSession.data.profit_loss}}</span>
+                </span>
+                            </div>
+                          </div>
                         </div>
                       </VCol>
                     </VRow>
@@ -734,7 +845,7 @@ onMounted(() => {
                           <div class="d-flex align-center" style="flex: 1; min-width: 120px;">
                             <div>
                               <span class="text-caption grey--text">Average Price <VIcon icon="tabler-info-circle" size="14" /><br />
-                              <span class="text-sub-caption">225.25</span></span>
+                              <span class="text-sub-caption">{{formatProfit(currentSession.average_price) }}</span></span>
                             </div>
                           </div>
                         </VCol>
@@ -750,7 +861,7 @@ onMounted(() => {
                           <div class="d-flex align-center" style="flex: 1; min-width: 120px;">
                             <div>
                               <span class="text-caption grey--text">USDT Assigned <VIcon icon="tabler-info-circle" size="14" /><br />
-                              <span class="text-sub-caption">25399.12</span></span>
+                              <span class="text-sub-caption">{{formatProfit(currentSession.sessionDetail.usdt_assigned)}}</span></span>
                             </div>
                           </div>
                         </VCol>
@@ -758,7 +869,14 @@ onMounted(() => {
                           <div class="d-flex align-center" style="flex: 1; min-width: 120px;">
                             <div>
                               <span class="text-caption grey--text">USDT In Trade <VIcon icon="tabler-info-circle" size="14" /><br />
-                              <span class="text-sub-caption">3160.37</span></span>
+                              <span class="text-sub-caption">{{
+                                  currentSession.sessionDetail.usdt_assigned
+                                    ? formatProfit(
+                                      currentSession.sessionDetail.usdt_assigned -
+                                      currentSession.sessionDetail.usdt_available
+                                    )
+                                    : 0
+                                }}</span></span>
                             </div>
                           </div>
                         </VCol>
@@ -766,7 +884,7 @@ onMounted(() => {
                           <div class="d-flex align-center" style="flex: 1; min-width: 120px;">
                             <div>
                               <span class="text-caption grey--text">USDT Available <VIcon icon="tabler-info-circle" size="14" /><br />
-                              <span class="text-sub-caption">22238.75</span></span>
+                              <span class="text-sub-caption">{{formatProfit(currentSession.sessionDetail.usdt_available)}}</span></span>
                             </div>
                           </div>
                         </VCol>
