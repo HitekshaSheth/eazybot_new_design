@@ -152,44 +152,6 @@ const bots = [
   }
 
 ]
-const activeProjects = [
-  {
-    title: 'Laravel',
-    subtitle: 'Ecommerce',
-    stats: '65',
-    progressColor: 'error',
-  },
-  {
-    title: 'Figma',
-    subtitle: 'App UI Kit',
-    stats: '86',
-    progressColor: 'primary',
-  },
-  {
-    title: 'VueJs',
-    subtitle: 'Calendar App',
-    stats: '90',
-    progressColor: 'success',
-  },
-  {
-    title: 'React',
-    subtitle: 'Dashboard',
-    stats: '37',
-    progressColor: 'info',
-  },
-  {
-    title: 'Bootstrap',
-    subtitle: 'Website',
-    stats: '22',
-    progressColor: 'primary',
-  },
-  {
-    title: 'Sketch',
-    subtitle: 'Website Design',
-    stats: '29',
-    progressColor: 'warning',
-  },
-]
 
 const moreList = [
   {
@@ -321,566 +283,566 @@ const moreList = [
           </VBtn>
         </div>
       </div>
-      <VRow>
-        <VCol cols="12" sm="6" lg="4">
-          <VCard>
-            <VCardItem class="card-active">
-              <VCardTitle><RouterLink class="v-card-title" to="/view-bot">ETH/USDT - 1481.71</RouterLink>  </VCardTitle>
-              <template #append>
-                <span class="font-weight-bold">Active</span>
-                <div>
-                  <MoreBtn :menu-list="moreList" />
-                </div>
-              </template>
-            </VCardItem>
-            <VDivider />
+<!--      <VRow>-->
+<!--        <VCol cols="12" sm="6" lg="4">-->
+<!--          <VCard>-->
+<!--            <VCardItem class="card-active">-->
+<!--              <VCardTitle><RouterLink class="v-card-title" to="/view-bot">ETH/USDT - 1481.71</RouterLink>  </VCardTitle>-->
+<!--              <template #append>-->
+<!--                <span class="font-weight-bold">Active</span>-->
+<!--                <div>-->
+<!--                  <MoreBtn :menu-list="moreList" />-->
+<!--                </div>-->
+<!--              </template>-->
+<!--            </VCardItem>-->
+<!--            <VDivider />-->
 
-            <!--      <VCardText>-->
-            <VList class="card-list">
-              <VCardText class="pb-0 pt-4">
-                <VListItem>
-                  <div class="d-flex align-center gap-2">
-                    <VAvatar>
-                      <img :src="Group">
-                    </VAvatar>
-                    <VAvatar style="margin-left: -25px">
-                      <img :src="Frame">
-                    </VAvatar>
-                    <div>
-                      <div class="font-weight-medium">ETH</div>
-                      <div class="text-caption grey--text">ID: 107543 <VIcon icon="tabler-copy" size="20" /></div>
-                    </div>
-                    <div class="ml-auto text-right">
-                      <div class="text-caption grey--text">Strategy Type</div>
-                      <div class="font-weight-medium">SBS</div>
-                    </div>
-                  </div>
-                </VListItem>
-                <!--                <VDivider />-->
-              </VCardText>
-              <VListItem>
-                <VCardText class="pb-0 pt-0">
-                  <div class="d-flex align-center gap-2 py-2">
-                    <VRow dense class="w-100">
-                      <VCol cols="3">
-                        <div class="d-flex flex-column justify-center">
-                          <span class="text-caption grey--text">Exchange<br /><span class="text-sub-caption">Binance</span></span>
-                        </div>
-                      </VCol>
+<!--            &lt;!&ndash;      <VCardText>&ndash;&gt;-->
+<!--            <VList class="card-list">-->
+<!--              <VCardText class="pb-0 pt-4">-->
+<!--                <VListItem>-->
+<!--                  <div class="d-flex align-center gap-2">-->
+<!--                    <VAvatar>-->
+<!--                      <img :src="Group">-->
+<!--                    </VAvatar>-->
+<!--                    <VAvatar style="margin-left: -25px">-->
+<!--                      <img :src="Frame">-->
+<!--                    </VAvatar>-->
+<!--                    <div>-->
+<!--                      <div class="font-weight-medium">ETH</div>-->
+<!--                      <div class="text-caption grey&#45;&#45;text">ID: 107543 <VIcon icon="tabler-copy" size="20" /></div>-->
+<!--                    </div>-->
+<!--                    <div class="ml-auto text-right">-->
+<!--                      <div class="text-caption grey&#45;&#45;text">Strategy Type</div>-->
+<!--                      <div class="font-weight-medium">SBS</div>-->
+<!--                    </div>-->
+<!--                  </div>-->
+<!--                </VListItem>-->
+<!--                &lt;!&ndash;                <VDivider />&ndash;&gt;-->
+<!--              </VCardText>-->
+<!--              <VListItem>-->
+<!--                <VCardText class="pb-0 pt-0">-->
+<!--                  <div class="d-flex align-center gap-2 py-2">-->
+<!--                    <VRow dense class="w-100">-->
+<!--                      <VCol cols="3">-->
+<!--                        <div class="d-flex flex-column justify-center">-->
+<!--                          <span class="text-caption grey&#45;&#45;text">Exchange<br /><span class="text-sub-caption">Binance</span></span>-->
+<!--                        </div>-->
+<!--                      </VCol>-->
 
-                      <VCol cols="3">
-                        <div class="d-flex flex-column justify-center">
-                          <span class="text-caption grey--text">Cycle Type<br /><span class="text-sub-caption">Single</span></span>
-                        </div>
-                      </VCol>
+<!--                      <VCol cols="3">-->
+<!--                        <div class="d-flex flex-column justify-center">-->
+<!--                          <span class="text-caption grey&#45;&#45;text">Cycle Type<br /><span class="text-sub-caption">Single</span></span>-->
+<!--                        </div>-->
+<!--                      </VCol>-->
 
-                      <VCol cols="3">
-                        <div class="d-flex flex-column justify-center">
-                          <span class="text-caption grey--text">Strategy<br /><span class="text-sub-caption">Custom</span></span>
-                        </div>
-                      </VCol>
+<!--                      <VCol cols="3">-->
+<!--                        <div class="d-flex flex-column justify-center">-->
+<!--                          <span class="text-caption grey&#45;&#45;text">Strategy<br /><span class="text-sub-caption">Custom</span></span>-->
+<!--                        </div>-->
+<!--                      </VCol>-->
 
-                      <VCol cols="3">
-                        <div class="d-flex flex-column justify-center">
-                          <span class="text-caption grey--text">Category<br /><span class="text-sub-caption">N/A Bot</span></span>
-                        </div>
-                      </VCol>
-                    </VRow>
-                  </div>
+<!--                      <VCol cols="3">-->
+<!--                        <div class="d-flex flex-column justify-center">-->
+<!--                          <span class="text-caption grey&#45;&#45;text">Category<br /><span class="text-sub-caption">N/A Bot</span></span>-->
+<!--                        </div>-->
+<!--                      </VCol>-->
+<!--                    </VRow>-->
+<!--                  </div>-->
 
-                  <VDivider />
-                  <VRow dense class="py-2 align-center">
-                    <VCol cols="6">
-                      <div class="d-flex flex-column justify-center">
-                        <span class="text-caption grey--text">Profit</span>
-                        <span class="text-h4 font-weight-bold">166.30</span>
-                      </div>
-                    </VCol>
+<!--                  <VDivider />-->
+<!--                  <VRow dense class="py-2 align-center">-->
+<!--                    <VCol cols="6">-->
+<!--                      <div class="d-flex flex-column justify-center">-->
+<!--                        <span class="text-caption grey&#45;&#45;text">Profit</span>-->
+<!--                        <span class="text-h4 font-weight-bold">166.30</span>-->
+<!--                      </div>-->
+<!--                    </VCol>-->
 
-                    <VCol cols="6">
-                      <div class="d-flex flex-column justify-center align-end">
-                        <span class="text-caption grey--text">Market Vs Average</span>
-                        <span class="text-h4 font-weight-bold d-flex align-center" style="color: red">
-                    <VIcon icon="tabler-s-turn-down" size="22" />-50.15%</span>
-                      </div>
-                    </VCol>
-                  </VRow>
-                  <!--              <VDivider />-->
-                </VCardText>
-                <!-- Other Metrics -->
-                <div class="card-bg-metrics">
-                  <VCardText class="pb-0 pt-0">
-                    <VRow dense class="py-2 align-center">
-                      <VCol cols="6">
-                        <div class="d-flex flex-column justify-center">
-                          <span class="text-caption">Today Profit (9h:19m)</span>
-                        </div>
-                      </VCol>
+<!--                    <VCol cols="6">-->
+<!--                      <div class="d-flex flex-column justify-center align-end">-->
+<!--                        <span class="text-caption grey&#45;&#45;text">Market Vs Average</span>-->
+<!--                        <span class="text-h4 font-weight-bold d-flex align-center" style="color: red">-->
+<!--                    <VIcon icon="tabler-s-turn-down" size="22" />-50.15%</span>-->
+<!--                      </div>-->
+<!--                    </VCol>-->
+<!--                  </VRow>-->
+<!--                  &lt;!&ndash;              <VDivider />&ndash;&gt;-->
+<!--                </VCardText>-->
+<!--                &lt;!&ndash; Other Metrics &ndash;&gt;-->
+<!--                <div class="card-bg-metrics">-->
+<!--                  <VCardText class="pb-0 pt-0">-->
+<!--                    <VRow dense class="py-2 align-center">-->
+<!--                      <VCol cols="6">-->
+<!--                        <div class="d-flex flex-column justify-center">-->
+<!--                          <span class="text-caption">Today Profit (9h:19m)</span>-->
+<!--                        </div>-->
+<!--                      </VCol>-->
 
-                      <VCol cols="6">
-                        <div class="d-flex flex-column justify-center align-end">
-                          <span class="text-right text-h6 font-weight-medium"><img :src="Frame" height="15" style="vertical-align: middle;"/> -</span>
-                        </div>
-                      </VCol>
-                    </VRow>
-                    <VDivider />
-                    <VRow dense class="py-2 align-center">
-                      <VCol cols="6">
-                        <div class="d-flex flex-column justify-center">
-                          <span class="text-caption">Initial Capital</span>
-                        </div>
-                      </VCol>
+<!--                      <VCol cols="6">-->
+<!--                        <div class="d-flex flex-column justify-center align-end">-->
+<!--                          <span class="text-right text-h6 font-weight-medium"><img :src="Frame" height="15" style="vertical-align: middle;"/> -</span>-->
+<!--                        </div>-->
+<!--                      </VCol>-->
+<!--                    </VRow>-->
+<!--                    <VDivider />-->
+<!--                    <VRow dense class="py-2 align-center">-->
+<!--                      <VCol cols="6">-->
+<!--                        <div class="d-flex flex-column justify-center">-->
+<!--                          <span class="text-caption">Initial Capital</span>-->
+<!--                        </div>-->
+<!--                      </VCol>-->
 
-                      <VCol cols="6">
-                        <div class="d-flex flex-column justify-center align-end">
-                          <span class="text-right text-h6 font-weight-medium"><img :src="Frame" height="15" style="vertical-align: middle;"/> 2000.00</span>
-                        </div>
-                      </VCol>
-                    </VRow>
-                    <VDivider />
-                    <VRow dense class="py-2 align-center">
-                      <VCol cols="6">
-                        <div class="d-flex flex-column justify-center">
-                          <span class="text-caption">Current Capital</span>
-                        </div>
-                      </VCol>
+<!--                      <VCol cols="6">-->
+<!--                        <div class="d-flex flex-column justify-center align-end">-->
+<!--                          <span class="text-right text-h6 font-weight-medium"><img :src="Frame" height="15" style="vertical-align: middle;"/> 2000.00</span>-->
+<!--                        </div>-->
+<!--                      </VCol>-->
+<!--                    </VRow>-->
+<!--                    <VDivider />-->
+<!--                    <VRow dense class="py-2 align-center">-->
+<!--                      <VCol cols="6">-->
+<!--                        <div class="d-flex flex-column justify-center">-->
+<!--                          <span class="text-caption">Current Capital</span>-->
+<!--                        </div>-->
+<!--                      </VCol>-->
 
-                      <VCol cols="6">
-                        <div class="d-flex flex-column justify-center align-end">
-                          <span class="text-right text-h6 font-weight-medium"><img :src="Frame" height="15" style="vertical-align: middle;"/> 2166.30</span>
-                        </div>
-                      </VCol>
-                    </VRow>
-                    <VDivider />
-                    <VRow dense class="py-2 align-center">
-                      <VCol cols="6">
-                        <div class="d-flex flex-column justify-center">
-                          <span class="text-caption">Available Quote Coins</span>
-                        </div>
-                      </VCol>
+<!--                      <VCol cols="6">-->
+<!--                        <div class="d-flex flex-column justify-center align-end">-->
+<!--                          <span class="text-right text-h6 font-weight-medium"><img :src="Frame" height="15" style="vertical-align: middle;"/> 2166.30</span>-->
+<!--                        </div>-->
+<!--                      </VCol>-->
+<!--                    </VRow>-->
+<!--                    <VDivider />-->
+<!--                    <VRow dense class="py-2 align-center">-->
+<!--                      <VCol cols="6">-->
+<!--                        <div class="d-flex flex-column justify-center">-->
+<!--                          <span class="text-caption">Available Quote Coins</span>-->
+<!--                        </div>-->
+<!--                      </VCol>-->
 
-                      <VCol cols="6">
-                        <div class="d-flex flex-column justify-center align-end">
-                          <span class="text-right text-h6 font-weight-medium"><img :src="Frame" height="15" style="vertical-align: middle;"/> 993.62</span>
-                        </div>
-                      </VCol>
-                    </VRow>
-                    <VDivider />
-                    <VRow dense class="py-2 align-center">
-                      <VCol cols="6">
-                        <div class="d-flex flex-column justify-center">
-                          <span class="text-caption">Runtime</span>
-                        </div>
-                      </VCol>
+<!--                      <VCol cols="6">-->
+<!--                        <div class="d-flex flex-column justify-center align-end">-->
+<!--                          <span class="text-right text-h6 font-weight-medium"><img :src="Frame" height="15" style="vertical-align: middle;"/> 993.62</span>-->
+<!--                        </div>-->
+<!--                      </VCol>-->
+<!--                    </VRow>-->
+<!--                    <VDivider />-->
+<!--                    <VRow dense class="py-2 align-center">-->
+<!--                      <VCol cols="6">-->
+<!--                        <div class="d-flex flex-column justify-center">-->
+<!--                          <span class="text-caption">Runtime</span>-->
+<!--                        </div>-->
+<!--                      </VCol>-->
 
-                      <VCol cols="6">
-                        <div class="d-flex flex-column justify-center align-end">
-                          <span class="text-right text-h6 font-weight-medium"><VIcon icon="tabler-clock-hour-4" size="20" />144D 23H 17M</span>
-                        </div>
-                      </VCol>
-                    </VRow>
-                    <VDivider />
-                    <VRow dense class="py-2 align-center">
-                      <VCol cols="6">
-                        <div class="d-flex flex-column justify-center">
-                          <span class="text-caption">Last Trade</span>
-                        </div>
-                      </VCol>
+<!--                      <VCol cols="6">-->
+<!--                        <div class="d-flex flex-column justify-center align-end">-->
+<!--                          <span class="text-right text-h6 font-weight-medium"><VIcon icon="tabler-clock-hour-4" size="20" />144D 23H 17M</span>-->
+<!--                        </div>-->
+<!--                      </VCol>-->
+<!--                    </VRow>-->
+<!--                    <VDivider />-->
+<!--                    <VRow dense class="py-2 align-center">-->
+<!--                      <VCol cols="6">-->
+<!--                        <div class="d-flex flex-column justify-center">-->
+<!--                          <span class="text-caption">Last Trade</span>-->
+<!--                        </div>-->
+<!--                      </VCol>-->
 
-                      <VCol cols="6">
-                        <div class="d-flex flex-column justify-center align-end">
-                          <span class="text-right text-h6 font-weight-medium">BUY C9 15D ago</span>
-                        </div>
-                      </VCol>
-                    </VRow>
-                  </VCardText>
-                </div>
-                <!-- Footer -->
-                <VCardText class="align-center">
-                  <div class="text-caption text-center mt-2 grey--text">
-                    Bot ID: 107543 <VIcon icon="tabler-copy" size="20" />
-                  </div>
-                </VCardText>
-              </VListItem>
-            </VList>
-            <!--      </VCardText>-->
-          </VCard>
-        </VCol>
-        <VCol
-          cols="12"
-          sm="6"
-          lg="4"
-        >
-          <VCard>
-            <VCardItem class="card-sell-only">
-              <VCardTitle><a class="v-card-title" href="/view-bot">ETH/USDT - 1481.71</a>  </VCardTitle>
-              <template #append>
-                <span class="font-weight-bold">Sell Only</span>
-                <div>
-                  <MoreBtn :menu-list="moreList" />
-                </div>
-              </template>
-            </VCardItem>
-            <VDivider />
-            <!--      <VCardText>-->
-            <VList class="card-list">
-              <VCardText class="pb-0 pt-4">
-                <VListItem>
-                  <div class="d-flex align-center gap-2">
-                    <VAvatar>
-                      <img :src="Group">
-                    </VAvatar>
-                    <VAvatar style="margin-left: -25px">
-                      <img :src="Frame">
-                    </VAvatar>
-                    <div>
-                      <div class="font-weight-medium">ETH</div>
-                      <div class="text-caption grey--text">ID: 107543 <VIcon icon="tabler-copy" size="20" /></div>
-                    </div>
-                    <div class="ml-auto text-right">
-                      <div class="text-caption grey--text">Strategy Type</div>
-                      <div class="font-weight-medium">SBS</div>
-                    </div>
-                  </div>
-                </VListItem>
-                <!--                <VDivider />-->
-              </VCardText>
-              <VListItem>
-                <VCardText class="pb-0 pt-0">
-                  <div class="d-flex align-center gap-2 py-2">
-                    <VRow dense class="w-100">
-                      <VCol cols="3">
-                        <div class="d-flex flex-column justify-center">
-                          <span class="text-caption grey--text">Exchange<br /><span class="text-sub-caption">Binance</span></span>
-                        </div>
-                      </VCol>
+<!--                      <VCol cols="6">-->
+<!--                        <div class="d-flex flex-column justify-center align-end">-->
+<!--                          <span class="text-right text-h6 font-weight-medium">BUY C9 15D ago</span>-->
+<!--                        </div>-->
+<!--                      </VCol>-->
+<!--                    </VRow>-->
+<!--                  </VCardText>-->
+<!--                </div>-->
+<!--                &lt;!&ndash; Footer &ndash;&gt;-->
+<!--                <VCardText class="align-center">-->
+<!--                  <div class="text-caption text-center mt-2 grey&#45;&#45;text">-->
+<!--                    Bot ID: 107543 <VIcon icon="tabler-copy" size="20" />-->
+<!--                  </div>-->
+<!--                </VCardText>-->
+<!--              </VListItem>-->
+<!--            </VList>-->
+<!--            &lt;!&ndash;      </VCardText>&ndash;&gt;-->
+<!--          </VCard>-->
+<!--        </VCol>-->
+<!--        <VCol-->
+<!--          cols="12"-->
+<!--          sm="6"-->
+<!--          lg="4"-->
+<!--        >-->
+<!--          <VCard>-->
+<!--            <VCardItem class="card-sell-only">-->
+<!--              <VCardTitle><a class="v-card-title" href="/view-bot">ETH/USDT - 1481.71</a>  </VCardTitle>-->
+<!--              <template #append>-->
+<!--                <span class="font-weight-bold">Sell Only</span>-->
+<!--                <div>-->
+<!--                  <MoreBtn :menu-list="moreList" />-->
+<!--                </div>-->
+<!--              </template>-->
+<!--            </VCardItem>-->
+<!--            <VDivider />-->
+<!--            &lt;!&ndash;      <VCardText>&ndash;&gt;-->
+<!--            <VList class="card-list">-->
+<!--              <VCardText class="pb-0 pt-4">-->
+<!--                <VListItem>-->
+<!--                  <div class="d-flex align-center gap-2">-->
+<!--                    <VAvatar>-->
+<!--                      <img :src="Group">-->
+<!--                    </VAvatar>-->
+<!--                    <VAvatar style="margin-left: -25px">-->
+<!--                      <img :src="Frame">-->
+<!--                    </VAvatar>-->
+<!--                    <div>-->
+<!--                      <div class="font-weight-medium">ETH</div>-->
+<!--                      <div class="text-caption grey&#45;&#45;text">ID: 107543 <VIcon icon="tabler-copy" size="20" /></div>-->
+<!--                    </div>-->
+<!--                    <div class="ml-auto text-right">-->
+<!--                      <div class="text-caption grey&#45;&#45;text">Strategy Type</div>-->
+<!--                      <div class="font-weight-medium">SBS</div>-->
+<!--                    </div>-->
+<!--                  </div>-->
+<!--                </VListItem>-->
+<!--                &lt;!&ndash;                <VDivider />&ndash;&gt;-->
+<!--              </VCardText>-->
+<!--              <VListItem>-->
+<!--                <VCardText class="pb-0 pt-0">-->
+<!--                  <div class="d-flex align-center gap-2 py-2">-->
+<!--                    <VRow dense class="w-100">-->
+<!--                      <VCol cols="3">-->
+<!--                        <div class="d-flex flex-column justify-center">-->
+<!--                          <span class="text-caption grey&#45;&#45;text">Exchange<br /><span class="text-sub-caption">Binance</span></span>-->
+<!--                        </div>-->
+<!--                      </VCol>-->
 
-                      <VCol cols="3">
-                        <div class="d-flex flex-column justify-center">
-                          <span class="text-caption grey--text">Cycle Type<br /><span class="text-sub-caption">Single</span></span>
-                        </div>
-                      </VCol>
+<!--                      <VCol cols="3">-->
+<!--                        <div class="d-flex flex-column justify-center">-->
+<!--                          <span class="text-caption grey&#45;&#45;text">Cycle Type<br /><span class="text-sub-caption">Single</span></span>-->
+<!--                        </div>-->
+<!--                      </VCol>-->
 
-                      <VCol cols="3">
-                        <div class="d-flex flex-column justify-center">
-                          <span class="text-caption grey--text">Strategy<br /><span class="text-sub-caption">Custom</span></span>
-                        </div>
-                      </VCol>
+<!--                      <VCol cols="3">-->
+<!--                        <div class="d-flex flex-column justify-center">-->
+<!--                          <span class="text-caption grey&#45;&#45;text">Strategy<br /><span class="text-sub-caption">Custom</span></span>-->
+<!--                        </div>-->
+<!--                      </VCol>-->
 
-                      <VCol cols="3">
-                        <div class="d-flex flex-column justify-center">
-                          <span class="text-caption grey--text">Category<br /><span class="text-sub-caption">N/A Bot</span></span>
-                        </div>
-                      </VCol>
-                    </VRow>
-                  </div>
-                  <VDivider />
-                  <VRow dense class="py-2 align-center">
-                    <VCol cols="6">
-                      <div class="d-flex flex-column justify-center">
-                        <span class="text-caption grey--text">Profit</span>
-                        <span class="text-h4 font-weight-bold">166.30</span>
-                      </div>
-                    </VCol>
+<!--                      <VCol cols="3">-->
+<!--                        <div class="d-flex flex-column justify-center">-->
+<!--                          <span class="text-caption grey&#45;&#45;text">Category<br /><span class="text-sub-caption">N/A Bot</span></span>-->
+<!--                        </div>-->
+<!--                      </VCol>-->
+<!--                    </VRow>-->
+<!--                  </div>-->
+<!--                  <VDivider />-->
+<!--                  <VRow dense class="py-2 align-center">-->
+<!--                    <VCol cols="6">-->
+<!--                      <div class="d-flex flex-column justify-center">-->
+<!--                        <span class="text-caption grey&#45;&#45;text">Profit</span>-->
+<!--                        <span class="text-h4 font-weight-bold">166.30</span>-->
+<!--                      </div>-->
+<!--                    </VCol>-->
 
-                    <VCol cols="6">
-                      <div class="d-flex flex-column justify-center align-end">
-                        <span class="text-caption grey--text">Market Vs Average</span>
-                        <span class="text-h4 font-weight-bold d-flex align-center" style="color: red">
-                    <VIcon icon="tabler-s-turn-down" size="22" />-50.15%</span>
-                      </div>
-                    </VCol>
-                  </VRow>
-                  <!--              <VDivider />-->
-                </VCardText>
-                <!-- Other Metrics -->
-                <div class="card-bg-metrics">
-                  <VCardText class="pb-0 pt-0">
-                    <VRow dense class="py-2 align-center">
-                      <VCol cols="6">
-                        <div class="d-flex flex-column justify-center">
-                          <span class="text-caption">Today Profit (9h:19m)</span>
-                        </div>
-                      </VCol>
+<!--                    <VCol cols="6">-->
+<!--                      <div class="d-flex flex-column justify-center align-end">-->
+<!--                        <span class="text-caption grey&#45;&#45;text">Market Vs Average</span>-->
+<!--                        <span class="text-h4 font-weight-bold d-flex align-center" style="color: red">-->
+<!--                    <VIcon icon="tabler-s-turn-down" size="22" />-50.15%</span>-->
+<!--                      </div>-->
+<!--                    </VCol>-->
+<!--                  </VRow>-->
+<!--                  &lt;!&ndash;              <VDivider />&ndash;&gt;-->
+<!--                </VCardText>-->
+<!--                &lt;!&ndash; Other Metrics &ndash;&gt;-->
+<!--                <div class="card-bg-metrics">-->
+<!--                  <VCardText class="pb-0 pt-0">-->
+<!--                    <VRow dense class="py-2 align-center">-->
+<!--                      <VCol cols="6">-->
+<!--                        <div class="d-flex flex-column justify-center">-->
+<!--                          <span class="text-caption">Today Profit (9h:19m)</span>-->
+<!--                        </div>-->
+<!--                      </VCol>-->
 
-                      <VCol cols="6">
-                        <div class="d-flex flex-column justify-center align-end">
-                          <span class="text-right text-h6 font-weight-medium"><img :src="Frame" height="15" style="vertical-align: middle;"/> -</span>
-                        </div>
-                      </VCol>
-                    </VRow>
-                    <VDivider />
-                    <VRow dense class="py-2 align-center">
-                      <VCol cols="6">
-                        <div class="d-flex flex-column justify-center">
-                          <span class="text-caption">Initial Capital</span>
-                        </div>
-                      </VCol>
+<!--                      <VCol cols="6">-->
+<!--                        <div class="d-flex flex-column justify-center align-end">-->
+<!--                          <span class="text-right text-h6 font-weight-medium"><img :src="Frame" height="15" style="vertical-align: middle;"/> -</span>-->
+<!--                        </div>-->
+<!--                      </VCol>-->
+<!--                    </VRow>-->
+<!--                    <VDivider />-->
+<!--                    <VRow dense class="py-2 align-center">-->
+<!--                      <VCol cols="6">-->
+<!--                        <div class="d-flex flex-column justify-center">-->
+<!--                          <span class="text-caption">Initial Capital</span>-->
+<!--                        </div>-->
+<!--                      </VCol>-->
 
-                      <VCol cols="6">
-                        <div class="d-flex flex-column justify-center align-end">
-                          <span class="text-right text-h6 font-weight-medium"><img :src="Frame" height="15" style="vertical-align: middle;"/> 2000.00</span>
-                        </div>
-                      </VCol>
-                    </VRow>
-                    <VDivider />
-                    <VRow dense class="py-2 align-center">
-                      <VCol cols="6">
-                        <div class="d-flex flex-column justify-center">
-                          <span class="text-caption">Current Capital</span>
-                        </div>
-                      </VCol>
+<!--                      <VCol cols="6">-->
+<!--                        <div class="d-flex flex-column justify-center align-end">-->
+<!--                          <span class="text-right text-h6 font-weight-medium"><img :src="Frame" height="15" style="vertical-align: middle;"/> 2000.00</span>-->
+<!--                        </div>-->
+<!--                      </VCol>-->
+<!--                    </VRow>-->
+<!--                    <VDivider />-->
+<!--                    <VRow dense class="py-2 align-center">-->
+<!--                      <VCol cols="6">-->
+<!--                        <div class="d-flex flex-column justify-center">-->
+<!--                          <span class="text-caption">Current Capital</span>-->
+<!--                        </div>-->
+<!--                      </VCol>-->
 
-                      <VCol cols="6">
-                        <div class="d-flex flex-column justify-center align-end">
-                          <span class="text-right text-h6 font-weight-medium"><img :src="Frame" height="15" style="vertical-align: middle;"/> 2166.30</span>
-                        </div>
-                      </VCol>
-                    </VRow>
-                    <VDivider />
-                    <VRow dense class="py-2 align-center">
-                      <VCol cols="6">
-                        <div class="d-flex flex-column justify-center">
-                          <span class="text-caption">Available Quote Coins</span>
-                        </div>
-                      </VCol>
+<!--                      <VCol cols="6">-->
+<!--                        <div class="d-flex flex-column justify-center align-end">-->
+<!--                          <span class="text-right text-h6 font-weight-medium"><img :src="Frame" height="15" style="vertical-align: middle;"/> 2166.30</span>-->
+<!--                        </div>-->
+<!--                      </VCol>-->
+<!--                    </VRow>-->
+<!--                    <VDivider />-->
+<!--                    <VRow dense class="py-2 align-center">-->
+<!--                      <VCol cols="6">-->
+<!--                        <div class="d-flex flex-column justify-center">-->
+<!--                          <span class="text-caption">Available Quote Coins</span>-->
+<!--                        </div>-->
+<!--                      </VCol>-->
 
-                      <VCol cols="6">
-                        <div class="d-flex flex-column justify-center align-end">
-                          <span class="text-right text-h6 font-weight-medium"><img :src="Frame" height="15" style="vertical-align: middle;"/> 993.62</span>
-                        </div>
-                      </VCol>
-                    </VRow>
-                    <VDivider />
-                    <VRow dense class="py-2 align-center">
-                      <VCol cols="6">
-                        <div class="d-flex flex-column justify-center">
-                          <span class="text-caption">Runtime</span>
-                        </div>
-                      </VCol>
+<!--                      <VCol cols="6">-->
+<!--                        <div class="d-flex flex-column justify-center align-end">-->
+<!--                          <span class="text-right text-h6 font-weight-medium"><img :src="Frame" height="15" style="vertical-align: middle;"/> 993.62</span>-->
+<!--                        </div>-->
+<!--                      </VCol>-->
+<!--                    </VRow>-->
+<!--                    <VDivider />-->
+<!--                    <VRow dense class="py-2 align-center">-->
+<!--                      <VCol cols="6">-->
+<!--                        <div class="d-flex flex-column justify-center">-->
+<!--                          <span class="text-caption">Runtime</span>-->
+<!--                        </div>-->
+<!--                      </VCol>-->
 
-                      <VCol cols="6">
-                        <div class="d-flex flex-column justify-center align-end">
-                          <span class="text-right text-h6 font-weight-medium"><VIcon icon="tabler-clock-hour-4" size="20" />144D 23H 17M</span>
-                        </div>
-                      </VCol>
-                    </VRow>
-                    <VDivider />
-                    <VRow dense class="py-2 align-center">
-                      <VCol cols="6">
-                        <div class="d-flex flex-column justify-center">
-                          <span class="text-caption">Last Trade</span>
-                        </div>
-                      </VCol>
+<!--                      <VCol cols="6">-->
+<!--                        <div class="d-flex flex-column justify-center align-end">-->
+<!--                          <span class="text-right text-h6 font-weight-medium"><VIcon icon="tabler-clock-hour-4" size="20" />144D 23H 17M</span>-->
+<!--                        </div>-->
+<!--                      </VCol>-->
+<!--                    </VRow>-->
+<!--                    <VDivider />-->
+<!--                    <VRow dense class="py-2 align-center">-->
+<!--                      <VCol cols="6">-->
+<!--                        <div class="d-flex flex-column justify-center">-->
+<!--                          <span class="text-caption">Last Trade</span>-->
+<!--                        </div>-->
+<!--                      </VCol>-->
 
-                      <VCol cols="6">
-                        <div class="d-flex flex-column justify-center align-end">
-                          <span class="text-right text-h6 font-weight-medium">BUY C9 15D ago</span>
-                        </div>
-                      </VCol>
-                    </VRow>
-                  </VCardText>
-                </div>
-                <!-- Footer -->
-                <VCardText class="align-center">
-                  <div class="text-caption text-center mt-2 grey--text">
-                    Bot ID: 107543 <VIcon icon="tabler-copy" size="20" />
-                  </div>
-                </VCardText>
-              </VListItem>
-            </VList>
-            <!--      </VCardText>-->
-          </VCard>
-        </VCol>
-        <VCol
-          cols="12"
-          sm="6"
-          lg="4"
-        >
-          <VCard>
-            <VCardItem class="card-inactive">
-              <VCardTitle><a class="v-card-title" href="/view-bot">ETH/USDT - 1481.71</a>  </VCardTitle>
-              <template #append>
-                <span class="font-weight-bold">Inactive</span>
-                <div>
-                  <MoreBtn :menu-list="moreList" />
-                </div>
-              </template>
-            </VCardItem>
-            <VDivider />
+<!--                      <VCol cols="6">-->
+<!--                        <div class="d-flex flex-column justify-center align-end">-->
+<!--                          <span class="text-right text-h6 font-weight-medium">BUY C9 15D ago</span>-->
+<!--                        </div>-->
+<!--                      </VCol>-->
+<!--                    </VRow>-->
+<!--                  </VCardText>-->
+<!--                </div>-->
+<!--                &lt;!&ndash; Footer &ndash;&gt;-->
+<!--                <VCardText class="align-center">-->
+<!--                  <div class="text-caption text-center mt-2 grey&#45;&#45;text">-->
+<!--                    Bot ID: 107543 <VIcon icon="tabler-copy" size="20" />-->
+<!--                  </div>-->
+<!--                </VCardText>-->
+<!--              </VListItem>-->
+<!--            </VList>-->
+<!--            &lt;!&ndash;      </VCardText>&ndash;&gt;-->
+<!--          </VCard>-->
+<!--        </VCol>-->
+<!--        <VCol-->
+<!--          cols="12"-->
+<!--          sm="6"-->
+<!--          lg="4"-->
+<!--        >-->
+<!--          <VCard>-->
+<!--            <VCardItem class="card-inactive">-->
+<!--              <VCardTitle><a class="v-card-title" href="/view-bot">ETH/USDT - 1481.71</a>  </VCardTitle>-->
+<!--              <template #append>-->
+<!--                <span class="font-weight-bold">Inactive</span>-->
+<!--                <div>-->
+<!--                  <MoreBtn :menu-list="moreList" />-->
+<!--                </div>-->
+<!--              </template>-->
+<!--            </VCardItem>-->
+<!--            <VDivider />-->
 
-            <!--      <VCardText>-->
-            <VList class="card-list">
-              <VCardText class="pb-0 pt-4">
-                <VListItem>
-                  <div class="d-flex align-center gap-2">
-                    <VAvatar>
-                      <img :src="Group">
-                    </VAvatar>
-                    <VAvatar style="margin-left: -25px">
-                      <img :src="Frame">
-                    </VAvatar>
-                    <div>
-                      <div class="font-weight-medium">ETH</div>
-                      <div class="text-caption grey--text">ID: 107543 <VIcon icon="tabler-copy" size="20" /></div>
-                    </div>
-                    <div class="ml-auto text-right">
-                      <div class="text-caption grey--text">Strategy Type</div>
-                      <div class="font-weight-medium">SBS</div>
-                    </div>
-                  </div>
-                </VListItem>
-                <!--                <VDivider />-->
-              </VCardText>
-              <VListItem>
-                <VCardText class="pb-0 pt-0">
-                  <div class="d-flex align-center gap-2 py-2">
-                    <VRow dense class="w-100">
-                      <VCol cols="3">
-                        <div class="d-flex flex-column justify-center">
-                          <span class="text-caption grey--text">Exchange<br /><span class="text-sub-caption">Binance</span></span>
-                        </div>
-                      </VCol>
+<!--            &lt;!&ndash;      <VCardText>&ndash;&gt;-->
+<!--            <VList class="card-list">-->
+<!--              <VCardText class="pb-0 pt-4">-->
+<!--                <VListItem>-->
+<!--                  <div class="d-flex align-center gap-2">-->
+<!--                    <VAvatar>-->
+<!--                      <img :src="Group">-->
+<!--                    </VAvatar>-->
+<!--                    <VAvatar style="margin-left: -25px">-->
+<!--                      <img :src="Frame">-->
+<!--                    </VAvatar>-->
+<!--                    <div>-->
+<!--                      <div class="font-weight-medium">ETH</div>-->
+<!--                      <div class="text-caption grey&#45;&#45;text">ID: 107543 <VIcon icon="tabler-copy" size="20" /></div>-->
+<!--                    </div>-->
+<!--                    <div class="ml-auto text-right">-->
+<!--                      <div class="text-caption grey&#45;&#45;text">Strategy Type</div>-->
+<!--                      <div class="font-weight-medium">SBS</div>-->
+<!--                    </div>-->
+<!--                  </div>-->
+<!--                </VListItem>-->
+<!--                &lt;!&ndash;                <VDivider />&ndash;&gt;-->
+<!--              </VCardText>-->
+<!--              <VListItem>-->
+<!--                <VCardText class="pb-0 pt-0">-->
+<!--                  <div class="d-flex align-center gap-2 py-2">-->
+<!--                    <VRow dense class="w-100">-->
+<!--                      <VCol cols="3">-->
+<!--                        <div class="d-flex flex-column justify-center">-->
+<!--                          <span class="text-caption grey&#45;&#45;text">Exchange<br /><span class="text-sub-caption">Binance</span></span>-->
+<!--                        </div>-->
+<!--                      </VCol>-->
 
-                      <VCol cols="3">
-                        <div class="d-flex flex-column justify-center">
-                          <span class="text-caption grey--text">Cycle Type<br /><span class="text-sub-caption">Single</span></span>
-                        </div>
-                      </VCol>
+<!--                      <VCol cols="3">-->
+<!--                        <div class="d-flex flex-column justify-center">-->
+<!--                          <span class="text-caption grey&#45;&#45;text">Cycle Type<br /><span class="text-sub-caption">Single</span></span>-->
+<!--                        </div>-->
+<!--                      </VCol>-->
 
-                      <VCol cols="3">
-                        <div class="d-flex flex-column justify-center">
-                          <span class="text-caption grey--text">Strategy<br /><span class="text-sub-caption">Custom</span></span>
-                        </div>
-                      </VCol>
+<!--                      <VCol cols="3">-->
+<!--                        <div class="d-flex flex-column justify-center">-->
+<!--                          <span class="text-caption grey&#45;&#45;text">Strategy<br /><span class="text-sub-caption">Custom</span></span>-->
+<!--                        </div>-->
+<!--                      </VCol>-->
 
-                      <VCol cols="3">
-                        <div class="d-flex flex-column justify-center">
-                          <span class="text-caption grey--text">Category<br /><span class="text-sub-caption">N/A Bot</span></span>
-                        </div>
-                      </VCol>
-                    </VRow>
-                  </div>
+<!--                      <VCol cols="3">-->
+<!--                        <div class="d-flex flex-column justify-center">-->
+<!--                          <span class="text-caption grey&#45;&#45;text">Category<br /><span class="text-sub-caption">N/A Bot</span></span>-->
+<!--                        </div>-->
+<!--                      </VCol>-->
+<!--                    </VRow>-->
+<!--                  </div>-->
 
-                  <VDivider />
-                  <VRow dense class="py-2 align-center">
-                    <VCol cols="6">
-                      <div class="d-flex flex-column justify-center">
-                        <span class="text-caption grey--text">Profit</span>
-                        <span class="text-h4 font-weight-bold">166.30</span>
-                      </div>
-                    </VCol>
+<!--                  <VDivider />-->
+<!--                  <VRow dense class="py-2 align-center">-->
+<!--                    <VCol cols="6">-->
+<!--                      <div class="d-flex flex-column justify-center">-->
+<!--                        <span class="text-caption grey&#45;&#45;text">Profit</span>-->
+<!--                        <span class="text-h4 font-weight-bold">166.30</span>-->
+<!--                      </div>-->
+<!--                    </VCol>-->
 
-                    <VCol cols="6">
-                      <div class="d-flex flex-column justify-center align-end">
-                        <span class="text-caption grey--text">Market Vs Average</span>
-                        <span class="text-h4 font-weight-bold d-flex align-center" style="color: red">
-                    <VIcon icon="tabler-s-turn-down" size="22" />-50.15%</span>
-                      </div>
-                    </VCol>
-                  </VRow>
-                  <!--              <VDivider />-->
-                </VCardText>
-                <!-- Other Metrics -->
-                <div class="card-bg-metrics">
-                  <VCardText class="pb-0 pt-0">
-                    <VRow dense class="py-2 align-center">
-                      <VCol cols="6">
-                        <div class="d-flex flex-column justify-center">
-                          <span class="text-caption">Today Profit (9h:19m)</span>
-                        </div>
-                      </VCol>
+<!--                    <VCol cols="6">-->
+<!--                      <div class="d-flex flex-column justify-center align-end">-->
+<!--                        <span class="text-caption grey&#45;&#45;text">Market Vs Average</span>-->
+<!--                        <span class="text-h4 font-weight-bold d-flex align-center" style="color: red">-->
+<!--                    <VIcon icon="tabler-s-turn-down" size="22" />-50.15%</span>-->
+<!--                      </div>-->
+<!--                    </VCol>-->
+<!--                  </VRow>-->
+<!--                  &lt;!&ndash;              <VDivider />&ndash;&gt;-->
+<!--                </VCardText>-->
+<!--                &lt;!&ndash; Other Metrics &ndash;&gt;-->
+<!--                <div class="card-bg-metrics">-->
+<!--                  <VCardText class="pb-0 pt-0">-->
+<!--                    <VRow dense class="py-2 align-center">-->
+<!--                      <VCol cols="6">-->
+<!--                        <div class="d-flex flex-column justify-center">-->
+<!--                          <span class="text-caption">Today Profit (9h:19m)</span>-->
+<!--                        </div>-->
+<!--                      </VCol>-->
 
-                      <VCol cols="6">
-                        <div class="d-flex flex-column justify-center align-end">
-                          <span class="text-right text-h6 font-weight-medium"><img :src="Frame" height="15" style="vertical-align: middle;"/> -</span>
-                        </div>
-                      </VCol>
-                    </VRow>
-                    <VDivider />
-                    <VRow dense class="py-2 align-center">
-                      <VCol cols="6">
-                        <div class="d-flex flex-column justify-center">
-                          <span class="text-caption">Initial Capital</span>
-                        </div>
-                      </VCol>
+<!--                      <VCol cols="6">-->
+<!--                        <div class="d-flex flex-column justify-center align-end">-->
+<!--                          <span class="text-right text-h6 font-weight-medium"><img :src="Frame" height="15" style="vertical-align: middle;"/> -</span>-->
+<!--                        </div>-->
+<!--                      </VCol>-->
+<!--                    </VRow>-->
+<!--                    <VDivider />-->
+<!--                    <VRow dense class="py-2 align-center">-->
+<!--                      <VCol cols="6">-->
+<!--                        <div class="d-flex flex-column justify-center">-->
+<!--                          <span class="text-caption">Initial Capital</span>-->
+<!--                        </div>-->
+<!--                      </VCol>-->
 
-                      <VCol cols="6">
-                        <div class="d-flex flex-column justify-center align-end">
-                          <span class="text-right text-h6 font-weight-medium"><img :src="Frame" height="15" style="vertical-align: middle;"/> 2000.00</span>
-                        </div>
-                      </VCol>
-                    </VRow>
-                    <VDivider />
-                    <VRow dense class="py-2 align-center">
-                      <VCol cols="6">
-                        <div class="d-flex flex-column justify-center">
-                          <span class="text-caption">Current Capital</span>
-                        </div>
-                      </VCol>
+<!--                      <VCol cols="6">-->
+<!--                        <div class="d-flex flex-column justify-center align-end">-->
+<!--                          <span class="text-right text-h6 font-weight-medium"><img :src="Frame" height="15" style="vertical-align: middle;"/> 2000.00</span>-->
+<!--                        </div>-->
+<!--                      </VCol>-->
+<!--                    </VRow>-->
+<!--                    <VDivider />-->
+<!--                    <VRow dense class="py-2 align-center">-->
+<!--                      <VCol cols="6">-->
+<!--                        <div class="d-flex flex-column justify-center">-->
+<!--                          <span class="text-caption">Current Capital</span>-->
+<!--                        </div>-->
+<!--                      </VCol>-->
 
-                      <VCol cols="6">
-                        <div class="d-flex flex-column justify-center align-end">
-                          <span class="text-right text-h6 font-weight-medium"><img :src="Frame" height="15" style="vertical-align: middle;"/> 2166.30</span>
-                        </div>
-                      </VCol>
-                    </VRow>
-                    <VDivider />
-                    <VRow dense class="py-2 align-center">
-                      <VCol cols="6">
-                        <div class="d-flex flex-column justify-center">
-                          <span class="text-caption">Available Quote Coins</span>
-                        </div>
-                      </VCol>
+<!--                      <VCol cols="6">-->
+<!--                        <div class="d-flex flex-column justify-center align-end">-->
+<!--                          <span class="text-right text-h6 font-weight-medium"><img :src="Frame" height="15" style="vertical-align: middle;"/> 2166.30</span>-->
+<!--                        </div>-->
+<!--                      </VCol>-->
+<!--                    </VRow>-->
+<!--                    <VDivider />-->
+<!--                    <VRow dense class="py-2 align-center">-->
+<!--                      <VCol cols="6">-->
+<!--                        <div class="d-flex flex-column justify-center">-->
+<!--                          <span class="text-caption">Available Quote Coins</span>-->
+<!--                        </div>-->
+<!--                      </VCol>-->
 
-                      <VCol cols="6">
-                        <div class="d-flex flex-column justify-center align-end">
-                          <span class="text-right text-h6 font-weight-medium"><img :src="Frame" height="15" style="vertical-align: middle;"/> 993.62</span>
-                        </div>
-                      </VCol>
-                    </VRow>
-                    <VDivider />
-                    <VRow dense class="py-2 align-center">
-                      <VCol cols="6">
-                        <div class="d-flex flex-column justify-center">
-                          <span class="text-caption">Runtime</span>
-                        </div>
-                      </VCol>
+<!--                      <VCol cols="6">-->
+<!--                        <div class="d-flex flex-column justify-center align-end">-->
+<!--                          <span class="text-right text-h6 font-weight-medium"><img :src="Frame" height="15" style="vertical-align: middle;"/> 993.62</span>-->
+<!--                        </div>-->
+<!--                      </VCol>-->
+<!--                    </VRow>-->
+<!--                    <VDivider />-->
+<!--                    <VRow dense class="py-2 align-center">-->
+<!--                      <VCol cols="6">-->
+<!--                        <div class="d-flex flex-column justify-center">-->
+<!--                          <span class="text-caption">Runtime</span>-->
+<!--                        </div>-->
+<!--                      </VCol>-->
 
-                      <VCol cols="6">
-                        <div class="d-flex flex-column justify-center align-end">
-                          <span class="text-right text-h6 font-weight-medium"><VIcon icon="tabler-clock-hour-4" size="20" />144D 23H 17M</span>
-                        </div>
-                      </VCol>
-                    </VRow>
-                    <VDivider />
-                    <VRow dense class="py-2 align-center">
-                      <VCol cols="6">
-                        <div class="d-flex flex-column justify-center">
-                          <span class="text-caption">Last Trade</span>
-                        </div>
-                      </VCol>
+<!--                      <VCol cols="6">-->
+<!--                        <div class="d-flex flex-column justify-center align-end">-->
+<!--                          <span class="text-right text-h6 font-weight-medium"><VIcon icon="tabler-clock-hour-4" size="20" />144D 23H 17M</span>-->
+<!--                        </div>-->
+<!--                      </VCol>-->
+<!--                    </VRow>-->
+<!--                    <VDivider />-->
+<!--                    <VRow dense class="py-2 align-center">-->
+<!--                      <VCol cols="6">-->
+<!--                        <div class="d-flex flex-column justify-center">-->
+<!--                          <span class="text-caption">Last Trade</span>-->
+<!--                        </div>-->
+<!--                      </VCol>-->
 
-                      <VCol cols="6">
-                        <div class="d-flex flex-column justify-center align-end">
-                          <span class="text-right text-h6 font-weight-medium">BUY C9 15D ago</span>
-                        </div>
-                      </VCol>
-                    </VRow>
-                  </VCardText>
-                </div>
-                <!-- Footer -->
-                <VCardText class="align-center">
-                  <div class="text-caption text-center mt-2 grey--text">
-                    Bot ID: 107543 <VIcon icon="tabler-copy" size="20" />
-                  </div>
-                </VCardText>
-              </VListItem>
-            </VList>
-            <!--      </VCardText>-->
-          </VCard>
-        </VCol>
-      </VRow>
+<!--                      <VCol cols="6">-->
+<!--                        <div class="d-flex flex-column justify-center align-end">-->
+<!--                          <span class="text-right text-h6 font-weight-medium">BUY C9 15D ago</span>-->
+<!--                        </div>-->
+<!--                      </VCol>-->
+<!--                    </VRow>-->
+<!--                  </VCardText>-->
+<!--                </div>-->
+<!--                &lt;!&ndash; Footer &ndash;&gt;-->
+<!--                <VCardText class="align-center">-->
+<!--                  <div class="text-caption text-center mt-2 grey&#45;&#45;text">-->
+<!--                    Bot ID: 107543 <VIcon icon="tabler-copy" size="20" />-->
+<!--                  </div>-->
+<!--                </VCardText>-->
+<!--              </VListItem>-->
+<!--            </VList>-->
+<!--            &lt;!&ndash;      </VCardText>&ndash;&gt;-->
+<!--          </VCard>-->
+<!--        </VCol>-->
+<!--      </VRow>-->
       <VRow>
 
         <VCol v-for="(item, index) in botList"

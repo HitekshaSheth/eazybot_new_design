@@ -1124,10 +1124,13 @@ onMounted(() => {
                           </VRow>
                           <VRow>
                             <VCol cols="12" v-for="(item, index) in tradeItems" :key="index">
-<!--                              <VCardTitle class="border-bg-block" > <VIcon icon="tabler-alert-triangle" class="mr-1" style="background-color:red"/> Insufficient Balance</VCardTitle>-->
                               <VCard :class="item.type === 'Buy' ? 'buy-card' : 'sell-card pb-1'" class="pa-3">
                                 <VRow>
-                                  <VCol cols="5" class="pb-2">
+                                  <VCardTitle> <VIcon icon="tabler-alert-triangle" class="mr-1" style="background-color:red"/> Insufficient Balance</VCardTitle>
+                                  <VDivider />
+                                  <VCardText>
+                                    <VRow>
+                                      <VCol cols="5" class="pb-2">
                                     <div class="align-center gap-x-2" >
                                       <VChip :color="item.type === 'Buy' ? 'success' : 'error'" text-color="white" label size="small">
                                         {{ item.type }}
@@ -1146,6 +1149,7 @@ onMounted(() => {
                                       <div><strong>Open:</strong> <span class="text-caption font-weight-bold">{{ item.open }}</span></div>
                                     </div>
                                   </VCol>
+
                                 </VRow>
                                 <VRow class="mt-0">
                                   <VCol cols="5" class="pt-2">
@@ -1184,6 +1188,8 @@ onMounted(() => {
                                   </VChip>
                                 </span>
                                 </div>
+                                  </VCardText>
+                                </VRow>
                               </VCard>
                             </VCol>
                           </VRow>

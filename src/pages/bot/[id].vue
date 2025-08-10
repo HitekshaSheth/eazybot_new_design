@@ -10,7 +10,7 @@ import { onMounted } from 'vue'
 import axios from 'axios'
 
 const { mdAndUp } = useDisplay()
-const viewMode = ref('card')
+const viewMode = ref('table')
 
 const pageTitle = 'Bot Insight'
 const breadcrumbs = [
@@ -28,6 +28,7 @@ const currentTradeList = ref([])
 const currentSessionList = ref([])
 const previousSessionList = ref([])
 const errorMessage = ref('')
+const totalCloseSessions = ref(0)
 
 const stats = [
   { label: 'Trades closed', value: '7' },
@@ -159,6 +160,7 @@ const currentSessions = async () => {
 
     if (response.data.success && response.data?.sessions) {
       const sessions = response.data.sessions
+      const totalCloseSessions = response.data.totalCloseSessions
 
       // Loop and await fetchTrades
       for (const session of sessions) {
@@ -435,7 +437,7 @@ onMounted(() => {
                 <span>Previous Sessions</span>
                 <VBadge
                   color="secondary"
-                  content="3"
+                  content="{{totalCloseSessions}}"
                   inline
                   bordered
                   offset-x="2"
@@ -893,7 +895,11 @@ onMounted(() => {
                         <VCol cols="12" v-for="(item, index) in currentSession.trades" :key="index">
                           <VCard :class="item.side === 'BUY' ? 'buy-card' : 'sell-card pb-1'" class="pa-3">
                             <VRow>
-                              <VCol cols="5" class="pb-2">
+                              <VCardTitle v-if="item.exchange_order_status == 'FAILED' || item.exchange_order_status == 'REJECTED'"> <VIcon icon="tabler-alert-triangle" class="mr-1" style="background-color:red"/>{{item.failure_reason}}</VCardTitle>
+                              <VDivider  v-if="item.exchange_order_status == 'FAILED' || item.exchange_order_status == 'REJECTED'" />
+                              <VCardText>
+                                <VRow>
+                                  <VCol cols="5" class="pb-2">
                                 <div class="align-center gap-x-2" >
                                   <VChip :color="item.side === 'BUY' ? 'success' : 'error'" text-color="white" label size="small">
                                     {{ item.side }}
@@ -949,6 +955,8 @@ onMounted(() => {
                                   </VChip>
                                 </span>
                             </div>
+                              </VCardText>
+                            </VRow>
                           </VCard>
                         </VCol>
                       </VRow>
@@ -1396,68 +1404,75 @@ onMounted(() => {
                         </VCol>
                       </VRow>
                       <VRow>
-                        <VCol cols="12" v-for="(item, index) in previousSession.trades" :key="index">
+                        <VCol cols="12" v-for="(item, index) in currentSession.trades" :key="index">
                           <VCard :class="item.side === 'BUY' ? 'buy-card' : 'sell-card pb-1'" class="pa-3">
                             <VRow>
-                              <VCol cols="5" class="pb-2">
-                                <div class="align-center gap-x-2" >
-                                  <VChip :color="item.side === 'BUY' ? 'success' : 'error'" text-color="white" label size="small">
-                                    {{ item.side }}
-                                  </VChip>
-                                  <span class="text-caption font-weight-bold pl-2">{{ item.comment }}</span>
-                                </div>
-                              </VCol>
-                              <VCol cols="3" class="pb-2">
-                                <div class="text-caption">
-                                  <span class="font-weight-bold">{{ item.executed_quantity }}</span> Qty @
-                                  <span class="font-weight-bold">{{ item.executed_price }}</span>
-                                </div>
-                              </VCol>
-                              <VCol cols="4" class="pb-2">
-                                <div class="text-right text-caption">
-                                  <div v-if="item.side === 'BUY'"><strong>Open:</strong> <span class="text-caption font-weight-bold">{{ formatDateTime(item.created_at) }}</span></div>
-                                </div>
-                              </VCol>
-                            </VRow>
-                            <VRow class="mt-0">
-                              <VCol cols="5" class="pt-2">
-                                <div class="align-center gap-x-2" >
-                                  <span class="text-caption pl-13 font-weight-bold">Trade ID : {{ item.id }}</span>
-                                </div>
-                              </VCol>
-                              <VCol cols="3" class="pt-2">
-                                <div class="text-caption">
-                                  <span class="font-weight-bold">Total : {{ item.executed_amount }}</span>
-                                  <span class="text-grey text-uppercase">USDT</span>
-                                </div>
-                              </VCol>
-                              <VCol cols="4" class="pt-2">
-                                <div class="text-right text-caption">
-                                  <div><strong>Close:</strong> <span class="text-caption font-weight-bold">{{ isNull(item.closed_at) ? '-' : formatDateTime(item.closed_at) }}</span></div>
-                                </div>
-                              </VCol>
-                            </VRow>
-                            <!-- Divider for Sell only -->
-                            <VDivider v-if="item.side === 'SELL'" class="my-2" />
+                              <VCardTitle v-if="item.exchange_order_status == 'FAILED' || item.exchange_order_status == 'REJECTED'"> <VIcon icon="tabler-alert-triangle" class="mr-1" style="background-color:red"/>{{item.failure_reason}}</VCardTitle>
+                              <VDivider  v-if="item.exchange_order_status == 'FAILED' || item.exchange_order_status == 'REJECTED'" />
+                              <VCardText>
+                                <VRow>
+                                  <VCol cols="5" class="pb-2">
+                                    <div class="align-center gap-x-2" >
+                                      <VChip :color="item.side === 'BUY' ? 'success' : 'error'" text-color="white" label size="small">
+                                        {{ item.side }}
+                                      </VChip>
+                                      <span class="text-caption font-weight-bold pl-2">{{ item.comment }}</span>
+                                    </div>
+                                  </VCol>
+                                  <VCol cols="3" class="pb-2">
+                                    <div class="text-caption">
+                                      <span class="font-weight-bold">{{ item.executed_quantity }}</span> Qty @
+                                      <span class="font-weight-bold">{{ item.executed_price }}</span>
+                                    </div>
+                                  </VCol>
+                                  <VCol cols="4" class="pb-2">
+                                    <div class="text-right text-caption">
+                                      <div v-if="item.side === 'BUY'"><strong>Open:</strong> <span class="text-caption font-weight-bold">{{ formatDateTime(item.created_at) }}</span></div>
+                                    </div>
+                                  </VCol>
+                                </VRow>
+                                <VRow class="mt-0">
+                                  <VCol cols="5" class="pt-2">
+                                    <div class="align-center gap-x-2" >
+                                      <span class="text-caption pl-13 font-weight-bold">Trade ID : {{ item.id }}</span>
+                                    </div>
+                                  </VCol>
+                                  <VCol cols="3" class="pt-2">
+                                    <div class="text-caption">
+                                      <span class="font-weight-bold">Total : {{ item.executed_amount }}</span>
+                                      <span class="text-grey text-uppercase">USDT</span>
+                                    </div>
+                                  </VCol>
+                                  <VCol cols="4" class="pt-2">
+                                    <div class="text-right text-caption">
+                                      <div><strong>Close:</strong> <span class="text-caption font-weight-bold">{{ isNull(item.closed_at) ? '-' : formatDateTime(item.closed_at) }}</span></div>
+                                    </div>
+                                  </VCol>
+                                </VRow>
+                                <!-- Divider for Sell only -->
+                                <VDivider v-if="item.side === 'SELL'" class="my-2" />
 
-                            <!-- Profit Row for Sell -->
-                            <div
-                              v-if="item.side === 'SELL'"
-                              class="d-flex justify-space-between flex-wrap text-caption">
-                              <span class="text-caption"><strong>Gross Profit :</strong> <span class="font-weight-bold"> {{ item.gross_profit }}</span></span>
-                              <span class="text-caption"><strong>Fees :</strong><span class="font-weight-bold"> {{ item.exchange_fee_buy_sell }}</span></span>
-                              <span class="text-caption"><strong>Profit :</strong><span class="font-weight-bold"> {{ item.gross_profit }}</span></span>
-                              <span class="text-caption"><strong>Profit to Tank :</strong><span class="font-weight-bold"> {{ item.profit_avg }}</span></span>
-                              <span class="text-caption font-weight-bold">
+                                <!-- Profit Row for Sell -->
+                                <div
+                                  v-if="item.side === 'SELL'"
+                                  class="d-flex justify-space-between flex-wrap text-caption">
+                                  <span class="text-caption"><strong>Gross Profit :</strong> <span class="font-weight-bold"> {{ item.gross_profit }}</span></span>
+                                  <span class="text-caption"><strong>Fees :</strong><span class="font-weight-bold"> {{ item.exchange_fee_buy_sell }}</span></span>
+                                  <span class="text-caption"><strong>Profit :</strong><span class="font-weight-bold"> {{ item.gross_profit }}</span></span>
+                                  <span class="text-caption"><strong>Profit to Tank :</strong><span class="font-weight-bold"> {{ item.profit_avg }}</span></span>
+                                  <span class="text-caption font-weight-bold">
                                   <strong>Net Profit :</strong>
                                   <VChip color="success" size="small" class="font-bold ml-1">
                                     {{ item.used_profit }} [{{ item.used_profit }}]
                                   </VChip>
                                 </span>
-                            </div>
+                                </div>
+                              </VCardText>
+                            </VRow>
                           </VCard>
                         </VCol>
                       </VRow>
+
                     </div>
                   </VCardText>
 
