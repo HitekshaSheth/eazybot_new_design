@@ -45,6 +45,7 @@ const fetchBots = async () => {
       lastTrades.value = response.data.data.lastTrades
       initialbalances.value = response.data.data.initialbalances
       exchanges.value = response.data.data.exchanges
+    console.log("Exchange list: " , exchanges)
     } else {
       errorMessage.value = 'No bots found.'
     }
