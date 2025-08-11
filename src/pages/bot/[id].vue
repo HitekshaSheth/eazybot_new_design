@@ -938,11 +938,11 @@ onMounted(() => {
                               </VCol>
                             </VRow>
                             <!-- Divider for Sell only -->
-                            <VDivider v-if="item.side === 'SELL' && item.exchange_order_status != 'FAILED' || item.exchange_order_status != 'REJECTED'" class="my-2" />
+                            <VDivider v-if="item.side === 'SELL' && (item.exchange_order_status != 'FAILED' || item.exchange_order_status != 'REJECTED')" class="my-2" />
 
                             <!-- Profit Row for Sell -->
                             <div
-                              v-if="item.side === 'SELL' && item.exchange_order_status != 'FAILED' || item.exchange_order_status != 'REJECTED'"
+                              v-if="item.side === 'SELL' && (item.exchange_order_status != 'FAILED' || item.exchange_order_status != 'REJECTED')"
                               class="d-flex justify-space-between flex-wrap text-caption">
                               <span class="text-caption"><strong>Gross Profit :</strong> <span class="font-weight-bold"> {{ item.gross_profit }}</span></span>
                               <span class="text-caption"><strong>Fees :</strong><span class="font-weight-bold"> {{ item.exchange_fee_buy_sell }}</span></span>
