@@ -1884,5 +1884,9 @@ th{
 }
 .card-bg-metrics .text-caption{
   color: #475569!important;
+  font-size: 12px !important;
+}
+.text-h6{
+  font-size: 12px !important;
 }
 </style>

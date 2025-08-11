@@ -437,7 +437,7 @@ onMounted(() => {
                 <span>Previous Sessions</span>
                 <VBadge
                   color="secondary"
-                  content="{{totalCloseSessions}}"
+                  content={{totalCloseSessions}}
                   inline
                   bordered
                   offset-x="2"
@@ -893,7 +893,7 @@ onMounted(() => {
                       </VRow>
                       <VRow>
                         <VCol cols="12" v-for="(item, index) in currentSession.trades" :key="index">
-                          <VCard :class="item.side === 'BUY' ? 'buy-card' : 'sell-card pb-1'" class="pa-3">
+                          <VCard :class="item.side === 'BUY' ? 'buy-card' : (item.exchange_order_status == 'FAILED' || item.exchange_order_status == 'REJECTED' ? 'error-card' : 'sell-card pb-1')" class="pa-3">
                             <VRow>
                               <VCardTitle v-if="item.exchange_order_status == 'FAILED' || item.exchange_order_status == 'REJECTED'"> <VIcon icon="tabler-alert-triangle" class="mr-1" style="background-color:red"/>{{item.failure_reason}}</VCardTitle>
                               <VDivider  v-if="item.exchange_order_status == 'FAILED' || item.exchange_order_status == 'REJECTED'" />
@@ -938,11 +938,11 @@ onMounted(() => {
                               </VCol>
                             </VRow>
                             <!-- Divider for Sell only -->
-                            <VDivider v-if="item.side === 'SELL'" class="my-2" />
+                            <VDivider v-if="item.side === 'SELL' && item.exchange_order_status != 'FAILED' || item.exchange_order_status != 'REJECTED'" class="my-2" />
 
                             <!-- Profit Row for Sell -->
                             <div
-                              v-if="item.side === 'SELL'"
+                              v-if="item.side === 'SELL' && item.exchange_order_status != 'FAILED' || item.exchange_order_status != 'REJECTED'"
                               class="d-flex justify-space-between flex-wrap text-caption">
                               <span class="text-caption"><strong>Gross Profit :</strong> <span class="font-weight-bold"> {{ item.gross_profit }}</span></span>
                               <span class="text-caption"><strong>Fees :</strong><span class="font-weight-bold"> {{ item.exchange_fee_buy_sell }}</span></span>
@@ -1404,8 +1404,8 @@ onMounted(() => {
                         </VCol>
                       </VRow>
                       <VRow>
-                        <VCol cols="12" v-for="(item, index) in currentSession.trades" :key="index">
-                          <VCard :class="item.side === 'BUY' ? 'buy-card' : 'sell-card pb-1'" class="pa-3">
+                        <VCol cols="12" v-for="(item, index) in previousSession.trades" :key="index">
+                          <VCard :class="item.side === 'BUY' ? 'buy-card' : (item.exchange_order_status == 'FAILED' || item.exchange_order_status == 'REJECTED' ? 'error-card' : 'sell-card pb-1')" class="pa-3">
                             <VRow>
                               <VCardTitle v-if="item.exchange_order_status == 'FAILED' || item.exchange_order_status == 'REJECTED'"> <VIcon icon="tabler-alert-triangle" class="mr-1" style="background-color:red"/>{{item.failure_reason}}</VCardTitle>
                               <VDivider  v-if="item.exchange_order_status == 'FAILED' || item.exchange_order_status == 'REJECTED'" />
@@ -1450,11 +1450,11 @@ onMounted(() => {
                                   </VCol>
                                 </VRow>
                                 <!-- Divider for Sell only -->
-                                <VDivider v-if="item.side === 'SELL'" class="my-2" />
+                                <VDivider v-if="item.side === 'SELL' && item.exchange_order_status != 'FAILED' || item.exchange_order_status != 'REJECTED'" class="my-2" />
 
                                 <!-- Profit Row for Sell -->
                                 <div
-                                  v-if="item.side === 'SELL'"
+                                  v-if="item.side === 'SELL' && item.exchange_order_status != 'FAILED' || item.exchange_order_status != 'REJECTED'"
                                   class="d-flex justify-space-between flex-wrap text-caption">
                                   <span class="text-caption"><strong>Gross Profit :</strong> <span class="font-weight-bold"> {{ item.gross_profit }}</span></span>
                                   <span class="text-caption"><strong>Fees :</strong><span class="font-weight-bold"> {{ item.exchange_fee_buy_sell }}</span></span>
@@ -3591,6 +3591,10 @@ onMounted(() => {
 .buy-card{
   background-color: #f7fff5;
   border: 1px solid rgba(72, 200, 132, 0.6);
+}
+.error-card{
+  background-color: #f1f5f9;
+  border: 1px solid #c1c4c7;
 }
 .profit-card{
   background-color: #f9fbff;
