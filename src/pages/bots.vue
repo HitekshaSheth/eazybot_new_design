@@ -59,8 +59,8 @@ const fetchBots = async () => {
 // }
 
 const getExchangeName = userExchangeId => {
-  const exchange = exchanges[userExchangeId] || ''
-  console.log("Exchange -  ", userExchangeId , exchange.split('|')[0])
+  const exchange = exchanges.userExchangeId || ''
+  console.log("Exchange -  ", exchange.split('|')[0])
   return exchange.split('|')[0]
 }
 import moment from 'moment'
