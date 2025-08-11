@@ -938,7 +938,7 @@ onMounted(() => {
                               </VCol>
                             </VRow>
                             <!-- Divider for Sell only -->
-                            <VDivider v-if="item.side == 'SELL' && item.exchange_order_status != 'FAILED' && item.exchange_order_status != 'REJECTED')" class="my-2" />
+                            <VDivider v-if="item.side == 'SELL' && item.exchange_order_status != 'FAILED' && item.exchange_order_status != 'REJECTED'" class="my-2" />
 
                             <!-- Profit Row for Sell -->
                             <div
