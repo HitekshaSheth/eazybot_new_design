@@ -903,7 +903,7 @@ const moreList = [
                     <VRow dense class="w-100">
                       <VCol cols="3">
                         <div class="d-flex flex-column justify-center">
-                          <span class="text-caption grey--text">Exchange<br /><span class="text-sub-caption">{{ getExchangeName(item.user_exchange_id)}}</span></span>
+                          <span class="text-caption grey--text">Exchange<br /><span class="text-sub-caption">{{ exchanges[item.user_exchange_id].split('|')[0]}}</span></span>
                         </div>
                       </VCol>
 
