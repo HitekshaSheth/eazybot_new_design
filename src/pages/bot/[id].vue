@@ -893,7 +893,7 @@ onMounted(() => {
                       </VRow>
                       <VRow>
                         <VCol cols="12" v-for="(item, index) in currentSession.trades" :key="index">
-                          <VCard :class="item.side === 'BUY' ? 'buy-card' : (item.exchange_order_status == 'FAILED' || item.exchange_order_status == 'REJECTED' ? 'error-card' : 'sell-card pb-1')" class="pa-3">
+                          <VCard :class="item.exchange_order_status == 'FAILED' || item.exchange_order_status == 'REJECTED' ? 'error-card' : (item.side === 'BUY' ? 'buy-card' : 'sell-card pb-1')" class="pa-3">
                             <VRow>
                               <VCardTitle v-if="item.exchange_order_status == 'FAILED' || item.exchange_order_status == 'REJECTED'"> <VIcon icon="tabler-alert-triangle" class="mr-1" style="background-color:red"/>{{item.failure_reason}}</VCardTitle>
                               <VDivider  v-if="item.exchange_order_status == 'FAILED' || item.exchange_order_status == 'REJECTED'" />
@@ -1405,7 +1405,7 @@ onMounted(() => {
                       </VRow>
                       <VRow>
                         <VCol cols="12" v-for="(item, index) in previousSession.trades" :key="index">
-                          <VCard :class="item.side === 'BUY' ? 'buy-card' : (item.exchange_order_status == 'FAILED' || item.exchange_order_status == 'REJECTED' ? 'error-card' : 'sell-card pb-1')" class="pa-3">
+                          <VCard :class="item.exchange_order_status == 'FAILED' || item.exchange_order_status == 'REJECTED' ? 'error-card' : (item.side === 'BUY' ? 'buy-card' : 'sell-card pb-1')" class="pa-3">
                             <VRow>
                               <VCardTitle v-if="item.exchange_order_status == 'FAILED' || item.exchange_order_status == 'REJECTED'"> <VIcon icon="tabler-alert-triangle" class="mr-1" style="background-color:red"/>{{item.failure_reason}}</VCardTitle>
                               <VDivider  v-if="item.exchange_order_status == 'FAILED' || item.exchange_order_status == 'REJECTED'" />
