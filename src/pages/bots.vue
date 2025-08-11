@@ -60,14 +60,9 @@ const fetchBots = async () => {
 
 const getExchangeName = userExchangeId => {
   const exchange = exchanges[userExchangeId] || ''
+  console.log("Exchange -  ", userExchangeId , exchange.split('|')[0])
   return exchange.split('|')[0]
 }
-
-const getExchangeSlug = userExchangeId => {
-  const exchange = exchanges[userExchangeId] || ''
-  return exchange.split('|')[1]
-}
-
 import moment from 'moment'
 
 function formatProfit(profit) {
@@ -155,16 +150,32 @@ const bots = [
 
 const moreList = [
   {
-    title: 'Refresh',
-    value: 'refresh',
+    title: 'Activate',
+    value: 'Activate',
   },
   {
-    title: 'Download',
-    value: 'Download',
+    title: 'Edit Settings',
+    value: 'edit-settings',
   },
   {
-    title: 'View All',
+    title: 'Remove Sell Only Mode',
     value: 'View All',
+  },
+  {
+    title: 'Convert to Cycle',
+    value: 'View All',
+  },
+  {
+    title: 'Move to Group',
+    value: 'View All',
+  },
+  {
+    title: 'Download Trades',
+    value: 'View All',
+  },
+  {
+    title: 'Delete',
+    value: 'delete',
   },
 ]
 
