@@ -437,7 +437,7 @@ onMounted(() => {
                 <span>Previous Sessions</span>
                 <VBadge
                   color="secondary"
-                  content="{{totalCloseSessions}}"
+                  :content="totalCloseSessions"
                   inline
                   bordered
                   offset-x="2"
