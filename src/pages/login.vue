@@ -48,7 +48,7 @@ const login = async () => {
   errorMessage.value = '' // clear previous error
   try {
     // Set base URL
-    axios.defaults.baseURL = 'http://127.0.0.1:8000'
+    axios.defaults.baseURL = 'https://api.eazybot.com'
 
 // Ensure credentials are sent (needed for cookies including CSRF token)
     axios.defaults.withCredentials = true

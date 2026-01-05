@@ -332,7 +332,7 @@ async function createBot() {
     const token = localStorage.getItem('accessToken')
     console.log(token);
 
-    const response = await axios.post(`http://127.0.0.1:8000/api/v1/bots`, payload,{
+    const response = await axios.post(`https://api.eazybot.com/api/v1/bots`, payload,{
       'Accept': 'application/json',
       headers: {
         'Authorization': token,

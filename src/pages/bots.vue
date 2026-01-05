@@ -39,7 +39,7 @@ const fetchBots = async (page = 1) => {
     const token = localStorage.getItem('accessToken')
     console.log(token);
 
-    const response = await axios.get(`http://127.0.0.1:8000/api/v1/bots?is_backtest=0&page=${page}`, {
+    const response = await axios.get(`https://api.eazybot.com/api/v1/bots?is_backtest=0&page=${page}`, {
       'Accept': 'application/json',
       headers: {
         'Authorization': token,
