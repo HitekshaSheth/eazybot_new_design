@@ -8,6 +8,7 @@ import Usdc from '@/assets/images/usdc.svg?url'
 import Sbs from '@/assets/images/Sbs.svg?url'
 import Chart from '@/assets/images/chart-mixed.svg?url'
 import { useDisplay } from 'vuetify'
+import axios from 'axios'
 
 const { mdAndUp } = useDisplay()
 
@@ -76,6 +77,13 @@ const validatePersonalForm = () => {
   })
 }
 
+function handleFinalSubmit() {
+  refPersonalForm.value?.validate().then(valid => {
+    if (valid.valid) {
+      createBot()
+    }
+  })
+}
 
 const pageTitle = 'Build Bot'
 const breadcrumbs = [
@@ -124,6 +132,22 @@ const radioContent2 = [
 const selectedRadio2 = ref('basic')
 const initialOrder = ref(30)
 const amount = ref(180)
+const userExchangeId = ref(null)
+
+const exchangeItems = [
+  { title: "Binance", value: 1 },
+  { title: "KuCoin", value: 2 },
+  { title: "Bitget", value: 3 },
+  { title: "Kraken", value: 4 },
+  { title: "Coinbase Advanced", value: 5 },
+  { title: "Bybit", value: 6 },
+  { title: "Coinbase Prime", value: 7 },
+]
+const currencyItems = [
+  { title: "USDT", value: 238 },
+  { title: "BTC", value: 239 },
+  { title: "ETH", value: 240 },
+]
 const autoCompounding = ref(true)
 const eazybotStrategy = ref(false)
 const isVirtual = ref(false)
@@ -164,8 +188,8 @@ watch(
   { immediate: true }
 )
 
-const takeProfit = ref(600)
-const profitRetracement = ref(600)
+const takeProfit = ref(2.5)
+const profitRetracement = ref(-0.3)
 
 const sliding = ref({
   coverPercent: '-1.28',
@@ -242,9 +266,89 @@ function goBack() {
   window.history.back()
 }
 
-function createBot() {
-  alert('Bot Created!')
+async function createBot() {
+  try {
+    console.log("In")
+    // 👉 Prepare "bots" array from table rows
+    const botsPayload = botForms.value.map(b => ({
+      title: b.title,
+      symbol_id: b.baseCurrency,          // ❗ Replace with actual symbol ID
+      is_cycle: b.option === 'cycle' ? 1 : 0,
+      status: b.status === 'active' ? 1 : 0,
+      balance: Number(b.usdt),
+      strategy: selectedRadio2.value=== "basic" ? "new" : "old",     // SBS / Moving Average
+      category_id: 2,                     // Example
+      trigger_price: 10.1,                // Add your values later
+      cooldown_time_in_secs: 5,
+      price_range_high: 10.9,
+      price_range_low: 10.3,
+      is_virtual: isVirtual.value ? 1 : 0,
+    }))
+
+    // 👉 Prepare take profit & covers
+    const takeProfitsPayload = [
+      {
+        take_profit: Number(takeProfit.value),
+        retrace: Number(profitRetracement.value),
+        "type": "AVG",
+      }
+    ]
+
+    // 👉 Prepare covers array
+    const coverPayload = [covers.value.map((c, index) => ({
+      index: index + 1,        // <-- added incremental index
+      cover_percentage: Number(c.cover),
+      buy_x_times: Number(c.buyXTime),
+      cover_pullback: Number(c.pullback),
+      keep_profit: Number(c.keepProfit),
+      type: c.type === "Average" ? "AVG" : "IND",
+    }))]
+
+
+    // 👉 Final payload
+    const payload = {
+      user_exchange_id: userExchangeId.value ,
+      preset: selectedRadio.value === "basic" ? 0 : 1,
+      auto_compound: autoCompounding.value ? 1 : 0,
+      is_virtual: isVirtual.value ? 1 : 0,
+      strategy: selectedRadio2.value === "basic" ? "new" : "old",     // SBS / Moving Average
+      mcr: 0,
+      idle: 0,
+      sell_only: 0,
+      init_amount_percentage: Number(initialOrder.value),
+      is_backtests: 1,
+      back_test: {
+        start_date: "2025-11-13",
+        end_date: "2025-11-15",
+      },
+      is_helper: 1,
+      helper_price: [10, 20, 30],
+      bots: botsPayload,
+      take_profits: takeProfitsPayload,
+      covers: coverPayload,
+    }
+
+    console.log("🚀 Payload sending:", payload)
+    const token = localStorage.getItem('accessToken')
+    console.log(token);
+
+    const response = await axios.post(`http://127.0.0.1:8000/api/v1/bots`, payload,{
+      'Accept': 'application/json',
+      headers: {
+        'Authorization': token,
+      }
+    })
+    console.log("API Response:", response.data)
+
+    // Show success
+    alert("Bot Created Successfully!")
+
+  } catch (error) {
+    console.error("API Error:", error)
+    alert("Failed to create bot")
+  }
 }
+
 
 function bulkEdit() {
   alert('Bulk Edit triggered')
@@ -363,10 +467,10 @@ body .v-btn-group.v-btn-toggle.v-btn-group{
                     <VCol cols="12" md="7" class="d-flex flex-column justify-center">
                       <label>Exchange</label>
                       <AppSelect
-                        v-model="accountForm.exchange"
+                        v-model="userExchangeId"
                         placeholder="Select"
                         :rules="[requiredValidator]"
-                        :items="['Binance', 'KuCoin', 'Bitget', 'Kraken', 'Coinbase Advanced', 'Bybit', 'Coinbase Prime']"
+                        :items="exchangeItems"
                       />
                     </VCol>
 
@@ -607,7 +711,7 @@ body .v-btn-group.v-btn-toggle.v-btn-group{
                       <td>
                         <VSelect
                           v-model="botForm.baseCurrency"
-                          :items="['USDT', 'BTC', 'ETH']"
+                          :items="currencyItems"
                           placeholder="Select"
                           dense
                           variant="outlined"
@@ -687,11 +791,9 @@ body .v-btn-group.v-btn-toggle.v-btn-group{
           </VWindowItem>
 
           <VWindowItem>
-            <VForm
-              ref="refPersonalForm"
-              @submit.prevent="validatePersonalForm"
-            >
-              <VCard class="mb-4">
+            <VForm ref="refPersonalForm" @submit.prevent="handleFinalSubmit">
+
+            <VCard class="mb-4">
                 <VCardTitle>Take Profit</VCardTitle>
                 <VCardText>
                   <VRow class="align-stretch">

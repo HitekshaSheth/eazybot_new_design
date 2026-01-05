@@ -8,7 +8,12 @@ import { useDisplay } from 'vuetify'
 
 const { mdAndUp } = useDisplay()
 const botList = ref([])
+const currentPage = ref(1)
+const lastPage = ref(null)
+const loading = ref(false)
 const profits = ref([])
+const stats = ref([])
+const revenueInsight = ref([])
 const quoteWiseProfits = ref([])
 const balances = ref([])
 const botSessions = ref([])
@@ -25,34 +30,46 @@ const currentTime = () => {
   return `${hours}h:${minutes}m`
 }
 
-const fetchBots = async () => {
+const fetchBots = async (page = 1) => {
+  if (loading.value) return
+
+  loading.value = true
+
   try {
     const token = localStorage.getItem('accessToken')
     console.log(token);
-    const response = await axios.get('https://stocktrader.eazybot.com/api/v1/0/bots?is_backtest=0', {
+
+    const response = await axios.get(`http://127.0.0.1:8000/api/v1/bots?is_backtest=0&page=${page}`, {
       'Accept': 'application/json',
       headers: {
-        'X-CSRF-TOKEN': token,
+        'Authorization': token,
       }
     })
+    const res = response.data.data
+    console.log(response.data);
 
-    if (response.data.result && response.data.data?.bots) {
-      botList.value = response.data.data.bots
-      profits.value = response.data.data.profits
-      quoteWiseProfits.value = response.data.data.quoteWiseProfits
-      balances.value = response.data.data.balances
-      botSessions.value = response.data.data.sessions
-      lastTrades.value = response.data.data.lastTrades
-      initialbalances.value = response.data.data.initialbalances
-      exchanges.value = response.data.data.exchanges
-    console.log("Exchange list: " , exchanges)
+    if (response.data.success && response.data.data?.data) {
+      stats.value = response.data.data.stats_info
+      revenueInsight.value = response.data.data.revenue_insights
+        if (page === 1) {
+        botList.value = res.data
+      } else {
+        botList.value.push(...res.data)
+      }
     } else {
       errorMessage.value = 'No bots found.'
     }
+    currentPage.value = res.meta.current_page
+    lastPage.value = res.meta.last_page
+
   } catch (error) {
     errorMessage.value = 'Error fetching bots.'
+    console.error(error)
   }
+
+  loading.value = false
 }
+
 // const getCategoryName = categoryId => {
 //   const categoryMap = JSON.parse(botCategory)
 //   const category = categoryMap[categoryId] || ''
@@ -112,9 +129,29 @@ function formatDate(created_at) {
   return diffDays === 0 ? 'Today' : `${diffDays}D ago`
 }
 
+const bottomTrigger = ref(null)
+
+const loadMore = () => {
+  if (currentPage.value < lastPage.value) {
+    fetchBots(currentPage.value + 1)
+  }
+}
+
 onMounted(() => {
   fetchBots()
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      if (entries[0].isIntersecting) {
+        loadMore()
+      }
+    },
+    { threshold: 1 }
+  )
+
+  if (bottomTrigger.value) observer.observe(bottomTrigger.value)
 })
+
 
 const pageTitle = 'Bots'
 const breadcrumbs = [
@@ -182,9 +219,7 @@ const moreList = [
 ]
 
 </script>
-
 <template>
-
   <div v-if="mdAndUp">
 
     <AppPageHeader
@@ -201,11 +236,11 @@ const moreList = [
 
           <!-- Right: Statuses -->
           <div class="d-flex align-center gap-x-4">
-            <span>Active: <span class="font-weight-bold" style="color: green">12</span></span>
+            <span>Active: <span class="font-weight-bold" style="color: green">{{ stats.active }}</span></span>
             <div style="width: 1px; height: 24px; background-color: #ccc;"></div>
-            <span>Sell only: <span class="font-weight-bold" style="color:orange">6</span></span>
+            <span>Sell only: <span class="font-weight-bold" style="color:orange">{{ stats.sell_only }}</span></span>
             <div style="width: 1px; height: 24px; background-color: #ccc;"></div>
-            <span>Inactive: <span class="font-weight-bold" style="color:red">4</span></span>
+            <span>Inactive: <span class="font-weight-bold" style="color:red">{{ stats.inactive }}</span></span>
           </div>
         </VCardText>
         <VTable class="text-no-wrap">
@@ -215,7 +250,7 @@ const moreList = [
               Profile
             </th>
             <th>
-              Today (10h:35m)
+              Today ({{ currentTime() }})
             </th>
             <th>
               Last 7 days
@@ -236,30 +271,27 @@ const moreList = [
           </thead>
 
           <tbody>
-          <tr
-            v-for="(item, index) in bots"
-            :key="item.bot"
-          >
-            <td :class="{ 'font-weight-bold': index === bots.length - 1 }">
-              {{ item.profile }}
+          <tr>
+            <td class="font-weight-bold">
+              Total Profit
             </td>
             <td>
-              {{ item.today }}
+              {{ formatProfit(revenueInsight.today) }}
             </td>
             <td>
-              {{ item.last7days }}
+              {{ formatProfit(revenueInsight.last_7_days) }}
             </td>
             <td>
-              {{ item.last30days }}
+              {{ formatProfit(revenueInsight.last_30_days) }}
             </td>
             <td>
-              {{ item.total }}
+              {{ formatProfit(revenueInsight.total) }}
             </td>
             <td>
-              {{ item.deleted }}
+              {{ formatProfit(revenueInsight.deleted_bots_total) }}
             </td>
-            <td :class="{ 'font-weight-bold': index === bots.length - 1 }">
-              {{ item.grand_total }}
+            <td class="font-weight-bold">
+              {{ formatProfit(revenueInsight.grand_total) }}
             </td>
           </tr>
           </tbody>
@@ -296,577 +328,16 @@ const moreList = [
           </VBtn>
         </div>
       </div>
-<!--      <VRow>-->
-<!--        <VCol cols="12" sm="6" lg="4">-->
-<!--          <VCard>-->
-<!--            <VCardItem class="card-active">-->
-<!--              <VCardTitle><RouterLink class="v-card-title" to="/view-bot">ETH/USDT - 1481.71</RouterLink>  </VCardTitle>-->
-<!--              <template #append>-->
-<!--                <span class="font-weight-bold">Active</span>-->
-<!--                <div>-->
-<!--                  <MoreBtn :menu-list="moreList" />-->
-<!--                </div>-->
-<!--              </template>-->
-<!--            </VCardItem>-->
-<!--            <VDivider />-->
-
-<!--            &lt;!&ndash;      <VCardText>&ndash;&gt;-->
-<!--            <VList class="card-list">-->
-<!--              <VCardText class="pb-0 pt-4">-->
-<!--                <VListItem>-->
-<!--                  <div class="d-flex align-center gap-2">-->
-<!--                    <VAvatar>-->
-<!--                      <img :src="Group">-->
-<!--                    </VAvatar>-->
-<!--                    <VAvatar style="margin-left: -25px">-->
-<!--                      <img :src="Frame">-->
-<!--                    </VAvatar>-->
-<!--                    <div>-->
-<!--                      <div class="font-weight-medium">ETH</div>-->
-<!--                      <div class="text-caption grey&#45;&#45;text">ID: 107543 <VIcon icon="tabler-copy" size="20" /></div>-->
-<!--                    </div>-->
-<!--                    <div class="ml-auto text-right">-->
-<!--                      <div class="text-caption grey&#45;&#45;text">Strategy Type</div>-->
-<!--                      <div class="font-weight-medium">SBS</div>-->
-<!--                    </div>-->
-<!--                  </div>-->
-<!--                </VListItem>-->
-<!--                &lt;!&ndash;                <VDivider />&ndash;&gt;-->
-<!--              </VCardText>-->
-<!--              <VListItem>-->
-<!--                <VCardText class="pb-0 pt-0">-->
-<!--                  <div class="d-flex align-center gap-2 py-2">-->
-<!--                    <VRow dense class="w-100">-->
-<!--                      <VCol cols="3">-->
-<!--                        <div class="d-flex flex-column justify-center">-->
-<!--                          <span class="text-caption grey&#45;&#45;text">Exchange<br /><span class="text-sub-caption">Binance</span></span>-->
-<!--                        </div>-->
-<!--                      </VCol>-->
-
-<!--                      <VCol cols="3">-->
-<!--                        <div class="d-flex flex-column justify-center">-->
-<!--                          <span class="text-caption grey&#45;&#45;text">Cycle Type<br /><span class="text-sub-caption">Single</span></span>-->
-<!--                        </div>-->
-<!--                      </VCol>-->
-
-<!--                      <VCol cols="3">-->
-<!--                        <div class="d-flex flex-column justify-center">-->
-<!--                          <span class="text-caption grey&#45;&#45;text">Strategy<br /><span class="text-sub-caption">Custom</span></span>-->
-<!--                        </div>-->
-<!--                      </VCol>-->
-
-<!--                      <VCol cols="3">-->
-<!--                        <div class="d-flex flex-column justify-center">-->
-<!--                          <span class="text-caption grey&#45;&#45;text">Category<br /><span class="text-sub-caption">N/A Bot</span></span>-->
-<!--                        </div>-->
-<!--                      </VCol>-->
-<!--                    </VRow>-->
-<!--                  </div>-->
-
-<!--                  <VDivider />-->
-<!--                  <VRow dense class="py-2 align-center">-->
-<!--                    <VCol cols="6">-->
-<!--                      <div class="d-flex flex-column justify-center">-->
-<!--                        <span class="text-caption grey&#45;&#45;text">Profit</span>-->
-<!--                        <span class="text-h4 font-weight-bold">166.30</span>-->
-<!--                      </div>-->
-<!--                    </VCol>-->
-
-<!--                    <VCol cols="6">-->
-<!--                      <div class="d-flex flex-column justify-center align-end">-->
-<!--                        <span class="text-caption grey&#45;&#45;text">Market Vs Average</span>-->
-<!--                        <span class="text-h4 font-weight-bold d-flex align-center" style="color: red">-->
-<!--                    <VIcon icon="tabler-s-turn-down" size="22" />-50.15%</span>-->
-<!--                      </div>-->
-<!--                    </VCol>-->
-<!--                  </VRow>-->
-<!--                  &lt;!&ndash;              <VDivider />&ndash;&gt;-->
-<!--                </VCardText>-->
-<!--                &lt;!&ndash; Other Metrics &ndash;&gt;-->
-<!--                <div class="card-bg-metrics">-->
-<!--                  <VCardText class="pb-0 pt-0">-->
-<!--                    <VRow dense class="py-2 align-center">-->
-<!--                      <VCol cols="6">-->
-<!--                        <div class="d-flex flex-column justify-center">-->
-<!--                          <span class="text-caption">Today Profit (9h:19m)</span>-->
-<!--                        </div>-->
-<!--                      </VCol>-->
-
-<!--                      <VCol cols="6">-->
-<!--                        <div class="d-flex flex-column justify-center align-end">-->
-<!--                          <span class="text-right text-h6 font-weight-medium"><img :src="Frame" height="15" style="vertical-align: middle;"/> -</span>-->
-<!--                        </div>-->
-<!--                      </VCol>-->
-<!--                    </VRow>-->
-<!--                    <VDivider />-->
-<!--                    <VRow dense class="py-2 align-center">-->
-<!--                      <VCol cols="6">-->
-<!--                        <div class="d-flex flex-column justify-center">-->
-<!--                          <span class="text-caption">Initial Capital</span>-->
-<!--                        </div>-->
-<!--                      </VCol>-->
-
-<!--                      <VCol cols="6">-->
-<!--                        <div class="d-flex flex-column justify-center align-end">-->
-<!--                          <span class="text-right text-h6 font-weight-medium"><img :src="Frame" height="15" style="vertical-align: middle;"/> 2000.00</span>-->
-<!--                        </div>-->
-<!--                      </VCol>-->
-<!--                    </VRow>-->
-<!--                    <VDivider />-->
-<!--                    <VRow dense class="py-2 align-center">-->
-<!--                      <VCol cols="6">-->
-<!--                        <div class="d-flex flex-column justify-center">-->
-<!--                          <span class="text-caption">Current Capital</span>-->
-<!--                        </div>-->
-<!--                      </VCol>-->
-
-<!--                      <VCol cols="6">-->
-<!--                        <div class="d-flex flex-column justify-center align-end">-->
-<!--                          <span class="text-right text-h6 font-weight-medium"><img :src="Frame" height="15" style="vertical-align: middle;"/> 2166.30</span>-->
-<!--                        </div>-->
-<!--                      </VCol>-->
-<!--                    </VRow>-->
-<!--                    <VDivider />-->
-<!--                    <VRow dense class="py-2 align-center">-->
-<!--                      <VCol cols="6">-->
-<!--                        <div class="d-flex flex-column justify-center">-->
-<!--                          <span class="text-caption">Available Quote Coins</span>-->
-<!--                        </div>-->
-<!--                      </VCol>-->
-
-<!--                      <VCol cols="6">-->
-<!--                        <div class="d-flex flex-column justify-center align-end">-->
-<!--                          <span class="text-right text-h6 font-weight-medium"><img :src="Frame" height="15" style="vertical-align: middle;"/> 993.62</span>-->
-<!--                        </div>-->
-<!--                      </VCol>-->
-<!--                    </VRow>-->
-<!--                    <VDivider />-->
-<!--                    <VRow dense class="py-2 align-center">-->
-<!--                      <VCol cols="6">-->
-<!--                        <div class="d-flex flex-column justify-center">-->
-<!--                          <span class="text-caption">Runtime</span>-->
-<!--                        </div>-->
-<!--                      </VCol>-->
-
-<!--                      <VCol cols="6">-->
-<!--                        <div class="d-flex flex-column justify-center align-end">-->
-<!--                          <span class="text-right text-h6 font-weight-medium"><VIcon icon="tabler-clock-hour-4" size="20" />144D 23H 17M</span>-->
-<!--                        </div>-->
-<!--                      </VCol>-->
-<!--                    </VRow>-->
-<!--                    <VDivider />-->
-<!--                    <VRow dense class="py-2 align-center">-->
-<!--                      <VCol cols="6">-->
-<!--                        <div class="d-flex flex-column justify-center">-->
-<!--                          <span class="text-caption">Last Trade</span>-->
-<!--                        </div>-->
-<!--                      </VCol>-->
-
-<!--                      <VCol cols="6">-->
-<!--                        <div class="d-flex flex-column justify-center align-end">-->
-<!--                          <span class="text-right text-h6 font-weight-medium">BUY C9 15D ago</span>-->
-<!--                        </div>-->
-<!--                      </VCol>-->
-<!--                    </VRow>-->
-<!--                  </VCardText>-->
-<!--                </div>-->
-<!--                &lt;!&ndash; Footer &ndash;&gt;-->
-<!--                <VCardText class="align-center">-->
-<!--                  <div class="text-caption text-center mt-2 grey&#45;&#45;text">-->
-<!--                    Bot ID: 107543 <VIcon icon="tabler-copy" size="20" />-->
-<!--                  </div>-->
-<!--                </VCardText>-->
-<!--              </VListItem>-->
-<!--            </VList>-->
-<!--            &lt;!&ndash;      </VCardText>&ndash;&gt;-->
-<!--          </VCard>-->
-<!--        </VCol>-->
-<!--        <VCol-->
-<!--          cols="12"-->
-<!--          sm="6"-->
-<!--          lg="4"-->
-<!--        >-->
-<!--          <VCard>-->
-<!--            <VCardItem class="card-sell-only">-->
-<!--              <VCardTitle><a class="v-card-title" href="/view-bot">ETH/USDT - 1481.71</a>  </VCardTitle>-->
-<!--              <template #append>-->
-<!--                <span class="font-weight-bold">Sell Only</span>-->
-<!--                <div>-->
-<!--                  <MoreBtn :menu-list="moreList" />-->
-<!--                </div>-->
-<!--              </template>-->
-<!--            </VCardItem>-->
-<!--            <VDivider />-->
-<!--            &lt;!&ndash;      <VCardText>&ndash;&gt;-->
-<!--            <VList class="card-list">-->
-<!--              <VCardText class="pb-0 pt-4">-->
-<!--                <VListItem>-->
-<!--                  <div class="d-flex align-center gap-2">-->
-<!--                    <VAvatar>-->
-<!--                      <img :src="Group">-->
-<!--                    </VAvatar>-->
-<!--                    <VAvatar style="margin-left: -25px">-->
-<!--                      <img :src="Frame">-->
-<!--                    </VAvatar>-->
-<!--                    <div>-->
-<!--                      <div class="font-weight-medium">ETH</div>-->
-<!--                      <div class="text-caption grey&#45;&#45;text">ID: 107543 <VIcon icon="tabler-copy" size="20" /></div>-->
-<!--                    </div>-->
-<!--                    <div class="ml-auto text-right">-->
-<!--                      <div class="text-caption grey&#45;&#45;text">Strategy Type</div>-->
-<!--                      <div class="font-weight-medium">SBS</div>-->
-<!--                    </div>-->
-<!--                  </div>-->
-<!--                </VListItem>-->
-<!--                &lt;!&ndash;                <VDivider />&ndash;&gt;-->
-<!--              </VCardText>-->
-<!--              <VListItem>-->
-<!--                <VCardText class="pb-0 pt-0">-->
-<!--                  <div class="d-flex align-center gap-2 py-2">-->
-<!--                    <VRow dense class="w-100">-->
-<!--                      <VCol cols="3">-->
-<!--                        <div class="d-flex flex-column justify-center">-->
-<!--                          <span class="text-caption grey&#45;&#45;text">Exchange<br /><span class="text-sub-caption">Binance</span></span>-->
-<!--                        </div>-->
-<!--                      </VCol>-->
-
-<!--                      <VCol cols="3">-->
-<!--                        <div class="d-flex flex-column justify-center">-->
-<!--                          <span class="text-caption grey&#45;&#45;text">Cycle Type<br /><span class="text-sub-caption">Single</span></span>-->
-<!--                        </div>-->
-<!--                      </VCol>-->
-
-<!--                      <VCol cols="3">-->
-<!--                        <div class="d-flex flex-column justify-center">-->
-<!--                          <span class="text-caption grey&#45;&#45;text">Strategy<br /><span class="text-sub-caption">Custom</span></span>-->
-<!--                        </div>-->
-<!--                      </VCol>-->
-
-<!--                      <VCol cols="3">-->
-<!--                        <div class="d-flex flex-column justify-center">-->
-<!--                          <span class="text-caption grey&#45;&#45;text">Category<br /><span class="text-sub-caption">N/A Bot</span></span>-->
-<!--                        </div>-->
-<!--                      </VCol>-->
-<!--                    </VRow>-->
-<!--                  </div>-->
-<!--                  <VDivider />-->
-<!--                  <VRow dense class="py-2 align-center">-->
-<!--                    <VCol cols="6">-->
-<!--                      <div class="d-flex flex-column justify-center">-->
-<!--                        <span class="text-caption grey&#45;&#45;text">Profit</span>-->
-<!--                        <span class="text-h4 font-weight-bold">166.30</span>-->
-<!--                      </div>-->
-<!--                    </VCol>-->
-
-<!--                    <VCol cols="6">-->
-<!--                      <div class="d-flex flex-column justify-center align-end">-->
-<!--                        <span class="text-caption grey&#45;&#45;text">Market Vs Average</span>-->
-<!--                        <span class="text-h4 font-weight-bold d-flex align-center" style="color: red">-->
-<!--                    <VIcon icon="tabler-s-turn-down" size="22" />-50.15%</span>-->
-<!--                      </div>-->
-<!--                    </VCol>-->
-<!--                  </VRow>-->
-<!--                  &lt;!&ndash;              <VDivider />&ndash;&gt;-->
-<!--                </VCardText>-->
-<!--                &lt;!&ndash; Other Metrics &ndash;&gt;-->
-<!--                <div class="card-bg-metrics">-->
-<!--                  <VCardText class="pb-0 pt-0">-->
-<!--                    <VRow dense class="py-2 align-center">-->
-<!--                      <VCol cols="6">-->
-<!--                        <div class="d-flex flex-column justify-center">-->
-<!--                          <span class="text-caption">Today Profit (9h:19m)</span>-->
-<!--                        </div>-->
-<!--                      </VCol>-->
-
-<!--                      <VCol cols="6">-->
-<!--                        <div class="d-flex flex-column justify-center align-end">-->
-<!--                          <span class="text-right text-h6 font-weight-medium"><img :src="Frame" height="15" style="vertical-align: middle;"/> -</span>-->
-<!--                        </div>-->
-<!--                      </VCol>-->
-<!--                    </VRow>-->
-<!--                    <VDivider />-->
-<!--                    <VRow dense class="py-2 align-center">-->
-<!--                      <VCol cols="6">-->
-<!--                        <div class="d-flex flex-column justify-center">-->
-<!--                          <span class="text-caption">Initial Capital</span>-->
-<!--                        </div>-->
-<!--                      </VCol>-->
-
-<!--                      <VCol cols="6">-->
-<!--                        <div class="d-flex flex-column justify-center align-end">-->
-<!--                          <span class="text-right text-h6 font-weight-medium"><img :src="Frame" height="15" style="vertical-align: middle;"/> 2000.00</span>-->
-<!--                        </div>-->
-<!--                      </VCol>-->
-<!--                    </VRow>-->
-<!--                    <VDivider />-->
-<!--                    <VRow dense class="py-2 align-center">-->
-<!--                      <VCol cols="6">-->
-<!--                        <div class="d-flex flex-column justify-center">-->
-<!--                          <span class="text-caption">Current Capital</span>-->
-<!--                        </div>-->
-<!--                      </VCol>-->
-
-<!--                      <VCol cols="6">-->
-<!--                        <div class="d-flex flex-column justify-center align-end">-->
-<!--                          <span class="text-right text-h6 font-weight-medium"><img :src="Frame" height="15" style="vertical-align: middle;"/> 2166.30</span>-->
-<!--                        </div>-->
-<!--                      </VCol>-->
-<!--                    </VRow>-->
-<!--                    <VDivider />-->
-<!--                    <VRow dense class="py-2 align-center">-->
-<!--                      <VCol cols="6">-->
-<!--                        <div class="d-flex flex-column justify-center">-->
-<!--                          <span class="text-caption">Available Quote Coins</span>-->
-<!--                        </div>-->
-<!--                      </VCol>-->
-
-<!--                      <VCol cols="6">-->
-<!--                        <div class="d-flex flex-column justify-center align-end">-->
-<!--                          <span class="text-right text-h6 font-weight-medium"><img :src="Frame" height="15" style="vertical-align: middle;"/> 993.62</span>-->
-<!--                        </div>-->
-<!--                      </VCol>-->
-<!--                    </VRow>-->
-<!--                    <VDivider />-->
-<!--                    <VRow dense class="py-2 align-center">-->
-<!--                      <VCol cols="6">-->
-<!--                        <div class="d-flex flex-column justify-center">-->
-<!--                          <span class="text-caption">Runtime</span>-->
-<!--                        </div>-->
-<!--                      </VCol>-->
-
-<!--                      <VCol cols="6">-->
-<!--                        <div class="d-flex flex-column justify-center align-end">-->
-<!--                          <span class="text-right text-h6 font-weight-medium"><VIcon icon="tabler-clock-hour-4" size="20" />144D 23H 17M</span>-->
-<!--                        </div>-->
-<!--                      </VCol>-->
-<!--                    </VRow>-->
-<!--                    <VDivider />-->
-<!--                    <VRow dense class="py-2 align-center">-->
-<!--                      <VCol cols="6">-->
-<!--                        <div class="d-flex flex-column justify-center">-->
-<!--                          <span class="text-caption">Last Trade</span>-->
-<!--                        </div>-->
-<!--                      </VCol>-->
-
-<!--                      <VCol cols="6">-->
-<!--                        <div class="d-flex flex-column justify-center align-end">-->
-<!--                          <span class="text-right text-h6 font-weight-medium">BUY C9 15D ago</span>-->
-<!--                        </div>-->
-<!--                      </VCol>-->
-<!--                    </VRow>-->
-<!--                  </VCardText>-->
-<!--                </div>-->
-<!--                &lt;!&ndash; Footer &ndash;&gt;-->
-<!--                <VCardText class="align-center">-->
-<!--                  <div class="text-caption text-center mt-2 grey&#45;&#45;text">-->
-<!--                    Bot ID: 107543 <VIcon icon="tabler-copy" size="20" />-->
-<!--                  </div>-->
-<!--                </VCardText>-->
-<!--              </VListItem>-->
-<!--            </VList>-->
-<!--            &lt;!&ndash;      </VCardText>&ndash;&gt;-->
-<!--          </VCard>-->
-<!--        </VCol>-->
-<!--        <VCol-->
-<!--          cols="12"-->
-<!--          sm="6"-->
-<!--          lg="4"-->
-<!--        >-->
-<!--          <VCard>-->
-<!--            <VCardItem class="card-inactive">-->
-<!--              <VCardTitle><a class="v-card-title" href="/view-bot">ETH/USDT - 1481.71</a>  </VCardTitle>-->
-<!--              <template #append>-->
-<!--                <span class="font-weight-bold">Inactive</span>-->
-<!--                <div>-->
-<!--                  <MoreBtn :menu-list="moreList" />-->
-<!--                </div>-->
-<!--              </template>-->
-<!--            </VCardItem>-->
-<!--            <VDivider />-->
-
-<!--            &lt;!&ndash;      <VCardText>&ndash;&gt;-->
-<!--            <VList class="card-list">-->
-<!--              <VCardText class="pb-0 pt-4">-->
-<!--                <VListItem>-->
-<!--                  <div class="d-flex align-center gap-2">-->
-<!--                    <VAvatar>-->
-<!--                      <img :src="Group">-->
-<!--                    </VAvatar>-->
-<!--                    <VAvatar style="margin-left: -25px">-->
-<!--                      <img :src="Frame">-->
-<!--                    </VAvatar>-->
-<!--                    <div>-->
-<!--                      <div class="font-weight-medium">ETH</div>-->
-<!--                      <div class="text-caption grey&#45;&#45;text">ID: 107543 <VIcon icon="tabler-copy" size="20" /></div>-->
-<!--                    </div>-->
-<!--                    <div class="ml-auto text-right">-->
-<!--                      <div class="text-caption grey&#45;&#45;text">Strategy Type</div>-->
-<!--                      <div class="font-weight-medium">SBS</div>-->
-<!--                    </div>-->
-<!--                  </div>-->
-<!--                </VListItem>-->
-<!--                &lt;!&ndash;                <VDivider />&ndash;&gt;-->
-<!--              </VCardText>-->
-<!--              <VListItem>-->
-<!--                <VCardText class="pb-0 pt-0">-->
-<!--                  <div class="d-flex align-center gap-2 py-2">-->
-<!--                    <VRow dense class="w-100">-->
-<!--                      <VCol cols="3">-->
-<!--                        <div class="d-flex flex-column justify-center">-->
-<!--                          <span class="text-caption grey&#45;&#45;text">Exchange<br /><span class="text-sub-caption">Binance</span></span>-->
-<!--                        </div>-->
-<!--                      </VCol>-->
-
-<!--                      <VCol cols="3">-->
-<!--                        <div class="d-flex flex-column justify-center">-->
-<!--                          <span class="text-caption grey&#45;&#45;text">Cycle Type<br /><span class="text-sub-caption">Single</span></span>-->
-<!--                        </div>-->
-<!--                      </VCol>-->
-
-<!--                      <VCol cols="3">-->
-<!--                        <div class="d-flex flex-column justify-center">-->
-<!--                          <span class="text-caption grey&#45;&#45;text">Strategy<br /><span class="text-sub-caption">Custom</span></span>-->
-<!--                        </div>-->
-<!--                      </VCol>-->
-
-<!--                      <VCol cols="3">-->
-<!--                        <div class="d-flex flex-column justify-center">-->
-<!--                          <span class="text-caption grey&#45;&#45;text">Category<br /><span class="text-sub-caption">N/A Bot</span></span>-->
-<!--                        </div>-->
-<!--                      </VCol>-->
-<!--                    </VRow>-->
-<!--                  </div>-->
-
-<!--                  <VDivider />-->
-<!--                  <VRow dense class="py-2 align-center">-->
-<!--                    <VCol cols="6">-->
-<!--                      <div class="d-flex flex-column justify-center">-->
-<!--                        <span class="text-caption grey&#45;&#45;text">Profit</span>-->
-<!--                        <span class="text-h4 font-weight-bold">166.30</span>-->
-<!--                      </div>-->
-<!--                    </VCol>-->
-
-<!--                    <VCol cols="6">-->
-<!--                      <div class="d-flex flex-column justify-center align-end">-->
-<!--                        <span class="text-caption grey&#45;&#45;text">Market Vs Average</span>-->
-<!--                        <span class="text-h4 font-weight-bold d-flex align-center" style="color: red">-->
-<!--                    <VIcon icon="tabler-s-turn-down" size="22" />-50.15%</span>-->
-<!--                      </div>-->
-<!--                    </VCol>-->
-<!--                  </VRow>-->
-<!--                  &lt;!&ndash;              <VDivider />&ndash;&gt;-->
-<!--                </VCardText>-->
-<!--                &lt;!&ndash; Other Metrics &ndash;&gt;-->
-<!--                <div class="card-bg-metrics">-->
-<!--                  <VCardText class="pb-0 pt-0">-->
-<!--                    <VRow dense class="py-2 align-center">-->
-<!--                      <VCol cols="6">-->
-<!--                        <div class="d-flex flex-column justify-center">-->
-<!--                          <span class="text-caption">Today Profit (9h:19m)</span>-->
-<!--                        </div>-->
-<!--                      </VCol>-->
-
-<!--                      <VCol cols="6">-->
-<!--                        <div class="d-flex flex-column justify-center align-end">-->
-<!--                          <span class="text-right text-h6 font-weight-medium"><img :src="Frame" height="15" style="vertical-align: middle;"/> -</span>-->
-<!--                        </div>-->
-<!--                      </VCol>-->
-<!--                    </VRow>-->
-<!--                    <VDivider />-->
-<!--                    <VRow dense class="py-2 align-center">-->
-<!--                      <VCol cols="6">-->
-<!--                        <div class="d-flex flex-column justify-center">-->
-<!--                          <span class="text-caption">Initial Capital</span>-->
-<!--                        </div>-->
-<!--                      </VCol>-->
-
-<!--                      <VCol cols="6">-->
-<!--                        <div class="d-flex flex-column justify-center align-end">-->
-<!--                          <span class="text-right text-h6 font-weight-medium"><img :src="Frame" height="15" style="vertical-align: middle;"/> 2000.00</span>-->
-<!--                        </div>-->
-<!--                      </VCol>-->
-<!--                    </VRow>-->
-<!--                    <VDivider />-->
-<!--                    <VRow dense class="py-2 align-center">-->
-<!--                      <VCol cols="6">-->
-<!--                        <div class="d-flex flex-column justify-center">-->
-<!--                          <span class="text-caption">Current Capital</span>-->
-<!--                        </div>-->
-<!--                      </VCol>-->
-
-<!--                      <VCol cols="6">-->
-<!--                        <div class="d-flex flex-column justify-center align-end">-->
-<!--                          <span class="text-right text-h6 font-weight-medium"><img :src="Frame" height="15" style="vertical-align: middle;"/> 2166.30</span>-->
-<!--                        </div>-->
-<!--                      </VCol>-->
-<!--                    </VRow>-->
-<!--                    <VDivider />-->
-<!--                    <VRow dense class="py-2 align-center">-->
-<!--                      <VCol cols="6">-->
-<!--                        <div class="d-flex flex-column justify-center">-->
-<!--                          <span class="text-caption">Available Quote Coins</span>-->
-<!--                        </div>-->
-<!--                      </VCol>-->
-
-<!--                      <VCol cols="6">-->
-<!--                        <div class="d-flex flex-column justify-center align-end">-->
-<!--                          <span class="text-right text-h6 font-weight-medium"><img :src="Frame" height="15" style="vertical-align: middle;"/> 993.62</span>-->
-<!--                        </div>-->
-<!--                      </VCol>-->
-<!--                    </VRow>-->
-<!--                    <VDivider />-->
-<!--                    <VRow dense class="py-2 align-center">-->
-<!--                      <VCol cols="6">-->
-<!--                        <div class="d-flex flex-column justify-center">-->
-<!--                          <span class="text-caption">Runtime</span>-->
-<!--                        </div>-->
-<!--                      </VCol>-->
-
-<!--                      <VCol cols="6">-->
-<!--                        <div class="d-flex flex-column justify-center align-end">-->
-<!--                          <span class="text-right text-h6 font-weight-medium"><VIcon icon="tabler-clock-hour-4" size="20" />144D 23H 17M</span>-->
-<!--                        </div>-->
-<!--                      </VCol>-->
-<!--                    </VRow>-->
-<!--                    <VDivider />-->
-<!--                    <VRow dense class="py-2 align-center">-->
-<!--                      <VCol cols="6">-->
-<!--                        <div class="d-flex flex-column justify-center">-->
-<!--                          <span class="text-caption">Last Trade</span>-->
-<!--                        </div>-->
-<!--                      </VCol>-->
-
-<!--                      <VCol cols="6">-->
-<!--                        <div class="d-flex flex-column justify-center align-end">-->
-<!--                          <span class="text-right text-h6 font-weight-medium">BUY C9 15D ago</span>-->
-<!--                        </div>-->
-<!--                      </VCol>-->
-<!--                    </VRow>-->
-<!--                  </VCardText>-->
-<!--                </div>-->
-<!--                &lt;!&ndash; Footer &ndash;&gt;-->
-<!--                <VCardText class="align-center">-->
-<!--                  <div class="text-caption text-center mt-2 grey&#45;&#45;text">-->
-<!--                    Bot ID: 107543 <VIcon icon="tabler-copy" size="20" />-->
-<!--                  </div>-->
-<!--                </VCardText>-->
-<!--              </VListItem>-->
-<!--            </VList>-->
-<!--            &lt;!&ndash;      </VCardText>&ndash;&gt;-->
-<!--          </VCard>-->
-<!--        </VCol>-->
-<!--      </VRow>-->
       <VRow>
-
         <VCol v-for="(item, index) in botList"
               :key="item.id" cols="12" sm="6" lg="4">
           <VCard>
-            <VCardItem :class="item.status == 0 ? 'card-inactive' : (item.sell_only > 0 ? 'card-sell-only' : 'card-active')">
+            <VCardItem :class="item.status == 'Inactive' ? 'card-inactive' : (item.sell_only == 'YES' ? 'card-sell-only' : 'card-active')">
               <VCardTitle>
-                <RouterLink class="v-card-title" :to="`/bot/${item.id}`">{{item.symbol.code}} - 1481.71</RouterLink>
+                <RouterLink class="v-card-title" :to="`/bot/${item.id}`">{{item.coin_pair}} - 1481.71</RouterLink>
               </VCardTitle>
               <template #append>
-                <span class="font-weight-bold">{{ item.status == 0 ? 'Inactive' : (item.sell_only > 0 ? 'Sell Only' : 'Active')}}</span>
+                <span class="font-weight-bold">{{ item.sell_only == 'YES' ? 'Sell Only' : item.status}}</span>
                 <div>
                   <MoreBtn :menu-list="moreList" />
                 </div>
@@ -891,7 +362,7 @@ const moreList = [
                     </div>
                     <div class="ml-auto text-right">
                       <div class="text-caption grey--text">Strategy Type</div>
-                      <div class="font-weight-medium">{{item.strategy}}</div>
+                      <div class="font-weight-medium">{{item.strategy_type}}</div>
                     </div>
                   </div>
                 </VListItem>
@@ -903,32 +374,25 @@ const moreList = [
                     <VRow dense class="w-100">
                       <VCol cols="3">
                         <div class="d-flex flex-column justify-center">
-                          <span class="text-caption grey--text">Exchange<br /><span class="text-sub-caption">{{ exchanges[item.user_exchange_id].split('|')[0]}}</span></span>
+                          <span class="text-caption grey--text">Exchange<br /><span class="text-sub-caption">{{ item.exchange}}</span></span>
                         </div>
                       </VCol>
 
                       <VCol cols="3">
                         <div class="d-flex flex-column justify-center">
-                          <span class="text-caption grey--text">Cycle Type<br /><span class="text-sub-caption">{{
-                              item.is_cycle
-                                ? 'Cycle'
-                                : 'Single'}}</span></span>
+                          <span class="text-caption grey--text">Cycle Type<br /><span class="text-sub-caption">{{item.cycle_type }}</span></span>
                         </div>
                       </VCol>
 
                       <VCol cols="3">
                         <div class="d-flex flex-column justify-center">
-                          <span class="text-caption grey--text">Strategy<br /><span class="text-sub-caption">{{
-                              item.preset
-                                ? 'Default EZB'
-                                : 'Custom'
-                            }}</span></span>
+                          <span class="text-caption grey--text">Strategy<br /><span class="text-sub-caption">{{item.strategy}}</span></span>
                         </div>
                       </VCol>
 
                       <VCol cols="3">
                         <div class="d-flex flex-column justify-center">
-                          <span class="text-caption grey--text">Category<br /><span class="text-sub-caption">{{item.category_id}}</span></span>
+                          <span class="text-caption grey--text">Category<br /><span class="text-sub-caption">{{item.category}}</span></span>
                         </div>
                       </VCol>
                     </VRow>
@@ -940,16 +404,7 @@ const moreList = [
                       <div class="d-flex flex-column justify-center">
                         <span class="text-caption grey--text">Profit</span>
                         <span class="text-h4 font-weight-bold">
-                          {{
-                            profits[item.id] ===
-                            undefined
-                              ? 0
-                              : formatProfit(
-                                profits[
-                                  item.id
-                                  ].profit_total
-                              )
-                          }}
+                          {{formatProfit(item.total_profit)}}
                         </span>
                       </div>
                     </VCol>
@@ -977,16 +432,7 @@ const moreList = [
                       <VCol cols="6">
                         <div class="d-flex flex-column justify-center align-end">
                           <span class="text-right text-h6 font-weight-medium"><img :src="Frame" height="15" style="vertical-align: middle;"/>
-                          {{
-                              profits[item.id] ===
-                              undefined
-                                ? 0
-                                : formatProfit(
-                                  profits[
-                                    item.id
-                                    ].profit_today
-                                )
-                            }}
+                          {{item.today_profit}}
                           </span>
                         </div>
                       </VCol>
@@ -1002,17 +448,7 @@ const moreList = [
                       <VCol cols="6">
                         <div class="d-flex flex-column justify-center align-end">
                           <span class="text-right text-h6 font-weight-medium"><img :src="Frame" height="15" style="vertical-align: middle;"/>
-                          {{
-                              initialbalances[
-                                item.id
-                                ] === undefined
-                                ? 0
-                                : formatProfit(
-                                  initialbalances[
-                                    item.id
-                                    ]
-                                )
-                            }}
+                          {{item.initial_capital}}
                           </span>
                         </div>
                       </VCol>
@@ -1028,16 +464,7 @@ const moreList = [
                       <VCol cols="6">
                         <div class="d-flex flex-column justify-center align-end">
                           <span class="text-right text-h6 font-weight-medium"><img :src="Frame" height="15" style="vertical-align: middle;"/>
-                          {{
-                              balances[item.id] ===
-                              undefined
-                                ? 0
-                                : formatProfit(
-                                  balances[
-                                    item.id
-                                    ]
-                                )
-                            }}
+                          {{item.current_capital}}
                           </span>
                         </div>
                       </VCol>
@@ -1052,30 +479,8 @@ const moreList = [
 
                       <VCol cols="6">
                         <div class="d-flex flex-column justify-center align-end">
-                          <span class="text-right text-h6 font-weight-medium" v-if="item.open_orders_sum_executed_amount"><img :src="Frame" height="15" style="vertical-align: middle;"/>
-{{
-                              balances[item.id] ===
-                              undefined
-                                ? 0
-                                : formatProfit(
-                                  balances[
-                                    item.id
-                                    ] -
-                                 item.open_orders_sum_executed_amount
-                                )
-                            }}
-                          </span>
-                          <span class="text-right text-h6 font-weight-medium" v-else><img :src="Frame" height="15" style="vertical-align: middle;"/>
-{{
-                                balances[item.id] ===
-                                undefined
-                                  ? 0
-                                  : formatProfit(
-                                    balances[
-                                      item.id
-                                      ]
-                                  )
-                              }}
+                          <span class="text-right text-h6 font-weight-medium"><img :src="Frame" height="15" style="vertical-align: middle;"/>
+                            {{item.available_quote_coins}}
                           </span>
                         </div>
                       </VCol>
@@ -1090,11 +495,7 @@ const moreList = [
 
                       <VCol cols="6">
                         <div class="d-flex flex-column justify-center align-end">
-                          <span class="text-right text-h6 font-weight-medium"><VIcon icon="tabler-clock-hour-4" size="20" />{{
-                              formatDuration(
-                                item.created_at
-                              )
-                            }}</span>
+                          <span class="text-right text-h6 font-weight-medium"><VIcon icon="tabler-clock-hour-4" size="20" />{{ item.runtime }}</span>
                         </div>
                       </VCol>
                     </VRow>
@@ -1109,48 +510,7 @@ const moreList = [
                       <VCol cols="6">
                         <div class="d-flex flex-column justify-center align-end">
                           <span class="text-right text-h6 font-weight-medium">
-                             {{
-                              lastTrades[item.id]
-                                ? lastTrades[item.id]
-                                  .side
-                                : ''
-                            }}
-
-                                                    {{
-                              lastTrades[item.id]
-                                ? lastTrades[item.id]
-                                  .stage == 2
-                                  ? 'MCR'
-                                  : ''
-                                : ''
-                            }}
-
-                                                    {{
-                              lastTrades[item.id]
-                                ? lastTrades[item.id]
-                                  .cover_index ===
-                                null
-                                  ? ''
-                                  : 'C' +
-                                  lastTrades[
-                                    item.id
-                                    ].cover_index
-                                : ''
-                            }}
-                                                    {{
-                              formatDate(
-                                lastTrades[item.id]
-                                  ? lastTrades[
-                                    item.id
-                                    ].created_at
-                                    ? lastTrades[
-                                      item.id
-                                      ]
-                                      .created_at
-                                    : 0
-                                  : 0
-                              )
-                            }}
+                             {{item.last_trade}}
                           </span>
                         </div>
                       </VCol>
@@ -1169,6 +529,14 @@ const moreList = [
           </VCard>
         </VCol>
       </VRow>
+
+      <!-- Load More Trigger -->
+      <div ref="bottomTrigger" style="height: 1px"></div>
+
+      <!-- Loading Spinner -->
+      <div v-if="loading" class="text-center py-4">
+        <VProgressCircular indeterminate />
+      </div>
     </div>
   </div>
   <div v-else>
@@ -1202,11 +570,11 @@ const moreList = [
           </VExpansionPanelTitle>
           <VExpansionPanelText>
             <div class="d-flex align-center gap-x-4">
-              <span>Active: <span class="font-weight-bold" style="color: green">12</span></span>
+              <span>Active: <span class="font-weight-bold" style="color: green">{{ stats.active }}</span></span>
               <div style="width: 1px; height: 24px; background-color: #ccc;"></div>
-              <span>Sell only: <span class="font-weight-bold" style="color:orange">6</span></span>
+              <span>Sell only: <span class="font-weight-bold" style="color:orange">{{ stats.sell_only }}</span></span>
               <div style="width: 1px; height: 24px; background-color: #ccc;"></div>
-              <span>Inactive: <span class="font-weight-bold" style="color:red">4</span></span>
+              <span>Inactive: <span class="font-weight-bold" style="color:red">{{ stats.inactive }}</span></span>
             </div>
             <VTable class="text-no-wrap pt-4">
               <thead>
@@ -1215,7 +583,7 @@ const moreList = [
                   Profile
                 </th>
                 <th>
-                  Today (10h:35m)
+                  Today ({{ currentTime() }})
                 </th>
                 <th>
                   Last 7 days
@@ -1236,30 +604,27 @@ const moreList = [
               </thead>
 
               <tbody>
-              <tr
-                v-for="(item, index) in bots"
-                :key="item.bot"
-              >
-                <td :class="{ 'font-weight-bold': index === bots.length - 1 }">
-                  {{ item.profile }}
+              <tr>
+                <td class="font-weight-bold">
+                  Total Profit
                 </td>
                 <td>
-                  {{ item.today }}
+                  {{ formatProfit(revenueInsight.today) }}
                 </td>
                 <td>
-                  {{ item.last7days }}
+                  {{ formatProfit(revenueInsight.last_7_days) }}
                 </td>
                 <td>
-                  {{ item.last30days }}
+                  {{ formatProfit(revenueInsight.last_30_days) }}
                 </td>
                 <td>
-                  {{ item.total }}
+                  {{ formatProfit(revenueInsight.total) }}
                 </td>
                 <td>
-                  {{ item.deleted }}
+                  {{ formatProfit(revenueInsight.deleted_bots_total) }}
                 </td>
-                <td :class="{ 'font-weight-bold': index === bots.length - 1 }">
-                  {{ item.grand_total }}
+                <td class="font-weight-bold">
+                  {{ formatProfit(revenueInsight.grand_total) }}
                 </td>
               </tr>
               </tbody>
@@ -1268,20 +633,19 @@ const moreList = [
         </VExpansionPanel>
       </VExpansionPanels>
       <VRow class="mt-4">
-        <VCol
-          cols="12"
-          sm="6"
-          lg="4"
-        >
+        <VCol v-for="(item, index) in botList"
+              :key="item.id" cols="12" sm="6" lg="4">
           <VCard>
-            <VCardItem class="card-active">
-              <VCardTitle><a class="v-card-title" href="/view-bot">ETH/USDT <strong>1481.71</strong></a>  </VCardTitle>
-              <template #append>
-                <span class="font-weight-bold">Active</span>
-                <div>
-                  <MoreBtn :menu-list="moreList" />
-                </div>
-              </template>
+            <VCardItem :class="item.status == 'Inactive' ? 'card-inactive' : (item.sell_only == 'YES' ? 'card-sell-only' : 'card-active')">
+                <VCardTitle>
+                  <RouterLink class="v-card-title" :to="`/bot/${item.id}`">{{item.coin_pair}} - 1481.71</RouterLink>
+                </VCardTitle>
+                <template #append>
+                  <span class="font-weight-bold">{{ item.sell_only == 'YES' ? 'Sell Only' : item.status}}</span>
+                  <div>
+                    <MoreBtn :menu-list="moreList" />
+                  </div>
+                </template>
             </VCardItem>
             <VDivider />
 
@@ -1297,12 +661,12 @@ const moreList = [
                       <img :src="Frame">
                     </VAvatar>
                     <div>
-                      <div class="font-weight-medium">ETH</div>
-                      <div class="text-caption grey--text">ID: 107543 <VIcon icon="tabler-copy" size="20" /></div>
+                      <div class="font-weight-medium">{{ item.title }}</div>
+                      <div class="text-caption grey--text">ID: {{item.id}} <VIcon icon="tabler-copy" size="20" /></div>
                     </div>
                     <div  class="ml-auto text-right">
                       <div class="text-caption grey--text">Category</div>
-                      <div class="font-weight-medium">Not Assigned Bot</div>
+                      <div class="font-weight-medium">{{ item.category }}</div>
                     </div>
                   </div>
                 </VListItem>
@@ -1313,25 +677,25 @@ const moreList = [
                     <VRow dense class="w-100">
                       <VCol cols="3">
                         <div class="d-flex flex-column justify-center">
-                          <span class="text-caption grey--text text-center"><VIcon icon="tabler-circle-letter-b"/><span class="text-sub-caption-mobile">Binance</span></span>
+                          <span class="text-caption grey--text text-center"><VIcon icon="tabler-circle-letter-b"/><span class="text-sub-caption-mobile">{{ item.exchange}}</span></span>
                         </div>
                       </VCol>
 
                       <VCol cols="3">
                         <div class="d-flex flex-column justify-center">
-                          <span class="text-caption grey--text text-center"><VIcon icon="tabler-refresh"/><span class="text-sub-caption-mobile">Single</span></span>
+                          <span class="text-caption grey--text text-center"><VIcon icon="tabler-refresh"/><span class="text-sub-caption-mobile">{{item.cycle_type }}</span></span>
                         </div>
                       </VCol>
 
                       <VCol cols="3">
                         <div class="d-flex flex-column justify-center">
-                          <span class="text-caption grey--text text-center"><VIcon icon="tabler-world-cog"/><span class="text-sub-caption-mobile">Custom</span></span>
+                          <span class="text-caption grey--text text-center"><VIcon icon="tabler-world-cog"/><span class="text-sub-caption-mobile">{{item.preset}}</span></span>
                         </div>
                       </VCol>
 
                       <VCol cols="3">
                         <div class="d-flex flex-column justify-center">
-                          <span class="text-caption grey--text text-center"><VIcon icon="tabler-target-arrow"/><span class="text-sub-caption-mobile">SBS</span></span>
+                          <span class="text-caption grey--text text-center"><VIcon icon="tabler-target-arrow"/><span class="text-sub-caption-mobile">{{item.strategy}}</span></span>
                         </div>
                       </VCol>
                     </VRow>
@@ -1342,7 +706,7 @@ const moreList = [
                     <VCol cols="6">
                       <div class="d-flex flex-column justify-center">
                         <span class="text-caption grey--text">Profit</span>
-                        <span class="text-h4 font-weight-bold">166.30</span>
+                        <span class="text-h4 font-weight-bold">{{formatProfit(item.total_profit)}}</span>
                       </div>
                     </VCol>
 
@@ -1362,13 +726,13 @@ const moreList = [
                     <VRow dense class="py-2 align-center">
                       <VCol cols="6">
                         <div class="d-flex flex-column justify-center">
-                          <span class="text-caption">Today Profit (9h:19m)</span>
+                          <span class="text-caption">Today Profit ({{ currentTime() }})</span>
                         </div>
                       </VCol>
 
                       <VCol cols="6">
                         <div class="d-flex flex-column justify-center align-end">
-                          <span class="text-right text-h6 font-weight-medium"><img :src="Frame" height="15" style="vertical-align: middle;"/> -</span>
+                          <span class="text-right text-h6 font-weight-medium"><img :src="Frame" height="15" style="vertical-align: middle;"/> {{item.today_profit}}</span>
                         </div>
                       </VCol>
                     </VRow>
@@ -1382,7 +746,7 @@ const moreList = [
 
                       <VCol cols="6">
                         <div class="d-flex flex-column justify-center align-end">
-                          <span class="text-right text-h6 font-weight-medium"><img :src="Frame" height="15" style="vertical-align: middle;"/> 2000.00</span>
+                          <span class="text-right text-h6 font-weight-medium"><img :src="Frame" height="15" style="vertical-align: middle;"/> {{item.initial_capital}}</span>
                         </div>
                       </VCol>
                     </VRow>
@@ -1396,7 +760,7 @@ const moreList = [
 
                       <VCol cols="6">
                         <div class="d-flex flex-column justify-center align-end">
-                          <span class="text-right text-h6 font-weight-medium"><img :src="Frame" height="15" style="vertical-align: middle;"/> 2166.30</span>
+                          <span class="text-right text-h6 font-weight-medium"><img :src="Frame" height="15" style="vertical-align: middle;"/> {{item.current_capital}}</span>
                         </div>
                       </VCol>
                     </VRow>
@@ -1410,7 +774,7 @@ const moreList = [
 
                       <VCol cols="6">
                         <div class="d-flex flex-column justify-center align-end">
-                          <span class="text-right text-h6 font-weight-medium"><img :src="Frame" height="15" style="vertical-align: middle;"/> 993.62</span>
+                          <span class="text-right text-h6 font-weight-medium"><img :src="Frame" height="15" style="vertical-align: middle;"/> {{item.available_quote_coins}}</span>
                         </div>
                       </VCol>
                     </VRow>
@@ -1424,7 +788,7 @@ const moreList = [
 
                       <VCol cols="6">
                         <div class="d-flex flex-column justify-center align-end">
-                          <span class="text-right text-h6 font-weight-medium"><VIcon icon="tabler-clock-hour-4" size="20" />144D 23H 17M</span>
+                          <span class="text-right text-h6 font-weight-medium"><VIcon icon="tabler-clock-hour-4" size="20" />{{ item.runtime }}</span>
                         </div>
                       </VCol>
                     </VRow>
@@ -1438,7 +802,7 @@ const moreList = [
 
                       <VCol cols="6">
                         <div class="d-flex flex-column justify-center align-end">
-                          <span class="text-right text-h6 font-weight-medium">BUY C9 15D ago</span>
+                          <span class="text-right text-h6 font-weight-medium">{{item.last_trade}}</span>
                         </div>
                       </VCol>
                     </VRow>
@@ -1447,380 +811,7 @@ const moreList = [
                 <!-- Footer -->
                 <VCardText class="align-center">
                   <div class="text-caption text-center mt-2 grey--text">
-                    Bot ID: 107543 <VIcon icon="tabler-copy" size="20" />
-                  </div>
-                </VCardText>
-              </VListItem>
-            </VList>
-            <!--      </VCardText>-->
-          </VCard>
-        </VCol>
-        <VCol
-          cols="12"
-          sm="6"
-          lg="4"
-        >
-          <VCard>
-            <VCardItem class="card-sell-only">
-              <VCardTitle><a class="v-card-title" href="/view-bot">ETH/USDT <strong>1481.71</strong></a>  </VCardTitle>
-              <template #append>
-                <span class="font-weight-bold">Sell Only</span>
-                <div>
-                  <MoreBtn :menu-list="moreList" />
-                </div>
-              </template>
-            </VCardItem>
-            <VDivider />
-            <!--      <VCardText>-->
-            <VList class="card-list">
-              <VCardText class="pb-0 pt-4">
-                <VListItem>
-                  <div class="d-flex align-center gap-2">
-                    <VAvatar>
-                      <img :src="Group">
-                    </VAvatar>
-                    <VAvatar style="margin-left: -25px">
-                      <img :src="Frame">
-                    </VAvatar>
-                    <div>
-                      <div class="font-weight-medium">ETH</div>
-                      <div class="text-caption grey--text">ID: 107543 <VIcon icon="tabler-copy" size="20" /></div>
-                    </div>
-                    <div class="ml-auto text-right">
-                      <div class="text-caption grey--text">Category</div>
-                      <div class="font-weight-medium">Not Assigned Bot</div>
-                    </div>
-                  </div>
-                </VListItem>
-              </VCardText>
-              <VListItem>
-                <VCardText class="pb-0 pt-0">
-                  <div class="d-flex align-center gap-2 py-2">
-                    <VRow dense class="w-100">
-                      <VCol cols="3">
-                        <div class="d-flex flex-column justify-center">
-                          <span class="text-caption grey--text text-center"><VIcon icon="tabler-circle-letter-b"/><span class="text-sub-caption-mobile">Binance</span></span>
-                        </div>
-                      </VCol>
-
-                      <VCol cols="3">
-                        <div class="d-flex flex-column justify-center">
-                          <span class="text-caption grey--text text-center"><VIcon icon="tabler-refresh"/><span class="text-sub-caption-mobile">Single</span></span>
-                        </div>
-                      </VCol>
-
-                      <VCol cols="3">
-                        <div class="d-flex flex-column justify-center">
-                          <span class="text-caption grey--text text-center"><VIcon icon="tabler-world-cog"/><span class="text-sub-caption-mobile">Custom</span></span>
-                        </div>
-                      </VCol>
-
-                      <VCol cols="3">
-                        <div class="d-flex flex-column justify-center">
-                          <span class="text-caption grey--text text-center"><VIcon icon="tabler-target-arrow"/><span class="text-sub-caption-mobile">SBS</span></span>
-                        </div>
-                      </VCol>
-                    </VRow>
-                  </div>
-
-                  <VDivider />
-                  <VRow dense class="py-2 align-center">
-                    <VCol cols="6">
-                      <div class="d-flex flex-column justify-center">
-                        <span class="text-caption grey--text">Profit</span>
-                        <span class="text-h4 font-weight-bold">166.30</span>
-                      </div>
-                    </VCol>
-
-                    <VCol cols="6">
-                      <div class="d-flex flex-column justify-center align-end">
-                        <span class="text-caption grey--text">Market Vs Average</span>
-                        <span class="text-h4 font-weight-bold d-flex align-center" style="color: red">
-                    <VIcon icon="tabler-s-turn-down" size="22" />-50.15%</span>
-                      </div>
-                    </VCol>
-                  </VRow>
-                  <!--              <VDivider />-->
-                </VCardText>
-                <!-- Other Metrics -->
-                <div class="card-bg-metrics">
-                  <VCardText class="pb-0 pt-0">
-                    <VRow dense class="py-2 align-center">
-                      <VCol cols="6">
-                        <div class="d-flex flex-column justify-center">
-                          <span class="text-caption">Today Profit (9h:19m)</span>
-                        </div>
-                      </VCol>
-
-                      <VCol cols="6">
-                        <div class="d-flex flex-column justify-center align-end">
-                          <span class="text-right text-h6 font-weight-medium"><img :src="Frame" height="15" style="vertical-align: middle;"/> -</span>
-                        </div>
-                      </VCol>
-                    </VRow>
-                    <VDivider />
-                    <VRow dense class="py-2 align-center">
-                      <VCol cols="6">
-                        <div class="d-flex flex-column justify-center">
-                          <span class="text-caption">Initial Capital</span>
-                        </div>
-                      </VCol>
-
-                      <VCol cols="6">
-                        <div class="d-flex flex-column justify-center align-end">
-                          <span class="text-right text-h6 font-weight-medium"><img :src="Frame" height="15" style="vertical-align: middle;"/> 2000.00</span>
-                        </div>
-                      </VCol>
-                    </VRow>
-                    <VDivider />
-                    <VRow dense class="py-2 align-center">
-                      <VCol cols="6">
-                        <div class="d-flex flex-column justify-center">
-                          <span class="text-caption">Current Capital</span>
-                        </div>
-                      </VCol>
-
-                      <VCol cols="6">
-                        <div class="d-flex flex-column justify-center align-end">
-                          <span class="text-right text-h6 font-weight-medium"><img :src="Frame" height="15" style="vertical-align: middle;"/> 2166.30</span>
-                        </div>
-                      </VCol>
-                    </VRow>
-                    <VDivider />
-                    <VRow dense class="py-2 align-center">
-                      <VCol cols="6">
-                        <div class="d-flex flex-column justify-center">
-                          <span class="text-caption">Available Quote Coins</span>
-                        </div>
-                      </VCol>
-
-                      <VCol cols="6">
-                        <div class="d-flex flex-column justify-center align-end">
-                          <span class="text-right text-h6 font-weight-medium"><img :src="Frame" height="15" style="vertical-align: middle;"/> 993.62</span>
-                        </div>
-                      </VCol>
-                    </VRow>
-                    <VDivider />
-                    <VRow dense class="py-2 align-center">
-                      <VCol cols="6">
-                        <div class="d-flex flex-column justify-center">
-                          <span class="text-caption">Runtime</span>
-                        </div>
-                      </VCol>
-
-                      <VCol cols="6">
-                        <div class="d-flex flex-column justify-center align-end">
-                          <span class="text-right text-h6 font-weight-medium"><VIcon icon="tabler-clock-hour-4" size="20" />144D 23H 17M</span>
-                        </div>
-                      </VCol>
-                    </VRow>
-                    <VDivider />
-                    <VRow dense class="py-2 align-center">
-                      <VCol cols="6">
-                        <div class="d-flex flex-column justify-center">
-                          <span class="text-caption">Last Trade</span>
-                        </div>
-                      </VCol>
-
-                      <VCol cols="6">
-                        <div class="d-flex flex-column justify-center align-end">
-                          <span class="text-right text-h6 font-weight-medium">BUY C9 15D ago</span>
-                        </div>
-                      </VCol>
-                    </VRow>
-                  </VCardText>
-                </div>
-                <!-- Footer -->
-                <VCardText class="align-center">
-                  <div class="text-caption text-center mt-2 grey--text">
-                    Bot ID: 107543 <VIcon icon="tabler-copy" size="20" />
-                  </div>
-                </VCardText>
-              </VListItem>
-            </VList>
-            <!--      </VCardText>-->
-          </VCard>
-        </VCol>
-        <VCol
-          cols="12"
-          sm="6"
-          lg="4"
-        >
-          <VCard>
-            <VCardItem class="card-inactive">
-              <VCardTitle><a class="v-card-title" href="/view-bot">ETH/USDT <strong>1481.71</strong></a>  </VCardTitle>
-              <template #append>
-                <span class="font-weight-bold">Inactive</span>
-                <div>
-                  <MoreBtn :menu-list="moreList" />
-                </div>
-              </template>
-            </VCardItem>
-            <VDivider />
-
-            <!--      <VCardText>-->
-            <VList class="card-list">
-              <VCardText class="pb-0 pt-4">
-                <VListItem>
-                  <div class="d-flex align-center gap-2">
-                    <VAvatar>
-                      <img :src="Group">
-                    </VAvatar>
-                    <VAvatar style="margin-left: -25px">
-                      <img :src="Frame">
-                    </VAvatar>
-                    <div>
-                      <div class="font-weight-medium">ETH</div>
-                      <div class="text-caption grey--text">ID: 107543 <VIcon icon="tabler-copy" size="20" /></div>
-                    </div>
-                    <div class="ml-auto text-right">
-                      <div class="text-caption grey--text">Category</div>
-                      <div class="font-weight-medium">Not Assigned Bot</div>
-                    </div>
-                  </div>
-                </VListItem>
-              </VCardText>
-              <VListItem>
-                <VCardText class="pb-0 pt-0">
-                  <div class="d-flex align-center gap-2 py-2">
-                    <VRow dense class="w-100">
-                      <VCol cols="3">
-                        <div class="d-flex flex-column justify-center">
-                          <span class="text-caption grey--text text-center"><VIcon icon="tabler-circle-letter-b"/><span class="text-sub-caption-mobile">Binance</span></span>
-                        </div>
-                      </VCol>
-
-                      <VCol cols="3">
-                        <div class="d-flex flex-column justify-center">
-                          <span class="text-caption grey--text text-center"><VIcon icon="tabler-refresh"/><span class="text-sub-caption-mobile">Single</span></span>
-                        </div>
-                      </VCol>
-
-                      <VCol cols="3">
-                        <div class="d-flex flex-column justify-center">
-                          <span class="text-caption grey--text text-center"><VIcon icon="tabler-world-cog"/><span class="text-sub-caption-mobile">Custom</span></span>
-                        </div>
-                      </VCol>
-
-                      <VCol cols="3">
-                        <div class="d-flex flex-column justify-center">
-                          <span class="text-caption grey--text text-center"><VIcon icon="tabler-target-arrow"/><span class="text-sub-caption-mobile">SBS</span></span>
-                        </div>
-                      </VCol>
-                    </VRow>
-                  </div>
-
-                  <VDivider />
-                  <VRow dense class="py-2 align-center">
-                    <VCol cols="6">
-                      <div class="d-flex flex-column justify-center">
-                        <span class="text-caption grey--text">Profit</span>
-                        <span class="text-h4 font-weight-bold">166.30</span>
-                      </div>
-                    </VCol>
-
-                    <VCol cols="6">
-                      <div class="d-flex flex-column justify-center align-end">
-                        <span class="text-caption grey--text">Market Vs Average</span>
-                        <span class="text-h4 font-weight-bold d-flex align-center" style="color: red">
-                    <VIcon icon="tabler-s-turn-down" size="22" />-50.15%</span>
-                      </div>
-                    </VCol>
-                  </VRow>
-                  <!--              <VDivider />-->
-                </VCardText>
-                <!-- Other Metrics -->
-                <div class="card-bg-metrics">
-                  <VCardText class="pb-0 pt-0">
-                    <VRow dense class="py-2 align-center">
-                      <VCol cols="6">
-                        <div class="d-flex flex-column justify-center">
-                          <span class="text-caption">Today Profit (9h:19m)</span>
-                        </div>
-                      </VCol>
-
-                      <VCol cols="6">
-                        <div class="d-flex flex-column justify-center align-end">
-                          <span class="text-right text-h6 font-weight-medium"><img :src="Frame" height="15" style="vertical-align: middle;"/> -</span>
-                        </div>
-                      </VCol>
-                    </VRow>
-                    <VDivider />
-                    <VRow dense class="py-2 align-center">
-                      <VCol cols="6">
-                        <div class="d-flex flex-column justify-center">
-                          <span class="text-caption">Initial Capital</span>
-                        </div>
-                      </VCol>
-
-                      <VCol cols="6">
-                        <div class="d-flex flex-column justify-center align-end">
-                          <span class="text-right text-h6 font-weight-medium"><img :src="Frame" height="15" style="vertical-align: middle;"/> 2000.00</span>
-                        </div>
-                      </VCol>
-                    </VRow>
-                    <VDivider />
-                    <VRow dense class="py-2 align-center">
-                      <VCol cols="6">
-                        <div class="d-flex flex-column justify-center">
-                          <span class="text-caption">Current Capital</span>
-                        </div>
-                      </VCol>
-
-                      <VCol cols="6">
-                        <div class="d-flex flex-column justify-center align-end">
-                          <span class="text-right text-h6 font-weight-medium"><img :src="Frame" height="15" style="vertical-align: middle;"/> 2166.30</span>
-                        </div>
-                      </VCol>
-                    </VRow>
-                    <VDivider />
-                    <VRow dense class="py-2 align-center">
-                      <VCol cols="6">
-                        <div class="d-flex flex-column justify-center">
-                          <span class="text-caption">Available Quote Coins</span>
-                        </div>
-                      </VCol>
-
-                      <VCol cols="6">
-                        <div class="d-flex flex-column justify-center align-end">
-                          <span class="text-right text-h6 font-weight-medium"><img :src="Frame" height="15" style="vertical-align: middle;"/> 993.62</span>
-                        </div>
-                      </VCol>
-                    </VRow>
-                    <VDivider />
-                    <VRow dense class="py-2 align-center">
-                      <VCol cols="6">
-                        <div class="d-flex flex-column justify-center">
-                          <span class="text-caption">Runtime</span>
-                        </div>
-                      </VCol>
-
-                      <VCol cols="6">
-                        <div class="d-flex flex-column justify-center align-end">
-                          <span class="text-right text-h6 font-weight-medium"><VIcon icon="tabler-clock-hour-4" size="20" />144D 23H 17M</span>
-                        </div>
-                      </VCol>
-                    </VRow>
-                    <VDivider />
-                    <VRow dense class="py-2 align-center">
-                      <VCol cols="6">
-                        <div class="d-flex flex-column justify-center">
-                          <span class="text-caption">Last Trade</span>
-                        </div>
-                      </VCol>
-
-                      <VCol cols="6">
-                        <div class="d-flex flex-column justify-center align-end">
-                          <span class="text-right text-h6 font-weight-medium">BUY C9 15D ago</span>
-                        </div>
-                      </VCol>
-                    </VRow>
-                  </VCardText>
-                </div>
-                <!-- Footer -->
-                <VCardText class="align-center">
-                  <div class="text-caption text-center mt-2 grey--text">
-                    Bot ID: 107543 <VIcon icon="tabler-copy" size="20" />
+                    Bot ID: {{item.id}} <VIcon icon="tabler-copy" size="20" />
                   </div>
                 </VCardText>
               </VListItem>
@@ -1829,6 +820,13 @@ const moreList = [
           </VCard>
         </VCol>
       </VRow>
+      <!-- Load More Trigger -->
+      <div ref="bottomTrigger" style="height: 1px"></div>
+
+      <!-- Loading Spinner -->
+      <div v-if="loading" class="text-center py-4">
+        <VProgressCircular indeterminate />
+      </div>
     </div>
   </div>
 </template>

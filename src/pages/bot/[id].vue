@@ -16,7 +16,7 @@ const pageTitle = 'Bot Insight'
 const breadcrumbs = [
   { title: 'Home', to: '/', icon: 'tabler-home' },
   { title: 'Bots', to: '/bots' },
-  { title: route.params.id, to: '/view-bot' },
+  { title: route.params.id},
   { title: 'Bot Insight' }
 ]
 
@@ -29,6 +29,9 @@ const currentSessionList = ref([])
 const previousSessionList = ref([])
 const errorMessage = ref('')
 const totalCloseSessions = ref(0)
+const bot = ref(null)
+const loading = ref(true)
+const error = ref(null)
 
 const stats = [
   { label: 'Trades closed', value: '7' },
@@ -141,6 +144,33 @@ const tradeItems = [
 
 const isNull = val => val === null || val === undefined || val === '' || val === 'null'
 const token = localStorage.getItem('accessToken')
+
+// API call
+const fetchBotDetails = async () => {
+  loading.value = true
+  try {
+    const response = await axios.get(
+      "http://127.0.0.1:8000/api/v1/bots/"+route.params.id,
+      {
+        headers: {
+          Accept: "application/json",
+          Authorization: token,
+        },
+      }
+    )
+
+    bot.value = response.data.data // adjust based on response format
+    totalCloseSessions = bot.trading_info.trades_closed
+
+    console.log(bot);
+
+  } catch (err) {
+    error.value = "Failed to load bot details"
+    console.error(err)
+  }
+
+  loading.value = false
+}
 
 const currentSessions = async () => {
   try {
@@ -333,8 +363,9 @@ function formatProfit(profit) {
 }
 
 onMounted(() => {
-  currentSessions()
-  previousSessions()
+  fetchBotDetails()
+  // currentSessions()
+  // previousSessions()
 })
 </script>
 <template>
@@ -348,8 +379,8 @@ onMounted(() => {
       <VCardText class="d-flex justify-space-between align-center flex-wrap gap-4">
         <!-- Left: Title -->
         <span class="font-weight-bold">
-        <span class="pr-2">ETH</span>
-      <VChip color="success">Active</VChip>
+        <span class="pr-2">{{ bot?.title }}</span>
+      <VChip :color="bot?.status === 'Active' ? 'success' : 'grey'">{{ bot?.status }}</VChip>
       </span>
 
         <!-- Right: Statuses -->
@@ -377,7 +408,7 @@ onMounted(() => {
                 <img :src="Frame">
               </VAvatar>
               <div>
-                <div class="font-weight-medium">ETH/USDT</div>
+                <div class="font-weight-medium">{{ bot?.coin_pair }}</div>
                 <div class="text-caption grey--text">1481.71</div>
               </div>
             </div>
@@ -386,17 +417,17 @@ onMounted(() => {
 
         <!-- Right: Statuses -->
         <div class="d-flex align-center gap-x-4">
-          <span class="text-caption grey--text">Sessions Closed<br /><span class="text-sub-caption">10</span></span>
+          <span class="text-caption grey--text">Sessions Closed<br /><span class="text-sub-caption">{{ bot?.trading_info.sessions_closed }}</span></span>
           <div style="width: 1px; height: 24px; background-color: #ccc;"></div>
-          <span class="text-caption grey--text">Exchange<br /><span class="text-sub-caption">Binance</span></span>
+          <span class="text-caption grey--text">Exchange<br /><span class="text-sub-caption">{{ bot?.exchange_name }}</span></span>
           <div style="width: 1px; height: 24px; background-color: #ccc;"></div>
-          <span class="text-caption grey--text">Cycle Type<br /><span class="text-sub-caption">Single</span></span>
+          <span class="text-caption grey--text">Cycle Type<br /><span class="text-sub-caption">{{ bot?.cycle_type }}</span></span>
           <div style="width: 1px; height: 24px; background-color: #ccc;"></div>
-          <span class="text-caption grey--text">Strategy<br /><span class="text-sub-caption">Custom</span></span>
+          <span class="text-caption grey--text">Strategy<br /><span class="text-sub-caption">{{ bot?.preset }}</span></span>
           <div style="width: 1px; height: 24px; background-color: #ccc;"></div>
-          <span class="text-caption grey--text">Strategy Type<br /><span class="text-sub-caption">SBS</span></span>
+          <span class="text-caption grey--text">Strategy Type<br /><span class="text-sub-caption">{{ bot?.strategy }}</span></span>
           <div style="width: 1px; height: 24px; background-color: #ccc;"></div>
-          <span class="text-caption grey--text">Runtime<br /><span class="text-sub-caption">149D 20H 44M</span></span>
+          <span class="text-caption grey--text">Runtime<br /><span class="text-sub-caption">{{ bot?.runtime }}</span></span>
         </div>
       </VCardText>
       <VCardText class="justify-space-between align-center flex-wrap gap-4">
@@ -408,19 +439,19 @@ onMounted(() => {
               <div class="font-weight-bold">Earnings Report <VIcon icon="tabler-arrow-right" size="20" /></div>
             </VCol>
             <VCol cols="2">
-              <span class="text-caption grey--text">Today (7h:27m)<br /><span class="text-sub-caption">-</span></span>
+              <span class="text-caption grey--text">Today (7h:27m)<br /><span class="text-sub-caption">{{ bot?.profit.today }}</span></span>
             </VCol>
             <VCol cols="2">
-              <span class="text-caption grey--text">Last 7 Days<br /><span class="text-sub-caption">-</span></span>
+              <span class="text-caption grey--text">Last 7 Days<br /><span class="text-sub-caption">{{ bot?.profit.last_7_days }}</span></span>
             </VCol>
             <VCol cols="2">
-              <span class="text-caption grey--text">Last 30 Days<br /><span class="text-sub-caption">-</span></span>
+              <span class="text-caption grey--text">Last 30 Days<br /><span class="text-sub-caption">{{ bot?.profit.last_30_days }}</span></span>
             </VCol>
             <VCol cols="2">
-              <span class="text-caption grey--text">Trades Closed<br /><span class="text-sub-caption">68</span></span>
+              <span class="text-caption grey--text">Trades Closed<br /><span class="text-sub-caption">{{ bot?.trading_info.trades_closed }}</span></span>
             </VCol>
             <VCol cols="2">
-              <span class="text-caption grey--text">Trade Profit <VIcon icon="tabler-info-circle"/><br /><span class="text-sub-caption" style="color: green">$ 166.30</span></span>
+              <span class="text-caption grey--text">Trade Profit <VIcon icon="tabler-info-circle"/><br /><span class="text-sub-caption" style="color: green">$ {{ bot?.profit.total }}</span></span>
             </VCol>
           </VRow>
         </div>

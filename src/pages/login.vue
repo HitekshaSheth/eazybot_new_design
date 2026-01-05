@@ -48,14 +48,14 @@ const login = async () => {
   errorMessage.value = '' // clear previous error
   try {
     // Set base URL
-    axios.defaults.baseURL = 'https://stocktrader.eazybot.com'
+    axios.defaults.baseURL = 'http://127.0.0.1:8000'
 
 // Ensure credentials are sent (needed for cookies including CSRF token)
     axios.defaults.withCredentials = true
     axios.defaults.withXSRFToken = true;
 
 // Step 1: First, get CSRF token
-    await axios.get('/sanctum/csrf-cookie')
+//     await axios.get('/sanctum/csrf-cookie')
 
 // Step 2: Then, make the login request
     const response = await axios.post('/api/login', {
@@ -67,8 +67,10 @@ const login = async () => {
       },
       withCredentials: true, // ✅ Important if you need cookies
     })
-    if (response.data.result) {
-      localStorage.setItem('accessToken', response.data.api_token)
+    console.log(response.data.api_token);
+
+    if (response.data.success == true) {
+      localStorage.setItem('accessToken', 'Bearer ' + response.data.api_token)
       router.push({ name: 'root' }) // redirect after login
     }
   } catch (error) {
@@ -77,8 +79,8 @@ const login = async () => {
       errorMessage.value = error.response.data.message || 'Login failed. Please try again.'
     }
     else {
-      if (error.response && error.response.data && error.response.data.error) {
-        const apiError = error.response.data.error
+      if (error.response && error.response.data && error.response.data.errors) {
+        const apiError = error.response.data.errors
         const emailError = apiError.email?.[0]
         errorMessage.value = emailError || 'Login failed. Please try again.'
       } else {
